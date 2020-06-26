@@ -1,0 +1,49 @@
+{
+  "name": "@tago-io/sdk",
+  "version": "10.0.0",
+  "description": "TagoIO SDK for JavaScript in the browser and Node.js",
+  "author": "Tago LLC",
+  "homepage": "https://tago.io",
+  "license": "Apache-2.0",
+  "repository": "tago-io/tago-sdk-js.git",
+  "main": "./out/modules.js",
+  "types": "./out/modules.d.ts",
+  "keywords": [
+    "tago",
+    "tagoio",
+    "iot",
+    "tago.io",
+    "sdk",
+    "analysis",
+    "device",
+    "tagoio"
+  ],
+  "engines": {
+    "node": ">= 12.0"
+  },
+  "scripts": {
+    "prepare": "tsc",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "26.0.3",
+    "@types/node": "14.0.14",
+    "@types/qs": "6.9.3",
+    "@types/socket.io-client": "1.4.33",
+    "@typescript-eslint/eslint-plugin": "3.4.0",
+    "@typescript-eslint/parser": "3.4.0",
+    "eslint": "7.3.1",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-prettier": "3.1.4",
+    "jest": "26.1.0",
+    "prettier": "2.0.5",
+    "ts-jest": "26.1.1",
+    "typescript": "3.9.5"
+  },
+  "dependencies": {
+    "axios": "0.19.2",
+    "qs": "6.9.4",
+    "socket.io-client": "2.3.0"
+  }
+}
