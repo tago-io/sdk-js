@@ -21,9 +21,9 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
   protected params = {} as T;
 
   constructor(params: T) {
-    this.validateParams();
-
     this.params = params;
+
+    this.validateParams();
   }
 
   private validateParams() {
