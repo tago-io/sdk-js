@@ -17,4 +17,41 @@ interface TagsObj {
   [key: string]: string;
 }
 
-export { Data, TagsObj };
+interface Query<T, U> {
+  /**
+   * Page of list starting from 1
+   */
+  page?: number;
+  /**
+   * Amount of items will return.
+   */
+  amount?: number;
+  /**
+   *  Array of field names.
+   */
+  fields?: (keyof T)[];
+  /**
+   *  Filter object.
+   */
+  filter?: Partial<T>;
+  /**
+   * Tuple with a field and an order
+   */
+  orderBy?: [Extract<keyof T, U>, "asc" | "desc"];
+}
+
+/**
+ * ID used on TagoIO, string with 24 character
+ */
+type GenericID = string;
+
+/**
+ * Token used on TagoIO, string with 36 characters
+ */
+type GenericToken = string;
+
+type permissionOption = "write" | "read" | "full";
+
+type expireTimeOption = "never" | string;
+
+export { Data, TagsObj, Query, GenericID, GenericToken, permissionOption, expireTimeOption };
