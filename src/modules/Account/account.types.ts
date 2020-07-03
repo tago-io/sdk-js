@@ -1,3 +1,5 @@
+import { TagsObj } from "../../comum/comum.types";
+
 interface AccountInfo {
   active: Boolean;
   blocked: Boolean;
@@ -24,4 +26,65 @@ interface AccountInfo {
   plan: String;
 }
 
-export { AccountInfo };
+interface BucketInfo {
+  id: string;
+  name: string;
+  description: string | void;
+  visible: boolean;
+  data_retention: string;
+  data_retention_ignore: [];
+  profile: string;
+  tags: TagsObj[];
+  database: string | void;
+  last_backup: string | void;
+  last_retention: string | void;
+  created_at: string;
+  updated_at: string;
+}
+
+interface BucketCreateInfo {
+  /**
+   * A name for the bucket.
+   */
+  name: string;
+  /**
+   * Description for the bucket.
+   */
+  description?: string | void;
+  /**
+   * Set if the bucket will be visible or not. Default True.
+   */
+  visible?: boolean;
+  /**
+   * An array of tags.
+   */
+  tags?: TagsObj[];
+}
+
+interface BucketDeviceInfo {
+  id: string;
+  name: string;
+}
+interface VariablesInfo {
+  variable: string;
+  unitis: string[];
+  origins: string[] | BucketDeviceInfo[];
+  amount?: number;
+  deleted?: {
+    origin: string;
+    created_at: string;
+  }[];
+}
+
+type ExportBucket = {
+  id: string;
+  origin: string;
+  variables: string[];
+}[];
+
+interface ExportBucketOption {
+  start_date?: string;
+  end_date?: string;
+}
+
+export { AccountInfo, BucketInfo, BucketCreateInfo, VariablesInfo, BucketDeviceInfo, ExportBucket, ExportBucketOption };

@@ -1,5 +1,13 @@
 import { Regions } from "../../regions";
-import { Data, Query, GenericID, GenericToken, expireTimeOption, permissionOption } from "../../comum/comum.types";
+import {
+  Data,
+  Query,
+  GenericID,
+  GenericToken,
+  ExpireTimeOption,
+  PermissionOption,
+  TagsObj,
+} from "../../comum/comum.types";
 import { Key } from "readline";
 
 interface DeviceInfo {
@@ -15,7 +23,7 @@ interface DeviceInfo {
   connector: string;
   connector_parse: boolean;
   parse_function: string;
-  tags: Tags[];
+  tags: TagsObj[];
   updated_at: string;
   created_at: string;
   inspected_at: string;
@@ -49,18 +57,13 @@ interface ConfigurationParams {
   value: string | number | boolean;
 }
 
-interface Tags {
-  key: string;
-  value: string | number | boolean;
-}
-
 type ListResponse = DeviceInfo[];
 
 interface TokenDataList {
   token: GenericToken;
   name: string;
   type: string;
-  permission: permissionOption;
+  permission: PermissionOption;
   serie_number: string | void;
   last_authorization: string | void;
   verification_code: string | void;
@@ -107,7 +110,7 @@ interface DeviceData {
   /**
    * An array of tags
    */
-  tags?: Tags[];
+  tags?: TagsObj[];
 }
 
 interface TokenData {
@@ -120,11 +123,11 @@ interface TokenData {
    * It will be randomly generated if not included.
    * Accepts “never” as value.
    */
-  expire_time?: expireTimeOption;
+  expire_time?: ExpireTimeOption;
   /**
    * Token permission should be 'write', 'read' or 'full'.
    */
-  permission: permissionOption;
+  permission: PermissionOption;
   /**
    * [optional] The serial number of the device.
    */
@@ -151,6 +154,6 @@ export {
   ListTokenQuery,
   TokenListResponse,
   TokenData,
-  permissionOption,
-  expireTimeOption,
+  PermissionOption,
+  ExpireTimeOption,
 };

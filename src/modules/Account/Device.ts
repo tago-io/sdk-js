@@ -1,8 +1,5 @@
 import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import Middlewares from "./Middlewares";
-import Tags from "./Tags";
-import QueryString from "qs";
-import { TagsObj, GenericID, GenericToken } from "../../comum/comum.types";
+import { GenericID, GenericToken } from "../../comum/comum.types";
 import {
   DeviceData,
   ListResponse,
@@ -10,28 +7,33 @@ import {
   TokenListResponse,
   ListTokenQuery,
   TokenData,
-  permissionOption,
-  expireTimeOption,
+  PermissionOption,
+  ExpireTimeOption,
   DeviceInfo,
   ConfigurationParams,
 } from "../Device/device.types";
-import { stringify } from "querystring";
 
 type DeviceCreateResponse = { deviceID: GenericID; bucket_id: GenericID; token: GenericToken };
 
-type TokenCreateResponse = { token: GenericToken; expire_date: expireTimeOption; permission: permissionOption };
+type TokenCreateResponse = { token: GenericToken; expire_date: ExpireTimeOption; permission: PermissionOption };
 
 class Device extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list with all devices from the account
    *
-   * @param {ListQuery} [query] Search query params
-   * @return {Promise<Partial<ListResponse> | string>}
+   * @param {ListQuery} [query] Search query params;
+   * Default:{
+   *   page: 1,
+   *   fields: ["id", "name"],
+   *   filter: {},
+   *   amount: 20,
+   *   orderBy: "name,asc",
+   *   resolveBucketName: false
+   * }
+   * @return {Promise<Partial<ListResponse>>}
    * @memberof Device
    */
-  list(query?: ListQuery): Promise<Partial<ListResponse> | string> {
-    console.log(query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "name,asc");
-
+  list(query?: ListQuery): Promise<Partial<ListResponse>> {
     const result = this.doRequest<Partial<ListResponse>>({
       path: "/device",
       method: "GET",
@@ -52,10 +54,10 @@ class Device extends TagoIOModule<GenericModuleParams> {
    * Create a Device
    *
    * @param {DeviceData} data New device info
-   * @returns {Promise<DeviceCreateResponse | string>}
+   * @returns {Promise<DeviceCreateResponse>}
    * @memberof Device
    */
-  create(data: DeviceData): Promise<DeviceCreateResponse | string> {
+  create(data: DeviceData): Promise<DeviceCreateResponse> {
     const result = this.doRequest<DeviceCreateResponse>({
       path: "/device",
       method: "POST",
@@ -103,11 +105,18 @@ class Device extends TagoIOModule<GenericModuleParams> {
    * Retrieves a list of all tokens of the device
    *
    * @param {GenericID} deviceID Device identification
-   * @param {ListTokenQuery} [query] Search query params
-   * @returns {Promise<Partial<TokenListResponse>[] | string>}
+   * @param {ListTokenQuery} [query] Search query params;
+   * Default:{
+   *   page: 1,
+   *   fields: ["name", "token", "permission"],
+   *   filter: {},
+   *   amount: 20,
+   *   orderBy: "created_at,desc",
+   * }
+   * @returns {Promise<Partial<TokenListResponse>[]>}
    * @memberof Device
    */
-  tokenList(deviceID: GenericID, query?: ListTokenQuery): Promise<Partial<TokenListResponse>[] | string> {
+  tokenList(deviceID: GenericID, query?: ListTokenQuery): Promise<Partial<TokenListResponse>[]> {
     const result = this.doRequest<Partial<TokenListResponse>[]>({
       path: `/device/token/${deviceID}`,
       method: "GET",
@@ -128,10 +137,10 @@ class Device extends TagoIOModule<GenericModuleParams> {
    *
    * @param {GenericID} deviceID Device identification
    * @param {TokenData} data New Token info
-   * @returns {Promise<TokenCreateResponse | string>} Token created info
+   * @returns {Promise<TokenCreateResponse>} Token created info
    * @memberof Device
    */
-  tokenCreate(deviceID: GenericID, data: TokenData): Promise<TokenCreateResponse | string> {
+  tokenCreate(deviceID: GenericID, data: TokenData): Promise<TokenCreateResponse> {
     const result = this.doRequest<TokenCreateResponse>({
       path: "/device/token",
       method: "POST",
@@ -161,10 +170,10 @@ class Device extends TagoIOModule<GenericModuleParams> {
    * Get Info of the Device
    *
    * @param {GenericID} deviceID Device identification
-   * @returns {Promise<DeviceInfo | string>}
+   * @returns {Promise<DeviceInfo>}
    * @memberof Device
    */
-  info(deviceID: GenericID): Promise<DeviceInfo | string> {
+  info(deviceID: GenericID): Promise<DeviceInfo> {
     const result = this.doRequest<DeviceInfo>({
       path: `/device/${deviceID}`,
       method: "GET",
@@ -202,10 +211,10 @@ class Device extends TagoIOModule<GenericModuleParams> {
    *
    * @param {GenericID} deviceID Device identification
    * @param {Boolean} [sentStatus] Get only this status if setted
-   * @returns {(Promise<ConfigurationParams | string>)}
+   * @returns {(Promise<ConfigurationParams>)}
    * @memberof Device
    */
-  paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<ConfigurationParams | string> {
+  paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<ConfigurationParams> {
     const result = this.doRequest<ConfigurationParams>({
       path: `/device/${deviceID}/params`,
       method: "GET",

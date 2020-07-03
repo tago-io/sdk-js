@@ -14,7 +14,8 @@ interface Data {
 }
 
 interface TagsObj {
-  [key: string]: string;
+  key: string;
+  value: string | number | boolean;
 }
 
 interface Query<T, U> {
@@ -50,8 +51,10 @@ type GenericID = string;
  */
 type GenericToken = string;
 
-type permissionOption = "write" | "read" | "full";
+type PermissionOption = "write" | "read" | "full";
 
-type expireTimeOption = "never" | string;
+type ExpireTimeOption = "never" | string;
 
-export { Data, TagsObj, Query, GenericID, GenericToken, permissionOption, expireTimeOption };
+type ExportOption = "csv" | "json" | "xml";
+
+export { Data, TagsObj, Query, GenericID, GenericToken, PermissionOption, ExpireTimeOption, ExportOption };
