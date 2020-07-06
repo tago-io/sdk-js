@@ -104,7 +104,3 @@ class Actions extends TagoIOModule<GenericModuleParams> {
 }
 
 export default Actions;
-
-const act = new Actions({ token: "f591edc2-d426-421b-82f3-1533cf64b22d", region: "us-east" });
-
-act.list().then(console.log).catch(console.log);
