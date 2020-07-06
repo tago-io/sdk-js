@@ -1,4 +1,4 @@
-import { TagsObj } from "../../comum/comum.types";
+import { TagsObj, GenericID, Conditionals } from "../../comum/comum.types";
 
 interface AccountInfo {
   active: Boolean;
@@ -6,7 +6,7 @@ interface AccountInfo {
   company: String;
   created_at: String;
   email: String;
-  id: String;
+  id: GenericID;
   language: String;
   last_login: String;
   name: String;
@@ -27,13 +27,13 @@ interface AccountInfo {
 }
 
 interface BucketInfo {
-  id: string;
+  id: GenericID;
   name: string;
   description: string | void;
   visible: boolean;
   data_retention: string;
   data_retention_ignore: [];
-  profile: string;
+  profile: GenericID;
   tags: TagsObj[];
   database: string | void;
   last_backup: string | void;
@@ -62,7 +62,7 @@ interface BucketCreateInfo {
 }
 
 interface BucketDeviceInfo {
-  id: string;
+  id: GenericID;
   name: string;
 }
 interface VariablesInfo {
@@ -87,4 +87,133 @@ interface ExportBucketOption {
   end_date?: string;
 }
 
-export { AccountInfo, BucketInfo, BucketCreateInfo, VariablesInfo, BucketDeviceInfo, ExportBucket, ExportBucketOption };
+type ActionType = "condition" | "resource" | "interval" | "schedule" | "mqtt_topic";
+
+type ActionTypeParams =
+  | {
+      script: GenericID[];
+      type: "script";
+    }
+  | {
+      message: string;
+      subject: string;
+      type: "notification";
+    }
+  | {
+      message: string;
+      subject: string;
+      run_user: GenericID;
+      type: "notification_run";
+    }
+  | {
+      message: string;
+      subject: string;
+      to: string;
+      type: "email";
+    }
+  | {
+      message: string;
+      to: string;
+      type: "sms";
+    }
+  | {
+      bucket: string;
+      payload: string;
+      topic: string;
+      type: "mqtt";
+    }
+  | {
+      headers: {};
+      type: "post";
+      url: string;
+    };
+
+interface ActionInfo {
+  id: string;
+  name: string;
+  type: ActionType;
+  description: string | null;
+  active: boolean;
+  lock: boolean;
+  last_triggered: "never" | string;
+  profile: GenericID;
+  action: ActionTypeParams;
+  tags: TagsObj[];
+  created_at: string;
+  updated_at: string;
+}
+type ActionTriggerType =
+  | {
+      resource: "device" | "bucket" | "file" | "analysis" | "action" | "am" | "user" | "financial" | "profile";
+      when: "create" | "update" | "delete";
+      tag_key: string;
+      tag_value: string;
+    }
+  | {
+      interval: string;
+    }
+  | {
+      timezone: string | Date;
+      cron: string;
+    }
+  | {
+      device: string;
+      variable: string;
+      is: Conditionals;
+      value: string;
+      second_value?: string;
+      value_type: "string" | "number" | "boolean" | "*";
+      unlock?: boolean;
+    };
+
+interface ActionCreateInfo {
+  /**
+   * The name for the action.
+   */
+  name: string;
+  /**
+   * Profile identification
+   */
+  profile?: GenericID;
+  /**
+   * True if the action is active or not. The default is true.
+   */
+  active?: boolean;
+  /**
+   * An array of tags.
+   */
+  tags?: TagsObj[];
+  /**
+   * Description of the action.
+   */
+  description?: string | null;
+  lock?: boolean;
+  /**
+   * Type of action
+   */
+  type?: ActionType;
+  /**
+   * Array of trigger configuration according to type
+   */
+  trigger?: ActionTriggerType[];
+  /**
+   * Action configuration
+   */
+  action?: ActionTypeParams;
+  /**
+   * Action action.
+   */
+  id?: GenericID;
+}
+
+export {
+  AccountInfo,
+  BucketInfo,
+  BucketCreateInfo,
+  VariablesInfo,
+  BucketDeviceInfo,
+  ExportBucket,
+  ExportBucketOption,
+  ActionInfo,
+  ActionCreateInfo,
+};

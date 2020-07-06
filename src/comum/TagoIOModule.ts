@@ -1,11 +1,11 @@
 import { AxiosRequestConfig, Method } from "axios";
 import qs from "qs";
 import apiRequest from "../infraestrucure/apiRequest";
-import regions from "../regions";
+import regions, { Regions } from "../regions";
 
 interface GenericModuleParams {
   token?: string;
-  region?: string;
+  region?: Regions;
   options?: Object;
 }
 

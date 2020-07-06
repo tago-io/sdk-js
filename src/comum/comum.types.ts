@@ -18,6 +18,13 @@ interface TagsObj {
   value: string | number | boolean;
 }
 
+type RecursivePartial<T> = {
+  [P in keyof T]?: T[P] extends (infer U)[]
+    ? RecursivePartial<U>[]
+    : T[P] extends object
+    ? RecursivePartial<T[P]>
+    : T[P];
+};
 interface Query<T, U> {
   /**
    * Page of list starting from 1
@@ -34,7 +41,7 @@ interface Query<T, U> {
   /**
    *  Filter object.
    */
-  filter?: Partial<T>;
+  filter?: RecursivePartial<T>;
   /**
    * Tuple with a field and an order
    */
@@ -57,4 +64,16 @@ type ExpireTimeOption = "never" | string;
 
 type ExportOption = "csv" | "json" | "xml";
 
-export { Data, TagsObj, Query, GenericID, GenericToken, PermissionOption, ExpireTimeOption, ExportOption };
+type Conditionals = "<" | ">" | "=" | "!" | "><" | "*";
+
+export {
+  Data,
+  TagsObj,
+  Query,
+  GenericID,
+  GenericToken,
+  PermissionOption,
+  ExpireTimeOption,
+  ExportOption,
+  Conditionals,
+};
