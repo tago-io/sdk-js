@@ -58,6 +58,8 @@ type GenericID = string;
  */
 type GenericToken = string;
 
+type Base64 = string;
+
 type PermissionOption = "write" | "read" | "full";
 
 type ExpireTimeOption = "never" | string;
@@ -66,12 +68,15 @@ type ExportOption = "csv" | "json" | "xml";
 
 type Conditionals = "<" | ">" | "=" | "!" | "><" | "*";
 
+type RunTypeOptions = "node" | "python" | "java" | "c#" | "golang";
+
 type TokenCreateResponse = { token: GenericToken; expire_date: ExpireTimeOption; permission: PermissionOption };
 
 export {
   Data,
   TagsObj,
   Query,
+  Base64,
   GenericID,
   GenericToken,
   PermissionOption,
@@ -79,4 +84,5 @@ export {
   ExportOption,
   Conditionals,
   TokenCreateResponse,
+  RunTypeOptions,
 };

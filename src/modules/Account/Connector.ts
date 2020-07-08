@@ -69,6 +69,13 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
     const result = await this.doRequest<Partial<ConnectorInfo>[]>({
       path: `/connector/token/${connectorID}`,
       method: "GET",
+      params: {
+        page: query?.page || 1,
+        fields: query?.fields || ["name", "token", "created_at"],
+        filter: query?.filter || {},
+        amount: query?.amount || 20,
+        orderBy: query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "created_at,desc",
+      },
     });
 
     return result;

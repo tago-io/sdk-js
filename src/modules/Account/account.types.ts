@@ -1,4 +1,12 @@
-import { TagsObj, GenericID, Conditionals, PermissionOption, ExpireTimeOption } from "../../comum/comum.types";
+import {
+  TagsObj,
+  GenericID,
+  Conditionals,
+  PermissionOption,
+  ExpireTimeOption,
+  RunTypeOptions,
+  Base64,
+} from "../../comum/comum.types";
 
 interface AccountInfo {
   active: Boolean;
@@ -237,6 +245,34 @@ interface ConnectorTokenInfo extends Readonly<ConnectorTokenCreateInfo> {
   connector: GenericID;
   type: "type" | "connector";
 }
+
+interface AnalysisCreateInfo {
+  name: string;
+  description?: string | null;
+  interval?: string;
+  run_on?: "tago" | "external";
+  file_name?: string;
+  runtime?: RunTypeOptions;
+  active?: true;
+  profile?: GenericID;
+  variables?: TagsObj[];
+  tags?: TagsObj[];
+}
+interface AnalysisInfo extends Readonly<AnalysisCreateInfo> {
+  id: GenericID;
+  token: string;
+  last_run: string;
+  created_at: string;
+  updated_at: string;
+  locked_at: any;
+  console?: string[];
+}
+
+interface ScriptFile {
+  name: string;
+  content: Base64;
+  language: RunTypeOptions;
+}
 export {
   AccountInfo,
   BucketInfo,
@@ -251,4 +287,7 @@ export {
   ConnectorCreateInfo,
   ConnectorTokenCreateInfo,
   ConnectorTokenInfo,
+  AnalysisInfo,
+  AnalysisCreateInfo,
+  ScriptFile,
 };

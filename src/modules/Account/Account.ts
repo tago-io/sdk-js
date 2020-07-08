@@ -1,5 +1,4 @@
 import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import Middlewares from "./Middlewares";
 import Tags from "./Tags";
 import { AccountInfo } from "./account.types";
 
@@ -17,10 +16,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
     });
 
     return result;
-  }
-
-  get middlewares() {
-    return new Middlewares(this.params);
   }
 
   get tags() {
