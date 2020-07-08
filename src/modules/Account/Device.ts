@@ -1,5 +1,5 @@
 import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import { GenericID, GenericToken } from "../../comum/comum.types";
+import { GenericID, GenericToken, TokenCreateResponse } from "../../comum/comum.types";
 import {
   DeviceData,
   ListResponse,
@@ -14,8 +14,6 @@ import {
 } from "../Device/device.types";
 
 type DeviceCreateResponse = { deviceID: GenericID; bucket_id: GenericID; token: GenericToken };
-
-type TokenCreateResponse = { token: GenericToken; expire_date: ExpireTimeOption; permission: PermissionOption };
 
 class Device extends TagoIOModule<GenericModuleParams> {
   /**

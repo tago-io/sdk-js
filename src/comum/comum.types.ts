@@ -66,6 +66,8 @@ type ExportOption = "csv" | "json" | "xml";
 
 type Conditionals = "<" | ">" | "=" | "!" | "><" | "*";
 
+type TokenCreateResponse = { token: GenericToken; expire_date: ExpireTimeOption; permission: PermissionOption };
+
 export {
   Data,
   TagsObj,
@@ -76,4 +78,5 @@ export {
   ExpireTimeOption,
   ExportOption,
   Conditionals,
+  TokenCreateResponse,
 };

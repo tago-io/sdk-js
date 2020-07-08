@@ -1,4 +1,4 @@
-import { TagsObj, GenericID, Conditionals } from "../../comum/comum.types";
+import { TagsObj, GenericID, Conditionals, PermissionOption, ExpireTimeOption } from "../../comum/comum.types";
 
 interface AccountInfo {
   active: Boolean;
@@ -206,6 +206,37 @@ interface ActionCreateInfo {
   id?: GenericID;
 }
 
+interface ConnectorCreateInfo {
+  name: string;
+  description_short?: string;
+  description_full?: string;
+  description_end?: string;
+  logo_url?: string;
+  options?: {};
+}
+
+interface ConnectorInfo extends Readonly<ConnectorCreateInfo> {
+  id: GenericID;
+  public: boolean;
+  categories: string[];
+  created_at: string;
+  updated_at: string;
+  parent: GenericID;
+  hidden_parse: boolean;
+}
+
+interface ConnectorTokenCreateInfo {
+  name: string;
+  expire_time?: ExpireTimeOption;
+  permission?: PermissionOption;
+}
+
+interface ConnectorTokenInfo extends Readonly<ConnectorTokenCreateInfo> {
+  created_at: string;
+  updated_at: string;
+  connector: GenericID;
+  type: "type" | "connector";
+}
 export {
   AccountInfo,
   BucketInfo,
@@ -216,4 +247,8 @@ export {
   ExportBucketOption,
   ActionInfo,
   ActionCreateInfo,
+  ConnectorInfo,
+  ConnectorCreateInfo,
+  ConnectorTokenCreateInfo,
+  ConnectorTokenInfo,
 };
