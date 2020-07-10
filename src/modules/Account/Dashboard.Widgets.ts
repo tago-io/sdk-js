@@ -1,5 +1,5 @@
 import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import { GenericID } from "../../comum/comum.types";
+import { GenericID, GenericToken } from "../../comum/comum.types";
 import { InviteResponse, InviteInfo } from "./account.types";
 
 interface WidgetInfo {
@@ -46,6 +46,63 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   public async info(dashboardID: GenericID, widgetID: GenericID): Promise<Readonly<WidgetInfo>> {
     const result = await this.doRequest<Readonly<WidgetInfo>>({
       path: `/dashboard/${dashboardID}/widget/${widgetID}`,
+      method: "GET",
+    });
+
+    return result;
+  }
+  // TODO
+  public async getData(dashboardID: GenericID, widgetID: GenericID): Promise<object> {
+    const result = await this.doRequest<object>({
+      path: `/data/${dashboardID}/${widgetID}`,
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  public async sendData(
+    dashboardID: GenericID,
+    widgetID: GenericID,
+    data: object,
+    bypassBucket: boolean = false
+  ): Promise<object> {
+    const result = await this.doRequest<object>({
+      path: `/data/${dashboardID}/${widgetID}`,
+      method: "POST",
+      params: {
+        bypass_bucket: bypassBucket,
+      },
+      body: data,
+    });
+
+    return result;
+  }
+
+  public async runAnalysis(dashboardID: GenericID, widgetID: GenericID, data: object): Promise<object> {
+    const result = await this.doRequest<object>({
+      path: `/data/${dashboardID}/${widgetID}/run`,
+      method: "POST",
+      body: data,
+    });
+
+    return result;
+  }
+
+  public async deleteData(dashboardID: GenericID, widgetID: GenericID, ids: GenericID): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/data/${dashboardID}/${widgetID}`,
+      method: "DELETE",
+      params: {
+        ids,
+      },
+    });
+
+    return result;
+  }
+  public async tokenGenerate(dashboardID: GenericID, widgetID: GenericID): Promise<{ widget_token: GenericToken }> {
+    const result = await this.doRequest<{ widget_token: GenericToken }>({
+      path: `/dashboard/${dashboardID}/widget/${widgetID}/token`,
       method: "GET",
     });
 

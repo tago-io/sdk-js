@@ -60,7 +60,7 @@ type GenericToken = string;
 
 type Base64 = string;
 
-type PermissionOption = "write" | "read" | "full";
+type PermissionOption = "write" | "read" | "full" | "deny";
 
 type ExpireTimeOption = "never" | string;
 
@@ -71,6 +71,8 @@ type Conditionals = "<" | ">" | "=" | "!" | "><" | "*";
 type RunTypeOptions = "node" | "python" | "java" | "c#" | "golang";
 
 type TokenCreateResponse = { token: GenericToken; expire_date: ExpireTimeOption; permission: PermissionOption };
+
+type RefType = "dashboard";
 
 export {
   Data,
@@ -85,4 +87,5 @@ export {
   Conditionals,
   TokenCreateResponse,
   RunTypeOptions,
+  RefType,
 };

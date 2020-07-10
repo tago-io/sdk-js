@@ -1,32 +1,11 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import { GenericID, PermissionOption, ExpireTimeOption } from "../../comum/comum.types";
+import TagoIOModule, { ShareModuleParams } from "../../comum/TagoIOModule";
+import { GenericID } from "../../comum/comum.types";
+import { InviteResponse, InviteInfo } from "./account.types";
 
-type refType = "dashboard";
-
-interface InviteData {
-  email: string;
-  permission?: PermissionOption;
-}
-
-interface InviteResponse {
-  expire_time: ExpireTimeOption;
-  id: GenericID;
-}
-
-interface InviteInfo {
-  status: string;
-  expire_time: ExpireTimeOption;
-  allow_share: boolean;
-  allow_tags: boolean;
-  id: GenericID;
-  name: string;
-  email: string;
-}
-
-class _Share extends TagoIOModule<GenericModuleParams> {
-  public async invite(type: refType, id: GenericID, data: InviteData): Promise<InviteResponse> {
+class _Share extends TagoIOModule<ShareModuleParams> {
+  public async invite(id: GenericID, data: InviteInfo): Promise<InviteResponse> {
     const result = await this.doRequest<InviteResponse>({
-      path: `/share/${type}/${id}`,
+      path: `/share/${this.params.type}/${id}`,
       method: "POST",
       body: {
         ...data,
@@ -35,9 +14,9 @@ class _Share extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
-  public async edit(type: refType, id: GenericID, data: Partial<InviteData>): Promise<string> {
+  public async edit(id: GenericID, data: Partial<InviteInfo>): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/share/${type}/${id}`,
+      path: `/share/${this.params.type}/${id}`,
       method: "PUT",
       body: {
         ...data,
@@ -46,9 +25,9 @@ class _Share extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
-  public async list(type: refType, id: GenericID): Promise<InviteInfo[]> {
+  public async list(id: GenericID): Promise<Readonly<InviteInfo[]>> {
     const result = await this.doRequest<InviteInfo[]>({
-      path: `/share/${type}/${id}`,
+      path: `/share/${this.params.type}/${id}`,
       method: "GET",
     });
 
