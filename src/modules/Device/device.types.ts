@@ -59,22 +59,6 @@ interface ConfigurationParams {
 
 type ListResponse = DeviceInfo[];
 
-interface TokenDataList {
-  token: GenericToken;
-  name: string;
-  type: string;
-  permission: PermissionOption;
-  serie_number: string | void;
-  last_authorization: string | void;
-  verification_code: string | void;
-  expire_time: string;
-  ref_id: string;
-  created_at: string;
-  created_by: string | void;
-}
-
-type TokenListResponse = TokenDataList[];
-
 interface ListQuery
   extends Query<
     DeviceInfo,
@@ -82,9 +66,6 @@ interface ListQuery
   > {
   resolveBucketName?: boolean;
 }
-
-interface ListTokenQuery
-  extends Query<TokenDataList, "name" | "permission" | "serie_number" | "verification_code" | "created_at"> {}
 
 interface DeviceData {
   /**
@@ -113,35 +94,6 @@ interface DeviceData {
   tags?: TagsObj[];
 }
 
-interface TokenData {
-  /**
-   * A name for the token.
-   */
-  name: string;
-  /**
-   * The time for when the token should expire.
-   * It will be randomly generated if not included.
-   * Accepts “never” as value.
-   */
-  expire_time?: ExpireTimeOption;
-  /**
-   * Token permission should be 'write', 'read' or 'full'.
-   */
-  permission: PermissionOption;
-  /**
-   * [optional] The serial number of the device.
-   */
-  serie_number?: string;
-  /**
-   * [optional] Verification code to validate middleware requests.
-   */
-  verification_code?: string;
-  /**
-   * [optional] Middleware or type of the device that will be added.
-   */
-  middleware?: string;
-}
-
 export {
   DeviceConstructorParams,
   DeviceInfo,
@@ -151,9 +103,6 @@ export {
   DeviceData,
   ListResponse,
   ListQuery,
-  ListTokenQuery,
-  TokenListResponse,
-  TokenData,
   PermissionOption,
   ExpireTimeOption,
 };

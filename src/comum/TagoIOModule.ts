@@ -2,7 +2,7 @@ import { AxiosRequestConfig, Method } from "axios";
 import qs from "qs";
 import apiRequest from "../infraestrucure/apiRequest";
 import regions, { Regions } from "../regions";
-import { RefType } from "../comum/comum.types";
+import { RefType, GenericID } from "../comum/comum.types";
 
 interface GenericModuleParams {
   token?: string;
@@ -10,13 +10,14 @@ interface GenericModuleParams {
   options?: Object;
 }
 
-interface ShareModuleParams {
-  token?: string;
-  region?: Regions;
-  options?: Object;
+interface ShareModuleParams extends GenericModuleParams {
   type: RefType;
 }
 
+interface TokenModuleParams extends GenericModuleParams {
+  path: string;
+  id?: GenericID;
+}
 interface doRequestParams {
   path: string;
   method: Method;
@@ -75,4 +76,4 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
 }
 
 export default TagoIOModule;
-export { GenericModuleParams, ShareModuleParams, doRequestParams };
+export { GenericModuleParams, ShareModuleParams, doRequestParams, TokenModuleParams };

@@ -1,17 +1,22 @@
 import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import { GenericID, GenericToken, TokenCreateResponse } from "../../comum/comum.types";
+import {
+  GenericID,
+  GenericToken,
+  TokenCreateResponse,
+  ListTokenQuery,
+  TokenDataList,
+  TokenData,
+} from "../../comum/comum.types";
 import {
   DeviceData,
   ListResponse,
   ListQuery,
-  TokenListResponse,
-  ListTokenQuery,
-  TokenData,
   PermissionOption,
   ExpireTimeOption,
   DeviceInfo,
   ConfigurationParams,
 } from "../Device/device.types";
+import Token from "./_Token";
 
 type DeviceCreateResponse = { deviceID: GenericID; bucket_id: GenericID; token: GenericToken };
 
@@ -100,71 +105,6 @@ class Device extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves a list of all tokens of the device
-   *
-   * @param {GenericID} deviceID Device identification
-   * @param {ListTokenQuery} [query] Search query params;
-   * Default:{
-   *   page: 1,
-   *   fields: ["name", "token", "permission"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "created_at,desc",
-   * }
-   * @returns {Promise<Partial<TokenListResponse>[]>}
-   * @memberof Device
-   */
-  tokenList(deviceID: GenericID, query?: ListTokenQuery): Promise<Partial<TokenListResponse>[]> {
-    const result = this.doRequest<Partial<TokenListResponse>[]>({
-      path: `/device/token/${deviceID}`,
-      method: "GET",
-      params: {
-        page: query?.page || 1,
-        fields: query?.fields || ["name", "token", "permission"],
-        filter: query?.filter || {},
-        amount: query?.amount || 20,
-        orderBy: query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "created_at,desc",
-      },
-    });
-
-    return result;
-  }
-
-  /**
-   * Generates and retrieves a new token for the device
-   *
-   * @param {GenericID} deviceID Device identification
-   * @param {TokenData} data New Token info
-   * @returns {Promise<TokenCreateResponse>} Token created info
-   * @memberof Device
-   */
-  tokenCreate(deviceID: GenericID, data: TokenData): Promise<TokenCreateResponse> {
-    const result = this.doRequest<TokenCreateResponse>({
-      path: "/device/token",
-      method: "POST",
-      body: { device: deviceID, ...data },
-    });
-
-    return result;
-  }
-
-  /**
-   * Deletes a token from the Device
-   *
-   * @param {GenericToken} token Token from Device
-   * @returns {Promise<string>} String with status
-   * @memberof Device
-   */
-  tokenDelete(token: GenericToken): Promise<string> {
-    const result = this.doRequest<string>({
-      path: `/device/token/${token}`,
-      method: "DELETE",
-    });
-
-    return result;
-  }
-
-  /**
    * Get Info of the Device
    *
    * @param {GenericID} deviceID Device identification
@@ -233,6 +173,71 @@ class Device extends TagoIOModule<GenericModuleParams> {
   paramRemove(deviceID: GenericID, paramID: GenericID): Promise<string> {
     const result = this.doRequest<string>({
       path: `/device/${deviceID}/params/${paramID}`,
+      method: "DELETE",
+    });
+
+    return result;
+  }
+
+  /**
+   * Retrieves a list of all tokens
+   *
+   * @param {GenericID} deviceID
+   * @param {ListTokenQuery} [query] Search query params;
+   * Default:{
+   *   page: 1,
+   *   fields: ["name", "token", "permission"],
+   *   filter: {},
+   *   amount: 20,
+   *   orderBy: "created_at,desc",
+   * }
+   * @returns {Promise<Partial<TokenListResponse>[]>}
+   * @memberof Token
+   */
+  tokenList(deviceID: GenericID, query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
+    const result = this.doRequest<Partial<TokenDataList>[]>({
+      path: `/device/token/${deviceID}`,
+      method: "GET",
+      params: {
+        page: query?.page || 1,
+        fields: query?.fields || ["name", "token", "permission"],
+        filter: query?.filter || {},
+        amount: query?.amount || 20,
+        orderBy: query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "created_at,desc",
+      },
+    });
+
+    return result;
+  }
+
+  /**
+   * Generates and retrieves a new token
+   *
+   * @param {GenericID} deviceID
+   * @param {TokenData} data New Token info
+   * @returns {Promise<TokenCreateResponse>} Token created info
+   * @memberof Token
+   */
+  tokenCreate(deviceID: GenericID, data: TokenData): Promise<TokenCreateResponse> {
+    const result = this.doRequest<TokenCreateResponse>({
+      path: `/device/token`,
+      method: "POST",
+      body: { device: deviceID, ...data },
+    });
+
+    return result;
+  }
+
+  /**
+   * Deletes a token
+   *
+   * @param {GenericToken} token Token
+   * @returns {Promise<string>} String with status
+   * @memberof Token
+   */
+  tokenDelete(token: GenericToken): Promise<string> {
+    const result = this.doRequest<string>({
+      path: `/device/token/${token}`,
       method: "DELETE",
     });
 

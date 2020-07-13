@@ -1,10 +1,16 @@
 import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import { GenericID, Query, TokenCreateResponse } from "../../comum/comum.types";
-import { ConnectorInfo, ConnectorCreateInfo, ConnectorTokenInfo } from "./account.types";
+import {
+  GenericID,
+  Query,
+  ListTokenQuery,
+  TokenDataList,
+  TokenData,
+  TokenCreateResponse,
+  GenericToken,
+} from "../../comum/comum.types";
+import { ConnectorInfo, ConnectorCreateInfo } from "./account.types";
 
 type ConnectorQuery = Query<ConnectorInfo, "name" | "active" | "public" | "created_at" | "updated_at">;
-type TokenQuery = Query<ConnectorTokenInfo, "name" | "created_at" | "updated_at">;
-
 class Connectors extends TagoIOModule<GenericModuleParams> {
   public async list(query?: ConnectorQuery): Promise<ConnectorInfo[]> {
     const result = await this.doRequest<ConnectorInfo[]>({
@@ -65,13 +71,29 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
-  public async tokenList(connectorID: GenericID, query?: TokenQuery): Promise<Partial<ConnectorInfo>[]> {
-    const result = await this.doRequest<Partial<ConnectorInfo>[]>({
+
+  /**
+   * Retrieves a list of all tokens
+   *
+   * @param {GenericID} connectorID
+   * @param {ListTokenQuery} [query] Search query params;
+   * Default:{
+   *   page: 1,
+   *   fields: ["name", "token", "permission"],
+   *   filter: {},
+   *   amount: 20,
+   *   orderBy: "created_at,desc",
+   * }
+   * @returns {Promise<Partial<TokenListResponse>[]>}
+   * @memberof Token
+   */
+  tokenList(connectorID: GenericID, query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
+    const result = this.doRequest<Partial<TokenDataList>[]>({
       path: `/connector/token/${connectorID}`,
       method: "GET",
       params: {
         page: query?.page || 1,
-        fields: query?.fields || ["name", "token", "created_at"],
+        fields: query?.fields || ["name", "token", "permission"],
         filter: query?.filter || {},
         amount: query?.amount || 20,
         orderBy: query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "created_at,desc",
@@ -81,22 +103,34 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async tokenCreate(connectorID: GenericID, data: ConnectorCreateInfo): Promise<TokenCreateResponse> {
-    const result = await this.doRequest<TokenCreateResponse>({
+  /**
+   * Generates and retrieves a new token
+   *
+   * @param {GenericID} connectorID
+   * @param {TokenData} data New Token info
+   * @returns {Promise<TokenCreateResponse>} Token created info
+   * @memberof Token
+   */
+  tokenCreate(connectorID: GenericID, data: TokenData): Promise<TokenCreateResponse> {
+    const result = this.doRequest<TokenCreateResponse>({
       path: `/connector/token`,
       method: "POST",
-      body: {
-        connector: connectorID,
-        ...data,
-      },
+      body: { device: connectorID, ...data },
     });
 
     return result;
   }
 
-  public async tokenDelete(tokenID: GenericID): Promise<string> {
-    const result = await this.doRequest<string>({
-      path: `/connector/token/${tokenID}`,
+  /**
+   * Deletes a token
+   *
+   * @param {GenericToken} token Token
+   * @returns {Promise<string>} String with status
+   * @memberof Token
+   */
+  tokenDelete(token: GenericToken): Promise<string> {
+    const result = this.doRequest<string>({
+      path: `/connector/token/${token}`,
       method: "DELETE",
     });
 
