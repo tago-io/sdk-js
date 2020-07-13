@@ -1,12 +1,12 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
 import {
   GenericID,
   GenericToken,
+  ListTokenQuery,
   TokenCreateResponse,
   TokenData,
   TokenDataList,
-  ListTokenQuery,
 } from "../../comum/comum.types";
+import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
 
 interface ProfileListInfo {
   id: GenericID;
@@ -183,7 +183,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list of all tokens
    *
-   * @param {GenericID} refID
+   * @param {GenericID} profileID
    * @param {ListTokenQuery} [query] Search query params;
    * Default:{
    *   page: 1,
@@ -214,7 +214,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   /**
    * Generates and retrieves a new token
    *
-   * @param {GenericID} refID
+   * @param {GenericID} profileID
    * @param {TokenData} data New Token info
    * @returns {Promise<TokenCreateResponse>} Token created info
    * @memberof Token
