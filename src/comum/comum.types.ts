@@ -137,4 +137,5 @@ export {
   ListTokenQuery,
   TokenData,
   TokenDataList,
+  RecursivePartial,
 };
