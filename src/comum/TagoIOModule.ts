@@ -23,6 +23,7 @@ interface doRequestParams {
   method: Method;
   body?: any;
   params?: any;
+  headers?: any;
   overwriteAxiosConfig?: AxiosRequestConfig;
 }
 
@@ -67,6 +68,7 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
       paramsSerializer: (p) => qs.stringify(p),
       headers: {
         token: this.params.token,
+        ...requestObj.headers,
       },
       ...requestObj.overwriteAxiosConfig,
     };
