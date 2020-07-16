@@ -2,7 +2,7 @@ import { AxiosRequestConfig, Method } from "axios";
 import qs from "qs";
 import apiRequest from "../infraestrucure/apiRequest";
 import regions, { Regions } from "../regions";
-import { RefType, GenericID } from "../comum/comum.types";
+import { RefType, GenericID } from "./comum.types";
 
 interface GenericModuleParams {
   token?: string;
@@ -49,9 +49,9 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
       throw new Error("Invalid Region");
     }
 
-    if (this.params.options && typeof this.params.options !== "object") {
-      throw new Error("Invalid Params");
-    }
+    // if (this.params.options && typeof this.params.options !== "object") {
+    //   throw new Error("Invalid Params");
+    // }
   }
 
   protected doRequest<TR>(requestObj: doRequestParams): Promise<TR> {

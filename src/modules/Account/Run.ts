@@ -1,5 +1,5 @@
-import { ExpireTimeOption, GenericID, GenericToken, Query, RecursivePartial, TagsObj } from "../../comum/comum.types";
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
+import { ExpireTimeOption, GenericID, GenericToken, Query, RecursivePartial, TagsObj } from "../../common/comum.types";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
 interface RunInfo {
   profile: GenericID;

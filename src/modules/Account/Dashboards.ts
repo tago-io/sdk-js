@@ -1,5 +1,5 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import { GenericID, Query, GenericToken, TagsObj, PermissionOption, ExpireTimeOption } from "../../comum/comum.types";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { GenericID, Query, GenericToken, TagsObj, PermissionOption, ExpireTimeOption } from "../../common/comum.types";
 import { InviteInfo, InviteResponse, BucketDeviceInfo } from "./account.types";
 import _Share from "./_Share";
 import Widgets from "./Dashboard.Widgets";

@@ -1,5 +1,5 @@
-import { GenericToken, ListTokenQuery, TokenCreateResponse, TokenData, TokenDataList } from "../../comum/comum.types";
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
+import { GenericToken, ListTokenQuery, TokenCreateResponse, TokenData, TokenDataList } from "../../common/comum.types";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
 class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   /**

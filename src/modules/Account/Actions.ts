@@ -1,5 +1,5 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import { GenericID, Query } from "../../comum/comum.types";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { GenericID, Query } from "../../common/comum.types";
 import { ActionInfo, ActionCreateInfo } from "./account.types";
 
 type ActionQuery = Query<ActionInfo, "name" | "active" | "locked" | "last_triggered" | "created_at" | "updated_at">;

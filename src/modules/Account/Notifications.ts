@@ -1,5 +1,5 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import { GenericID, GenericToken } from "../../comum/comum.types";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { GenericID, GenericToken } from "../../common/comum.types";
 
 type NotificationType = "dashboard" | "bucket" | "analysis" | "profile" | "tago" | "limit_alert";
 
@@ -24,7 +24,7 @@ interface NotificationInfo {
   created_at: string;
 }
 
-class Notification extends TagoIOModule<GenericModuleParams> {
+class Notifications extends TagoIOModule<GenericModuleParams> {
   public async list(query?: NotificationQuery): Promise<NotificationInfo[]> {
     const result = await this.doRequest<NotificationInfo[]>({
       path: "/notification/",
@@ -96,4 +96,4 @@ class Notification extends TagoIOModule<GenericModuleParams> {
   }
 }
 
-export default Notification;
+export default Notifications;

@@ -1,5 +1,5 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import { GenericID, GenericToken, ExpireTimeOption } from "../../comum/comum.types";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { GenericID, GenericToken, ExpireTimeOption } from "../../common/comum.types";
 
 interface PlanSetInfo {
   plan: string;

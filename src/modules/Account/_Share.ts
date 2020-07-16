@@ -1,5 +1,5 @@
-import TagoIOModule, { ShareModuleParams } from "../../comum/TagoIOModule";
-import { GenericID } from "../../comum/comum.types";
+import TagoIOModule, { ShareModuleParams } from "../../common/TagoIOModule";
+import { GenericID } from "../../common/comum.types";
 import { InviteResponse, InviteInfo } from "./account.types";
 
 class _Share extends TagoIOModule<ShareModuleParams> {

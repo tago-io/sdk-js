@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import config from "../config";
-import sleep from "../comum/sleep";
+import sleep from "../common/sleep";
 
 function resultHandler(result: AxiosResponse) {
   if (!result.data) {

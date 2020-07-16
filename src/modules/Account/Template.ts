@@ -1,5 +1,5 @@
-import { GenericID } from "../../comum/comum.types";
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
+import { GenericID } from "../../common/comum.types";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
 interface TemplateObj {
   dashboard: GenericID;

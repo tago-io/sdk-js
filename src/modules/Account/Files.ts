@@ -1,6 +1,6 @@
-import { GenericID } from "../../comum/comum.types";
-import sleep from "../../comum/sleep";
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
+import { GenericID } from "../../common/comum.types";
+import sleep from "../../common/sleep";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import FormData from "form-data";
 
 interface FileQuery {
@@ -51,7 +51,7 @@ function isCanceled(cancelled: boolean) {
   }
 }
 
-class File extends TagoIOModule<GenericModuleParams> {
+class Files extends TagoIOModule<GenericModuleParams> {
   public async list(query?: FileQuery): Promise<FileListInfo> {
     const result = await this.doRequest<FileListInfo>({
       path: "/files",
@@ -339,5 +339,4 @@ class File extends TagoIOModule<GenericModuleParams> {
   }
 }
 
-
-export default File;
+export default Files;

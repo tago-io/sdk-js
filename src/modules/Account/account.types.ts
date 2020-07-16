@@ -6,19 +6,27 @@ import {
   ExpireTimeOption,
   RunTypeOptions,
   Base64,
-} from "../../comum/comum.types";
+} from "../../common/comum.types";
 
-interface AccountInfo {
+interface AccountCreateInfo {
+  name: string;
+  email: string;
+  password: string;
+  cpassword: string;
+  country?: string;
+  timezone: string;
+  company?: string;
+  newsletter?: boolean;
+  developer?: boolean;
+}
+
+interface AccountInfo extends Readonly<Omit<AccountCreateInfo, "passord" | "cpassword" | "country">> {
   active: Boolean;
   blocked: Boolean;
-  company: String;
   created_at: String;
-  email: String;
   id: GenericID;
   language: String;
   last_login: String;
-  name: String;
-  newsletter: Boolean;
   options: {
     user_view_welcome: Boolean;
     decimal_separator: string;
@@ -28,7 +36,6 @@ interface AccountInfo {
   phone: String | null;
   send_invoice: Boolean;
   stripe_id: String | null;
-  timezone: String;
   type: String;
   updated_at: String;
   plan: String;
@@ -137,19 +144,31 @@ type ActionTypeParams =
     };
 
 interface ActionInfo {
-  id: string;
-  name: string;
-  type: ActionType;
-  description: string | null;
+  id: GenericID;
   active: boolean;
-  lock: boolean;
-  last_triggered: "never" | string;
-  profile: GenericID;
-  action: ActionTypeParams;
-  tags: TagsObj[];
+  blocked: boolean;
+  company: string;
   created_at: string;
+  email: string;
+  language: string;
+  last_login: string;
+  name: string;
+  newsletter: boolean;
+  options: {
+    user_view_welcome: boolean;
+    decimal_separator: string;
+    thousand_separator: string;
+    last_whats_new: string;
+  };
+  phone: string;
+  send_invoice: boolean;
+  stripe_id: string;
+  timezone: string;
+  type: string;
   updated_at: string;
+  plan: string;
 }
+
 type ActionTriggerType =
   | {
       resource: "device" | "bucket" | "file" | "analysis" | "action" | "am" | "user" | "financial" | "profile";
@@ -309,4 +328,5 @@ export {
   ScriptFile,
   InviteResponse,
   InviteInfo,
+  AccountCreateInfo,
 };

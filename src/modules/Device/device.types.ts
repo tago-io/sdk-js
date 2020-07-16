@@ -7,7 +7,7 @@ import {
   ExpireTimeOption,
   PermissionOption,
   TagsObj,
-} from "../../comum/comum.types";
+} from "../../common/comum.types";
 import { Key } from "readline";
 
 interface DeviceInfo {

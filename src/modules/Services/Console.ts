@@ -1,4 +1,4 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
 class ConsoleService extends TagoIOModule<GenericModuleParams> {
   public async log(message: string, time?: Date) {

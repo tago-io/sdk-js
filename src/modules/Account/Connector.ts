@@ -1,4 +1,4 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import {
   GenericID,
   Query,
@@ -7,7 +7,7 @@ import {
   TokenData,
   TokenCreateResponse,
   GenericToken,
-} from "../../comum/comum.types";
+} from "../../common/comum.types";
 import { ConnectorInfo, ConnectorCreateInfo } from "./account.types";
 
 type ConnectorQuery = Query<ConnectorInfo, "name" | "active" | "public" | "created_at" | "updated_at">;

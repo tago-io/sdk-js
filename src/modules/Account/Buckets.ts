@@ -1,5 +1,5 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import { GenericID, Query, ExportOption } from "../../comum/comum.types";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { GenericID, Query, ExportOption } from "../../common/comum.types";
 import {
   BucketInfo,
   BucketCreateInfo,

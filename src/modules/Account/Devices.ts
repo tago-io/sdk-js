@@ -1,4 +1,4 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import {
   GenericID,
   GenericToken,
@@ -6,7 +6,7 @@ import {
   ListTokenQuery,
   TokenDataList,
   TokenData,
-} from "../../comum/comum.types";
+} from "../../common/comum.types";
 import {
   DeviceData,
   ListResponse,
@@ -16,11 +16,10 @@ import {
   DeviceInfo,
   ConfigurationParams,
 } from "../Device/device.types";
-import Token from "./_Token";
 
 type DeviceCreateResponse = { deviceID: GenericID; bucket_id: GenericID; token: GenericToken };
 
-class Device extends TagoIOModule<GenericModuleParams> {
+class Devices extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list with all devices from the account
    *
@@ -245,4 +244,4 @@ class Device extends TagoIOModule<GenericModuleParams> {
   }
 }
 
-export default Device;
+export default Devices;

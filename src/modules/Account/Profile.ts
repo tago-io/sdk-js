@@ -5,8 +5,8 @@ import {
   TokenCreateResponse,
   TokenData,
   TokenDataList,
-} from "../../comum/comum.types";
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
+} from "../../common/comum.types";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
 interface ProfileListInfo {
   id: GenericID;

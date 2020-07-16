@@ -1,5 +1,5 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import { GenericID, Query, TokenCreateResponse, GenericToken, Base64 } from "../../comum/comum.types";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { GenericID, Query, TokenCreateResponse, GenericToken, Base64 } from "../../common/comum.types";
 import { AnalysisCreateInfo, AnalysisInfo, ScriptFile } from "./account.types";
 
 type ConnectorQuery = Query<AnalysisInfo, "name" | "active" | "run_on" | "last_run" | "created_at" | "updated_at">;

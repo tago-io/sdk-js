@@ -1,4 +1,4 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import ConsoleService from "./Console";
 
 class Services extends TagoIOModule<GenericModuleParams> {

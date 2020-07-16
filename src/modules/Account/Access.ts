@@ -1,5 +1,5 @@
-import TagoIOModule, { GenericModuleParams } from "../../comum/TagoIOModule";
-import { GenericID, Query, GenericToken, TagsObj, PermissionOption } from "../../comum/comum.types";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { GenericID, Query, GenericToken, TagsObj, PermissionOption } from "../../common/comum.types";
 import {} from "./account.types";
 
 interface AccessCreateInfo {

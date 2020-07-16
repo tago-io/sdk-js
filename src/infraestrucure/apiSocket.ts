@@ -1,7 +1,7 @@
 import io from "socket.io-client";
 import config from "../config.js";
 import regions from "../regions.js";
-import { GenericModuleParams } from "../comum/TagoIOModule.js";
+import { GenericModuleParams } from "../common/TagoIOModule.js";
 
 /**
  * TagoIO Socket Connection
