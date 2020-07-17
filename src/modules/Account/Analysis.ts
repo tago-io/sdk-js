@@ -1,11 +1,9 @@
+import { GenericID, GenericToken } from "../../common/comum.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { GenericID, Query, TokenCreateResponse, GenericToken, Base64 } from "../../common/comum.types";
-import { AnalysisCreateInfo, AnalysisInfo, ScriptFile } from "./account.types";
-
-type ConnectorQuery = Query<AnalysisInfo, "name" | "active" | "run_on" | "last_run" | "created_at" | "updated_at">;
+import { AnalysisCreateInfo, AnalysisInfo, AnalysisQuery, ScriptFile } from "./analysis.types";
 
 class Analysis extends TagoIOModule<GenericModuleParams> {
-  public async list(query?: ConnectorQuery): Promise<AnalysisInfo[]> {
+  public async list(query?: AnalysisQuery): Promise<AnalysisInfo[]> {
     const result = await this.doRequest<AnalysisInfo[]>({
       path: "/analysis/",
       method: "GET",

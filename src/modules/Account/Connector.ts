@@ -1,16 +1,7 @@
+import { GenericID, GenericToken, ListTokenQuery, TokenCreateResponse, TokenData } from "../../common/comum.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import {
-  GenericID,
-  Query,
-  ListTokenQuery,
-  TokenDataList,
-  TokenData,
-  TokenCreateResponse,
-  GenericToken,
-} from "../../common/comum.types";
-import { ConnectorInfo, ConnectorCreateInfo } from "./account.types";
+import { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery, ConnectorTokenInfo } from "./connector.types";
 
-type ConnectorQuery = Query<ConnectorInfo, "name" | "active" | "public" | "created_at" | "updated_at">;
 class Connectors extends TagoIOModule<GenericModuleParams> {
   public async list(query?: ConnectorQuery): Promise<ConnectorInfo[]> {
     const result = await this.doRequest<ConnectorInfo[]>({
@@ -87,8 +78,8 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    * @returns {Promise<Partial<TokenListResponse>[]>}
    * @memberof Token
    */
-  tokenList(connectorID: GenericID, query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
-    const result = this.doRequest<Partial<TokenDataList>[]>({
+  tokenList(connectorID: GenericID, query?: ListTokenQuery): Promise<Partial<ConnectorTokenInfo>[]> {
+    const result = this.doRequest<Partial<ConnectorTokenInfo>[]>({
       path: `/connector/token/${connectorID}`,
       method: "GET",
       params: {
@@ -115,7 +106,7 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
     const result = this.doRequest<TokenCreateResponse>({
       path: `/connector/token`,
       method: "POST",
-      body: { device: connectorID, ...data },
+      body: { connector: connectorID, ...data },
     });
 
     return result;

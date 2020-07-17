@@ -1,49 +1,8 @@
+import FormData from "form-data";
 import { GenericID } from "../../common/comum.types";
 import sleep from "../../common/sleep";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import FormData from "form-data";
-
-interface FileQuery {
-  path?: string;
-  paginationToken?: string;
-  quantity?: number;
-}
-
-interface FileListInfo {
-  files: {
-    filename: string;
-    size: number;
-    last_modified: string;
-  }[];
-  folders: string[];
-}
-
-interface Base64File {
-  filename: string;
-  file: string;
-}
-
-interface MoveFiles {
-  from: string;
-  to: string;
-}
-
-interface FilesPermission {
-  file: string;
-  public: boolean;
-}
-
-interface Options {
-  maxTriesForEachChunk?: number;
-  timeoutForEachFailedChunk?: number;
-  contentType?: string;
-  isPublic: boolean;
-  dashboard?: string;
-  widget?: string;
-  onCancelToken?: Function;
-  chunkSize?: number;
-  onProgress: Function;
-}
+import { Base64File, FileListInfo, FileQuery, FilesPermission, MoveFiles, Options } from "./files.types";
 
 function isCanceled(cancelled: boolean) {
   if (cancelled) {

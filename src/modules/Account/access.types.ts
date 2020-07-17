@@ -1,0 +1,22 @@
+import { GenericID, TagsObj, Query } from "../../common/comum.types";
+
+interface AccessCreateInfo {
+  name: string;
+  // TODO: permissions type
+  permissions: [];
+  // TODO: target type
+  targets: [];
+  profile?: GenericID;
+  tags?: TagsObj;
+  active?: number;
+}
+
+interface AccessInfo extends Readonly<AccessCreateInfo> {
+  id: GenericID;
+  created_at: string;
+  updated_at: string;
+}
+
+type AccessQuery = Query<AccessInfo, "name" | "active" | "created_at" | "updated_at">;
+
+export { AccessCreateInfo, AccessInfo, AccessQuery };

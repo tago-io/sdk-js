@@ -1,25 +1,6 @@
+import { GenericID } from "../../common/comum.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { GenericID, Query, GenericToken, TagsObj, PermissionOption } from "../../common/comum.types";
-import {} from "./account.types";
-
-interface AccessCreateInfo {
-  name: string;
-  // TODO: permissions type
-  permissions: [];
-  // TODO: target type
-  targets: [];
-  profile?: GenericID;
-  tags?: TagsObj;
-  active?: number;
-}
-
-interface AccessInfo extends Readonly<AccessCreateInfo> {
-  id: GenericID;
-  created_at: string;
-  updated_at: string;
-}
-
-type AccessQuery = Query<AccessInfo, "name" | "active" | "created_at" | "updated_at">;
+import { AccessCreateInfo, AccessInfo, AccessQuery } from "./access.types";
 
 class Access extends TagoIOModule<GenericModuleParams> {
   public async list(query?: AccessQuery): Promise<AccessInfo[]> {
@@ -37,6 +18,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
   public async create(data: AccessCreateInfo): Promise<{ am_id: GenericID }> {
     const result = await this.doRequest<{ am_id: GenericID }>({
       path: "/am",
@@ -48,6 +30,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
   public async edit(accessID: GenericID, data: Partial<AccessInfo>): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/am/${accessID}`,
@@ -59,6 +42,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
   public async delete(accessID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/am/${accessID}`,
@@ -67,6 +51,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
   public async info(accessID: GenericID): Promise<AccessInfo> {
     const result = await this.doRequest<AccessInfo>({
       path: `/am/${accessID}`,

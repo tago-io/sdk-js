@@ -1,29 +1,19 @@
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import {
   GenericID,
   GenericToken,
-  TokenCreateResponse,
   ListTokenQuery,
-  TokenDataList,
+  TokenCreateResponse,
   TokenData,
+  TokenDataList,
 } from "../../common/comum.types";
-import {
-  DeviceData,
-  ListResponse,
-  ListQuery,
-  PermissionOption,
-  ExpireTimeOption,
-  DeviceInfo,
-  ConfigurationParams,
-} from "../Device/device.types";
-
-type DeviceCreateResponse = { deviceID: GenericID; bucket_id: GenericID; token: GenericToken };
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { ConfigurationParams, DeviceCreateInfo, DeviceCreateResponse, DeviceInfo, DeviceQuery } from "./devices.types";
 
 class Devices extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list with all devices from the account
    *
-   * @param {ListQuery} [query] Search query params;
+   * @param {DeviceQuery} [query] Search query params;
    * Default:{
    *   page: 1,
    *   fields: ["id", "name"],
@@ -32,11 +22,11 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *   orderBy: "name,asc",
    *   resolveBucketName: false
    * }
-   * @return {Promise<Partial<ListResponse>>}
+   * @return {Promise<DeviceInfo[]>}
    * @memberof Device
    */
-  list(query?: ListQuery): Promise<Partial<ListResponse>> {
-    const result = this.doRequest<Partial<ListResponse>>({
+  list(query?: DeviceQuery): Promise<DeviceInfo[]> {
+    const result = this.doRequest<DeviceInfo[]>({
       path: "/device",
       method: "GET",
       params: {
@@ -55,11 +45,11 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   /**
    * Create a Device
    *
-   * @param {DeviceData} data New device info
+   * @param {DeviceCreateInfo} data New device info
    * @returns {Promise<DeviceCreateResponse>}
    * @memberof Device
    */
-  create(data: DeviceData): Promise<DeviceCreateResponse> {
+  create(data: DeviceCreateInfo): Promise<DeviceCreateResponse> {
     const result = this.doRequest<DeviceCreateResponse>({
       path: "/device",
       method: "POST",
@@ -73,11 +63,11 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * Edit the Device
    *
    * @param {GenericID} deviceID Device identification
-   * @param {DeviceData} data Device info to change
+   * @param {Partial<DeviceInfo>} data Device info to change
    * @returns {Promise<string>} String with status
    * @memberof Device
    */
-  edit(deviceID: GenericID, data: DeviceData): Promise<string> {
+  edit(deviceID: GenericID, data: Partial<DeviceInfo>): Promise<string> {
     const result = this.doRequest<string>({
       path: `/device/${deviceID}`,
       method: "PUT",

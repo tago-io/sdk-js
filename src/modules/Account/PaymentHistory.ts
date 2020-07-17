@@ -1,5 +1,5 @@
+import { GenericID } from "../../common/comum.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { GenericID, GenericToken } from "../../common/comum.types";
 
 interface PaymentInfo {
   status: boolean;

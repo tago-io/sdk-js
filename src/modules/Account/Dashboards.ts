@@ -1,59 +1,15 @@
+import { ExpireTimeOption, GenericID } from "../../common/comum.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { GenericID, Query, GenericToken, TagsObj, PermissionOption, ExpireTimeOption } from "../../common/comum.types";
-import { InviteInfo, InviteResponse, BucketDeviceInfo } from "./account.types";
-import _Share from "./_Share";
+import { InviteInfo, InviteResponse } from "./account.types";
 import Widgets from "./Dashboard.Widgets";
-
-interface Arrangement {
-  widget_id: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  tab?: string | null;
-}
-
-interface DashboardCreateInfo {
-  label: string;
-  arrangement?: Arrangement[];
-  tags?: TagsObj;
-  visible?: boolean;
-}
-
-interface DashboardInfo extends Readonly<DashboardCreateInfo> {
-  id: GenericID;
-  created_at: string;
-  updated_at: string;
-  last_access: string;
-  group_by: [];
-  tabs: [];
-  icon: {
-    url: string;
-    color?: string;
-  };
-  background: any;
-  type: string;
-  blueprint_device_behavior: any;
-  blueprint_selector_behavior: any;
-  theme: any;
-  shared: {
-    id: string;
-    email: string;
-    name: string;
-    free_account: boolean;
-    allow_tags: boolean;
-    expire_time: ExpireTimeOption;
-    allow_share: boolean;
-  };
-}
-
-interface DevicesRelated extends BucketDeviceInfo {
-  bucket: GenericID;
-}
-
-type DashboardQuery = Query<DashboardInfo, "name" | "label" | "active" | "created_at" | "updated_at">;
-
-type PublicKeyResponse = { token: GenericToken; expire_time: "never" };
+import {
+  DashboardCreateInfo,
+  DashboardInfo,
+  DashboardQuery,
+  DevicesRelated,
+  PublicKeyResponse,
+} from "./dashboards.types";
+import _Share from "./_Share";
 
 class Dashboards extends TagoIOModule<GenericModuleParams> {
   private share = new _Share({ ...this.params, type: "dashboard" });

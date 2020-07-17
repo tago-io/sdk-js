@@ -1,15 +1,14 @@
+import { ExportOption, GenericID } from "../../common/comum.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { GenericID, Query, ExportOption } from "../../common/comum.types";
 import {
-  BucketInfo,
   BucketCreateInfo,
-  VariablesInfo,
   BucketDeviceInfo,
+  BucketInfo,
+  BucketQuery,
   ExportBucket,
   ExportBucketOption,
-} from "./account.types";
-
-type BucketQuery = Query<BucketInfo, "name" | "visible" | "data_retention" | "created_at" | "updated_at">;
+  VariablesInfo,
+} from "./buckets.types";
 
 interface ListVariablesOptions {
   /**

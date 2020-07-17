@@ -1,14 +1,5 @@
+import { Data, GenericID, GenericToken, Query, TagsObj } from "../../common/comum.types";
 import { Regions } from "../../regions";
-import {
-  Data,
-  Query,
-  GenericID,
-  GenericToken,
-  ExpireTimeOption,
-  PermissionOption,
-  TagsObj,
-} from "../../common/comum.types";
-import { Key } from "readline";
 
 interface DeviceInfo {
   id: GenericID;
@@ -51,58 +42,6 @@ interface DataQuery {
   end_date?: Date | string;
 }
 
-interface ConfigurationParams {
-  sent: boolean;
-  key: string;
-  value: string | number | boolean;
-}
-
 type ListResponse = DeviceInfo[];
 
-interface ListQuery
-  extends Query<
-    DeviceInfo,
-    "name" | "visible" | "active" | "last_input" | "last_output" | "created_at" | "updated_at"
-  > {
-  resolveBucketName?: boolean;
-}
-
-interface DeviceData {
-  /**
-   * A name for the device.
-   */
-  name?: string;
-  /**
-   * Description of the device.
-   */
-  description?: string;
-  /**
-   * Set if the device will be active.
-   */
-  active?: boolean;
-  /**
-   * Set if the device will be visible.
-   */
-  visible?: boolean;
-  /**
-   * An array of configuration params
-   */
-  configuration_params?: ConfigurationParams[];
-  /**
-   * An array of tags
-   */
-  tags?: TagsObj[];
-}
-
-export {
-  DeviceConstructorParams,
-  DeviceInfo,
-  ConfigurationParams,
-  DataToSend,
-  DataQuery,
-  DeviceData,
-  ListResponse,
-  ListQuery,
-  PermissionOption,
-  ExpireTimeOption,
-};
+export { DeviceConstructorParams, DeviceInfo, DataToSend, DataQuery, ListResponse };
