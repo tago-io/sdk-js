@@ -1,21 +1,6 @@
 import { ExpireTimeOption, GenericID, PermissionOption } from "../../common/comum.types";
 import TagoIOModule, { ShareModuleParams } from "../../common/TagoIOModule";
-interface InviteResponse {
-  expire_time: ExpireTimeOption;
-  id: GenericID;
-}
-
-interface InviteInfo {
-  permission?: PermissionOption;
-  status?: string;
-  copy_me?: boolean;
-  expire_time?: ExpireTimeOption;
-  allow_share?: boolean;
-  allow_tags?: boolean;
-  id?: GenericID;
-  name?: string;
-  email: string;
-}
+import { InviteInfo, InviteResponse } from "./_share.types";
 
 class _Share extends TagoIOModule<ShareModuleParams> {
   public async invite(id: GenericID, data: InviteInfo): Promise<InviteResponse> {

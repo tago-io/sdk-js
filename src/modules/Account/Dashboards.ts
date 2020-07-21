@@ -1,6 +1,6 @@
 import { ExpireTimeOption, GenericID } from "../../common/comum.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { InviteInfo, InviteResponse } from "./account.types";
+import { InviteInfo, InviteResponse } from "./_share.types";
 import Widgets from "./Dashboard.Widgets";
 import {
   DashboardCreateInfo,
