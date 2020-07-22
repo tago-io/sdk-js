@@ -8,6 +8,7 @@
   "repository": "tago-io/sdk-js.git",
   "main": "./out/modules.js",
   "types": "./out/modules.d.ts",
+  "private": false,
   "keywords": [
     "tago",
     "tagoio",
@@ -23,7 +24,7 @@
     "node": ">= 12.0"
   },
   "scripts": {
-    "prepare": "tsc",
+    "prepare": "rm -rf ./out; tsc",
     "build": "tsc",
     "linter": "eslint .",
     "test": "jest"
