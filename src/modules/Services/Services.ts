@@ -4,7 +4,7 @@ import SMS from "./SMS";
 import Email from "./Email";
 import MQTT from "./MQTT";
 import Notification from "./Notification";
-import Attachment from "./Attachmment";
+import Attachment from "./Attachment";
 
 class Services extends TagoIOModule<GenericModuleParams> {
   get console() {
