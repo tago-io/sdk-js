@@ -32,7 +32,7 @@ interface DeviceCreateInfo {
   /**
    * An array of tags
    */
-  tags?: TagsObj[];
+  tags?: TagsObj | TagsObj[];
 }
 
 interface DeviceInfo extends Readonly<Omit<DeviceCreateInfo, "configuration_params">> {
