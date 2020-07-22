@@ -1,7 +1,7 @@
 import TagoIOModule from "../../common/TagoIOModule";
 import ConsoleService from "../Services/Console";
 import apiSocket, { channels } from "../../infrastructure/apiSocket";
-import { AnalysisConstructorParams, analysisFunction } from "./analysis.types";
+import { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment } from "./analysis.types";
 
 class Analysis extends TagoIOModule<AnalysisConstructorParams> {
   private analysis: analysisFunction;
@@ -19,8 +19,8 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     return typeof msg === "object" && !Array.isArray(msg) ? JSON.stringify(msg) : String(msg);
   }
 
-  public run(environment: any, data: any, analysis_id: any, token: any) {
-    const tagoConsole = new ConsoleService(this.params as any);
+  public run(environment: AnalysisEnvironment, data: any[], analysis_id: string, token: string) {
+    const tagoConsole = new ConsoleService({ token, region: this.params.region });
 
     const log = (...args: any[]) => {
       if (!process.env.TAGO_RUNTIME) {

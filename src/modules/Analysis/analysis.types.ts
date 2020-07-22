@@ -8,4 +8,8 @@ interface AnalysisConstructorParams {
   // options?: any;
 }
 
-export { AnalysisConstructorParams, analysisFunction };
+interface AnalysisEnvironment {
+  [key: string]: string;
+}
+
+export { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment };
