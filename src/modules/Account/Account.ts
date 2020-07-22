@@ -107,7 +107,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
       body: data,
     };
 
-    const result = this.doRequestAnonymous<{ token: GenericToken }>(params, region);
+    const result = TagoIOModule.doRequestAnonymous<{ token: GenericToken }>(params, region);
 
     return result;
   }
@@ -126,7 +126,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
       body: data,
     };
 
-    const result = this.doRequestAnonymous<LoginResponse>(params, region);
+    const result = TagoIOModule.doRequestAnonymous<LoginResponse>(params, region);
 
     return result;
   }
@@ -144,7 +144,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
       method: "GET",
     };
 
-    const result = this.doRequestAnonymous<string>(params, region);
+    const result = TagoIOModule.doRequestAnonymous<string>(params, region);
 
     return result;
   }
@@ -182,7 +182,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
       body: data,
     };
 
-    const result = this.doRequestAnonymous<string>(params, region);
+    const result = TagoIOModule.doRequestAnonymous<string>(params, region);
 
     return result;
   }
@@ -200,7 +200,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
       method: "GET",
     };
 
-    const result = this.doRequestAnonymous<string>(params, region);
+    const result = TagoIOModule.doRequestAnonymous<string>(params, region);
 
     return result;
   }
@@ -218,7 +218,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
       method: "GET",
     };
 
-    const result = this.doRequestAnonymous<string>(params, region);
+    const result = TagoIOModule.doRequestAnonymous<string>(params, region);
 
     return result;
   }
