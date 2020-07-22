@@ -27,17 +27,28 @@ interface DeviceConstructorParams {
   // options?: any;
 }
 
-type DataToSend = Omit<Data, "id" | "created_at" | "origin">;
+type DataToSend = Omit<Data, "id" | "created_at" | "origin" | "time"> & { time?: Date };
+
+type valuesTypes = string | number | boolean;
 
 interface DataQuery {
   query?: "default" | "last_item" | "last_value" | "last_location" | "last_insert" | "min" | "max" | "count";
   qty?: number;
   details?: boolean;
-  variables?: string[];
-  origins?: string[];
-  series?: string[];
-  ids?: string[];
-  values?: (string | number | boolean)[];
+
+  // Plural
+  variables?: string[] | string;
+  origins?: string[] | string;
+  series?: string[] | string;
+  ids?: string[] | string;
+  values?: valuesTypes[] | valuesTypes;
+  // Singular
+  variable?: string[] | string;
+  origin?: string[] | string;
+  serie?: string[] | string;
+  id?: string[] | string;
+  value?: valuesTypes[] | valuesTypes;
+
   start_date?: Date | string;
   end_date?: Date | string;
 }
