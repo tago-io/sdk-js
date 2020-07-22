@@ -6,8 +6,8 @@ import { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment } from
 class Analysis extends TagoIOModule<AnalysisConstructorParams> {
   private analysis: analysisFunction;
 
-  constructor(analysis: analysisFunction, params: AnalysisConstructorParams) {
-    super(params);
+  constructor(analysis: analysisFunction, params?: AnalysisConstructorParams) {
+    super(params || { token: "unknown" });
     this.analysis = analysis;
 
     if (!process.env.TAGO_RUNTIME) {
@@ -55,8 +55,8 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
   }
 
   private localRuntime() {
-    if (!this.params.token) {
-      throw "To run locally, needs a token";
+    if (this.params.token === "unknown") {
+      throw "To run analysis locally, you needs a token";
     }
 
     const socket = apiSocket(this.params);
