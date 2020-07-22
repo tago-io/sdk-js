@@ -41,7 +41,14 @@ interface EmailData {
 }
 
 class Email extends TagoIOModule<GenericModuleParams> {
-  public async send(email: EmailData) {
+  /**
+   * Send email
+   *
+   * @param {EmailData} email
+   * @returns {Promise<string>} status
+   * @memberof Email
+   */
+  public async send(email: EmailData): Promise<string> {
     const result = await this.doRequest<string>({
       path: "/analysis/services/email/send",
       method: "POST",

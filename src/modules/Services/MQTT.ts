@@ -30,7 +30,14 @@ interface MQTTData {
 }
 
 class MQTT extends TagoIOModule<GenericModuleParams> {
-  public async publish(mqtt: MQTTData) {
+  /**
+   * Publish MQTT
+   *
+   * @param {MQTTData} mqtt
+   * @returns {Promise<string>} status
+   * @memberof MQTT
+   */
+  public async publish(mqtt: MQTTData): Promise<string> {
     const result = await this.doRequest<string>({
       path: "/analysis/services/mqtt/publish",
       method: "POST",

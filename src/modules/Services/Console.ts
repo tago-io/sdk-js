@@ -1,7 +1,15 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
 class ConsoleService extends TagoIOModule<GenericModuleParams> {
-  public async log(message: string, time?: Date) {
+  /**
+   * Log message in analisys console
+   *
+   * @param {string} message
+   * @param {Date} [time]
+   * @returns {Promise<string>}
+   * @memberof ConsoleService
+   */
+  public async log(message: string, time?: Date): Promise<string> {
     const timestamp = new Date(time).getTime();
 
     const result = await this.doRequest<string>({
