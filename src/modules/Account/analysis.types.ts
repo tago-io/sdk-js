@@ -15,8 +15,11 @@ interface AnalysisCreateInfo {
   runtime?: RunTypeOptions;
   active?: true;
   profile?: GenericID;
-  variables?: TagsObj[];
-  tags?: TagsObj[];
+  variables?: {
+    key: string;
+    value: string | number | boolean;
+  };
+  tags?: TagsObj | TagsObj[];
 }
 
 interface AnalysisInfo extends Readonly<AnalysisCreateInfo> {

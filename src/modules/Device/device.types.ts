@@ -14,7 +14,7 @@ interface DeviceInfo {
   connector: string;
   connector_parse: boolean;
   parse_function: string;
-  tags: TagsObj[];
+  tags: TagsObj | TagsObj[];
   updated_at: string;
   created_at: string;
   inspected_at: string;

@@ -81,7 +81,7 @@ interface ActionCreateInfo {
   /**
    * An array of tags.
    */
-  tags?: TagsObj[];
+  tags?: TagsObj | TagsObj[];
   /**
    * Description of the action.
    */

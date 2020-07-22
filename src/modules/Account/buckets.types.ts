@@ -27,7 +27,7 @@ interface BucketCreateInfo {
   /**
    * An array of tags.
    */
-  tags?: TagsObj[];
+  tags?: TagsObj | TagsObj[];
 }
 
 interface BucketInfo extends Readonly<BucketCreateInfo> {
