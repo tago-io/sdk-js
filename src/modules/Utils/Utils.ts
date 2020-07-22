@@ -1,3 +1,3 @@
-export { default as EnvToJson } from "./EnvToJson";
-export { default as GetAPIVersion } from "./GetAPIVersion";
-export { default as GetTokenByName } from "./GetTokenByName";
+export { default as envToJson } from "./envToJson";
+export { default as getAPIVersion } from "./getAPIVersion";
+export { default as getTokenByName } from "./getTokenByName";
