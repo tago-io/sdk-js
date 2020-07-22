@@ -1,8 +1,6 @@
 # TagoIO - SDK for Node.js and Browser
 > TagoIO provides easy connection of electronic devices with external data to driver smarter decisions using contextual analysis.
 
-[Documentation](https://sdk.js.tago.io/)
-
 ## Description
 
 TagoIO SDK for JavaScript in the browser and Node.JS.
