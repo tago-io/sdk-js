@@ -20,7 +20,7 @@ $ npm install @tago-io/sdk --save
 ## Quick Example
 #### Insert Device Data
 ``` javascript
-import { Device } from "@tago-io/sdk";
+const { Device } = require("@tago-io/sdk");
 
 const myDevice = new Device({ token: "00000000-2ec4-11e6-a77d-991b8f63b767" });
 
