@@ -29,7 +29,7 @@ interface DeviceConstructorParams {
 
 type DataToSend = Omit<Data, "id" | "created_at" | "origin" | "time"> & { time?: Date };
 
-type valuesTypes = string | number | boolean;
+type valuesTypes = string | number | boolean | void;
 
 interface DataQuery {
   query?: "default" | "last_item" | "last_value" | "last_location" | "last_insert" | "min" | "max" | "count";
@@ -55,4 +55,4 @@ interface DataQuery {
 
 type ListResponse = DeviceInfo[];
 
-export { DeviceConstructorParams, DeviceInfo, DataToSend, DataQuery, ListResponse };
+export { DeviceConstructorParams, DeviceInfo, DataToSend, DataQuery, ListResponse, valuesTypes };
