@@ -8,6 +8,7 @@ interface Data {
   value?: string | number | boolean | void;
   location?: { lat: number; lng: number };
   metadata?: Metadata;
+  serie?: string;
   origin: string;
   time: Date;
   created_at: Date;
