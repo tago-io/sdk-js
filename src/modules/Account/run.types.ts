@@ -78,7 +78,7 @@ interface UserInfo extends Omit<UserCreateInfo, "password"> {
   created_at: string;
   updated_at: string;
   options: object;
-  tags: TagsObj | TagsObj[];
+  tags: TagsObj[];
 }
 
 interface LoginResponse {

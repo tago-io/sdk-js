@@ -13,7 +13,7 @@ interface Arrangement {
 interface DashboardCreateInfo {
   label: string;
   arrangement?: Arrangement[];
-  tags?: TagsObj | TagsObj[];
+  tags?: TagsObj[];
   visible?: boolean;
 }
 

@@ -19,7 +19,7 @@ interface AnalysisCreateInfo {
     key: string;
     value: string | number | boolean;
   };
-  tags?: TagsObj | TagsObj[];
+  tags?: TagsObj[];
 }
 
 interface AnalysisInfo extends Readonly<AnalysisCreateInfo> {

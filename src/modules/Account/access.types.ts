@@ -7,7 +7,7 @@ interface AccessCreateInfo {
   // TODO: target type
   targets: [];
   profile?: GenericID;
-  tags?: TagsObj | TagsObj[];
+  tags?: TagsObj[];
   active?: number;
 }
 
