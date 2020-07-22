@@ -1,4 +1,4 @@
-import { GenericID, Conditionals, TagsObj, Query } from "../../common/comum.types";
+import { GenericID, Conditionals, TagsObj, Query } from "../../common/common.types";
 
 type ActionType = "condition" | "resource" | "interval" | "schedule" | "mqtt_topic";
 

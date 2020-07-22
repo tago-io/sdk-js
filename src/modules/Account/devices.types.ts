@@ -1,4 +1,4 @@
-import { GenericID, GenericToken, Query, TagsObj } from "../../common/comum.types";
+import { GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
 
 interface DeviceQuery
   extends Query<

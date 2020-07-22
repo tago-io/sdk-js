@@ -1,6 +1,6 @@
 import TagoIOModule from "../../common/TagoIOModule";
 import ConsoleService from "../Services/Console";
-import apiSocket, { channels } from "../../infraestrucure/apiSocket";
+import apiSocket, { channels } from "../../infrastructure/apiSocket";
 import { AnalysisConstructorParams, analysisFunction } from "./analysis.types";
 
 class Analysis extends TagoIOModule<AnalysisConstructorParams> {

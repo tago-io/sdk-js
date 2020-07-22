@@ -1,4 +1,4 @@
-import { GenericID, Query, TokenData } from "../../common/comum.types";
+import { GenericID, Query, TokenData } from "../../common/common.types";
 
 interface ConnectorCreateInfo {
   name: string;

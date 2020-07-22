@@ -1,4 +1,4 @@
-import { GenericID, TagsObj, Query } from "../../common/comum.types";
+import { GenericID, TagsObj, Query } from "../../common/common.types";
 
 interface AccessCreateInfo {
   name: string;

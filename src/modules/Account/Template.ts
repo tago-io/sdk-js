@@ -1,4 +1,4 @@
-import { GenericID } from "../../common/comum.types";
+import { GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
 interface TemplateObj {

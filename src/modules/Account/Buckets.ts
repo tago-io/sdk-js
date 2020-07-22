@@ -1,4 +1,4 @@
-import { ExportOption, GenericID } from "../../common/comum.types";
+import { ExportOption, GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import {
   BucketCreateInfo,

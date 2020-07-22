@@ -1,5 +1,5 @@
 import TagoIOModule from "../../common/TagoIOModule";
-import { Data } from "../../common/comum.types";
+import { Data } from "../../common/common.types";
 import { DeviceInfo, DeviceConstructorParams, DataToSend, DataQuery } from "./device.types";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {

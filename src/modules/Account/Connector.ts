@@ -1,4 +1,4 @@
-import { GenericID, GenericToken, ListTokenQuery, TokenCreateResponse, TokenData } from "../../common/comum.types";
+import { GenericID, GenericToken, ListTokenQuery, TokenCreateResponse, TokenData } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery, ConnectorTokenInfo } from "./connector.types";
 

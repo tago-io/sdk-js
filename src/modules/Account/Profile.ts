@@ -5,7 +5,7 @@ import {
   TokenCreateResponse,
   TokenData,
   TokenDataList,
-} from "../../common/comum.types";
+} from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { AuditLogFilter, ProfileInfo, ProfileListInfo, UsageStatistic } from "./profile.types";
 class Profile extends TagoIOModule<GenericModuleParams> {

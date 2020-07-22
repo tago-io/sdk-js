@@ -20,7 +20,7 @@ class Plan extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async sumary(): Promise<Summary> {
+  public async summary(): Promise<Summary> {
     const result = await this.doRequest<Summary>({
       path: "/billing",
       method: "GET",

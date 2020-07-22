@@ -5,7 +5,7 @@
   "author": "Tago LLC",
   "homepage": "https://tago.io",
   "license": "Apache-2.0",
-  "repository": "tago-io/tago-sdk-js.git",
+  "repository": "tago-io/sdk-js.git",
   "main": "./out/modules.js",
   "types": "./out/modules.d.ts",
   "keywords": [
@@ -16,7 +16,8 @@
     "sdk",
     "analysis",
     "device",
-    "tagoio"
+    "tagoio",
+    "tago-io"
   ],
   "engines": {
     "node": ">= 12.0"
@@ -24,22 +25,23 @@
   "scripts": {
     "prepare": "tsc",
     "build": "tsc",
+    "linter": "eslint .",
     "test": "jest"
   },
   "devDependencies": {
-    "@types/jest": "26.0.3",
-    "@types/node": "14.0.14",
+    "@types/jest": "26.0.5",
+    "@types/node": "14.0.24",
     "@types/qs": "6.9.3",
     "@types/socket.io-client": "1.4.33",
-    "@typescript-eslint/eslint-plugin": "3.4.0",
-    "@typescript-eslint/parser": "3.4.0",
-    "eslint": "7.3.1",
+    "@typescript-eslint/eslint-plugin": "3.7.0",
+    "@typescript-eslint/parser": "3.7.0",
+    "eslint": "7.5.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-prettier": "3.1.4",
     "jest": "26.1.0",
     "prettier": "2.0.5",
-    "ts-jest": "26.1.1",
-    "typescript": "3.9.5"
+    "ts-jest": "26.1.3",
+    "typescript": "3.9.7"
   },
   "dependencies": {
     "axios": "0.19.2",

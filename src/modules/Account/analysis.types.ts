@@ -1,4 +1,4 @@
-import { Base64, RunTypeOptions, GenericID, TagsObj, Query } from "../../common/comum.types";
+import { Base64, RunTypeOptions, GenericID, TagsObj, Query } from "../../common/common.types";
 
 interface ScriptFile {
   name: string;

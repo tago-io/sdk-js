@@ -1,4 +1,4 @@
-import { GenericID, GenericToken } from "../../common/comum.types";
+import { GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { NotificationInfo, NotificationQuery } from "./notifications.types";
 

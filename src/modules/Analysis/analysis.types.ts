@@ -4,7 +4,7 @@ type analysisFunction = (context: any, data: any) => any;
 
 interface AnalysisConstructorParams {
   token?: string;
-  region: Regions;
+  region?: Regions;
   // options?: any;
 }
 

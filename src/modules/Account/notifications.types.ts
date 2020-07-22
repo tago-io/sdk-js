@@ -1,4 +1,4 @@
-import { GenericID } from "../../common/comum.types";
+import { GenericID } from "../../common/common.types";
 
 type NotificationType = "dashboard" | "bucket" | "analysis" | "profile" | "tago" | "limit_alert";
 

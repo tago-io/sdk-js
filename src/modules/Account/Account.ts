@@ -1,6 +1,6 @@
 import Batch from "../../common/BatchRequest";
-import { GenericToken } from "../../common/comum.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { GenericToken } from "../../common/common.types";
+import TagoIOModule, { GenericModuleParams, doRequestParams } from "../../common/TagoIOModule";
 import Access from "./Access";
 import { AccountCreateInfo, AccountInfo, LoginResponse, TokenCreateInfo } from "./account.types";
 import Actions from "./Actions";
@@ -20,6 +20,7 @@ import Run from "./Run";
 import ServiceAuthorization from "./ServiceAuthorization";
 import Tags from "./Tags";
 import Template from "./Template";
+import { Regions } from "../../regions";
 
 /**
  * To set up an account object, you need a token that you need to get from our
@@ -51,7 +52,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @returns {Promise<AccountInfo>}
    * @memberof Account
    */
-  sumary(): Promise<AccountInfo> {
+  summary(): Promise<AccountInfo> {
     const result = this.doRequest<AccountInfo>({
       path: "/account/summary",
       method: "GET",
@@ -99,12 +100,14 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @returns {Promise<{ token: GenericToken }>} Token created info
    * @memberof Account
    */
-  tokenCreate(data: TokenCreateInfo): Promise<{ token: GenericToken }> {
-    const result = this.doRequest<{ token: GenericToken }>({
+  public static tokenCreate(data: TokenCreateInfo, region?: Regions): Promise<{ token: GenericToken }> {
+    const params: doRequestParams = {
       path: "/account/profile/token",
       method: "POST",
       body: data,
-    });
+    };
+
+    const result = this.doRequestAnonymous<{ token: GenericToken }>(params, region);
 
     return result;
   }
@@ -116,12 +119,14 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @returns {Promise<LoginResponse>}
    * @memberof Account
    */
-  login(data: { email: string; password: string }): Promise<LoginResponse> {
-    const result = this.doRequest<LoginResponse>({
+  public static login(data: { email: string; password: string }, region?: Regions): Promise<LoginResponse> {
+    const params: doRequestParams = {
       path: "/account/login",
       method: "POST",
       body: data,
-    });
+    };
+
+    const result = this.doRequestAnonymous<LoginResponse>(params, region);
 
     return result;
   }
@@ -133,11 +138,13 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @returns {Promise<string>} status
    * @memberof Account
    */
-  passwordRecover(email: string): Promise<string> {
-    const result = this.doRequest<string>({
+  public static passwordRecover(email: string, region?: Regions): Promise<string> {
+    const params: doRequestParams = {
       path: `/account/passwordreset/${email}`,
       method: "GET",
-    });
+    };
+
+    const result = this.doRequestAnonymous<string>(params, region);
 
     return result;
   }
@@ -168,12 +175,14 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @returns {Promise<string>} status
    * @memberof Account
    */
-  create(data: AccountCreateInfo): Promise<string> {
-    const result = this.doRequest<string>({
+  public static create(data: AccountCreateInfo, region?: Regions): Promise<string> {
+    const params: doRequestParams = {
       path: `/account`,
       method: "POST",
       body: data,
-    });
+    };
+
+    const result = this.doRequestAnonymous<string>(params, region);
 
     return result;
   }
@@ -185,11 +194,13 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @returns {Promise<string>} status
    * @memberof Account
    */
-  resendConfirmation(email: string): Promise<string> {
-    const result = this.doRequest<string>({
+  public static resendConfirmation(email: string, region?: Regions): Promise<string> {
+    const params: doRequestParams = {
       path: `/account/resend_confirmation/${email}`,
       method: "GET",
-    });
+    };
+
+    const result = this.doRequestAnonymous<string>(params, region);
 
     return result;
   }
@@ -197,15 +208,17 @@ class Account extends TagoIOModule<GenericModuleParams> {
   /**
    * Confirm account creation
    *
-   * @param {GenericToken} token confimation token
+   * @param {GenericToken} token confirmation token
    * @returns {Promise<string>} status
    * @memberof Account
    */
-  confirmAccount(token: GenericToken): Promise<string> {
-    const result = this.doRequest<string>({
+  public static confirmAccount(token: GenericToken, region?: Regions): Promise<string> {
+    const params: doRequestParams = {
       path: `/account/confirm/${token}`,
       method: "GET",
-    });
+    };
+
+    const result = this.doRequestAnonymous<string>(params, region);
 
     return result;
   }

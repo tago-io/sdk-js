@@ -1,4 +1,4 @@
-import { ExpireTimeOption, GenericID, PermissionOption } from "../../common/comum.types";
+import { ExpireTimeOption, GenericID, PermissionOption } from "../../common/common.types";
 import TagoIOModule, { ShareModuleParams } from "../../common/TagoIOModule";
 import { InviteInfo, InviteResponse } from "./_share.types";
 

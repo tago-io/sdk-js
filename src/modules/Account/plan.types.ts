@@ -1,4 +1,4 @@
-import { ExpireTimeOption, GenericID } from "../../common/comum.types";
+import { ExpireTimeOption, GenericID } from "../../common/common.types";
 
 interface PlanSetInfo {
   plan: string;

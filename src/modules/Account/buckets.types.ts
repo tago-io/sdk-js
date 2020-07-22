@@ -1,4 +1,4 @@
-import { GenericID, TagsObj, Query } from "../../common/comum.types";
+import { GenericID, TagsObj, Query } from "../../common/common.types";
 
 type ExportBucket = {
   id: string;
@@ -49,8 +49,8 @@ interface BucketDeviceInfo {
 
 interface VariablesInfo {
   variable: string;
-  unitis: string[];
-  origins: string[] | BucketDeviceInfo[];
+  origin: GenericID;
+  origin_name?: string;
   amount?: number;
   deleted?: {
     origin: string;

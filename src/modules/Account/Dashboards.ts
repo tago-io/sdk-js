@@ -1,4 +1,4 @@
-import { ExpireTimeOption, GenericID } from "../../common/comum.types";
+import { ExpireTimeOption, GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { InviteInfo, InviteResponse } from "./_share.types";
 import Widgets from "./Dashboard.Widgets";
@@ -124,12 +124,12 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   public async runWidgetHeaderButtonAnalysis(
     analysisID: GenericID,
     dashboardID: GenericID,
-    witgetID: GenericID,
+    widgetID: GenericID,
     // TODO
     scope?: object
   ): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/analysis/${analysisID}/run/${dashboardID}/${witgetID}`,
+      path: `/analysis/${analysisID}/run/${dashboardID}/${widgetID}`,
       method: "POST",
     });
 

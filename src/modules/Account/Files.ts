@@ -1,5 +1,5 @@
 import FormData from "form-data";
-import { GenericID } from "../../common/comum.types";
+import { GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { Base64File, FileListInfo, FileQuery, FilesPermission, MoveFiles, Options } from "./files.types";

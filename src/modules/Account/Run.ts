@@ -1,4 +1,4 @@
-import { GenericID, RecursivePartial } from "../../common/comum.types";
+import { GenericID, RecursivePartial } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { LoginResponse, NotificationCreateInfo, RunInfo, UserCreateInfo, UserInfo, UserQuery } from "./run.types";
 

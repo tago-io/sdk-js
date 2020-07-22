@@ -1,4 +1,4 @@
-import { ExpireTimeOption, GenericID, PermissionOption } from "../../common/comum.types";
+import { ExpireTimeOption, GenericID, PermissionOption } from "../../common/common.types";
 
 interface InviteResponse {
   expire_time: ExpireTimeOption;

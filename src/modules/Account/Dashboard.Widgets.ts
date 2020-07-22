@@ -1,5 +1,5 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { GenericID, GenericToken } from "../../common/comum.types";
+import { GenericID, GenericToken } from "../../common/common.types";
 
 interface WidgetInfo {
   analysis_run?: GenericID;

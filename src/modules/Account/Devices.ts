@@ -5,7 +5,7 @@ import {
   TokenCreateResponse,
   TokenData,
   TokenDataList,
-} from "../../common/comum.types";
+} from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { ConfigurationParams, DeviceCreateInfo, DeviceCreateResponse, DeviceInfo, DeviceQuery } from "./devices.types";
 

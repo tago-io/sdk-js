@@ -1,4 +1,4 @@
-import { GenericID, GenericToken } from "../../common/comum.types";
+import { GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { AnalysisCreateInfo, AnalysisInfo, AnalysisQuery, ScriptFile } from "./analysis.types";
 
@@ -31,9 +31,9 @@ class Analysis extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async edit(analisysID: GenericID, data: Partial<AnalysisInfo>): Promise<string> {
+  public async edit(analysisID: GenericID, data: Partial<AnalysisInfo>): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/analysis/${analisysID}`,
+      path: `/analysis/${analysisID}`,
       method: "PUT",
       body: {
         ...data,
@@ -42,26 +42,26 @@ class Analysis extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
-  public async delete(analisysID: GenericID): Promise<string> {
+  public async delete(analysisID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/analysis/${analisysID}`,
+      path: `/analysis/${analysisID}`,
       method: "DELETE",
     });
 
     return result;
   }
-  public async info(analisysID: GenericID): Promise<AnalysisInfo> {
+  public async info(analysisID: GenericID): Promise<AnalysisInfo> {
     const result = await this.doRequest<AnalysisInfo>({
-      path: `/analysis/${analisysID}`,
+      path: `/analysis/${analysisID}`,
       method: "GET",
     });
 
     return result;
   }
 
-  public async run(analisysID: GenericID, scope?: object): Promise<{ analysis_token: GenericToken }> {
+  public async run(analysisID: GenericID, scope?: object): Promise<{ analysis_token: GenericToken }> {
     const result = await this.doRequest<{ analysis_token: GenericToken }>({
-      path: `/analysis/${analisysID}/run`,
+      path: `/analysis/${analysisID}/run`,
       method: "POST",
       body: {
         scope,
@@ -71,18 +71,18 @@ class Analysis extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async tokenGenerate(analisysID: GenericID): Promise<string> {
+  public async tokenGenerate(analysisID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/analysis/${analisysID}/token`,
+      path: `/analysis/${analysisID}/token`,
       method: "GET",
     });
 
     return result;
   }
 
-  public async uploadScript(analisysID: GenericID, file: ScriptFile): Promise<string> {
+  public async uploadScript(analysisID: GenericID, file: ScriptFile): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/analysis/${analisysID}/upload`,
+      path: `/analysis/${analysisID}/upload`,
       method: "POST",
       body: {
         file: file.content,
@@ -95,10 +95,10 @@ class Analysis extends TagoIOModule<GenericModuleParams> {
   }
 
   public async downloadScript(
-    analisysID: GenericID
+    analysisID: GenericID
   ): Promise<{ url: string; size_unit: string; size: number; expire_at: string }> {
     const result = await this.doRequest<{ url: string; size_unit: string; size: number; expire_at: string }>({
-      path: `/analysis/${analisysID}/download`,
+      path: `/analysis/${analysisID}/download`,
       method: "GET",
     });
 

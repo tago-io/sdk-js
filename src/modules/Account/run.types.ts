@@ -1,4 +1,4 @@
-import { ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/comum.types";
+import { ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
 
 interface RunInfo {
   profile: GenericID;

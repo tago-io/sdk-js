@@ -1,5 +1,5 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { GenericID } from "../../common/comum.types";
+import { GenericID } from "../../common/common.types";
 
 interface ExploreInfo {
   id: GenericID;

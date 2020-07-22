@@ -1,13 +1,13 @@
 import { AxiosRequestConfig, Method } from "axios";
 import qs from "qs";
-import apiRequest from "../infraestrucure/apiRequest";
+import apiRequest from "../infrastructure/apiRequest";
 import regions, { Regions } from "../regions";
-import { RefType, GenericID } from "./comum.types";
+import { RefType, GenericID } from "./common.types";
 
 interface GenericModuleParams {
   token?: string;
   region?: Regions;
-  options?: Object;
+  // options?: Object;
 }
 
 interface ShareModuleParams extends GenericModuleParams {
@@ -25,6 +25,22 @@ interface doRequestParams {
   params?: any;
   headers?: any;
   overwriteAxiosConfig?: AxiosRequestConfig;
+}
+
+function mountAxiosRequest(uri: string, requestObj: doRequestParams): AxiosRequestConfig {
+  const axiosObj: AxiosRequestConfig = {
+    url: `${uri}${requestObj.path}`,
+    method: requestObj.method,
+    data: requestObj.body,
+    params: requestObj.params,
+    paramsSerializer: (p) => qs.stringify(p),
+    headers: {
+      ...requestObj.headers,
+    },
+    ...requestObj.overwriteAxiosConfig,
+  };
+
+  return axiosObj;
 }
 
 abstract class TagoIOModule<T extends GenericModuleParams> {
@@ -45,33 +61,33 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
       throw new Error("Invalid Token");
     }
 
-    if (!this.params.region) {
-      throw new Error("Invalid Region");
-    }
-
     // if (this.params.options && typeof this.params.options !== "object") {
     //   throw new Error("Invalid Params");
     // }
   }
 
   protected doRequest<TR>(requestObj: doRequestParams): Promise<TR> {
-    const region = regions[this.params.region]?.api;
-    if (!region) {
+    const apiURI = regions(this.params.region)?.api;
+    if (!apiURI) {
       throw new Error("Invalid region");
     }
 
-    const axiosObj: AxiosRequestConfig = {
-      url: `${region}${requestObj.path}`,
-      method: requestObj.method,
-      data: requestObj.body,
-      params: requestObj.params,
-      paramsSerializer: (p) => qs.stringify(p),
-      headers: {
-        token: this.params.token,
-        ...requestObj.headers,
-      },
-      ...requestObj.overwriteAxiosConfig,
+    const axiosObj = mountAxiosRequest(apiURI, requestObj);
+    axiosObj.headers = {
+      token: this.params.token,
+      ...axiosObj.headers,
     };
+
+    return apiRequest(axiosObj) as Promise<TR>;
+  }
+
+  protected static doRequestAnonymous<TR>(requestObj: doRequestParams, region?: Regions): Promise<TR> {
+    const apiURI = regions(region)?.api;
+    if (!apiURI) {
+      throw new Error("Invalid region");
+    }
+
+    const axiosObj = mountAxiosRequest(apiURI, requestObj);
 
     return apiRequest(axiosObj) as Promise<TR>;
   }
