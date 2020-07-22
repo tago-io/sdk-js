@@ -15,10 +15,10 @@
     "resolveJsonModule": true,
     "lib": [
       "ES2017",
-      "DOM",
+      "DOM"
     ],
   },
   "include": [
     "src/**/*"
-  ],
+  ]
 }
