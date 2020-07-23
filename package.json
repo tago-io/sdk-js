@@ -24,7 +24,7 @@
     "node": ">= 12.0"
   },
   "scripts": {
-    "prepare": "rm -rf ./out; eslint .; tsc",
+    "prepublishOnly": "rm -rf ./out; eslint .; tsc",
     "build": "tsc",
     "linter": "eslint .",
     "test": "jest"
