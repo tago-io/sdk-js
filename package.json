@@ -1,6 +1,6 @@
 {
   "name": "@tago-io/sdk",
-  "version": "10.0.0-beta.14",
+  "version": "10.0.0-beta.15",
   "description": "TagoIO SDK for JavaScript in the browser and Node.js",
   "author": "Tago LLC",
   "homepage": "https://tago.io",
@@ -30,7 +30,7 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@types/jest": "26.0.5",
+    "@types/jest": "26.0.6",
     "@types/node": "14.0.24",
     "@types/qs": "6.9.3",
     "@types/socket.io-client": "1.4.33",

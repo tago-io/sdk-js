@@ -1,14 +1,9 @@
 name: Units Tests
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: push
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -23,7 +18,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run linter
-    - run: npm run build --if-present
     - run: npm test
+    - run: npm run build --if-present
       env:
         CI: true

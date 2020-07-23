@@ -41,8 +41,12 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
   }
 
   public async deleteData(params?: DataQuery) {
-    if (!params || !params?.query) {
+    if (!params) {
       params = { query: "last_item" };
+    }
+
+    if (params?.query === "default") {
+      delete params.query;
     }
 
     const result = await this.doRequest<string>({
