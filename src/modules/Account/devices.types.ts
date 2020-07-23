@@ -59,5 +59,6 @@ interface ConfigurationParams {
 }
 
 type DeviceCreateResponse = { device_id: GenericID; bucket_id: GenericID; token: GenericToken };
+type DeviceListItem = Omit<DeviceInfo, "bucket"> & { bucket: GenericID };
 
-export { DeviceQuery, DeviceCreateInfo, ConfigurationParams, DeviceInfo, DeviceCreateResponse };
+export { DeviceQuery, DeviceCreateInfo, ConfigurationParams, DeviceInfo, DeviceCreateResponse, DeviceListItem };

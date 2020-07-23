@@ -7,7 +7,14 @@ import {
   TokenDataList,
 } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { ConfigurationParams, DeviceCreateInfo, DeviceCreateResponse, DeviceInfo, DeviceQuery } from "./devices.types";
+import {
+  ConfigurationParams,
+  DeviceCreateInfo,
+  DeviceCreateResponse,
+  DeviceInfo,
+  DeviceQuery,
+  DeviceListItem,
+} from "./devices.types";
 
 class Devices extends TagoIOModule<GenericModuleParams> {
   /**
@@ -23,8 +30,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * }
    * @param query Search query params
    */
-  list(query?: DeviceQuery): Promise<DeviceInfo[]> {
-    const result = this.doRequest<DeviceInfo[]>({
+  list(query?: DeviceQuery): Promise<DeviceListItem[]> {
+    const result = this.doRequest<DeviceListItem[]>({
       path: "/device",
       method: "GET",
       params: {
