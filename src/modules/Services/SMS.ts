@@ -13,11 +13,8 @@ interface SMSData {
 
 class SMS extends TagoIOModule<GenericModuleParams> {
   /**
-   * Send SMS to number
-   *
-   * @param {SMSData} sms
-   * @returns {Promise<string>} status
-   * @memberof SMS
+   * Send SMS to phone number
+   * @param sms SMS Object
    */
   public async send(sms: SMSData): Promise<string> {
     const result = await this.doRequest<string>({

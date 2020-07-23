@@ -22,10 +22,7 @@ class Notification extends TagoIOModule<GenericModuleParams> {
    * You can add ref_id from a bucket or dashboard,
    * if it is valid it will show up a button Go To Dashboard
    * Any account with share of the dashboard/bucket will receive too.
-   *
-   * @param {NotificationData} notification
-   * @returns {Promise<string>} status
-   * @memberof Notification
+   * @param notification Notification Object
    */
   public async send(notification: NotificationData): Promise<string> {
     const result = await this.doRequest<string>({

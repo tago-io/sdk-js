@@ -3,57 +3,34 @@ import { GenericID } from "../../common/common.types";
 interface AccountCreateInfo {
   /**
    * Name of the account
-   * @type {string}
-   * @memberof AccountCreateInfo
    */
   name: string;
   /**
    * Email of the account
-   *
-   * @type {string}
-   * @memberof AccountCreateInfo
    */
   email: string;
   /**
    * Password of the account
-   *
-   * @type {string}
-   * @memberof AccountCreateInfo
    */
   password: string;
   /**
    * Password confirmation
-   *
-   * @type {string}
-   * @memberof AccountCreateInfo
    */
   cpassword: string;
   /**
    * Country of the account
-   *
-   * @type {string}
-   * @memberof AccountCreateInfo
    */
   country?: string;
   /**
    * Timezone of the account
-   *
-   * @type {(Date | string)}
-   * @memberof AccountCreateInfo
    */
   timezone: Date | string;
   /**
    * Company of the account
-   *
-   * @type {string}
-   * @memberof AccountCreateInfo
    */
   company?: string;
   /**
    * Set true if wanna receive newsletter
-   *
-   * @type {boolean}
-   * @memberof AccountCreateInfo
    */
   newsletter?: boolean;
   developer?: boolean;
@@ -97,23 +74,14 @@ interface LoginResponse {
 interface TokenCreateInfo {
   /**
    * Id of profile to create the token
-   *
-   * @type {GenericID}
-   * @memberof TokenCreateInfo
    */
   profile_id: GenericID;
   /**
    * Email of the account
-   *
-   * @type {string}
-   * @memberof TokenCreateInfo
    */
   email: string;
   /**
    * Password of the account
-   *
-   * @type {string}
-   * @memberof TokenCreateInfo
    */
   password: string;
 }
