@@ -65,18 +65,16 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Retrieves a list of all tokens
-   *
-   * @param {GenericID} connectorID
-   * @param {ListTokenQuery} [query] Search query params;
-   * Default:{
+   * @example
+   * Default: {
    *   page: 1,
    *   fields: ["name", "token", "permission"],
    *   filter: {},
    *   amount: 20,
    *   orderBy: "created_at,desc",
    * }
-   * @returns {Promise<Partial<TokenListResponse>[]>}
-   * @memberof Token
+   * @param connectorID Connector ID
+   * @param query Search query params
    */
   tokenList(connectorID: GenericID, query?: ListTokenQuery): Promise<Partial<ConnectorTokenInfo>[]> {
     const result = this.doRequest<Partial<ConnectorTokenInfo>[]>({
@@ -96,17 +94,14 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Generates and retrieves a new token
-   *
-   * @param {GenericID} connectorID
-   * @param {TokenData} data New Token info
-   * @returns {Promise<TokenCreateResponse>} Token created info
-   * @memberof Token
+   * @param connectorID Connector ID
+   * @param tokenParams Details of new token
    */
-  tokenCreate(connectorID: GenericID, data: TokenData): Promise<TokenCreateResponse> {
+  tokenCreate(connectorID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
     const result = this.doRequest<TokenCreateResponse>({
       path: `/connector/token`,
       method: "POST",
-      body: { connector: connectorID, ...data },
+      body: { connector: connectorID, ...tokenParams },
     });
 
     return result;
@@ -114,10 +109,7 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Deletes a token
-   *
-   * @param {GenericToken} token Token
-   * @returns {Promise<string>} String with status
-   * @memberof Token
+   * @param token Token ID
    */
   tokenDelete(token: GenericToken): Promise<string> {
     const result = this.doRequest<string>({

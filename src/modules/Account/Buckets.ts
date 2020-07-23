@@ -28,17 +28,15 @@ interface ListVariablesOptions {
 class Buckets extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list with all buckets from account
-   *
-   * @param {ListQuery} [query] Search query params;
-   * Default:{
+   * @example
+   * Default: {
    *   page: 1,
    *   fields: ["id", "name"],
    *   filter: {},
    *   amount: 20,
    *   orderBy: "name,asc",
    * }
-   * @return {Promise<BucketInfo[]>}
-   * @memberof Device
+   * @param query Search query params
    */
   list(query?: BucketQuery): Promise<BucketInfo[]> {
     const result = this.doRequest<BucketInfo[]>({
@@ -58,16 +56,13 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Generates and retrieves a new bucket for the account
-   *
-   * @param {BucketCreateInfo} data New Bucket info
-   * @returns {(Promise<{ bucket: string }>)} Bucket created info
-   * @memberof Buckets
+   * @param createParams Bucket create object
    */
-  create(data: BucketCreateInfo): Promise<{ bucket: string }> {
+  create(createParams: BucketCreateInfo): Promise<{ bucket: string }> {
     const result = this.doRequest<{ bucket: string }>({
       path: "/bucket",
       method: "POST",
-      body: data,
+      body: createParams,
     });
 
     return result;
@@ -75,17 +70,14 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Modifies any property of the bucket.
-   *
-   * @param {GenericID} bucketID Bucket identification
-   * @param {Partial<BucketCreateInfo>} data Device info to change
-   * @returns {Promise<string>} String with status
-   * @memberof Buckets
+   * @param bucketID Bucket ID
+   * @param bucketObject JSON of bucket to replace
    */
-  edit(bucketID: GenericID, data: Partial<BucketCreateInfo>): Promise<string> {
+  edit(bucketID: GenericID, bucketObject: Partial<BucketCreateInfo>): Promise<string> {
     const result = this.doRequest<string>({
       path: `/bucket/${bucketID}`,
       method: "PUT",
-      body: data,
+      body: bucketObject,
     });
 
     return result;
@@ -93,10 +85,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Deletes a bucket from the account
-   *
-   * @param {GenericID} bucketID Bucket identification
-   * @returns {Promise<string>} String with status
-   * @memberof Buckets
+   * @param bucketID Bucket ID
    */
   delete(bucketID: GenericID): Promise<string> {
     const result = this.doRequest<string>({
@@ -109,10 +98,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Gets information about the bucket
-   *
-   * @param {GenericID} bucketID Bucket identification
-   * @returns {(Promise<BucketInfo>)} Bucket info
-   * @memberof Buckets
+   * @param bucketID Bucket ID
    */
   info(bucketID: GenericID): Promise<BucketInfo> {
     const result = this.doRequest<BucketInfo>({
@@ -125,10 +111,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Get Amount of data on the Bucket
-   *
-   * @param {GenericID} bucketID Bucket identification
-   * @returns {(Promise<number>)} Amount of data
-   * @memberof Buckets
+   * @param bucketID Bucket ID
    */
   amount(bucketID: GenericID): Promise<number> {
     const result = this.doRequest<number>({
@@ -141,16 +124,14 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
 
   /**
    * List variables inside the bucket
-   *
-   * @param {GenericID} bucketID Bucket identification
-   * @param {ListVariablesOptions} [options] List options;
-   * Default: {
+   * @example
+   * Options Default: {
    *   showAmount: false
    *   showDeleted: false
    *   resolveOriginName: false
    * }
-   * @returns {Promise<VariablesInfo[]>}
-   * @memberof Buckets
+   * @param bucketID Bucket ID
+   * @param options Request options
    */
   listVariables(bucketID: GenericID, options?: ListVariablesOptions): Promise<VariablesInfo[]> {
     const result = this.doRequest<VariablesInfo[]>({
@@ -168,17 +149,14 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Delete a bucket variable
-   *
-   * @param {GenericID} bucketID Bucket identification
-   * @param {{ variable: string; origin: string }} data Variable target info
-   * @returns {Promise<string>} String with status
-   * @memberof Buckets
+   * @param bucketID Bucket ID
+   * @param deleteParams Variable Details
    */
-  deleteVariable(bucketID: GenericID, data: { variable: string; origin: string }): Promise<string> {
+  deleteVariable(bucketID: GenericID, deleteParams: { variable: string; origin: string }): Promise<string> {
     const result = this.doRequest<string>({
       path: `/bucket/${bucketID}/variable`,
       method: "DELETE",
-      body: data || {},
+      body: deleteParams || {},
     });
 
     return result;
@@ -186,10 +164,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Get all device associated with bucket
-   *
-   * @param {GenericID} bucketID Bucket identification
-   * @returns {Promise<BucketDeviceInfo[]>}
-   * @memberof Buckets
+   * @param bucketID Bucket ID
    */
   getDevicesAssociated(bucketID: GenericID): Promise<BucketDeviceInfo[]> {
     const result = this.doRequest<BucketDeviceInfo[]>({
@@ -202,12 +177,9 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Export Data from Bucket
-   *
-   * @param {ExportBucket} buckets List with buckets and their variables to be exported
-   * @param {ExportOption} output Output format
-   * @param {ExportBucketOption} [options] extra options
-   * @returns {Promise<string>}
-   * @memberof Buckets
+   * @param buckets Array of JSON with get details
+   * @param output Type of output
+   * @param options Options of request
    */
   exportData(buckets: ExportBucket, output: ExportOption, options?: ExportBucketOption): Promise<string> {
     const result = this.doRequest<string>({

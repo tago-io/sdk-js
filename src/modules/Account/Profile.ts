@@ -8,6 +8,7 @@ import {
 } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { AuditLogFilter, ProfileInfo, ProfileListInfo, UsageStatistic } from "./profile.types";
+
 class Profile extends TagoIOModule<GenericModuleParams> {
   public async list(): Promise<ProfileListInfo[]> {
     const result = await this.doRequest<ProfileListInfo[]>({
@@ -119,18 +120,8 @@ class Profile extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Retrieves a list of all tokens
-   *
-   * @param {GenericID} profileID
-   * @param {ListTokenQuery} [query] Search query params;
-   * Default:{
-   *   page: 1,
-   *   fields: ["name", "token", "permission"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "created_at,desc",
-   * }
-   * @returns {Promise<Partial<TokenListResponse>[]>}
-   * @memberof Token
+   * @param profileID Profile ID
+   * @param query Search query params
    */
   tokenList(profileID: GenericID, query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
     const result = this.doRequest<Partial<TokenDataList>[]>({
@@ -150,17 +141,14 @@ class Profile extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Generates and retrieves a new token
-   *
-   * @param {GenericID} profileID
-   * @param {TokenData} data New Token info
-   * @returns {Promise<TokenCreateResponse>} Token created info
-   * @memberof Token
+   * @param profileID Profile ID
+   * @param tokenParams Token params for new token
    */
-  tokenCreate(profileID: GenericID, data: TokenData): Promise<TokenCreateResponse> {
+  tokenCreate(profileID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
     const result = this.doRequest<TokenCreateResponse>({
       path: `/profile/${profileID}/token`,
       method: "POST",
-      body: data,
+      body: tokenParams,
     });
 
     return result;
@@ -168,10 +156,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Deletes a token
-   *
-   * @param {GenericToken} token Token
-   * @returns {Promise<string>} String with status
-   * @memberof Token
+   * @param token Token
    */
   tokenDelete(token: GenericToken): Promise<string> {
     const result = this.doRequest<string>({

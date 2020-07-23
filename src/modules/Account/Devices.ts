@@ -12,9 +12,8 @@ import { ConfigurationParams, DeviceCreateInfo, DeviceCreateResponse, DeviceInfo
 class Devices extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list with all devices from the account
-   *
-   * @param {DeviceQuery} [query] Search query params;
-   * Default:{
+   * @example
+   * Default Query: {
    *   page: 1,
    *   fields: ["id", "name"],
    *   filter: {},
@@ -22,8 +21,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *   orderBy: "name,asc",
    *   resolveBucketName: false
    * }
-   * @return {Promise<DeviceInfo[]>}
-   * @memberof Device
+   * @param query Search query params
    */
   list(query?: DeviceQuery): Promise<DeviceInfo[]> {
     const result = this.doRequest<DeviceInfo[]>({
@@ -44,16 +42,13 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Create a Device
-   *
-   * @param {DeviceCreateInfo} data New device info
-   * @returns {Promise<DeviceCreateResponse>}
-   * @memberof Device
+   * @param createParams Params of new device
    */
-  create(data: DeviceCreateInfo): Promise<DeviceCreateResponse> {
+  create(createParams: DeviceCreateInfo): Promise<DeviceCreateResponse> {
     const result = this.doRequest<DeviceCreateResponse>({
       path: "/device",
       method: "POST",
-      body: data,
+      body: createParams,
     });
 
     return result;
@@ -61,17 +56,14 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Edit the Device
-   *
-   * @param {GenericID} deviceID Device identification
-   * @param {Partial<DeviceInfo>} data Device info to change
-   * @returns {Promise<string>} String with status
-   * @memberof Device
+   * @param deviceID Device ID
+   * @param deviceObject Device object with fields to replace
    */
-  edit(deviceID: GenericID, data: Partial<DeviceInfo>): Promise<string> {
+  edit(deviceID: GenericID, deviceObject: Partial<DeviceInfo>): Promise<string> {
     const result = this.doRequest<string>({
       path: `/device/${deviceID}`,
       method: "PUT",
-      body: data,
+      body: deviceObject,
     });
 
     return result;
@@ -79,10 +71,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Delete the Device
-   *
-   * @param {GenericID} deviceID Device identification
-   * @returns {Promise<string>} String with status
-   * @memberof Device
+   * @param deviceID Device ID
    */
   delete(deviceID: GenericID): Promise<string> {
     const result = this.doRequest<string>({
@@ -95,10 +84,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Get Info of the Device
-   *
-   * @param {GenericID} deviceID Device identification
-   * @returns {Promise<DeviceInfo>}
-   * @memberof Device
+   * @param deviceID Device ID
    */
   info(deviceID: GenericID): Promise<DeviceInfo> {
     const result = this.doRequest<DeviceInfo>({
@@ -111,12 +97,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Create or edit param for the Device
-   *
-   * @param {GenericID} deviceID Device identification
-   * @param {Partial<ConfigurationParams>} data Param data to set
-   * @param {GenericID} [paramID] Param id to edit if setted
-   * @returns {Promise<string>}
-   * @memberof Device
+   * @param deviceID Device ID
+   * @param data Configuration Data
+   * @param paramID Parameter ID
    */
   paramSet(deviceID: GenericID, data: Partial<ConfigurationParams>, paramID?: GenericID): Promise<string> {
     const result = this.doRequest<string>({
@@ -135,11 +118,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * List Params for the Device
-   *
-   * @param {GenericID} deviceID Device identification
-   * @param {Boolean} [sentStatus] Get only this status if setted
-   * @returns {(Promise<ConfigurationParams>)}
-   * @memberof Device
+   * @param deviceID Device ID
+   * @param sentStatus True return only sent=true, False return only sent=false
    */
   paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<ConfigurationParams> {
     const result = this.doRequest<ConfigurationParams>({
@@ -153,11 +133,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Remove param for the Device
-   *
-   * @param {GenericID} deviceID Device identification
-   * @param {GenericID} paramID Param identification
-   * @returns {Promise<string>}
-   * @memberof Device
+   * @param deviceID Device ID
+   * @param paramID Parameter ID
    */
   paramRemove(deviceID: GenericID, paramID: GenericID): Promise<string> {
     const result = this.doRequest<string>({
@@ -170,18 +147,16 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Retrieves a list of all tokens
-   *
-   * @param {GenericID} deviceID
-   * @param {ListTokenQuery} [query] Search query params;
-   * Default:{
+   * @example
+   * Default Query: {
    *   page: 1,
    *   fields: ["name", "token", "permission"],
    *   filter: {},
    *   amount: 20,
    *   orderBy: "created_at,desc",
    * }
-   * @returns {Promise<Partial<TokenListResponse>[]>}
-   * @memberof Token
+   * @param deviceID Device ID
+   * @param query Search query params
    */
   tokenList(deviceID: GenericID, query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
     const result = this.doRequest<Partial<TokenDataList>[]>({
@@ -201,28 +176,22 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Generates and retrieves a new token
-   *
-   * @param {GenericID} deviceID
-   * @param {TokenData} data New Token info
-   * @returns {Promise<TokenCreateResponse>} Token created info
-   * @memberof Token
+   * @param deviceID Device ID
+   * @param tokenParams Params for new token
    */
-  tokenCreate(deviceID: GenericID, data: TokenData): Promise<TokenCreateResponse> {
+  tokenCreate(deviceID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
     const result = this.doRequest<TokenCreateResponse>({
       path: `/device/token`,
       method: "POST",
-      body: { device: deviceID, ...data },
+      body: { device: deviceID, ...tokenParams },
     });
 
     return result;
   }
 
   /**
-   * Deletes a token
-   *
-   * @param {GenericToken} token Token
-   * @returns {Promise<string>} String with status
-   * @memberof Token
+   * Delete a token
+   * @param token Token
    */
   tokenDelete(token: GenericToken): Promise<string> {
     const result = this.doRequest<string>({

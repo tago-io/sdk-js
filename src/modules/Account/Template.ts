@@ -10,7 +10,7 @@ interface TemplateObj {
 }
 
 interface TemplateInstallData {
-  device: { id: GenericID; bucket: GenericID };
+  device?: { id: GenericID; bucket: GenericID } | void;
 }
 
 class Template extends TagoIOModule<GenericModuleParams> {

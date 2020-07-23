@@ -4,17 +4,15 @@ import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list of all tokens
-   *
-   * @param {ListTokenQuery} [query] Search query params;
-   * Default:{
+   * @example
+   * Default Query: {
    *   page: 1,
    *   fields: ["name", "token", "permission"],
    *   filter: {},
    *   amount: 20,
    *   orderBy: "created_at,desc",
    * }
-   * @returns {Promise<Partial<TokenListResponse>[]>}
-   * @memberof Token
+   * @param query Search query params
    */
   tokenList(query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
     const result = this.doRequest<Partial<TokenDataList>[]>({
@@ -34,16 +32,13 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Generates and retrieves a new token
-   *
-   * @param {TokenData} data New Token info
-   * @returns {Promise<TokenCreateResponse>} Token created info
-   * @memberof Token
+   * @param tokenParams Token params to create new token
    */
-  tokenCreate(data: TokenData): Promise<TokenCreateResponse> {
+  tokenCreate(tokenParams: TokenData): Promise<TokenCreateResponse> {
     const result = this.doRequest<TokenCreateResponse>({
       path: `/serviceauth`,
       method: "POST",
-      body: data,
+      body: tokenParams,
     });
 
     return result;
@@ -51,10 +46,7 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Deletes a token
-   *
-   * @param {GenericToken} token Token
-   * @returns {Promise<string>} String with status
-   * @memberof Token
+   * @param token Token
    */
   tokenDelete(token: GenericToken): Promise<string> {
     const result = this.doRequest<string>({

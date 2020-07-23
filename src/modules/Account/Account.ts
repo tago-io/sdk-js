@@ -33,9 +33,6 @@ import { Regions } from "../../regions";
 class Account extends TagoIOModule<GenericModuleParams> {
   /**
    * Gets all account information
-   *
-   * @returns {Promise<AccountInfo>}
-   * @memberof Account
    */
   info(): Promise<AccountInfo> {
     const result = this.doRequest<AccountInfo>({
@@ -48,9 +45,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Gets account summary
-   *
-   * @returns {Promise<AccountInfo>}
-   * @memberof Account
    */
   summary(): Promise<AccountInfo> {
     const result = this.doRequest<AccountInfo>({
@@ -63,16 +57,13 @@ class Account extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Edit account
-   *
-   * @param {Partial<AccountInfo>} data Account data to edit
-   * @returns {Promise<string>} status
-   * @memberof Account
+   * @param accountObj Account data to edit
    */
-  edit(data: Partial<AccountInfo>): Promise<string> {
+  edit(accountObj: Partial<AccountInfo>): Promise<string> {
     const result = this.doRequest<string>({
       path: "/account",
       method: "PUT",
-      body: data,
+      body: accountObj,
     });
 
     return result;
@@ -80,9 +71,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Delete account
-   *
-   * @returns {Promise<string>} status
-   * @memberof Account
    */
   delete(): Promise<string> {
     const result = this.doRequest<string>({
@@ -95,16 +83,14 @@ class Account extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Generates and retrieves a new token for the account
-   *
-   * @param {TokenCreateInfo} data Token data
-   * @returns {Promise<{ token: GenericToken }>} Token created info
-   * @memberof Account
+   * @param tokenParams Token data
+   * @param region TagoIO Region Server [default usa-1]
    */
-  public static tokenCreate(data: TokenCreateInfo, region?: Regions): Promise<{ token: GenericToken }> {
+  public static tokenCreate(tokenParams: TokenCreateInfo, region?: Regions): Promise<{ token: GenericToken }> {
     const params: doRequestParams = {
       path: "/account/profile/token",
       method: "POST",
-      body: data,
+      body: tokenParams,
     };
 
     const result = TagoIOModule.doRequestAnonymous<{ token: GenericToken }>(params, region);
@@ -114,16 +100,14 @@ class Account extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Retrieve list of profiles for login and do Login
-   *
-   * @param {{ email: string; password: string }} data Credentials
-   * @returns {Promise<LoginResponse>}
-   * @memberof Account
+   * @param credentials Credentials
+   * @param region TagoIO Region Server [default usa-1]
    */
-  public static login(data: { email: string; password: string }, region?: Regions): Promise<LoginResponse> {
+  public static login(credentials: { email: string; password: string }, region?: Regions): Promise<LoginResponse> {
     const params: doRequestParams = {
       path: "/account/login",
       method: "POST",
-      body: data,
+      body: credentials,
     };
 
     const result = TagoIOModule.doRequestAnonymous<LoginResponse>(params, region);
@@ -133,10 +117,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Send password recover email
-   *
-   * @param {string} email
-   * @returns {Promise<string>} status
-   * @memberof Account
+   * @param email E-mail to recovery
+   * @param region TagoIO Region Server [default usa-1]
    */
   public static passwordRecover(email: string, region?: Regions): Promise<string> {
     const params: doRequestParams = {
@@ -150,11 +132,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Change password
-   *
-   * @param {string} password
-   * @returns {Promise<string>} status
-   * @memberof Account
+   * Change account password
+   * @param password New Password
    */
   passwordChange(password: string): Promise<string> {
     const result = this.doRequest<string>({
@@ -169,17 +148,15 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Create new Tago account
-   *
-   * @param {AccountCreateInfo} data
-   * @returns {Promise<string>} status
-   * @memberof Account
+   * Create new TagoIO account
+   * @param createParams New account details
+   * @param region TagoIO Region Server [default usa-1]
    */
-  public static create(data: AccountCreateInfo, region?: Regions): Promise<string> {
+  public static create(createParams: AccountCreateInfo, region?: Regions): Promise<string> {
     const params: doRequestParams = {
       path: `/account`,
       method: "POST",
-      body: data,
+      body: createParams,
     };
 
     const result = TagoIOModule.doRequestAnonymous<string>(params, region);
@@ -188,11 +165,9 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Re-send confirmation account email
-   *
-   * @param {string} email
-   * @returns {Promise<string>} status
-   * @memberof Account
+   *  Re-send confirmation account email
+   * @param email E-mail address
+   * @param region TagoIO Region Server [default usa-1]
    */
   public static resendConfirmation(email: string, region?: Regions): Promise<string> {
     const params: doRequestParams = {
@@ -207,10 +182,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Confirm account creation
-   *
-   * @param {GenericToken} token confirmation token
-   * @returns {Promise<string>} status
-   * @memberof Account
+   * @param token Confirmation token
+   * @param region TagoIO Region Server [default usa-1]
    */
   public static confirmAccount(token: GenericToken, region?: Regions): Promise<string> {
     const params: doRequestParams = {
@@ -225,9 +198,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Send a batch commands
-   *
-   * @readonly
-   * @memberof Account
    */
   get batch() {
     return new Batch(this.params);
@@ -237,9 +207,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Manage actions in account.
    * Be sure to use an account token with “write” permissions when
    * using functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get actions() {
     return new Actions(this.params);
@@ -249,9 +216,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Manage analysis in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get analysis() {
     return new Analysis(this.params);
@@ -261,9 +225,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Manage buckets in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get buckets() {
     return new Buckets(this.params);
@@ -273,9 +234,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Manage files in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get files() {
     return new Files(this.params);
@@ -285,9 +243,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Manage dashboards in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get dashboards() {
     return new Dashboards(this.params);
@@ -297,9 +252,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Manage devices in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get devices() {
     return new Devices(this.params);
@@ -309,9 +261,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Manage notifications in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get notifications() {
     return new Notifications(this.params);
@@ -321,31 +270,24 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Manage tags in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get tags() {
     return new Tags(this.params);
   }
+
   /**
    * Manage payment methods in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get paymentMethods() {
     return new PaymentMethods(this.params);
   }
+
   /**
    * Manage account plans
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get plan() {
     return new Plan(this.params);
@@ -354,86 +296,70 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Manage payment history in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get paymentHistory() {
     return new PaymentHistory(this.params);
   }
+
   /**
    * Manage explore in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get explore() {
     return new Explore(this.params);
   }
+
   /**
    * Manage connectors in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get connector() {
     return new Connectors(this.params);
   }
+
   /**
    * Manage templates in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get template() {
     return new Template(this.params);
   }
+
   /**
    * Manage access in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get accessManagement() {
     return new Access(this.params);
   }
+
   /**
    * Manage run apps in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    *
-   * @readonly
-   * @memberof Account
    */
   get run() {
     return new Run(this.params);
   }
+
   /**
    * Manage services in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get ServiceAuthorization() {
     return new ServiceAuthorization(this.params);
   }
+
   /**
    * Manage profiles in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
-   *
-   * @readonly
-   * @memberof Account
    */
   get profiles() {
     return new Profile(this.params);
