@@ -24,12 +24,14 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     return result;
   }
 
+  public async getData(params: Omit<DataQuery, "query"> & { query: "count" }): Promise<number>; // Overload
+  public async getData(params?: DataQuery): Promise<Data[]>; // Overload
   public async getData(params?: DataQuery) {
     if (params?.query === "default") {
       delete params.query;
     }
 
-    const result = await this.doRequest<Data[]>({
+    const result = await this.doRequest<Data[] | number>({
       path: "/data",
       method: "GET",
       params: params,

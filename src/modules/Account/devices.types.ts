@@ -38,7 +38,10 @@ interface DeviceCreateInfo {
 interface DeviceInfo extends Readonly<Omit<DeviceCreateInfo, "configuration_params">> {
   id: GenericID;
   profile: GenericID;
-  bucket: GenericID;
+  bucket: {
+    id: GenericID;
+    name: string;
+  };
   last_output: Date | string;
   last_input: Date | string;
   connector: GenericID;
