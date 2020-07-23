@@ -22,7 +22,7 @@ interface AnalysisCreateInfo {
   tags?: TagsObj[];
 }
 
-interface AnalysisInfo extends Readonly<AnalysisCreateInfo> {
+interface AnalysisInfo extends AnalysisCreateInfo {
   id: GenericID;
   token: string;
   last_run: string;

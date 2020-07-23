@@ -11,7 +11,7 @@ interface AccessCreateInfo {
   active?: number;
 }
 
-interface AccessInfo extends Readonly<AccessCreateInfo> {
+interface AccessInfo extends AccessCreateInfo {
   id: GenericID;
   created_at: string;
   updated_at: string;

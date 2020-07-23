@@ -80,7 +80,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async shareList(dashboardID: GenericID): Promise<Readonly<InviteInfo[]>> {
+  public async shareList(dashboardID: GenericID): Promise<InviteInfo[]> {
     return this.share.list(dashboardID);
   }
 

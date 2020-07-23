@@ -30,7 +30,7 @@ interface BucketCreateInfo {
   tags?: TagsObj[];
 }
 
-interface BucketInfo extends Readonly<BucketCreateInfo> {
+interface BucketInfo extends BucketCreateInfo {
   id: GenericID;
   data_retention: string;
   data_retention_ignore: [];

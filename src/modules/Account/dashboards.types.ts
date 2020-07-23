@@ -17,7 +17,7 @@ interface DashboardCreateInfo {
   visible?: boolean;
 }
 
-interface DashboardInfo extends Readonly<DashboardCreateInfo> {
+interface DashboardInfo extends DashboardCreateInfo {
   id: GenericID;
   created_at: string;
   updated_at: string;

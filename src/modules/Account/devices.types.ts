@@ -35,7 +35,7 @@ interface DeviceCreateInfo {
   tags?: TagsObj[];
 }
 
-interface DeviceInfo extends Readonly<Omit<DeviceCreateInfo, "configuration_params">> {
+interface DeviceInfo extends Omit<DeviceCreateInfo, "configuration_params"> {
   id: GenericID;
   profile: GenericID;
   bucket: {

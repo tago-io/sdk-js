@@ -9,7 +9,7 @@ interface ConnectorCreateInfo {
   options?: {};
 }
 
-interface ConnectorInfo extends Readonly<ConnectorCreateInfo> {
+interface ConnectorInfo extends ConnectorCreateInfo {
   id: GenericID;
   public: boolean;
   categories: string[];
@@ -19,7 +19,7 @@ interface ConnectorInfo extends Readonly<ConnectorCreateInfo> {
   hidden_parse: boolean;
 }
 
-interface ConnectorTokenInfo extends Readonly<TokenData> {
+interface ConnectorTokenInfo extends TokenData {
   created_at: string;
   updated_at: string;
   connector: GenericID;

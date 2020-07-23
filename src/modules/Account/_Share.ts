@@ -25,7 +25,7 @@ class _Share extends TagoIOModule<ShareModuleParams> {
 
     return result;
   }
-  public async list(id: GenericID): Promise<Readonly<InviteInfo[]>> {
+  public async list(id: GenericID): Promise<InviteInfo[]> {
     const result = await this.doRequest<InviteInfo[]>({
       path: `/share/${this.params.type}/${id}`,
       method: "GET",
