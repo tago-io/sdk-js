@@ -55,6 +55,6 @@ interface ConfigurationParams {
   value: string | number | boolean;
 }
 
-type DeviceCreateResponse = { deviceID: GenericID; bucket_id: GenericID; token: GenericToken };
+type DeviceCreateResponse = { device_id: GenericID; bucket_id: GenericID; token: GenericToken };
 
 export { DeviceQuery, DeviceCreateInfo, ConfigurationParams, DeviceInfo, DeviceCreateResponse };

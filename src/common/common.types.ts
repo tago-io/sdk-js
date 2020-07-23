@@ -1,5 +1,5 @@
 interface Metadata {
-  [key: string]: string | number | boolean | Metadata;
+  [key: string]: string | number | boolean | void | Metadata;
 }
 
 interface Data {
