@@ -12,3 +12,4 @@ export * as Plan from "./plan.types";
 export * as Profile from "./profile.types";
 export * as Run from "./run.types";
 export * as Share from "./_share.types";
+export * as Template from "./template.types";

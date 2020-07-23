@@ -1,20 +1,18 @@
 import { GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import {
+  TemplateObjDashboard,
+  TemplateObjAnalysis,
+  TemplateInstallDashboard,
+  TemplateInstallAnalysis,
+  TemplateObj,
+  TemplateInstallReturn,
+} from "./template.types";
 
-interface TemplateObj {
-  dashboard: GenericID;
-  name: string;
-  image_logo?: string;
-  image_main?: string;
-  setup?: object;
-}
-
-interface TemplateInstallData {
-  device?: { id: GenericID; bucket: GenericID } | void;
-}
+type TemplateInstallParams = TemplateInstallDashboard | TemplateInstallAnalysis;
 
 class Template extends TagoIOModule<GenericModuleParams> {
-  generateTemplate(template: TemplateObj): Promise<string> {
+  generateTemplate(template: TemplateObjDashboard | TemplateObjAnalysis) {
     const result = this.doRequest<string>({
       path: `/template`,
       method: "POST",
@@ -24,18 +22,18 @@ class Template extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  installTemplate(templateID: GenericID, data?: TemplateInstallData): Promise<string> {
-    const result = this.doRequest<string>({
-      path: `/template`,
+  installTemplate(templateID: GenericID, installParams?: TemplateInstallParams): Promise<TemplateInstallReturn> {
+    const result = this.doRequest<TemplateInstallReturn>({
+      path: `/template/${templateID}`,
       method: "POST",
-      body: data,
+      body: installParams,
     });
 
     return result;
   }
 
-  getTemplate(templateID: GenericID): Promise<object> {
-    const result = this.doRequest<object>({
+  getTemplate(templateID: GenericID): Promise<TemplateObj> {
+    const result = this.doRequest<TemplateObj>({
       path: `/template/${templateID}`,
       method: "GET",
     });

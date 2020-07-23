@@ -33,6 +33,7 @@ interface DashboardInfo extends Readonly<DashboardCreateInfo> {
   blueprint_device_behavior: any;
   blueprint_selector_behavior: any;
   theme: any;
+  setup: any;
   shared: {
     id: string;
     email: string;
