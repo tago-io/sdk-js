@@ -16,7 +16,10 @@ jobs:
         run: |
           npm ci
           npm run docs
+          rm -rf __tests__ src *.js *.json *.md
           mv docs/* .
+          rm -rf docs/
+          touch .nojekyll
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
