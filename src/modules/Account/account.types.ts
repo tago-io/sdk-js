@@ -24,7 +24,7 @@ interface AccountCreateInfo {
   /**
    * Timezone of the account
    */
-  timezone: Date | string;
+  timezone: string;
   /**
    * Company of the account
    */
