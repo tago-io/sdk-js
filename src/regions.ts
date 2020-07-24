@@ -1,3 +1,6 @@
+/**
+ * @internal
+ */
 let noRegionWarning = false;
 
 interface RegionsObj {
@@ -5,6 +8,10 @@ interface RegionsObj {
   realtime: string;
 }
 
+/**
+ * Object of Regions Definition
+ * @internal
+ */
 const regionsDefinition = {
   "usa-1": {
     api: "https://api.tago.io",
@@ -13,6 +20,11 @@ const regionsDefinition = {
   env: undefined as void, // ? process object should be on trycatch.
 };
 
+/**
+ * Get connection URI for Realtime and API
+ * @internal
+ * @param region Region
+ */
 function getConnectionURI(region?: Regions): RegionsObj {
   const value = regionsDefinition[region];
 
@@ -43,7 +55,7 @@ function getConnectionURI(region?: Regions): RegionsObj {
   }
 }
 
-type Regions = keyof typeof regionsDefinition;
+type Regions = "usa-1" | "env";
 
 export default getConnectionURI;
 export { Regions };

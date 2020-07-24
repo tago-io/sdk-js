@@ -18,6 +18,11 @@ interface TokenModuleParams extends GenericModuleParams {
   path: string;
   id?: GenericID;
 }
+
+/**
+ * Object for generate request params
+ * @internal
+ */
 interface doRequestParams {
   path: string;
   method: Method;
