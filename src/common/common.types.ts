@@ -70,7 +70,7 @@ type ExportOption = "csv" | "json" | "xml";
 
 type Conditionals = "<" | ">" | "=" | "!" | "><" | "*";
 
-type RunTypeOptions = "node" | "python" | "java" | "c#" | "golang";
+type RunTypeOptions = "node" | "python";
 
 type TokenCreateResponse = { token: GenericToken; expire_date: ExpireTimeOption; permission: PermissionOption };
 
