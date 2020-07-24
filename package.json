@@ -28,7 +28,7 @@
     "build": "tsc",
     "linter": "eslint .",
     "test": "jest",
-    "docs": "rm -rf ./docs; typedoc"
+    "docs": "rm -rf ./docs; typedoc && touch ./docs/.nojekyll"
   },
   "devDependencies": {
     "@types/jest": "26.0.6",
