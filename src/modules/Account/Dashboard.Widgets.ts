@@ -42,8 +42,8 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async info(dashboardID: GenericID, widgetID: GenericID): Promise<Readonly<WidgetInfo>> {
-    const result = await this.doRequest<Readonly<WidgetInfo>>({
+  public async info(dashboardID: GenericID, widgetID: GenericID): Promise<WidgetInfo> {
+    const result = await this.doRequest<WidgetInfo>({
       path: `/dashboard/${dashboardID}/widget/${widgetID}`,
       method: "GET",
     });

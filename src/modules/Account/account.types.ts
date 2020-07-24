@@ -36,7 +36,7 @@ interface AccountCreateInfo {
   developer?: boolean;
 }
 
-interface AccountInfo extends Readonly<Omit<AccountCreateInfo, "password" | "cpassword" | "country">> {
+interface AccountInfo extends Omit<AccountCreateInfo, "password" | "cpassword" | "country"> {
   active: Boolean;
   blocked: Boolean;
   created_at: String;

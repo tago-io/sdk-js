@@ -9,7 +9,7 @@ interface PlanSetInfo {
   analysis?: number;
 }
 
-interface PlanInfo extends Readonly<PlanSetInfo> {
+interface PlanInfo extends PlanSetInfo {
   id: GenericID;
   active: number;
   end_date: string | null;

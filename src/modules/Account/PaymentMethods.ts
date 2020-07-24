@@ -8,7 +8,7 @@ interface PaymentMethodCreateInfo {
   default_card?: boolean;
 }
 
-interface PaymentMethodInfo extends Readonly<PaymentMethodCreateInfo> {
+interface PaymentMethodInfo extends PaymentMethodCreateInfo {
   id: GenericID;
   last4: string;
   active: boolean;
