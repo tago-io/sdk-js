@@ -19,3 +19,4 @@ yarn.lock
 *.local.*
 *.tgz
 examples/**/package-lock.json
+docs/

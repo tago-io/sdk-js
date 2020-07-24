@@ -16,7 +16,7 @@ jobs:
         run: |
           npm ci
           npm run docs
-          rm -rf __tests__ src *.js *.json *.md
+          rm -rf __tests__ src .github *.js *.json *.md
           mv docs/* .
           rm -rf docs/
           touch .nojekyll
