@@ -20,7 +20,11 @@ interface TokenModuleParams extends GenericModuleParams {
 }
 
 interface ConnectorModuleParams extends GenericModuleParams {
-  details?: Boolean;
+  details?: boolean;
+}
+
+interface AuthorizationModuleParams extends GenericModuleParams {
+  details?: boolean;
 }
 
 /**
@@ -112,4 +116,11 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
 }
 
 export default TagoIOModule;
-export { GenericModuleParams, ShareModuleParams, doRequestParams, TokenModuleParams, ConnectorModuleParams };
+export {
+  GenericModuleParams,
+  ShareModuleParams,
+  doRequestParams,
+  TokenModuleParams,
+  ConnectorModuleParams,
+  AuthorizationModuleParams,
+};
