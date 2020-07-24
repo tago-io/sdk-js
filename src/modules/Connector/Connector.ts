@@ -1,8 +1,8 @@
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { ConnectorModuleParams } from "../../common/TagoIOModule";
 import { ConnectorInfo } from "./connector.types";
 import { GenericToken } from "../../common/common.types";
 
-class Connector extends TagoIOModule<GenericModuleParams> {
+class Connector extends TagoIOModule<ConnectorModuleParams> {
   /**
    * Get information about the current connector
    */
@@ -11,7 +11,7 @@ class Connector extends TagoIOModule<GenericModuleParams> {
       path: "/info",
       method: "GET",
       params: {
-        details: true,
+        details: this.params.details,
       },
     });
 
@@ -27,7 +27,7 @@ class Connector extends TagoIOModule<GenericModuleParams> {
       path,
       method: "GET",
       params: {
-        details: true,
+        details: this.params.details,
       },
     });
 

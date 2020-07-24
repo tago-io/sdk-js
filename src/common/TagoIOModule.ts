@@ -19,6 +19,10 @@ interface TokenModuleParams extends GenericModuleParams {
   id?: GenericID;
 }
 
+interface ConnectorModuleParams extends GenericModuleParams {
+  details?: Boolean;
+}
+
 /**
  * Object for generate request params
  * @internal
@@ -108,4 +112,4 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
 }
 
 export default TagoIOModule;
-export { GenericModuleParams, ShareModuleParams, doRequestParams, TokenModuleParams };
+export { GenericModuleParams, ShareModuleParams, doRequestParams, TokenModuleParams, ConnectorModuleParams };
