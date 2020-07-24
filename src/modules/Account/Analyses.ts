@@ -2,7 +2,7 @@ import { GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { AnalysisCreateInfo, AnalysisInfo, AnalysisQuery, ScriptFile } from "./analysis.types";
 
-class Analysis extends TagoIOModule<GenericModuleParams> {
+class Analyses extends TagoIOModule<GenericModuleParams> {
   public async list(query?: AnalysisQuery): Promise<AnalysisInfo[]> {
     const result = await this.doRequest<AnalysisInfo[]>({
       path: "/analysis/",
@@ -106,4 +106,4 @@ class Analysis extends TagoIOModule<GenericModuleParams> {
   }
 }
 
-export default Analysis;
+export default Analyses;

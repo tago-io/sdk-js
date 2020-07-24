@@ -4,7 +4,7 @@ import TagoIOModule, { GenericModuleParams, doRequestParams } from "../../common
 import Access from "./Access";
 import { AccountCreateInfo, AccountInfo, LoginResponse, TokenCreateInfo } from "./account.types";
 import Actions from "./Actions";
-import Analysis from "./Analysis";
+import Analyses from "./Analyses";
 import Buckets from "./Buckets";
 import Connectors from "./Connector";
 import Dashboards from "./Dashboards";
@@ -213,7 +213,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  public analysis = new Analysis(this.params);
+  public analysis = new Analyses(this.params);
 
   /**
    * Manage buckets in account
