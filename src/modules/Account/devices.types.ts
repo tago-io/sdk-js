@@ -33,6 +33,26 @@ interface DeviceCreateInfo {
    * An array of tags
    */
   tags?: TagsObj[];
+  /**
+   * Device Serie Number
+   */
+  serie_number?: string;
+  /**
+   * Verification code
+   */
+  verification_code?: string;
+  /**
+   * Connector ID
+   */
+  connector?: GenericID;
+  /**
+   * If device will use connector parser
+   */
+  connector_parse?: boolean;
+  /**
+   * Javascript code for use as payload parser
+   */
+  parse_function?: string;
 }
 
 interface DeviceInfo extends Readonly<Omit<DeviceCreateInfo, "configuration_params">> {
@@ -44,12 +64,9 @@ interface DeviceInfo extends Readonly<Omit<DeviceCreateInfo, "configuration_para
   };
   last_output: Date | string;
   last_input: Date | string;
-  connector: GenericID;
-  connector_parse: boolean;
-  parse_function: string;
-  updated_at: Date | string;
-  created_at: Date | string;
-  inspected_at: Date | string;
+  updated_at: Date;
+  created_at: Date;
+  inspected_at: Date | void;
 }
 
 interface ConfigurationParams {

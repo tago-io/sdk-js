@@ -9,6 +9,7 @@ interface Data {
   location?: { lat: number; lng: number };
   metadata?: Metadata;
   serie?: string;
+  unit?: string;
   origin: string;
   time: Date;
   created_at: Date;
