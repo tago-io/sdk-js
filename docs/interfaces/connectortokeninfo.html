@@ -70,7 +70,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="tsd-signature-symbol">{}</span>
+						<a href="tokendata.html" class="tsd-signature-type">TokenData</a>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">ConnectorTokenInfo</span>
@@ -88,8 +88,14 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="connectortokeninfo.html#connector" class="tsd-kind-icon">connector</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="connectortokeninfo.html#created_at" class="tsd-kind-icon">created_<wbr>at</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="connectortokeninfo.html#expire_time" class="tsd-kind-icon">expire_<wbr>time</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="connectortokeninfo.html#middleware" class="tsd-kind-icon">middleware</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="connectortokeninfo.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="connectortokeninfo.html#permission" class="tsd-kind-icon">permission</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="connectortokeninfo.html#serie_number" class="tsd-kind-icon">serie_<wbr>number</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="connectortokeninfo.html#type" class="tsd-kind-icon">type</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="connectortokeninfo.html#updated_at" class="tsd-kind-icon">updated_<wbr>at</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="connectortokeninfo.html#verification_code" class="tsd-kind-icon">verification_<wbr>code</a></li>
 							</ul>
 						</section>
 					</div>
@@ -103,7 +109,7 @@
 					<div class="tsd-signature tsd-kind-icon">connector<span class="tsd-signature-symbol">:</span> <a href="../globals.html#genericid" class="tsd-signature-type">GenericID</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/3e0c88f/src/modules/Account/connector.types.ts#L25">modules/Account/connector.types.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/modules/Account/connector.types.ts#L25">modules/Account/connector.types.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -113,9 +119,91 @@
 					<div class="tsd-signature tsd-kind-icon">created_<wbr>at<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/3e0c88f/src/modules/Account/connector.types.ts#L23">modules/Account/connector.types.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/modules/Account/connector.types.ts#L23">modules/Account/connector.types.ts:23</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="expire_time" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> expire_<wbr>time</h3>
+					<div class="tsd-signature tsd-kind-icon">expire_<wbr>time<span class="tsd-signature-symbol">:</span> <a href="../globals.html#expiretimeoption" class="tsd-signature-type">ExpireTimeOption</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="tokendata.html">TokenData</a>.<a href="tokendata.html#expire_time">expire_time</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/common/common.types.ts#L103">common/common.types.ts:103</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The time for when the token should expire.
+								It will be randomly generated if not included.
+							Accepts “never” as value.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="middleware" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> middleware</h3>
+					<div class="tsd-signature tsd-kind-icon">middleware<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="tokendata.html">TokenData</a>.<a href="tokendata.html#middleware">middleware</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/common/common.types.ts#L119">common/common.types.ts:119</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>[optional] Middleware or type of the device that will be added.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="tokendata.html">TokenData</a>.<a href="tokendata.html#name">name</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/common/common.types.ts#L97">common/common.types.ts:97</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A name for the token.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="permission" class="tsd-anchor"></a>
+					<h3>permission</h3>
+					<div class="tsd-signature tsd-kind-icon">permission<span class="tsd-signature-symbol">:</span> <a href="../globals.html#permissionoption" class="tsd-signature-type">PermissionOption</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="tokendata.html">TokenData</a>.<a href="tokendata.html#permission">permission</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/common/common.types.ts#L107">common/common.types.ts:107</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Token permission should be &#39;write&#39;, &#39;read&#39; or &#39;full&#39;.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="serie_number" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> serie_<wbr>number</h3>
+					<div class="tsd-signature tsd-kind-icon">serie_<wbr>number<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="tokendata.html">TokenData</a>.<a href="tokendata.html#serie_number">serie_number</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/common/common.types.ts#L111">common/common.types.ts:111</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>[optional] The serial number of the device.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="type" class="tsd-anchor"></a>
@@ -123,7 +211,7 @@
 					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"type"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"connector"</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/3e0c88f/src/modules/Account/connector.types.ts#L26">modules/Account/connector.types.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/modules/Account/connector.types.ts#L26">modules/Account/connector.types.ts:26</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -133,9 +221,25 @@
 					<div class="tsd-signature tsd-kind-icon">updated_<wbr>at<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/3e0c88f/src/modules/Account/connector.types.ts#L24">modules/Account/connector.types.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/modules/Account/connector.types.ts#L24">modules/Account/connector.types.ts:24</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="verification_code" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> verification_<wbr>code</h3>
+					<div class="tsd-signature tsd-kind-icon">verification_<wbr>code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="tokendata.html">TokenData</a>.<a href="tokendata.html#verification_code">verification_code</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/common/common.types.ts#L115">common/common.types.ts:115</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>[optional] Verification code to validate middleware requests.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -160,11 +264,29 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="connectortokeninfo.html#created_at" class="tsd-kind-icon">created_<wbr>at</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="connectortokeninfo.html#expire_time" class="tsd-kind-icon">expire_<wbr>time</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="connectortokeninfo.html#middleware" class="tsd-kind-icon">middleware</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="connectortokeninfo.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="connectortokeninfo.html#permission" class="tsd-kind-icon">permission</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="connectortokeninfo.html#serie_number" class="tsd-kind-icon">serie_<wbr>number</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="connectortokeninfo.html#type" class="tsd-kind-icon">type</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="connectortokeninfo.html#updated_at" class="tsd-kind-icon">updated_<wbr>at</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="connectortokeninfo.html#verification_code" class="tsd-kind-icon">verification_<wbr>code</a>
 							</li>
 						</ul>
 					</li>

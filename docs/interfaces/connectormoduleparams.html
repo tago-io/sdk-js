@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>FileQuery | TagoIO SDK for JavaScript and TypeScript</title>
+	<title>ConnectorModuleParams | TagoIO SDK for JavaScript and TypeScript</title>
 	<meta name="description" content="Documentation for TagoIO SDK for JavaScript and TypeScript">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="filequery.html">FileQuery</a>
+					<a href="connectormoduleparams.html">ConnectorModuleParams</a>
 				</li>
 			</ul>
-			<h1>Interface FileQuery</h1>
+			<h1>Interface ConnectorModuleParams</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">FileQuery</span>
+						<a href="genericmoduleparams.html" class="tsd-signature-type">GenericModuleParams</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">ConnectorModuleParams</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -81,9 +86,9 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="filequery.html#paginationtoken" class="tsd-kind-icon">pagination<wbr>Token</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="filequery.html#path" class="tsd-kind-icon">path</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="filequery.html#quantity" class="tsd-kind-icon">quantity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="connectormoduleparams.html#details" class="tsd-kind-icon">details</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="connectormoduleparams.html#region" class="tsd-kind-icon">region</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="connectormoduleparams.html#token" class="tsd-kind-icon">token</a></li>
 							</ul>
 						</section>
 					</div>
@@ -92,32 +97,34 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="paginationtoken" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> pagination<wbr>Token</h3>
-					<div class="tsd-signature tsd-kind-icon">pagination<wbr>Token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="details" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> details</h3>
+					<div class="tsd-signature tsd-kind-icon">details<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/modules/Account/files.types.ts#L3">modules/Account/files.types.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/common/TagoIOModule.ts#L23">common/TagoIOModule.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="path" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> path</h3>
-					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="region" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> region</h3>
+					<div class="tsd-signature tsd-kind-icon">region<span class="tsd-signature-symbol">:</span> <a href="../globals.html#regions" class="tsd-signature-type">Regions</a></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="genericmoduleparams.html">GenericModuleParams</a>.<a href="genericmoduleparams.html#region">region</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/modules/Account/files.types.ts#L2">modules/Account/files.types.ts:2</a></li>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/common/TagoIOModule.ts#L9">common/TagoIOModule.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="quantity" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> quantity</h3>
-					<div class="tsd-signature tsd-kind-icon">quantity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="token" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> token</h3>
+					<div class="tsd-signature tsd-kind-icon">token<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="genericmoduleparams.html">GenericModuleParams</a>.<a href="genericmoduleparams.html#token">token</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/modules/Account/files.types.ts#L4">modules/Account/files.types.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/tago-io/sdk-js/blob/7d97ff4/src/common/TagoIOModule.ts#L8">common/TagoIOModule.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -136,16 +143,16 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="filequery.html" class="tsd-kind-icon">File<wbr>Query</a>
+						<a href="connectormoduleparams.html" class="tsd-kind-icon">Connector<wbr>Module<wbr>Params</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="filequery.html#paginationtoken" class="tsd-kind-icon">pagination<wbr>Token</a>
+								<a href="connectormoduleparams.html#details" class="tsd-kind-icon">details</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="filequery.html#path" class="tsd-kind-icon">path</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="connectormoduleparams.html#region" class="tsd-kind-icon">region</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="filequery.html#quantity" class="tsd-kind-icon">quantity</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="connectormoduleparams.html#token" class="tsd-kind-icon">token</a>
 							</li>
 						</ul>
 					</li>
