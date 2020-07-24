@@ -33,6 +33,8 @@
       "Analysis",
       "Services",
       "Connector",
+      "Authorization",
+      "RunUser",
       "Utils"
     ],
     "mode": "file",

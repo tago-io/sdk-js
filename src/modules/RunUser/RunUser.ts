@@ -193,9 +193,7 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  get SDB() {
-    return new SDB(this.params);
-  }
+  public SDB = new SDB(this.params);
 }
 
 export default RunUser;
