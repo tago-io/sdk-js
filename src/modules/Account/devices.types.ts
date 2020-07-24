@@ -12,7 +12,7 @@ interface DeviceCreateInfo {
   /**
    * A name for the device.
    */
-  name?: string;
+  name: string;
   /**
    * Description of the device.
    */
