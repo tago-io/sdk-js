@@ -1,4 +1,4 @@
-import { PermissionOption, ExpireTimeOption, GenericID, TagsObj } from "../../common/common.types";
+import { PermissionOption, ExpireTimeOption, GenericID } from "../../common/common.types";
 
 interface AuthorizationInfo {
   name: string;
