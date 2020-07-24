@@ -3,6 +3,11 @@ import ConsoleService from "../Services/Console";
 import apiSocket, { channels } from "../../infrastructure/apiSocket";
 import { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment } from "./analysis.types";
 
+/**
+ * This class is used to instance an analysis
+ *
+ * It's can run locally or on TagoIO.
+ */
 class Analysis extends TagoIOModule<AnalysisConstructorParams> {
   private analysis: analysisFunction;
 
@@ -19,6 +24,14 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     return typeof msg === "object" && !Array.isArray(msg) ? JSON.stringify(msg) : String(msg);
   }
 
+  /**
+   * Run Analysis
+   * @internal
+   * @param environment
+   * @param data
+   * @param analysis_id
+   * @param token
+   */
   public run(environment: AnalysisEnvironment, data: any[], analysis_id: string, token: string) {
     const tagoConsole = new ConsoleService({ token, region: this.params.region });
 
