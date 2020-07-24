@@ -199,143 +199,111 @@ class Account extends TagoIOModule<GenericModuleParams> {
   /**
    * Send a batch commands
    */
-  get batch() {
-    return new Batch(this.params);
-  }
+  public batch = new Batch(this.params);
 
   /**
    * Manage actions in account.
    * Be sure to use an account token with “write” permissions when
    * using functions like create, edit and delete.
    */
-  get actions() {
-    return new Actions(this.params);
-  }
+  public actions = new Actions(this.params);
 
   /**
    * Manage analysis in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get analysis() {
-    return new Analysis(this.params);
-  }
+  public analysis = new Analysis(this.params);
 
   /**
    * Manage buckets in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get buckets() {
-    return new Buckets(this.params);
-  }
+  public buckets = new Buckets(this.params);
 
   /**
    * Manage files in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get files() {
-    return new Files(this.params);
-  }
+  public files = new Files(this.params);
 
   /**
    * Manage dashboards in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get dashboards() {
-    return new Dashboards(this.params);
-  }
+  public dashboards = new Dashboards(this.params);
 
   /**
    * Manage devices in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get devices() {
-    return new Devices(this.params);
-  }
+  public devices = new Devices(this.params);
 
   /**
    * Manage notifications in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get notifications() {
-    return new Notifications(this.params);
-  }
+  public notifications = new Notifications(this.params);
 
   /**
    * Manage tags in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get tags() {
-    return new Tags(this.params);
-  }
+  public tags = new Tags(this.params);
 
   /**
    * Manage payment methods in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get paymentMethods() {
-    return new PaymentMethods(this.params);
-  }
+  public paymentMethods = new PaymentMethods(this.params);
 
   /**
    * Manage account plans
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get plan() {
-    return new Plan(this.params);
-  }
+  public plan = new Plan(this.params);
   /**
    * Manage payment history in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get paymentHistory() {
-    return new PaymentHistory(this.params);
-  }
+  public paymentHistory = new PaymentHistory(this.params);
 
   /**
    * Manage explore in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get explore() {
-    return new Explore(this.params);
-  }
+  public explore = new Explore(this.params);
 
   /**
    * Manage connectors in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get connector() {
-    return new Connectors(this.params);
-  }
+  public connector = new Connectors(this.params);
 
   /**
    * Manage templates in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get template() {
-    return new Template(this.params);
-  }
+  public template = new Template(this.params);
 
   /**
    * Manage access in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get accessManagement() {
-    return new Access(this.params);
-  }
+  public accessManagement = new Access(this.params);
 
   /**
    * Manage run apps in account
@@ -343,27 +311,21 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * functions like create, edit and delete.
    *
    */
-  get run() {
-    return new Run(this.params);
-  }
+  public run = new Run(this.params);
 
   /**
    * Manage services in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get ServiceAuthorization() {
-    return new ServiceAuthorization(this.params);
-  }
+  public ServiceAuthorization = new ServiceAuthorization(this.params);
 
   /**
    * Manage profiles in account
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  get profiles() {
-    return new Profile(this.params);
-  }
+  public profiles = new Profile(this.params);
 }
 
 export default Account;

@@ -27,7 +27,8 @@
     "prepublishOnly": "rm -rf ./out; eslint .; tsc",
     "build": "tsc",
     "linter": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "docs": "rm -rf ./docs; typedoc"
   },
   "devDependencies": {
     "@types/jest": "26.0.6",
@@ -42,6 +43,7 @@
     "jest": "26.1.0",
     "prettier": "2.0.5",
     "ts-jest": "26.1.3",
+    "typedoc": "0.17.8",
     "typescript": "3.9.7"
   },
   "dependencies": {
