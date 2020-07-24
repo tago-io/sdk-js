@@ -9,6 +9,7 @@ interface Data {
   location?: { lat: number; lng: number };
   metadata?: Metadata;
   serie?: string;
+  unit?: string;
   origin: string;
   time: Date;
   created_at: Date;
@@ -69,7 +70,7 @@ type ExportOption = "csv" | "json" | "xml";
 
 type Conditionals = "<" | ">" | "=" | "!" | "><" | "*";
 
-type RunTypeOptions = "node" | "python" | "java" | "c#" | "golang";
+type RunTypeOptions = "node" | "python";
 
 type TokenCreateResponse = { token: GenericToken; expire_date: ExpireTimeOption; permission: PermissionOption };
 

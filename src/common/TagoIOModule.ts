@@ -18,6 +18,11 @@ interface TokenModuleParams extends GenericModuleParams {
   path: string;
   id?: GenericID;
 }
+
+/**
+ * Object for generate request params
+ * @internal
+ */
 interface doRequestParams {
   path: string;
   method: Method;
@@ -27,6 +32,12 @@ interface doRequestParams {
   overwriteAxiosConfig?: AxiosRequestConfig;
 }
 
+/**
+ * Create a Object for Axios
+ * @internal
+ * @param uri URI
+ * @param requestObj doRequestParams
+ */
 function mountAxiosRequest(uri: string, requestObj: doRequestParams): AxiosRequestConfig {
   const axiosObj: AxiosRequestConfig = {
     url: `${uri}${requestObj.path}`,
@@ -42,7 +53,10 @@ function mountAxiosRequest(uri: string, requestObj: doRequestParams): AxiosReque
 
   return axiosObj;
 }
-
+/**
+ * Abstract class to wrap all TagoIO SDK Modules
+ * @internal
+ */
 abstract class TagoIOModule<T extends GenericModuleParams> {
   protected params = {} as T;
 

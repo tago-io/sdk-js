@@ -5,14 +5,13 @@ import { GenericModuleParams } from "../common/TagoIOModule";
 
 /**
  * TagoIO Socket Connection
- * @param {String} token TagoIO Token
- * @param {JSON} socketIOExtraOptions SocketIO Extra Options
- * @return {io.Socket} SocketIO Instance
- * @description
  * In some cases you will should emit channels to subscribe/unsubscribe
  * example:
  *  - socket.emit('attach', 'bucket', '5d30e5f8577736001b1a5e11');
  *  - socket.emit('unattach', 'bucket', '5d30e5f8577736001b1a5e11');
+ * @internal
+ * @param params TagoIO Token and Region
+ * @param socketIOExtraOptions SocketIO Extra Options
  */
 function apiSocket(params: GenericModuleParams, socketIOExtraOptions = {}) {
   const socket = io.connect(regions(params.region).realtime, {
@@ -26,6 +25,9 @@ function apiSocket(params: GenericModuleParams, socketIOExtraOptions = {}) {
   return socket;
 }
 
+/**
+ * @internal
+ */
 const channels = {
   notification: "notification::data",
   analysisConsole: "analysis::console",

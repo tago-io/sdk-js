@@ -1,6 +1,6 @@
 {
   "name": "@tago-io/sdk",
-  "version": "10.0.0-beta.12",
+  "version": "10.0.0-beta.16",
   "description": "TagoIO SDK for JavaScript in the browser and Node.js",
   "author": "Tago LLC",
   "homepage": "https://tago.io",
@@ -24,13 +24,14 @@
     "node": ">= 12.0"
   },
   "scripts": {
-    "prepare": "rm -rf ./out; tsc",
+    "prepublishOnly": "rm -rf ./out; eslint .; tsc",
     "build": "tsc",
     "linter": "eslint .",
-    "test": "jest"
+    "test": "jest",
+    "docs": "rm -rf ./docs; typedoc && touch ./docs/.nojekyll"
   },
   "devDependencies": {
-    "@types/jest": "26.0.5",
+    "@types/jest": "26.0.6",
     "@types/node": "14.0.24",
     "@types/qs": "6.9.3",
     "@types/socket.io-client": "1.4.33",
@@ -42,6 +43,7 @@
     "jest": "26.1.0",
     "prettier": "2.0.5",
     "ts-jest": "26.1.3",
+    "typedoc": "0.17.8",
     "typescript": "3.9.7"
   },
   "dependencies": {

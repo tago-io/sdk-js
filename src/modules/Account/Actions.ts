@@ -5,17 +5,15 @@ import { ActionCreateInfo, ActionInfo, ActionQuery } from "./actions.types";
 class Actions extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list with all actions from the account
-   *
-   * @param {ListQuery} [query] Search query params;
-   * Default:{
+   * @example
+   * Default Query: {
    *   page: 1,
    *   fields: ["id", "name"],
    *   filter: {},
    *   amount: 20,
    *   orderBy: "name,asc",
    * }
-   * @return {Promise<ActionInfo[]>}
-   * @memberof Device
+   * @param query Search query params
    */
   list(query?: ActionQuery): Promise<ActionInfo[]> {
     const result = this.doRequest<ActionInfo[]>({
@@ -35,10 +33,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Generates and retrieves a new action from the account
-   *
-   * @param {ActionCreateInfo} data New Bucket info
-   * @returns {(Promise<{ bucket: string }>)} Bucket created id
-   * @memberof Buckets
+   * @param data Action object to create new TagoIO Action
    */
   create(data: ActionCreateInfo): Promise<{ action: string }> {
     const result = this.doRequest<{ action: string }>({
@@ -51,12 +46,9 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   *  Modify any property of the action.
-   *
-   * @param {GenericID} actionID Action identification
-   * @param {Partial<ActionCreateInfo>} data Data to change
-   * @returns {Promise<string>} String with status
-   * @memberof Actions
+   * Modify any property of the action.
+   * @param actionID Action ID
+   * @param data Action Object to replace
    */
   edit(actionID: GenericID, data: Partial<ActionCreateInfo>): Promise<string> {
     const result = this.doRequest<string>({
@@ -70,10 +62,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Deletes an action from the account
-   *
-   * @param {GenericID} actionID Action identification
-   * @returns {Promise<string>} String with status
-   * @memberof Actions
+   * @param actionID Action ID
    */
   delete(actionID: GenericID): Promise<string> {
     const result = this.doRequest<string>({
@@ -86,10 +75,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Gets information about the action
-   *
-   * @param {GenericID} actionID Action identification
-   * @returns {Promise<ActionInfo>}
-   * @memberof Actions
+   * @param actionID Action ID
    */
   info(actionID: GenericID): Promise<ActionInfo> {
     const result = this.doRequest<ActionInfo>({

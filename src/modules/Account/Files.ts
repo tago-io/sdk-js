@@ -4,13 +4,13 @@ import sleep from "../../common/sleep";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { Base64File, FileListInfo, FileQuery, FilesPermission, MoveFiles, Options } from "./files.types";
 
-function isCanceled(cancelled: boolean) {
-  if (cancelled) {
-    throw new Error("Cancelled request");
-  }
-}
-
 class Files extends TagoIOModule<GenericModuleParams> {
+  private isCanceled(cancelled: boolean) {
+    if (cancelled) {
+      throw new Error("Cancelled request");
+    }
+  }
+
   public async list(query?: FileQuery): Promise<FileListInfo> {
     const result = await this.doRequest<FileListInfo>({
       path: "/files",
@@ -208,7 +208,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
       });
     }
 
-    isCanceled(cancelled);
+    this.isCanceled(cancelled);
 
     const uploadID = await this.createMultipartUpload(filename, options);
 
@@ -228,13 +228,13 @@ class Files extends TagoIOModule<GenericModuleParams> {
     const parts: any[] = [];
     const promises: any[] = [];
 
-    isCanceled(cancelled);
+    this.isCanceled(cancelled);
 
     while (offsetStart < fileSize) {
       const sliced = file.slice(offsetStart, offsetEnd);
 
       while (promises.length >= partsPerTime) {
-        isCanceled(cancelled);
+        this.isCanceled(cancelled);
 
         if (error) {
           throw error;
@@ -265,7 +265,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
         error = err;
       });
 
-      isCanceled(cancelled);
+      this.isCanceled(cancelled);
 
       await sleep(500);
 
@@ -275,7 +275,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
     }
 
     while (promises.length > 0) {
-      isCanceled(cancelled);
+      this.isCanceled(cancelled);
 
       if (error) {
         throw error;
@@ -283,7 +283,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
       await sleep(1000);
     }
 
-    isCanceled(cancelled);
+    this.isCanceled(cancelled);
 
     for (let i = 0; i < 3; i += 1) {
       try {

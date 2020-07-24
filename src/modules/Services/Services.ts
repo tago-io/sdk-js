@@ -7,29 +7,17 @@ import Notification from "./Notification";
 import Attachment from "./Attachment";
 
 class Services extends TagoIOModule<GenericModuleParams> {
-  get console() {
-    return new ConsoleService(this.params);
-  }
+  public console = new ConsoleService(this.params);
 
-  get sms() {
-    return new SMS(this.params);
-  }
+  public sms = new SMS(this.params);
 
-  get email() {
-    return new Email(this.params);
-  }
+  public email = new Email(this.params);
 
-  get MQTT() {
-    return new MQTT(this.params);
-  }
+  public MQTT = new MQTT(this.params);
 
-  get Notification() {
-    return new Notification(this.params);
-  }
+  public Notification = new Notification(this.params);
 
-  get Attachment() {
-    return new Attachment(this.params);
-  }
+  public Attachment = new Attachment(this.params);
 }
 
 export default Services;

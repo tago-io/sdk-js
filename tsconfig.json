@@ -20,5 +20,24 @@
   },
   "include": [
     "src/**/*"
-  ]
+  ],
+  "typedocOptions": {
+    "name": "TagoIO SDK for JavaScript and TypeScript",
+    "readme": "./DOCS.MD",
+    "inputFiles": [
+      "./src"
+    ],
+    "toc": [
+      "Account",
+      "Device",
+      "Analysis",
+      "Services",
+      "Utils"
+    ],
+    "mode": "file",
+    "out": "docs",
+    "excludePrivate": true,
+    "excludeProtected": true,
+    "stripInternal": true
+  }
 }

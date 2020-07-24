@@ -9,11 +9,8 @@ interface ArchiveFile {
 
 class Attachment extends TagoIOModule<GenericModuleParams> {
   /**
-   * Send Attachment
-   *
-   * @param {ArchiveFile} archive Archive info
-   * @returns {Promise<string>} Link to archive
-   * @memberof Attachment
+   *  Send Attachment
+   * @param archive Archive JSON Object
    */
   public async upload(archive: ArchiveFile): Promise<string> {
     const result = await this.doRequest<string>({

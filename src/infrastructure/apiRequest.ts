@@ -2,6 +2,11 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import config from "../config";
 import sleep from "../common/sleep";
 
+/**
+ * Handle the TagoIO Response
+ * @internal
+ * @param result Axios Result
+ */
 function resultHandler(result: AxiosResponse) {
   if (!result.data) {
     throw result.statusText;
@@ -18,6 +23,11 @@ function resultHandler(result: AxiosResponse) {
   return { data: result.data.result };
 }
 
+/**
+ * Handle all request to TagoIO API
+ * @internal
+ * @param axiosObj Axios Object
+ */
 async function apiRequest(axiosObj: AxiosRequestConfig) {
   axiosObj.timeout = config.requestTimeout;
 

@@ -137,9 +137,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   // TODO dashboard id on constructor
-  get widgets() {
-    return new Widgets(this.params);
-  }
+  public widgets = new Widgets(this.params);
 }
 
 export default Dashboards;
