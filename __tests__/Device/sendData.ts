@@ -26,13 +26,11 @@ describe("Device class", () => {
   });
 
   test("Sending data", async () => {
-    let url;
-    let body;
-    let params;
+    let url: string;
+    let body: object;
     app.post("/data", (req, res) => {
       url = req.url;
       body = req.body;
-      params = req.params;
       res.send({ status: true, result: "1 Data Added" });
     });
 
