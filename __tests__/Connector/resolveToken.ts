@@ -1,7 +1,7 @@
-process.env.TAGOIO_API = "http://localhost:2000";
 import express, { Express } from "express";
 import http from "http";
 import { Connector } from "../../src/modules";
+import { AddressInfo } from "net";
 
 describe("Connector class", () => {
   let app: Express;
@@ -10,7 +10,8 @@ describe("Connector class", () => {
     const startServer = () => {
       app = express();
       app.use(express.json());
-      service = app.listen(2000);
+      service = app.listen(0);
+      process.env.TAGOIO_API = `http://localhost:${(service.address() as AddressInfo).port}`;
       done();
     };
 
