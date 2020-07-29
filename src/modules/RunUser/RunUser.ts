@@ -12,12 +12,12 @@ import SDB from "./SDB";
 
 class RunUser extends TagoIOModule<GenericModuleParams> {
   /**
-   * Get run user info
-   * @param tagoRunURL Tago run url without http
+   * Get Run user info
+   * @param tagoIORunURL TagoIO Run url without http
    */
-  public async info(tagoRunURL: string): Promise<RunUserInfo> {
+  public async info(tagoIORunURL: string): Promise<RunUserInfo> {
     const result = await this.doRequest<RunUserInfo>({
-      path: `/run/${tagoRunURL}/info`,
+      path: `/run/${tagoIORunURL}/info`,
       method: "GET",
     });
 
@@ -26,13 +26,13 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Create new TagoIO Run User (Anonymous)
-   * @param tagoRunURL Tago run url without http
+   * @param tagoIORunURL TagoIO Run url without http
    * @param newUserObj New user data
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static async create(tagoRunURL: string, newUserObj: RunUserCreateInfo, region?: Regions): Promise<string> {
+  public static async create(tagoIORunURL: string, newUserObj: RunUserCreateInfo, region?: Regions): Promise<string> {
     const params: doRequestParams = {
-      path: `/run/${tagoRunURL}/signup`,
+      path: `/run/${tagoIORunURL}/signup`,
       method: "POST",
       body: newUserObj,
     };
@@ -43,13 +43,13 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Edit run user info
-   * @param tagoRunURL Tago run url without http
+   * Edit Run user info
+   * @param tagoIORunURL TagoIO Run url without http
    * @param userChangesObj Data to change in user
    */
-  public async edit(tagoRunURL: string, userChangesObj: Partial<RunUserInfo>): Promise<string> {
+  public async edit(tagoIORunURL: string, userChangesObj: Partial<RunUserInfo>): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/run/${tagoRunURL}/info`,
+      path: `/run/${tagoIORunURL}/info`,
       method: "PUT",
       body: userChangesObj,
     });
@@ -59,17 +59,17 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Login at TagoIO Run as user (Anonymous)
-   * @param tagoRunURL Tago run url without http
+   * @param tagoIORunURL TagoIO Run url without http
    * @param credentialsObj Run user credentials
    * @param region TagoIO Region Server [default usa-1]
    */
   public static async login(
-    tagoRunURL: string,
+    tagoIORunURL: string,
     credentialsObj: RunUserLogin,
     region?: Regions
   ): Promise<RunUserLoginResponse> {
     const params: doRequestParams = {
-      path: `/run/${tagoRunURL}/login`,
+      path: `/run/${tagoIORunURL}/login`,
       method: "POST",
       body: credentialsObj,
     };
@@ -81,13 +81,13 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Confirm User on TagoIO Run (Anonymous)
-   * @param tagoRunURL Tago run url without http
-   * @param token Tago run user token
+   * @param tagoIORunURL TagoIO Run url without http
+   * @param token TagoIO Run user token
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static async confirmUser(tagoRunURL: string, token: GenericToken, region?: Regions): Promise<string> {
+  public static async confirmUser(tagoIORunURL: string, token: GenericToken, region?: Regions): Promise<string> {
     const params: doRequestParams = {
-      path: `/run/${tagoRunURL}/confirm/${token}`,
+      path: `/run/${tagoIORunURL}/confirm/${token}`,
       method: "GET",
     };
 
@@ -98,13 +98,13 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Sends a password recover e-mail
-   * @param tagoRunURL Tago run url without http
+   * @param tagoIORunURL TagoIO Run url without http
    * @param email Run user email to recover the password
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static async passwordRecover(tagoRunURL: string, email: string, region?: Regions): Promise<string> {
+  public static async passwordRecover(tagoIORunURL: string, email: string, region?: Regions): Promise<string> {
     const params: doRequestParams = {
-      path: `/run/${tagoRunURL}/passwordreset/${email}`,
+      path: `/run/${tagoIORunURL}/passwordreset/${email}`,
       method: "GET",
     };
 
@@ -115,12 +115,12 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Change password using token of the password recover.
-   * @param tagoRunURL Tago run url without http
+   * @param tagoIORunURL TagoIO Run url without http
    * @param password New password
    */
-  public async passwordChange(tagoRunURL: string, password: string): Promise<string> {
+  public async passwordChange(tagoIORunURL: string, password: string): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/run/${tagoRunURL}/passwordreset`,
+      path: `/run/${tagoIORunURL}/passwordreset`,
       method: "POST",
       body: {
         password,
@@ -132,11 +132,11 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * List notifications.
-   * @param tagoRunURL Tago run url without http
+   * @param tagoIORunURL TagoIO Run url without http
    */
-  public async notificationList(tagoRunURL: string): Promise<RunNotificationInfo[]> {
+  public async notificationList(tagoIORunURL: string): Promise<RunNotificationInfo[]> {
     const result = await this.doRequest<RunNotificationInfo[]>({
-      path: `/run/${tagoRunURL}/notification`,
+      path: `/run/${tagoIORunURL}/notification`,
       method: "GET",
     });
 
@@ -145,16 +145,16 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Mark notification as read
-   * @param tagoRunURL Tago run url without http
+   * @param tagoIORunURL TagoIO Run url without http
    * @param notificationIDs array of notification ids or a single id
    */
-  public async notificationMarkRead(tagoRunURL: string, notificationIDs: GenericID | GenericID[]): Promise<string> {
+  public async notificationMarkRead(tagoIORunURL: string, notificationIDs: GenericID | GenericID[]): Promise<string> {
     if (!Array.isArray(notificationIDs)) {
       notificationIDs = [notificationIDs];
     }
 
     const result = await this.doRequest<string>({
-      path: `/run/${tagoRunURL}/notification`,
+      path: `/run/${tagoIORunURL}/notification`,
       method: "PUT",
       body: {
         notification_ids: notificationIDs,
@@ -166,13 +166,13 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Trigger notification button
-   * @param tagoRunURL Tago run url without http
-   * @param notificationID Tago run notification id
+   * @param tagoIORunURL TagoIO Run url without http
+   * @param notificationID TagoIO Run notification id
    * @param buttonID Notification button id
    */
-  public async notificationButton(tagoRunURL: string, notificationID: GenericID, buttonID: GenericID): Promise<any> {
+  public async notificationButton(tagoIORunURL: string, notificationID: GenericID, buttonID: GenericID): Promise<any> {
     const result = await this.doRequest<any>({
-      path: `/run/${tagoRunURL}/notification${notificationID}/${buttonID}`,
+      path: `/run/${tagoIORunURL}/notification${notificationID}/${buttonID}`,
       method: "PUT",
     });
 
@@ -181,12 +181,12 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Delete notification
-   * @param tagoRunURL Tago run url without http
-   * @param notificationID Tago run notification id
+   * @param tagoIORunURL TagoIO Run url without http
+   * @param notificationID TagoIO Run notification id
    */
-  public async notificationDelete(tagoRunURL: string, notificationID: GenericID): Promise<string> {
+  public async notificationDelete(tagoIORunURL: string, notificationID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/run/${tagoRunURL}/notification/${notificationID}`,
+      path: `/run/${tagoIORunURL}/notification/${notificationID}`,
       method: "DELETE",
     });
 

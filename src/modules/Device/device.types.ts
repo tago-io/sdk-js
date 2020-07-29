@@ -1,4 +1,4 @@
-import { Data, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
+import { Data, GenericID, GenericToken, TagsObj } from "../../common/common.types";
 import { Regions } from "../../regions";
 
 interface DeviceInfo {
@@ -53,6 +53,8 @@ interface DataQuery {
   end_date?: Date | string;
 }
 
+type DataQueryCount = Omit<DataQuery, "query"> & { query: "count" };
+
 type ListResponse = DeviceInfo[];
 
-export { DeviceConstructorParams, DeviceInfo, DataToSend, DataQuery, ListResponse, valuesTypes };
+export { DeviceConstructorParams, DeviceInfo, DataToSend, DataQuery, ListResponse, valuesTypes, DataQueryCount };
