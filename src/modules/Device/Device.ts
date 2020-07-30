@@ -102,6 +102,31 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     return result;
   }
 
+  /**
+   * Get Data Streaming
+   *
+   * ! WARNING: not working yet.
+   * In development.
+   * @param params Data Query
+   * @param qtyOfDataBySecond Qty of Data by second
+   * @internal
+   * @hidden
+   */
+  public async getDataStreaming(params?: DataQuery, qtyOfDataBySecond = 1000): Promise<Data[]> {
+    if (!params.qty || (params.qty <= qtyOfDataBySecond && params.qty <= 10000)) {
+      return this.getData(params);
+    }
+    const qtyByRequest = Math.ceil(params.qty / qtyOfDataBySecond);
+    const data: Data[] = [];
+
+    for (const _ of Array.from(Array(qtyByRequest).keys())) {
+      data.push(...(await this.getData({ ...params, qty: qtyByRequest })));
+      await sleep(1000);
+    }
+
+    return data;
+  }
+
   public async sendDataStreaming(data: DataToSend[], qtyOfDataBySecond = 1000) {
     if (!Array.isArray(data)) {
       return Promise.reject("Only data array is allowed");
