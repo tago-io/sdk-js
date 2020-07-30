@@ -1,6 +1,8 @@
+import chunk from "lodash.chunk";
 import TagoIOModule from "../../common/TagoIOModule";
 import { Data } from "../../common/common.types";
 import { DeviceInfo, DeviceConstructorParams, DataToSend, DataQuery } from "./device.types";
+import sleep from "../../common/sleep";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
   public async info() {
@@ -100,7 +102,20 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     return result;
   }
 
-  public async sendDataStreaming() {}
+  public async sendDataStreaming(data: DataToSend[], qtyOfDataBySecond = 1000) {
+    if (!Array.isArray(data)) {
+      return Promise.reject("Only data array is allowed");
+    }
+
+    const dataChunk = chunk(data, qtyOfDataBySecond);
+    for (const items of dataChunk) {
+      await this.sendData(items);
+
+      await sleep(1000);
+    }
+
+    return `${data.length} Data added.`;
+  }
 }
 
 export default Device;
