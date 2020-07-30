@@ -3,46 +3,73 @@ import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { AccessCreateInfo, AccessInfo, AccessQuery } from "./access.types";
 
 class Access extends TagoIOModule<GenericModuleParams> {
-  public async list(query?: AccessQuery): Promise<AccessInfo[]> {
+  /**
+   * Retrieves a list with all Access rules from account
+   * @default
+   * ```json
+   * Default queryObj: {
+   *   page: 1,
+   *   fields: ["id", "name", "tags"],
+   *   filter: {},
+   *   amount: 20,
+   *   orderBy: "name,asc",
+   * }
+   * ```
+   * @param queryObj Search query params
+   */
+  public async list(queryObj?: AccessQuery): Promise<AccessInfo[]> {
     const result = await this.doRequest<AccessInfo[]>({
       path: "/am",
       method: "GET",
       params: {
-        page: query?.page || 1,
-        fields: query?.fields || ["id", "name", "tags"],
-        filter: query?.filter || {},
-        amount: query?.amount || 20,
-        orderBy: query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "name,asc",
+        page: queryObj?.page || 1,
+        fields: queryObj?.fields || ["id", "name", "tags"],
+        filter: queryObj?.filter || {},
+        amount: queryObj?.amount || 20,
+        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
       },
     });
 
     return result;
   }
 
-  public async create(data: AccessCreateInfo): Promise<{ am_id: GenericID }> {
+  /**
+   * Create a new access policy
+   * @param accessObj
+   */
+  public async create(accessObj: AccessCreateInfo): Promise<{ am_id: GenericID }> {
     const result = await this.doRequest<{ am_id: GenericID }>({
       path: "/am",
       method: "POST",
       body: {
-        ...data,
+        ...accessObj,
       },
     });
 
     return result;
   }
 
-  public async edit(accessID: GenericID, data: Partial<AccessInfo>): Promise<string> {
+  /**
+   * Edit access policy
+   * @param accessID Access policy identification
+   * @param accessObj Access policy info to change
+   */
+  public async edit(accessID: GenericID, accessObj: Partial<AccessInfo>): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/am/${accessID}`,
       method: "PUT",
       body: {
-        ...data,
+        ...accessObj,
       },
     });
 
     return result;
   }
 
+  /**
+   * Delete account policy
+   * @param accessID Access policy identification
+   */
   public async delete(accessID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/am/${accessID}`,
@@ -52,6 +79,10 @@ class Access extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Get account policy info
+   * @param accessID Access policy identification
+   */
   public async info(accessID: GenericID): Promise<AccessInfo> {
     const result = await this.doRequest<AccessInfo>({
       path: `/am/${accessID}`,

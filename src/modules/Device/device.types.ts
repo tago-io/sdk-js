@@ -1,4 +1,4 @@
-import { Data, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
+import { Data, GenericID, GenericToken, TagsObj } from "../../common/common.types";
 import { Regions } from "../../regions";
 
 interface DeviceInfo {

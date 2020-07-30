@@ -18,6 +18,11 @@ class Connector extends TagoIOModule<ConnectorModuleParams> {
     return result;
   }
 
+  /**
+   * Get a valid token using token serie
+   * @param serieNumber
+   * @param authorization
+   */
   public async resolveToken(serieNumber: string, authorization?: string): Promise<GenericToken> {
     let path = `/connector/resolve/${serieNumber}`;
 
