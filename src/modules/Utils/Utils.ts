@@ -1,3 +1,11 @@
-export { default as envToJson } from "./envToJson";
-export { default as getAPIVersion } from "./getAPIVersion";
-export { default as getTokenByName } from "./getTokenByName";
+import envToJson from "./envToJson";
+import getAPIVersion from "./getAPIVersion";
+import getTokenByName from "./getTokenByName";
+
+const Utils = {
+  envToJson,
+  getAPIVersion,
+  getTokenByName,
+};
+
+export default Utils;

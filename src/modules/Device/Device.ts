@@ -1,11 +1,15 @@
 import chunk from "lodash.chunk";
 import TagoIOModule from "../../common/TagoIOModule";
-import { Data } from "../../common/common.types";
+import { Data, GenericID } from "../../common/common.types";
 import { DeviceInfo, DeviceConstructorParams, DataToSend, DataQuery } from "./device.types";
 import sleep from "../../common/sleep";
+import Batch from "../../common/BatchRequest";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
-  public async info() {
+  /**
+   * Get information about the current device
+   */
+  public async info(): Promise<DeviceInfo> {
     const result = await this.doRequest<DeviceInfo>({
       path: "/info",
       method: "GET",
@@ -14,7 +18,11 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     return result;
   }
 
-  public async sendData(data: DataToSend | DataToSend[]) {
+  /**
+   * Send data to device
+   * @param data An array or one object with data to be send to TagoIO using device token
+   */
+  public async sendData(data: DataToSend | DataToSend[]): Promise<string> {
     data = Array.isArray(data) ? data : [data];
 
     const result = await this.doRequest<string>({
@@ -26,15 +34,27 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     return result;
   }
 
-  public async getData(params?: DataQuery): Promise<Data[]> {
-    if (params?.query === "default") {
-      delete params.query;
+  /**
+   * Get data from TagoIO Device.
+   * @example
+   * ```json
+   * queryParams: {
+   *  query: "last_item",
+   *  variable: "humidity",
+   * }
+   * ```
+   * @param queryParams Object with query params
+   * @returns An array of TagoIO registers
+   */
+  public async getData(queryParams?: DataQuery): Promise<Data[]> {
+    if (queryParams?.query === "default") {
+      delete queryParams.query;
     }
 
     let result = await this.doRequest<Data[] | number>({
       path: "/data",
       method: "GET",
-      params: params,
+      params: queryParams,
     });
 
     if (typeof result === "number") {
@@ -59,28 +79,42 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     });
   }
 
-  public async deleteData(params?: DataQuery) {
-    if (!params) {
-      params = { query: "last_item" };
+  /**
+   * Delete data from device
+   * @example
+   * ```json
+   * queryParams: {
+   *  id: "0f123d2xz"
+   * }
+   * ```
+   * @param queryParams
+   */
+  public async deleteData(queryParams?: DataQuery): Promise<string> {
+    if (!queryParams) {
+      queryParams = { query: "last_item" };
     }
 
-    if (params?.query === "default") {
-      delete params.query;
+    if (queryParams?.query === "default") {
+      delete queryParams.query;
     }
 
     const result = await this.doRequest<string>({
       path: "/data",
       method: "DELETE",
-      params: params,
+      params: queryParams,
     });
 
     return result;
   }
 
-  public async getParameters(onlyNoRead?: boolean) {
+  /**
+   * Get parameters from device
+   * @param onlyUnRead set true to get only unread parameters
+   */
+  public async getParameters(onlyUnRead?: boolean): Promise<string> {
     const params: { sent_status?: boolean } = {};
 
-    if (onlyNoRead === true) {
+    if (onlyUnRead === true) {
       params.sent_status = true;
     }
 
@@ -93,7 +127,11 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     return result;
   }
 
-  public async setParameterAsRead(parameterID: string) {
+  /**
+   * Mark parameter as read
+   * @param parameterID Parameter identification
+   */
+  public async setParameterAsRead(parameterID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/device/params/${parameterID}`,
       method: "PUT",
@@ -127,6 +165,16 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     return data;
   }
 
+  /**
+   * Send data using streaming
+   *
+   * ! WARNING: not working yet.
+   * In development.
+   * @param data An array of object with data to be send to TagoIO using device token
+   * @param qtyOfDataBySecond Qty of data by second
+   * @internal
+   * @hidden
+   */
   public async sendDataStreaming(data: DataToSend[], qtyOfDataBySecond = 1000) {
     if (!Array.isArray(data)) {
       return Promise.reject("Only data array is allowed");
@@ -141,6 +189,8 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
 
     return `${data.length} Data added.`;
   }
+
+  public batch = new Batch(this.params);
 }
 
 export default Device;

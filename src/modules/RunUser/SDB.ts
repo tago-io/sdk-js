@@ -2,9 +2,9 @@ import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
 class SDB extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieves a custom parameter of a run user.
-   * The run user is identified by the token in the constructor.
-   * @param tagoRunURL Tago run url without http
+   * Retrieves a custom parameter of a Run user.
+   * The Run user is identified by the token in the constructor.
+   * @param tagoRunURL TagoIO Run url without http
    * @param key Identifier of the parameter
    */
   public async getItem(tagoRunURL: string, key: string): Promise<any> {
@@ -16,9 +16,9 @@ class SDB extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates or updates a custom parameter of a run user.
-   * The run user is identified by the token in the constructor.
-   * @param tagoRunURL Tago run url without http
+   * Creates or updates a custom parameter of a Run user.
+   * The Run user is identified by the token in the constructor.
+   * @param tagoRunURL TagoIO Run url without http
    * @param key Identifier of the parameter
    * @param value Value of the parameter
    */
@@ -32,9 +32,9 @@ class SDB extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete a custom parameter of a run user.
-   * The run user is identified by the token in the constructor.
-   * @param tagoRunURL Tago run url without http
+   * Delete a custom parameter of a Run user.
+   * The Run user is identified by the token in the constructor.
+   * @param tagoRunURL TagoIO Run url without http
    * @param key Identifier of the parameter
    */
   public async removeItem(tagoRunURL: string, key: string): Promise<any> {

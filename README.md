@@ -8,7 +8,7 @@ TagoIO SDK for JavaScript in the browser and Node.JS.
 | what                  | where                    |
 |-----------------------|--------------------------|
 | TagoIO website        | https://tago.io           |
-| SDK documentation     | https://sdk.js.tago.io    |
+| SDK documentation     | https://js.sdk.tago.io    |
 | General documentation | https://docs.tago.io      |
 
 ## Installation
@@ -46,7 +46,7 @@ async function getMyData() {
   // Current Temperature is: 63
 }
 
-// -> See full documentation at: http://sdk.js.tago.io/
+// -> See full documentation at: https://js.sdk.tago.io/
 ```
 
 ## License
