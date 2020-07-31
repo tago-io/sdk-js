@@ -140,21 +140,6 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     return result;
   }
 
-  public async sendDataStreaming(data: DataToSend[], qtyOfDataBySecond = 1000) {
-    if (!Array.isArray(data)) {
-      return Promise.reject("Only data array is allowed");
-    }
-
-    const dataChunk = chunk(data, qtyOfDataBySecond);
-    for (const items of dataChunk) {
-      await this.sendData(items);
-
-      await sleep(1000);
-    }
-
-    return `${data.length} Data added.`;
-  }
-
   public batch = new Batch(this.params);
 }
 
