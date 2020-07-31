@@ -1,13 +1,19 @@
 import chunk from "lodash.chunk";
-import TagoIOModule from "../../common/TagoIOModule";
-import { Data, GenericID } from "../../common/common.types";
-import { DeviceInfo, DeviceConstructorParams, DataToSend, DataQuery } from "./device.types";
-import sleep from "../../common/sleep";
 import Batch from "../../common/BatchRequest";
+import { Data, GenericID } from "../../common/common.types";
+import sleep from "../../common/sleep";
+import TagoIOModule from "../../common/TagoIOModule";
+import { DataQuery, DataToSend, DeviceConstructorParams, DeviceInfo } from "./device.types";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
    * Get information about the current device
+   * @example
+   * ```js
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * const result = await myDevice.info();
+   * ```
    */
   public async info(): Promise<DeviceInfo> {
     const result = await this.doRequest<DeviceInfo>({
@@ -21,6 +27,18 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
    * Send data to device
    * @param data An array or one object with data to be send to TagoIO using device token
+   * @example
+   * ```js
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * const result = await myDevice.sendData({
+   *   variable: "temperature",
+   *   unit: "F",
+   *   value: 55,
+   *   time: "2015-11-03 13:44:33",
+   *   location: { lat: 42.2974279, lng: -85.628292 },
+   * });
+   * ```
    */
   public async sendData(data: DataToSend | DataToSend[]): Promise<string> {
     data = Array.isArray(data) ? data : [data];
@@ -36,15 +54,17 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
 
   /**
    * Get data from TagoIO Device.
-   * @example
-   * ```json
-   * queryParams: {
-   *  query: "last_item",
-   *  variable: "humidity",
-   * }
-   * ```
    * @param queryParams Object with query params
    * @returns An array of TagoIO registers
+   * @example
+   * ```js
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * const result = await myDevice.getData({
+   *   query: "last_item",
+   *   variable: "humidity",
+   * });
+   * ```
    */
   public async getData(queryParams?: DataQuery): Promise<Data[]> {
     if (queryParams?.query === "default") {
@@ -81,13 +101,17 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
 
   /**
    * Delete data from device
-   * @example
-   * ```json
-   * queryParams: {
-   *  id: "0f123d2xz"
-   * }
-   * ```
    * @param queryParams
+   * @example
+   * ```js
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * const result = await myDevice.deleteData({
+   *   query: "last_item",
+   *   variable: "humidity",
+   *   value: 10
+   * });
+   * ```
    */
   public async deleteData(queryParams?: DataQuery): Promise<string> {
     if (!queryParams) {
@@ -110,6 +134,12 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
    * Get parameters from device
    * @param onlyUnRead set true to get only unread parameters
+   * @example
+   * ```js
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * const result = await myDevice.getParameters();
+   * ```
    */
   public async getParameters(onlyUnRead?: boolean): Promise<string> {
     const params: { sent_status?: boolean } = {};
@@ -130,6 +160,13 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
    * Mark parameter as read
    * @param parameterID Parameter identification
+   * @example
+   * ```js
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * const result = await myDevice.setParameterAsRead("parameter_id");
+   * ```
+   *
    */
   public async setParameterAsRead(parameterID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -140,6 +177,26 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     return result;
   }
 
+  /**
+   * Stream data to device
+   * @param data An array or one object with data to be send to TagoIO using device token
+   * @param qtyOfDataBySecond Quantity of data per second to be sent
+   * @example
+   * ```js
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * const result = await myDevice.sendDataStreaming(
+   *   {
+   *     variable: "temperature",
+   *     unit: "F",
+   *     value: 55,
+   *     time: "2015-11-03 13:44:33",
+   *     location: { lat: 42.2974279, lng: -85.628292 },
+   *   },
+   *   2000
+   * );
+   * ```
+   */
   public async sendDataStreaming(data: DataToSend[], qtyOfDataBySecond = 1000) {
     if (!Array.isArray(data)) {
       return Promise.reject("Only data array is allowed");

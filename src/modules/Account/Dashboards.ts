@@ -12,8 +12,6 @@ import {
 import _Share from "./_Share";
 
 class Dashboards extends TagoIOModule<GenericModuleParams> {
-  private share = new _Share({ ...this.params, type: "dashboard" });
-
   public async list(query?: DashboardQuery): Promise<DashboardInfo[]> {
     const result = await this.doRequest<DashboardInfo[]>({
       path: "/dashboard",
@@ -135,6 +133,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
+  private share = new _Share({ ...this.params, type: "dashboard" });
 
   // TODO dashboard id on constructor
   public widgets = new Widgets(this.params);

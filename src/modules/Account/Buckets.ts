@@ -7,47 +7,35 @@ import {
   BucketQuery,
   ExportBucket,
   ExportBucketOption,
+  ListVariablesOptions,
   VariablesInfo,
 } from "./buckets.types";
-
-interface ListVariablesOptions {
-  /**
-   * return amount of each variable
-   */
-  showAmount?: boolean;
-  /**
-   * return array of async deleted
-   */
-  showDeleted?: boolean;
-  /**
-   * Change origins to array of object with id and name
-   */
-  resolveOriginName?: boolean;
-}
 
 class Buckets extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list with all buckets from account
-   * @example
-   * Default: {
+   * @default
+   * ```json
+   * queryObj: {
    *   page: 1,
    *   fields: ["id", "name"],
    *   filter: {},
    *   amount: 20,
    *   orderBy: "name,asc",
    * }
-   * @param query Search query params
+   * ```
+   * @param queryObj Search query params
    */
-  list(query?: BucketQuery): Promise<BucketInfo[]> {
+  list(queryObj?: BucketQuery): Promise<BucketInfo[]> {
     const result = this.doRequest<BucketInfo[]>({
       path: "/bucket",
       method: "GET",
       params: {
-        page: query?.page || 1,
-        fields: query?.fields || ["id", "name"],
-        filter: query?.filter || {},
-        amount: query?.amount || 20,
-        orderBy: query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "name,asc",
+        page: queryObj?.page || 1,
+        fields: queryObj?.fields || ["id", "name"],
+        filter: queryObj?.filter || {},
+        amount: queryObj?.amount || 20,
+        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
       },
     });
 
@@ -56,13 +44,13 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Generates and retrieves a new bucket for the account
-   * @param createParams Bucket create object
+   * @param bucketObj Object with data to create new bucket
    */
-  create(createParams: BucketCreateInfo): Promise<{ bucket: string }> {
+  create(bucketObj: BucketCreateInfo): Promise<{ bucket: string }> {
     const result = this.doRequest<{ bucket: string }>({
       path: "/bucket",
       method: "POST",
-      body: createParams,
+      body: bucketObj,
     });
 
     return result;
@@ -71,13 +59,13 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   /**
    * Modifies any property of the bucket.
    * @param bucketID Bucket ID
-   * @param bucketObject JSON of bucket to replace
+   * @param bucketObj Bucket Object data to be replaced
    */
-  edit(bucketID: GenericID, bucketObject: Partial<BucketCreateInfo>): Promise<string> {
+  edit(bucketID: GenericID, bucketObj: Partial<BucketCreateInfo>): Promise<string> {
     const result = this.doRequest<string>({
       path: `/bucket/${bucketID}`,
       method: "PUT",
-      body: bucketObject,
+      body: bucketObj,
     });
 
     return result;
@@ -124,23 +112,25 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
 
   /**
    * List variables inside the bucket
-   * @example
-   * Options Default: {
+   * @default
+   * ```json
+   * optionsObj: {
    *   showAmount: false
    *   showDeleted: false
    *   resolveOriginName: false
    * }
+   * ```
    * @param bucketID Bucket ID
-   * @param options Request options
+   * @param optionsObj Request options
    */
-  listVariables(bucketID: GenericID, options?: ListVariablesOptions): Promise<VariablesInfo[]> {
+  listVariables(bucketID: GenericID, optionsObj?: ListVariablesOptions): Promise<VariablesInfo[]> {
     const result = this.doRequest<VariablesInfo[]>({
       path: `/bucket/${bucketID}/variable`,
       method: "GET",
       params: {
-        amount: options?.showAmount || false,
-        deleted: options?.showDeleted || false,
-        resolveOriginName: options?.resolveOriginName || false,
+        amount: optionsObj?.showAmount || false,
+        deleted: optionsObj?.showDeleted || false,
+        resolveOriginName: optionsObj?.resolveOriginName || false,
       },
     });
 
@@ -179,15 +169,15 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * Export Data from Bucket
    * @param buckets Array of JSON with get details
    * @param output Type of output
-   * @param options Options of request
+   * @param optionsObj Options of request
    */
-  exportData(buckets: ExportBucket, output: ExportOption, options?: ExportBucketOption): Promise<string> {
+  exportData(buckets: ExportBucket, output: ExportOption, optionsObj?: ExportBucketOption): Promise<string> {
     const result = this.doRequest<string>({
       path: `/data/export?output=${output}`,
       method: "POST",
       body: {
         buckets,
-        ...options,
+        ...optionsObj,
       },
     });
 
