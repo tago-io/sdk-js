@@ -45,6 +45,16 @@ interface DashboardInfo extends DashboardCreateInfo {
   };
 }
 
+interface WidgetInfo {
+  analysis_run?: GenericID;
+  dashboard?: GenericID;
+  display?: object;
+  data: object[];
+  id?: GenericID;
+  label: string;
+  realtime?: boolean | null;
+  type: string;
+}
 interface DevicesRelated extends BucketDeviceInfo {
   bucket: GenericID;
 }
@@ -53,4 +63,18 @@ type DashboardQuery = Query<DashboardInfo, "name" | "label" | "active" | "create
 
 type PublicKeyResponse = { token: GenericToken; expire_time: "never" };
 
-export { DashboardQuery, PublicKeyResponse, DevicesRelated, DashboardCreateInfo, DashboardInfo };
+type widgetOverwriteOptions = "start_date" | "end_date" | "timezone";
+
+type widgetOverwrite = {
+  [key in widgetOverwriteOptions]: any;
+};
+
+export {
+  DashboardQuery,
+  PublicKeyResponse,
+  DevicesRelated,
+  DashboardCreateInfo,
+  DashboardInfo,
+  WidgetInfo,
+  widgetOverwrite,
+};

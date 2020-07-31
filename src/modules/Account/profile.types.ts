@@ -63,4 +63,10 @@ interface AuditLogFilter {
   end_date?: string;
 }
 
-export { ProfileListInfo, ProfileInfo, UsageStatistic, AuditLog, AuditLogFilter };
+interface AddonInfo {
+  id: GenericID;
+  name: string;
+  logo_url: string | null;
+}
+
+export { ProfileListInfo, ProfileInfo, UsageStatistic, AuditLog, AuditLogFilter, AddonInfo };

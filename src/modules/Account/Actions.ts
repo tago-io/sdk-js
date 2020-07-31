@@ -50,7 +50,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   /**
    * Modify any property of the action.
    * @param actionID Action ID
-   * @param actionObj Action Object to replace
+   * @param actionObj Action Object with data to be replaced
    */
   edit(actionID: GenericID, actionObj: Partial<ActionCreateInfo>): Promise<string> {
     const result = this.doRequest<string>({

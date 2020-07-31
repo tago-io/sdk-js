@@ -3,16 +3,29 @@ import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { NotificationInfo, NotificationQuery } from "./notifications.types";
 
 class Notifications extends TagoIOModule<GenericModuleParams> {
-  public async list(query?: NotificationQuery): Promise<NotificationInfo[]> {
+  /**
+   * Retrieves a list with all actions from the account
+   * @param queryObj Search query params
+   */
+  public async list(queryObj?: NotificationQuery): Promise<NotificationInfo[]> {
     const result = await this.doRequest<NotificationInfo[]>({
       path: "/notification/",
       method: "GET",
-      params: query,
+      params: queryObj,
     });
 
     return result;
   }
-  public async markAsRead(notificationIDS: GenericID[]): Promise<string> {
+
+  /**
+   * Mark notifications as read
+   * @param notificationIDS An array of ids or a single id
+   */
+  public async markAsRead(notificationIDS: GenericID[] | GenericID): Promise<string> {
+    if (!Array.isArray(notificationIDS)) {
+      notificationIDS = [notificationIDS];
+    }
+
     const result = await this.doRequest<string>({
       path: "/notification/read",
       method: "PUT",
@@ -23,6 +36,11 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
+  /**
+   * Accept a notification
+   * @param notificationID Notification identification
+   */
   public async accept(notificationID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/notification/accept/${notificationID}`,
@@ -31,6 +49,11 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
+  /**
+   * Refuse a notification
+   * @param notificationID Notification identification
+   */
   public async refuse(notificationID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/notification/refuse/${notificationID}`,
@@ -39,6 +62,11 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
+  /**
+   * Remove a notification
+   * @param notificationID Notification identification
+   */
   public async remove(notificationID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/notification/${notificationID}`,
@@ -48,6 +76,11 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Register device Token on Push Notification Service
+   * @param deviceToken Device token
+   * @param platform Platform of device
+   */
   public async registerDevice(deviceToken: GenericToken, platform: "ios" | "android"): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/notification/push/register`,
@@ -61,6 +94,10 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Unregister device Token on Push Notification Service
+   * @param deviceToken Device token
+   */
   public async unRegisterDevice(deviceToken: GenericToken): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/notification/push/unregister`,
