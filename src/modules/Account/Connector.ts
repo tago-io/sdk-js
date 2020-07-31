@@ -3,22 +3,41 @@ import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery, ConnectorTokenInfo } from "./connector.types";
 
 class Connectors extends TagoIOModule<GenericModuleParams> {
-  public async list(query?: ConnectorQuery): Promise<ConnectorInfo[]> {
+  /**
+   * Retrieves a list with all connectors from account
+   * @default
+   * ```json
+   * queryObj: {
+   *   page: 1,
+   *   fields: ["id", "name"],
+   *   filter: {},
+   *   amount: 20,
+   *   orderBy: "name,asc",
+   * }
+   * ```
+   * @param queryObj Search query params
+   */
+  public async list(queryObj?: ConnectorQuery): Promise<ConnectorInfo[]> {
     const result = await this.doRequest<ConnectorInfo[]>({
       path: "/connector/",
       method: "GET",
       params: {
-        page: query?.page || 1,
-        fields: query?.fields || ["id", "name"],
-        filter: query?.filter || {},
-        amount: query?.amount || 20,
-        orderBy: query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "name,asc",
+        page: queryObj?.page || 1,
+        fields: queryObj?.fields || ["id", "name"],
+        filter: queryObj?.filter || {},
+        amount: queryObj?.amount || 20,
+        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
       },
     });
 
     return result;
   }
 
+  /**
+   * Get Info of the Connector
+   * @param connectorID Connector identification
+   * @param noParent Dont subscribe parameters with parent parameters
+   */
   public async info(connectorID: GenericID, noParent: boolean = false): Promise<ConnectorInfo> {
     const result = await this.doRequest<ConnectorInfo>({
       path: `/connector/${connectorID}`,
@@ -31,29 +50,42 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async create(data: ConnectorCreateInfo): Promise<{ connector: GenericID }> {
+  /**
+   * Generates and retrieves a new connector from the account
+   * @param connectorObj Object data to create new Connector
+   */
+  public async create(connectorObj: ConnectorCreateInfo): Promise<{ connector: GenericID }> {
     const result = await this.doRequest<{ connector: GenericID }>({
       path: `/connector/`,
       method: "POST",
       body: {
-        ...data,
+        ...connectorObj,
       },
     });
 
     return result;
   }
 
-  public async edit(connectorID: GenericID, data: Partial<ConnectorCreateInfo>): Promise<string> {
+  /**
+   * Modify any property of the connector
+   * @param connectorID Connector identification
+   * @param connectorObj Object data to create new Connector
+   */
+  public async edit(connectorID: GenericID, connectorObj: Partial<ConnectorCreateInfo>): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/connector/${connectorID}`,
       method: "PUT",
       body: {
-        ...data,
+        ...connectorObj,
       },
     });
 
     return result;
   }
+  /**
+   * Deletes an connector from the account
+   * @param connectorID Connector identification
+   */
   public async delete(connectorID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/connector/${connectorID}`,
@@ -65,27 +97,29 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Retrieves a list of all tokens
-   * @example
-   * Default: {
+   * @default
+   * ```json
+   * queryObj: {
    *   page: 1,
    *   fields: ["name", "token", "permission"],
    *   filter: {},
    *   amount: 20,
    *   orderBy: "created_at,desc",
    * }
+   * ```
    * @param connectorID Connector ID
-   * @param query Search query params
+   * @param queryObj Search query params
    */
-  tokenList(connectorID: GenericID, query?: ListTokenQuery): Promise<Partial<ConnectorTokenInfo>[]> {
+  tokenList(connectorID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<ConnectorTokenInfo>[]> {
     const result = this.doRequest<Partial<ConnectorTokenInfo>[]>({
       path: `/connector/token/${connectorID}`,
       method: "GET",
       params: {
-        page: query?.page || 1,
-        fields: query?.fields || ["name", "token", "permission"],
-        filter: query?.filter || {},
-        amount: query?.amount || 20,
-        orderBy: query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "created_at,desc",
+        page: queryObj?.page || 1,
+        fields: queryObj?.fields || ["name", "token", "permission"],
+        filter: queryObj?.filter || {},
+        amount: queryObj?.amount || 20,
+        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "created_at,desc",
       },
     });
 

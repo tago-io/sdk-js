@@ -12,45 +12,72 @@ import {
 import _Share from "./_Share";
 
 class Dashboards extends TagoIOModule<GenericModuleParams> {
-  private share = new _Share({ ...this.params, type: "dashboard" });
-
-  public async list(query?: DashboardQuery): Promise<DashboardInfo[]> {
+  /**
+   * Retrieves a list with all dashboards from the account
+   * @default
+   * ```json
+   * queryObj: {
+   *   page: 1,
+   *   fields: ["id", "name"],
+   *   filter: {},
+   *   amount: 20,
+   *   orderBy: "label,asc",
+   * }
+   * ```
+   * @param queryObj Search query params
+   */
+  public async list(queryObj?: DashboardQuery): Promise<DashboardInfo[]> {
     const result = await this.doRequest<DashboardInfo[]>({
       path: "/dashboard",
       method: "GET",
       params: {
-        page: query?.page || 1,
-        fields: query?.fields || ["id", "name"],
-        filter: query?.filter || {},
-        amount: query?.amount || 20,
-        orderBy: query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "label,asc",
+        page: queryObj?.page || 1,
+        fields: queryObj?.fields || ["id", "name"],
+        filter: queryObj?.filter || {},
+        amount: queryObj?.amount || 20,
+        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "label,asc",
       },
     });
 
     return result;
   }
-  public async create(data: DashboardCreateInfo): Promise<{ dashboard: GenericID }> {
+  /**
+   * Generates and retrieves a new dashboard from the account
+   * @param dashboardObj Object data to create new Dashboard
+   */
+  public async create(dashboardObj: DashboardCreateInfo): Promise<{ dashboard: GenericID }> {
     const result = await this.doRequest<{ dashboard: GenericID }>({
       path: "/dashboard",
       method: "POST",
       body: {
-        ...data,
+        ...dashboardObj,
       },
     });
 
     return result;
   }
-  public async edit(dashboardID: GenericID, data: Partial<DashboardInfo>): Promise<string> {
+
+  /**
+   * Modify any property of the action
+   * @param dashboardID Dashboard identification
+   * @param dashboardObj Dashboard Object with data to be replaced
+   */
+  public async edit(dashboardID: GenericID, dashboardObj: Partial<DashboardInfo>): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/dashboard/${dashboardID}`,
       method: "PUT",
       body: {
-        ...data,
+        ...dashboardObj,
       },
     });
 
     return result;
   }
+
+  /**
+   * Deletes an dashboard from the account
+   * @param dashboardID Dashboard identification
+   */
   public async delete(dashboardID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/dashboard/${dashboardID}`,
@@ -59,6 +86,11 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
+  /**
+   * Gets information about the dashboard
+   * @param dashboardID Dashboard identification
+   */
   public async info(dashboardID: GenericID): Promise<DashboardInfo> {
     const result = await this.doRequest<DashboardInfo>({
       path: `/dashboard/${dashboardID}`,
@@ -67,35 +99,64 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
+  /**
+   * Duplicate the dashboard to your own account
+   * @param dashboardID Dashboard identification
+   * @param dashboardObj Object with data of the duplicate dashboard
+   */
   public async duplicate(
     dashboardID: GenericID,
-    data?: { setup?: object; new_label?: string }
+    dashboardObj?: { setup?: object; new_label?: string }
   ): Promise<{ dashboard_id: string; message: string }> {
     const result = await this.doRequest<{ dashboard_id: string; message: string }>({
       path: `/dashboard/${dashboardID}/duplicate`,
       method: "POST",
-      body: data || {},
+      body: dashboardObj || {},
     });
 
     return result;
   }
 
+  /**
+   * Get share list of the dashboard
+   * @param dashboardID Dashboard identification
+   */
   public async shareList(dashboardID: GenericID): Promise<InviteInfo[]> {
     return this.share.list(dashboardID);
   }
 
-  public async shareSendInvite(dashboardID: GenericID, data: InviteInfo): Promise<InviteResponse> {
-    return this.share.invite(dashboardID, data);
+  /**
+   * Share the dashboard with another person
+   * @param dashboardID Dashboard identification
+   * @param inviteObj Object with target and message
+   */
+  public async shareSendInvite(dashboardID: GenericID, inviteObj: InviteInfo): Promise<InviteResponse> {
+    return this.share.invite(dashboardID, inviteObj);
   }
 
-  public async shareEdit(dashboardID: GenericID, data: Partial<InviteInfo>): Promise<string> {
-    return this.share.edit(dashboardID, data);
+  /**
+   * Change permissions of the bucket
+   * @param shareID Share identification
+   * @param targetObj Object with target email and new permission
+   */
+  public async shareEdit(shareID: GenericID, targetObj: Partial<InviteInfo>): Promise<string> {
+    return this.share.edit(shareID, targetObj);
   }
 
-  public async shareDelete(dashboardID: GenericID): Promise<string> {
-    return this.share.remove(dashboardID);
+  /**
+   * Remove share of the bucket
+   * @param shareID Share identification
+   */
+  public async shareDelete(shareID: GenericID): Promise<string> {
+    return this.share.remove(shareID);
   }
 
+  /**
+   * Generate a new public token for the dashboard
+   * @param dashboardID Dashboard identification
+   * @param expireTime Time when token will expire
+   */
   public async getPublicKey(
     dashboardID: GenericID,
     expireTime: ExpireTimeOption = "never"
@@ -111,6 +172,10 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Get list of devices related with dashboard
+   * @param dashboardID Dashboard identification
+   */
   public async listDevicesRelated(dashboardID: GenericID): Promise<DevicesRelated[]> {
     const result = await this.doRequest<DevicesRelated[]>({
       path: `/dashboard/${dashboardID}/devices`,
@@ -120,23 +185,32 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  // TODO test
+  /**
+   * Runs an analysis located in a widget's header button
+   * @param analysisID The id of the analysis to run
+   * @param dashboardID The id of the dashboard that contains the widget
+   * @param widgetID The id of the widget that contains the header button
+   * @param scope Data to send to the analysis
+   */
   public async runWidgetHeaderButtonAnalysis(
     analysisID: GenericID,
     dashboardID: GenericID,
     widgetID: GenericID,
-    // TODO
     scope?: object
   ): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/analysis/${analysisID}/run/${dashboardID}/${widgetID}`,
       method: "POST",
+      body: {
+        scope,
+      },
     });
 
     return result;
   }
 
-  // TODO dashboard id on constructor
+  private share = new _Share({ ...this.params, type: "dashboard" });
+
   public widgets = new Widgets(this.params);
 }
 

@@ -5,26 +5,28 @@ import { ActionCreateInfo, ActionInfo, ActionQuery } from "./actions.types";
 class Actions extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list with all actions from the account
-   * @example
-   * Default Query: {
+   * @default
+   * ```json
+   * queryObj: {
    *   page: 1,
    *   fields: ["id", "name"],
    *   filter: {},
    *   amount: 20,
    *   orderBy: "name,asc",
    * }
-   * @param query Search query params
+   * ```
+   * @param queryObj Search query params
    */
-  list(query?: ActionQuery): Promise<ActionInfo[]> {
+  list(queryObj?: ActionQuery): Promise<ActionInfo[]> {
     const result = this.doRequest<ActionInfo[]>({
       path: "/action",
       method: "GET",
       params: {
-        page: query?.page || 1,
-        fields: query?.fields || ["id", "name"],
-        filter: query?.filter || {},
-        amount: query?.amount || 20,
-        orderBy: query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "name,asc",
+        page: queryObj?.page || 1,
+        fields: queryObj?.fields || ["id", "name"],
+        filter: queryObj?.filter || {},
+        amount: queryObj?.amount || 20,
+        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
       },
     });
 
@@ -33,13 +35,13 @@ class Actions extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Generates and retrieves a new action from the account
-   * @param data Action object to create new TagoIO Action
+   * @param actionObj Object data to create new TagoIO Action
    */
-  create(data: ActionCreateInfo): Promise<{ action: string }> {
+  create(actionObj: ActionCreateInfo): Promise<{ action: string }> {
     const result = this.doRequest<{ action: string }>({
       path: "/action",
       method: "POST",
-      body: data,
+      body: actionObj,
     });
 
     return result;
@@ -48,13 +50,13 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   /**
    * Modify any property of the action.
    * @param actionID Action ID
-   * @param data Action Object to replace
+   * @param actionObj Action Object with data to be replaced
    */
-  edit(actionID: GenericID, data: Partial<ActionCreateInfo>): Promise<string> {
+  edit(actionID: GenericID, actionObj: Partial<ActionCreateInfo>): Promise<string> {
     const result = this.doRequest<string>({
       path: `/action/${actionID}`,
       method: "PUT",
-      body: data,
+      body: actionObj,
     });
 
     return result;

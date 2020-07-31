@@ -2,7 +2,7 @@ import TagoIOModule, { GenericModuleParams, doRequestParams } from "../../common
 import { Regions } from "../../regions";
 
 class GetAPIVersion extends TagoIOModule<GenericModuleParams> {
-  public static async getVersion(region?: Regions) {
+  public static async getVersion(region?: Regions): Promise<string> {
     const params: doRequestParams = {
       path: "/status",
       method: "GET",

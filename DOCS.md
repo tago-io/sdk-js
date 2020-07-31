@@ -1,18 +1,10 @@
-## Help
-
-TagoIO SDK for JavaScript in the browser and Node.JS.
-
-| what                  | where                    |
-|-----------------------|--------------------------|
-| TagoIO website        | https://tago.io           |
-| SDK documentation     | https://sdk.js.tago.io    |
-| General documentation | https://docs.tago.io      |
-
 ## Installation
 
 ```bash
 $ npm install @tago-io/sdk --save
 ```
+
+___
 
 ## Quick Example
 #### Insert Device Data
@@ -45,6 +37,8 @@ async function getMyData() {
 
 // -> See full documentation at: http://sdk.js.tago.io/
 ```
+
+___
 
 ## License
 

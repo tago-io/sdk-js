@@ -21,6 +21,9 @@ interface DeviceInfo {
   bucket_name?: string;
 }
 
+/**
+ * @param token token
+ */
 interface DeviceConstructorParams {
   token: GenericToken;
   region?: Regions;

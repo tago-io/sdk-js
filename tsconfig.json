@@ -23,7 +23,7 @@
   ],
   "typedocOptions": {
     "name": "TagoIO SDK for JavaScript and TypeScript",
-    "readme": "./DOCS.MD",
+    "readme": "./DOCS.md",
     "inputFiles": [
       "./src"
     ],
@@ -39,6 +39,7 @@
     ],
     "mode": "file",
     "out": "docs",
+    "gaID": "UA-57075518-5",
     "excludePrivate": true,
     "excludeProtected": true,
     "stripInternal": true

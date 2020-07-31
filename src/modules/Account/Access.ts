@@ -7,7 +7,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
    * Retrieves a list with all Access rules from account
    * @default
    * ```json
-   * Default queryObj: {
+   * queryObj: {
    *   page: 1,
    *   fields: ["id", "name", "tags"],
    *   filter: {},

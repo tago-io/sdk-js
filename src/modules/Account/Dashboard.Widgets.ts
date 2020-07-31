@@ -1,29 +1,29 @@
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { GenericID, GenericToken } from "../../common/common.types";
-
-interface WidgetInfo {
-  analysis_run?: GenericID;
-  dashboard?: GenericID;
-  display?: object;
-  //TODO
-  data: object[];
-  id?: GenericID;
-  label: string;
-  realtime?: boolean | null;
-  type: string;
-}
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { WidgetInfo, widgetOverwrite } from "./dashboards.types";
 
 class Widgets extends TagoIOModule<GenericModuleParams> {
-  // TODO
-  public async create(dashboardID: GenericID, data: WidgetInfo): Promise<any> {
+  /**
+   * Create a Dashboard Widget
+   * @param dashboardID Dashboard identification
+   * @param widgetObj
+   */
+  public async create(dashboardID: GenericID, widgetObj: WidgetInfo): Promise<any> {
     const result = await this.doRequest<any>({
       path: `/dashboard/${dashboardID}/widget/`,
       method: "POST",
-      body: data,
+      body: widgetObj,
     });
 
     return result;
   }
+
+  /**
+   * Edit the Dashboard Widget
+   * @param dashboardID Dashboard identification
+   * @param widgetID Widget identification
+   * @param data
+   */
   public async edit(dashboardID: GenericID, widgetID: GenericID, data: Partial<WidgetInfo>): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/dashboard/${dashboardID}/widget/${widgetID}`,
@@ -33,6 +33,12 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
+  /**
+   * Delete the Dashboard Widget
+   * @param dashboardID Dashboard identification
+   * @param widgetID Widget identification
+   */
   public async delete(dashboardID: GenericID, widgetID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/dashboard/${dashboardID}/widget/${widgetID}`,
@@ -42,6 +48,11 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Get Info of the Dashboard Widget
+   * @param dashboardID Dashboard identification
+   * @param widgetID Widget identification
+   */
   public async info(dashboardID: GenericID, widgetID: GenericID): Promise<WidgetInfo> {
     const result = await this.doRequest<WidgetInfo>({
       path: `/dashboard/${dashboardID}/widget/${widgetID}`,
@@ -50,16 +61,32 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
-  // TODO
-  public async getData(dashboardID: GenericID, widgetID: GenericID): Promise<object> {
+
+  /**
+   * Get all data for the current widget
+   * @param dashboardID Dashboard identification
+   * @param widgetID Widget identification
+   * @param overwrite It can overwrite 'start_date', 'end_date', 'timezone' fields
+   */
+  public async getData(dashboardID: GenericID, widgetID: GenericID, overwrite: widgetOverwrite): Promise<object> {
     const result = await this.doRequest<object>({
       path: `/data/${dashboardID}/${widgetID}`,
       method: "GET",
+      params: {
+        overwrite,
+      },
     });
 
     return result;
   }
 
+  /**
+   * Update value of variable for the current widget
+   * @param dashboardID Dashboard identification
+   * @param widgetID Widget identification
+   * @param data
+   * @param bypassBucket
+   */
   public async sendData(
     dashboardID: GenericID,
     widgetID: GenericID,
@@ -78,6 +105,12 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Run analysis without inserting data to bucket
+   * @param dashboardID Dashboard identification
+   * @param widgetID Widget identification
+   * @param data
+   */
   public async runAnalysis(dashboardID: GenericID, widgetID: GenericID, data: object): Promise<object> {
     const result = await this.doRequest<object>({
       path: `/data/${dashboardID}/${widgetID}/run`,
@@ -88,6 +121,12 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Delete data by it's id, bucket and variable must be associeted with the widget
+   * @param dashboardID Dashboard identification
+   * @param widgetID Widget identification
+   * @param ids
+   */
   public async deleteData(dashboardID: GenericID, widgetID: GenericID, ids: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/data/${dashboardID}/${widgetID}`,
@@ -99,6 +138,13 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
+  /**
+   * Generate a new token for the embed widgets
+   * It can regenerate the token if call it multi-times
+   * @param dashboardID Dashboard identification
+   * @param widgetID Widget identification
+   */
   public async tokenGenerate(dashboardID: GenericID, widgetID: GenericID): Promise<{ widget_token: GenericToken }> {
     const result = await this.doRequest<{ widget_token: GenericToken }>({
       path: `/dashboard/${dashboardID}/widget/${widgetID}/token`,
