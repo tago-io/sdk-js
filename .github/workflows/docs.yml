@@ -16,10 +16,12 @@ jobs:
         run: |
           npm ci
           npm run docs
-          rm -rf __tests__ src .github *.js *.json *.md
+          rm -rf __tests__ src .github *.js *.json *.md *.MD
+          rm -rf .editorconfig .eslintignore .eslintrc.js .npmignore .npmrc .prettierrc
           mv docs/* .
           rm -rf docs/
           touch .nojekyll
+          echo "js.sdk.tago.io" > CNAME
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
