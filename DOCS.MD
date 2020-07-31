@@ -1,13 +1,3 @@
-## Help
-
-TagoIO SDK for JavaScript in the browser and Node.JS.
-
-| what                  | where                    |
-|-----------------------|--------------------------|
-| TagoIO website        | https://tago.io           |
-| SDK documentation     | https://sdk.js.tago.io    |
-| General documentation | https://docs.tago.io      |
-
 ## Installation
 
 ```bash
