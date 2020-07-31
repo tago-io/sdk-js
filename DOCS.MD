@@ -4,6 +4,8 @@
 $ npm install @tago-io/sdk --save
 ```
 
+___
+
 ## Quick Example
 #### Insert Device Data
 ``` javascript
@@ -35,6 +37,8 @@ async function getMyData() {
 
 // -> See full documentation at: http://sdk.js.tago.io/
 ```
+
+___
 
 ## License
 
