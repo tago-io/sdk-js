@@ -177,41 +177,6 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     return result;
   }
 
-  /**
-   * Stream data to device
-   * @param data An array or one object with data to be send to TagoIO using device token
-   * @param qtyOfDataBySecond Quantity of data per second to be sent
-   * @example
-   * ```js
-   * const myDevice = new Device({ token: "my_device_token" });
-   *
-   * const result = await myDevice.sendDataStreaming(
-   *   {
-   *     variable: "temperature",
-   *     unit: "F",
-   *     value: 55,
-   *     time: "2015-11-03 13:44:33",
-   *     location: { lat: 42.2974279, lng: -85.628292 },
-   *   },
-   *   2000
-   * );
-   * ```
-   */
-  public async sendDataStreaming(data: DataToSend[], qtyOfDataBySecond = 1000) {
-    if (!Array.isArray(data)) {
-      return Promise.reject("Only data array is allowed");
-    }
-
-    const dataChunk = chunk(data, qtyOfDataBySecond);
-    for (const items of dataChunk) {
-      await this.sendData(items);
-
-      await sleep(1000);
-    }
-
-    return `${data.length} Data added.`;
-  }
-
   public batch = new Batch(this.params);
 }
 
