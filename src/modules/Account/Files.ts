@@ -5,46 +5,75 @@ import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { Base64File, FileListInfo, FileQuery, FilesPermission, MoveFiles, Options } from "./files.types";
 
 class Files extends TagoIOModule<GenericModuleParams> {
-  private isCanceled(cancelled: boolean) {
-    if (cancelled) {
-      throw new Error("Cancelled request");
-    }
-  }
-
-  public async list(query?: FileQuery): Promise<FileListInfo> {
+  /**
+   * list of files in account
+   * @param queryObj Object with path, pagination and quantity
+   */
+  public async list(queryObj?: FileQuery): Promise<FileListInfo> {
     const result = await this.doRequest<FileListInfo>({
       path: "/files",
       method: "GET",
       params: {
-        path: query?.path || "/",
-        pagination_token: query?.paginationToken,
-        qty: query?.quantity || 300,
+        path: queryObj?.path || "/",
+        pagination_token: queryObj?.paginationToken,
+        qty: queryObj?.quantity || 300,
       },
     });
 
     return result;
   }
 
-  public async uploadBase64(data: Base64File[]): Promise<string> {
+  /**
+   * Upload an array of files(Base64) to TagoIO
+   * The filename parameter is also full path
+   * @param fileList Array of files data to be uploaded
+   * @example
+   * ```json
+   * fileList: [
+   *   {
+   *     filename: "/myfiles/myfile.ext",
+   *     file: "StringWithBase64"
+   *   }
+   * ]
+   * ```
+   */
+  public async uploadBase64(fileList: Base64File[]): Promise<string> {
     const result = await this.doRequest<string>({
       path: "/files",
       method: "POST",
-      body: data,
+      body: fileList,
     });
 
     return result;
   }
 
-  public async move(data: MoveFiles[]): Promise<string> {
+  /**
+   * Move/Rename Files
+   * @param fileList Array move actions to be made
+   * @example
+   * ```json
+   * fileList: [
+   *   {
+   *     from: "/myfiles/myOldName.ext",
+   *     to: "/myfiles/newFolder/andNewName.ext"
+   *   }
+   * ]
+   * ```
+   */
+  public async move(fileList: MoveFiles[]): Promise<string> {
     const result = await this.doRequest<string>({
       path: "/files",
       method: "PUT",
-      body: data,
+      body: fileList,
     });
 
     return result;
   }
 
+  /**
+   * Delete Folder or Files
+   * @param files An array of files or folders to be deleted
+   */
   public async delete(files: string[]): Promise<string> {
     const result = await this.doRequest<string>({
       path: "/files",
@@ -55,6 +84,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Check if file is private or public
+   * @param file Path of file
+   */
   public async checkPermission(file: string): Promise<{ public: boolean }> {
     const result = await this.doRequest<{ public: boolean }>({
       path: "/files/permission",
@@ -67,11 +100,15 @@ class Files extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async changePermission(files: FilesPermission[]): Promise<string> {
+  /**
+   * Change visibility from files
+   * @param filesVisibility An Array with files and their visibility to be setted
+   */
+  public async changePermission(filesVisibility: FilesPermission[]): Promise<string> {
     const result = await this.doRequest<string>({
       path: "/files/permission",
       method: "PUT",
-      body: files,
+      body: filesVisibility,
     });
 
     return result;
@@ -87,6 +124,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
     return url.slice(tagoURL + 8, url.length);
   }
 
+  /**
+   * Get a file url with authenticate token valid for 120 seconds
+   * @param url Full TagoIO File url
+   */
   public async getFileURLSigned(url: string): Promise<string> {
     const path = await this.getPathFromUrl(url);
 
@@ -101,6 +142,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Get file md5 with authenticate token for privates files
+   * @param url Full TagoIO File url
+   */
   public async getFileMD5(url: string): Promise<string> {
     const path = await this.getPathFromUrl(url);
 
@@ -116,6 +161,11 @@ class Files extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Creates a multipart upload instance
+   * @param filename the path + filename for the file
+   * @param options the upload options for this file
+   */
   private async createMultipartUpload(filename: string, options: Options) {
     const path = options.dashboard && options.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
 
@@ -133,6 +183,14 @@ class Files extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Uploads a single part to TagoIO
+   * @param filename the path + filename for the file
+   * @param uploadID the upload ID acquired by the 'createMultipartUpload' function call
+   * @param partNumber the sequential part number for the upload. This should be 1 in the first call, then 2 in the second call, so on and so forth
+   * @param blob the portion of the file to be uploaded
+   * @param options the upload options for this file
+   */
   async _uploadPart(filename: string, uploadID: string, partNumber: number, blob: Buffer | Blob, options: Options) {
     const path = options.dashboard && options.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
 
@@ -158,6 +216,16 @@ class Files extends TagoIOModule<GenericModuleParams> {
     };
   }
 
+  /**
+   * Adds an upload to the queue.
+   * It will try to upload for 'opts.maxTriesForEachChunk' and fail
+   * if it couldn't upload after those many tries.
+   * @param filename the path + filename for the file
+   * @param uploadID the upload ID acquired by the 'createMultipartUpload' function call
+   * @param partNumberthe sequential part number for the upload. This should be 1 in the first call, then 2 in the second call, so on and so forth
+   * @param blob the portion of the file to be uploaded
+   * @param options see the uploadFile function
+   */
   async _addToQueue(filename: string, uploadID: GenericID, partNumber: number, blob: Buffer | Blob, options: Options) {
     const maxTries = options.maxTriesForEachChunk || 5;
     const timeout = options.timeoutForEachFailedChunk || 2000;
@@ -179,7 +247,19 @@ class Files extends TagoIOModule<GenericModuleParams> {
     }
   }
 
-  async _completeMultipartUpload(filename: string, uploadID: string, parts: any[], options: Options) {
+  /**
+   * Finishes a multipart upload instance
+   * @param filename the path + filename for the file
+   * @param uploadID the upload ID acquired by the 'createMultipartUpload' function call
+   * @param parts all the parts uploaded to the file
+   * @param options the upload options for this file
+   */
+  async _completeMultipartUpload(
+    filename: string,
+    uploadID: string,
+    parts: { ETag: String; PartNumber: number }[],
+    options: Options
+  ) {
     const path = options.dashboard && options.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
 
     const partsOrdered = parts.sort((a, b) => a.PartNumber - b.PartNumber);
@@ -198,6 +278,14 @@ class Files extends TagoIOModule<GenericModuleParams> {
     });
   }
 
+  /**
+   * Uploads a single file to TagoIO.
+   * The upload is multipart, meaning that the file will be divided and sent in chunks, resulting in multiple requests being made.
+   *
+   * @param file the file to be uploaded
+   * @param filename the path + filename for the file
+   * @param options the upload options for this file
+   */
   public async uploadFile(file: Buffer | Blob, filename: string, options: Options) {
     const MB = Math.pow(2, 20);
 
@@ -294,6 +382,16 @@ class Files extends TagoIOModule<GenericModuleParams> {
           throw ex;
         }
       }
+    }
+  }
+
+  /**
+   * Throw a error if is cancelled
+   * @param cancelled
+   */
+  private isCanceled(cancelled: boolean) {
+    if (cancelled) {
+      throw new Error("Cancelled request");
     }
   }
 }

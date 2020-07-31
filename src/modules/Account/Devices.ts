@@ -19,8 +19,8 @@ import {
 class Devices extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list with all devices from the account
-   * @example
-   * Default Query: {
+   * @default
+   * queryObj: {
    *   page: 1,
    *   fields: ["id", "name"],
    *   filter: {},
@@ -28,19 +28,19 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *   orderBy: "name,asc",
    *   resolveBucketName: false
    * }
-   * @param query Search query params
+   * @param queryObj Search query params
    */
-  list(query?: DeviceQuery): Promise<DeviceListItem[]> {
+  list(queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
     const result = this.doRequest<DeviceListItem[]>({
       path: "/device",
       method: "GET",
       params: {
-        page: query?.page || 1,
-        fields: query?.fields || ["id", "name"],
-        filter: query?.filter || {},
-        amount: query?.amount || 20,
-        orderBy: query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "name,asc",
-        resolveBucketName: query?.resolveBucketName || false,
+        page: queryObj?.page || 1,
+        fields: queryObj?.fields || ["id", "name"],
+        filter: queryObj?.filter || {},
+        amount: queryObj?.amount || 20,
+        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
+        resolveBucketName: queryObj?.resolveBucketName || false,
       },
     });
 
@@ -48,36 +48,36 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Create a Device
-   * @param createParams Params of new device
+   * Generates and retrieves a new action from the Device
+   * @param deviceObj Object data to create new device
    */
-  create(createParams: DeviceCreateInfo): Promise<DeviceCreateResponse> {
+  create(deviceObj: DeviceCreateInfo): Promise<DeviceCreateResponse> {
     const result = this.doRequest<DeviceCreateResponse>({
       path: "/device",
       method: "POST",
-      body: createParams,
+      body: deviceObj,
     });
 
     return result;
   }
 
   /**
-   * Edit the Device
+   * Modify any property of the device
    * @param deviceID Device ID
-   * @param deviceObject Device object with fields to replace
+   * @param deviceObj Device object with fields to replace
    */
-  edit(deviceID: GenericID, deviceObject: Partial<DeviceInfo>): Promise<string> {
+  edit(deviceID: GenericID, deviceObj: Partial<DeviceInfo>): Promise<string> {
     const result = this.doRequest<string>({
       path: `/device/${deviceID}`,
       method: "PUT",
-      body: deviceObject,
+      body: deviceObj,
     });
 
     return result;
   }
 
   /**
-   * Delete the Device
+   * Deletes an device from the account
    * @param deviceID Device ID
    */
   delete(deviceID: GenericID): Promise<string> {
@@ -105,19 +105,19 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   /**
    * Create or edit param for the Device
    * @param deviceID Device ID
-   * @param data Configuration Data
+   * @param configObj Configuration Data
    * @param paramID Parameter ID
    */
-  paramSet(deviceID: GenericID, data: Partial<ConfigurationParams>, paramID?: GenericID): Promise<string> {
+  paramSet(deviceID: GenericID, configObj: Partial<ConfigurationParams>, paramID?: GenericID): Promise<string> {
     const result = this.doRequest<string>({
       path: `/device/${deviceID}/params`,
       method: "POST",
       body: paramID
         ? {
             id: paramID,
-            ...data,
+            ...configObj,
           }
-        : data,
+        : configObj,
     });
 
     return result;
@@ -154,8 +154,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Retrieves a list of all tokens
-   * @example
-   * Default Query: {
+   * @default
+   * queryObj: {
    *   page: 1,
    *   fields: ["name", "token", "permission"],
    *   filter: {},
@@ -163,18 +163,18 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *   orderBy: "created_at,desc",
    * }
    * @param deviceID Device ID
-   * @param query Search query params
+   * @param queryObj Search query params
    */
-  tokenList(deviceID: GenericID, query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
+  tokenList(deviceID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
     const result = this.doRequest<Partial<TokenDataList>[]>({
       path: `/device/token/${deviceID}`,
       method: "GET",
       params: {
-        page: query?.page || 1,
-        fields: query?.fields || ["name", "token", "permission"],
-        filter: query?.filter || {},
-        amount: query?.amount || 20,
-        orderBy: query?.orderBy ? `${query.orderBy[0]},${query.orderBy[1]}` : "created_at,desc",
+        page: queryObj?.page || 1,
+        fields: queryObj?.fields || ["name", "token", "permission"],
+        filter: queryObj?.filter || {},
+        amount: queryObj?.amount || 20,
+        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "created_at,desc",
       },
     });
 

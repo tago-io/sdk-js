@@ -58,6 +58,30 @@ interface VariablesInfo {
   }[];
 }
 
+interface ListVariablesOptions {
+  /**
+   * return amount of each variable
+   */
+  showAmount?: boolean;
+  /**
+   * return array of async deleted
+   */
+  showDeleted?: boolean;
+  /**
+   * Change origins to array of object with id and name
+   */
+  resolveOriginName?: boolean;
+}
+
 type BucketQuery = Query<BucketInfo, "name" | "visible" | "data_retention" | "created_at" | "updated_at">;
 
-export { BucketInfo, BucketCreateInfo, VariablesInfo, BucketDeviceInfo, ExportBucket, ExportBucketOption, BucketQuery };
+export {
+  BucketInfo,
+  BucketCreateInfo,
+  VariablesInfo,
+  BucketDeviceInfo,
+  ExportBucket,
+  ExportBucketOption,
+  BucketQuery,
+  ListVariablesOptions,
+};

@@ -39,7 +39,6 @@ describe("Authorization class", () => {
 
     const authorization = new Authorization({ token: "test", region: "env" });
     const result = await authorization.info();
-    console.log("url", url);
 
     expect(result).toMatchObject({ id: "test" });
     expect(url).toBe("/info");
@@ -59,7 +58,7 @@ describe("Authorization class", () => {
     });
 
     const authorization = new Authorization({ token: "test", region: "env", details: true });
-    const result = await authorization.info();
+    await authorization.info();
 
     expect(query).toMatchObject({ details: "true" });
   });
