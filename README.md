@@ -46,7 +46,7 @@ async function getMyData() {
   // Current Temperature is: 63
 }
 
-// -> See full documentation at: http://sdk.js.tago.io/
+// -> See full documentation at: https://js.sdk.tago.io/
 ```
 
 ## License
