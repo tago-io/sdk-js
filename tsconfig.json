@@ -39,6 +39,7 @@
     ],
     "mode": "file",
     "out": "docs",
+    "gaID": "UA-57075518-5",
     "excludePrivate": true,
     "excludeProtected": true,
     "stripInternal": true
