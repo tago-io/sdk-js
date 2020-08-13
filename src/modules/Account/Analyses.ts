@@ -95,12 +95,12 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * @param analysisID Analyze identification
    * @param scopeObj simulate scope for analysis
    */
-  public async run(analysisID: GenericID, scopeObj?: Object): Promise<{ analysis_token: GenericToken }> {
+  public async run(analysisID: GenericID, scopeObj?: Object | any): Promise<{ analysis_token: GenericToken }> {
     const result = await this.doRequest<{ analysis_token: GenericToken }>({
       path: `/analysis/${analysisID}/run`,
       method: "POST",
       body: {
-        scopeObj,
+        scope: scopeObj,
       },
     });
 
