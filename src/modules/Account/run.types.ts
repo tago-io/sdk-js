@@ -67,6 +67,8 @@ interface UserCreateInfo {
   company?: string;
   phone?: string;
   language?: string;
+  tags?: TagsObj[];
+  active?: boolean;
 }
 
 interface UserInfo extends Omit<UserCreateInfo, "password"> {
