@@ -91,6 +91,17 @@ interface NotificationCreateInfo {
   message: string;
 }
 
+interface LoginAsUserOptions {
+  /**
+   * Date to expire the login token.
+   *
+   * @example
+   * "3 months", "1 year", "20 hours"
+   * @default "8 hours"
+   */
+  expire_time?: string;
+}
+
 type ThemeOption =
   | "actionSchedule"
   | "actionTriggerByData"
@@ -211,4 +222,4 @@ type ThemeOption =
 
 type UserQuery = Query<UserInfo, "name" | "active" | "last_login" | "created_at" | "updated_at">;
 
-export { RunInfo, UserCreateInfo, UserInfo, LoginResponse, NotificationCreateInfo, UserQuery };
+export { RunInfo, UserCreateInfo, UserInfo, LoginResponse, NotificationCreateInfo, UserQuery, LoginAsUserOptions };

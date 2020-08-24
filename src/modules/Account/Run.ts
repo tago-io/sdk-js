@@ -1,6 +1,14 @@
 import { GenericID, RecursivePartial } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { LoginResponse, NotificationCreateInfo, RunInfo, UserCreateInfo, UserInfo, UserQuery } from "./run.types";
+import {
+  LoginResponse,
+  NotificationCreateInfo,
+  RunInfo,
+  UserCreateInfo,
+  UserInfo,
+  UserQuery,
+  LoginAsUserOptions,
+} from "./run.types";
 
 class Run extends TagoIOModule<GenericModuleParams> {
   public async info(): Promise<RunInfo> {
@@ -76,9 +84,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async loginAsUser(userID: GenericID): Promise<LoginResponse> {
+  public async loginAsUser(userID: GenericID, options?: LoginAsUserOptions): Promise<LoginResponse> {
     const result = await this.doRequest<LoginResponse>({
       path: `/run/users/${userID}/login`,
+      params: options,
       method: "GET",
     });
 
