@@ -4,7 +4,10 @@ import { Regions } from "../../regions";
 interface DeviceInfo {
   id: GenericID;
   profile: string;
-  bucket: string;
+  bucket: {
+    id: GenericID;
+    name: string;
+  };
   name: string;
   description: string | void;
   visible: boolean;
