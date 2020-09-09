@@ -91,6 +91,20 @@ interface LoginResponse {
 interface NotificationCreateInfo {
   title: string;
   message: string;
+  buttons?: NotificationButton[];
+  /** Auto disable all buttons when one is clicked. */
+  button_autodisable?: boolean;
+}
+
+interface NotificationButton {
+  label: string;
+  /** ID is sent back to analysis if any analysis is set to run */
+  id: string;
+  color?: string;
+  /** Analysis to run when button is clicked. */
+  analysis?: GenericID;
+  /** URL to redirect to when button is clicked. */
+  url?: string;
 }
 
 interface LoginAsUserOptions {
