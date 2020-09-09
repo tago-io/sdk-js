@@ -8,7 +8,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
    * @param dashboardID Dashboard identification
    * @param widgetObj
    */
-  public async create(dashboardID: GenericID, widgetObj: WidgetInfo): Promise<any> {
+  public async create(dashboardID: GenericID, widgetObj: WidgetInfo): Promise<{ widget: GenericID }> {
     const result = await this.doRequest<any>({
       path: `/dashboard/${dashboardID}/widget/`,
       method: "POST",
