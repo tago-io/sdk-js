@@ -82,7 +82,6 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
-
 }
 
 export default Connectors;

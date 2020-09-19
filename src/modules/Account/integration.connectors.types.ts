@@ -35,6 +35,17 @@ interface ConnectorInfo extends ConnectorCreateInfo {
   device_annotation?: string;
 }
 
-type ConnectorQuery = Query<ConnectorInfo, "name" | "id" | "description" | "logo_url" | "install_text" | "install_end_text" | "device_annotation" | "payload_decoder" | "networks">;
+type ConnectorQuery = Query<
+  ConnectorInfo,
+  | "name"
+  | "id"
+  | "description"
+  | "logo_url"
+  | "install_text"
+  | "install_end_text"
+  | "device_annotation"
+  | "payload_decoder"
+  | "networks"
+>;
 
 export { ConnectorInfo, ConnectorCreateInfo, ConnectorQuery };
