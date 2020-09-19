@@ -6,7 +6,6 @@ import { AccountCreateInfo, AccountInfo, LoginResponse, TokenCreateInfo } from "
 import Actions from "./Actions";
 import Analyses from "./Analyses";
 import Buckets from "./Buckets";
-import Connectors from "./Connector";
 import Dashboards from "./Dashboards";
 import Devices from "./Devices";
 import Explore from "./Explore";
@@ -21,6 +20,7 @@ import ServiceAuthorization from "./ServiceAuthorization";
 import Tags from "./Tags";
 import Template from "./Template";
 import { Regions } from "../../regions";
+import Integration from "./Integration";
 
 /**
  * To set up an account object, you need a token that you need to get from our
@@ -289,7 +289,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Be sure to use an account token with “write” permissions when using
    * functions like create, edit and delete.
    */
-  public connector = new Connectors(this.params);
+  public integration = new Integration(this.params);
 
   /**
    * Manage templates in account

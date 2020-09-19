@@ -3,7 +3,6 @@ export * as Access from "./access.types";
 export * as Actions from "./actions.types";
 export * as Analysis from "./analysis.types";
 export * as Buckets from "./buckets.types";
-export * as Connector from "./connector.types";
 export * as Dashboards from "./dashboards.types";
 export * as Devices from "./devices.types";
 export * as Files from "./files.types";
