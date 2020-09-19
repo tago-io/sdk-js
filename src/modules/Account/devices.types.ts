@@ -37,14 +37,17 @@ interface DeviceCreateInfo {
    * Device Serie Number
    */
   serie_number?: string;
-  /**
-   * Verification code
-   */
-  verification_code?: string;
+
   /**
    * Connector ID
    */
   connector?: GenericID;
+
+  /**
+   * Network ID
+   */
+  network?: GenericID;
+
   /**
    * If device will use connector parser
    */
