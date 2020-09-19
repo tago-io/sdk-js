@@ -128,8 +128,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    * @param sentStatus True return only sent=true, False return only sent=false
    */
-  paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<ConfigurationParams> {
-    const result = this.doRequest<ConfigurationParams>({
+  paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<ConfigurationParams[]> {
+    const result = this.doRequest<ConfigurationParams[]>({
       path: `/device/${deviceID}/params`,
       method: "GET",
       params: { sent_status: sentStatus },

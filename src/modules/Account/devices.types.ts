@@ -73,6 +73,7 @@ interface ConfigurationParams {
   sent: boolean;
   key: string;
   value: string | number | boolean;
+  id?: string;
 }
 
 type DeviceCreateResponse = { device_id: GenericID; bucket_id: GenericID; token: GenericToken };

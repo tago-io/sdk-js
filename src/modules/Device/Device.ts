@@ -3,6 +3,7 @@ import Batch from "../../common/BatchRequest";
 import { Data, GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
+import { ConfigurationParams } from "../Account/devices.types";
 import { DataQuery, DataToSend, DeviceConstructorParams, DeviceInfo } from "./device.types";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
@@ -141,14 +142,14 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * const result = await myDevice.getParameters();
    * ```
    */
-  public async getParameters(onlyUnRead?: boolean): Promise<string> {
+  public async getParameters(onlyUnRead?: boolean): Promise<ConfigurationParams[]> {
     const params: { sent_status?: boolean } = {};
 
     if (onlyUnRead === true) {
       params.sent_status = true;
     }
 
-    const result = await this.doRequest<string>({
+    const result = await this.doRequest<ConfigurationParams[]>({
       path: "/device/params",
       method: "GET",
       params: params,
