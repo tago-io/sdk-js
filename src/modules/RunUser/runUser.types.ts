@@ -13,6 +13,10 @@ interface RunUserCreateInfo {
   options?: {};
 }
 
+interface RunUserCreate {
+  user: GenericID;
+}
+
 interface RunUserInfo {
   id: GenericID;
   company: string;
@@ -42,4 +46,4 @@ interface RunNotificationInfo {
   buttons_autodisable: boolean;
 }
 
-export { RunUserInfo, RunUserCreateInfo, RunUserLogin, RunUserLoginResponse, RunNotificationInfo };
+export { RunUserInfo, RunUserCreateInfo, RunUserCreate, RunUserLogin, RunUserLoginResponse, RunNotificationInfo };
