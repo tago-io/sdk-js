@@ -1,5 +1,6 @@
 import { GenericID, RecursivePartial } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import {
   LoginResponse,
   NotificationCreateInfo,
@@ -43,6 +44,8 @@ class Run extends TagoIOModule<GenericModuleParams> {
       },
     });
 
+    dateParser(result, ["created_at", "updated_at", "last_login"]);
+
     return result;
   }
 
@@ -51,6 +54,8 @@ class Run extends TagoIOModule<GenericModuleParams> {
       path: `/run/users/${userID}`,
       method: "GET",
     });
+
+    dateParser(result, ["created_at", "updated_at", "last_login"]);
 
     return result;
   }
@@ -90,6 +95,8 @@ class Run extends TagoIOModule<GenericModuleParams> {
       params: options,
       method: "GET",
     });
+
+    dateParser(result, ["expire_date"]);
 
     return result;
   }

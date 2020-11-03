@@ -1,5 +1,6 @@
 import { GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery } from "./integration.connectors.types";
 
 class Connectors extends TagoIOModule<GenericModuleParams> {
@@ -30,6 +31,8 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
       },
     });
 
+    dateParser(result, ["created_at", "updated_at"]);
+
     return result;
   }
 
@@ -46,6 +49,8 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
         fields,
       },
     });
+
+    dateParser(result, ["created_at", "updated_at"]);
 
     return result;
   }

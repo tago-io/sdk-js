@@ -7,6 +7,7 @@ import {
   TokenDataList,
 } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import {
   ConfigurationParams,
   DeviceCreateInfo,
@@ -30,8 +31,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * }
    * @param queryObj Search query params
    */
-  list(queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
-    const result = this.doRequest<DeviceListItem[]>({
+  public async list(queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
+    const result = await this.doRequest<DeviceListItem[]>({
       path: "/device",
       method: "GET",
       params: {
@@ -44,6 +45,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
       },
     });
 
+    dateParser(result, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"]);
+
     return result;
   }
 
@@ -51,8 +54,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * Generates and retrieves a new action from the Device
    * @param deviceObj Object data to create new device
    */
-  create(deviceObj: DeviceCreateInfo): Promise<DeviceCreateResponse> {
-    const result = this.doRequest<DeviceCreateResponse>({
+  public async create(deviceObj: DeviceCreateInfo): Promise<DeviceCreateResponse> {
+    const result = await this.doRequest<DeviceCreateResponse>({
       path: "/device",
       method: "POST",
       body: deviceObj,
@@ -66,8 +69,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    * @param deviceObj Device object with fields to replace
    */
-  edit(deviceID: GenericID, deviceObj: Partial<DeviceInfo>): Promise<string> {
-    const result = this.doRequest<string>({
+  public async edit(deviceID: GenericID, deviceObj: Partial<DeviceInfo>): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/device/${deviceID}`,
       method: "PUT",
       body: deviceObj,
@@ -80,8 +83,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * Deletes an device from the account
    * @param deviceID Device ID
    */
-  delete(deviceID: GenericID): Promise<string> {
-    const result = this.doRequest<string>({
+  public async delete(deviceID: GenericID): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/device/${deviceID}`,
       method: "DELETE",
     });
@@ -93,11 +96,13 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * Get Info of the Device
    * @param deviceID Device ID
    */
-  info(deviceID: GenericID): Promise<DeviceInfo> {
-    const result = this.doRequest<DeviceInfo>({
+  public async info(deviceID: GenericID): Promise<DeviceInfo> {
+    const result = await this.doRequest<DeviceInfo>({
       path: `/device/${deviceID}`,
       method: "GET",
     });
+
+    dateParser(result, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"]);
 
     return result;
   }
@@ -108,8 +113,12 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param configObj Configuration Data
    * @param paramID Parameter ID
    */
-  paramSet(deviceID: GenericID, configObj: Partial<ConfigurationParams>, paramID?: GenericID): Promise<string> {
-    const result = this.doRequest<string>({
+  public async paramSet(
+    deviceID: GenericID,
+    configObj: Partial<ConfigurationParams>,
+    paramID?: GenericID
+  ): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/device/${deviceID}/params`,
       method: "POST",
       body: paramID
@@ -128,8 +137,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    * @param sentStatus True return only sent=true, False return only sent=false
    */
-  paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<ConfigurationParams[]> {
-    const result = this.doRequest<ConfigurationParams[]>({
+  public async paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<ConfigurationParams[]> {
+    const result = await this.doRequest<ConfigurationParams[]>({
       path: `/device/${deviceID}/params`,
       method: "GET",
       params: { sent_status: sentStatus },
@@ -143,8 +152,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    * @param paramID Parameter ID
    */
-  paramRemove(deviceID: GenericID, paramID: GenericID): Promise<string> {
-    const result = this.doRequest<string>({
+  public async paramRemove(deviceID: GenericID, paramID: GenericID): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/device/${deviceID}/params/${paramID}`,
       method: "DELETE",
     });
@@ -165,8 +174,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    * @param queryObj Search query params
    */
-  tokenList(deviceID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
-    const result = this.doRequest<Partial<TokenDataList>[]>({
+  public async tokenList(deviceID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
+    const result = await this.doRequest<Partial<TokenDataList>[]>({
       path: `/device/token/${deviceID}`,
       method: "GET",
       params: {
@@ -178,6 +187,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
       },
     });
 
+    dateParser(result, ["created_at", "last_authorization", "expire_time"]);
+
     return result;
   }
 
@@ -186,12 +197,14 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    * @param tokenParams Params for new token
    */
-  tokenCreate(deviceID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
-    const result = this.doRequest<TokenCreateResponse>({
+  public async tokenCreate(deviceID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
+    const result = await this.doRequest<TokenCreateResponse>({
       path: `/device/token`,
       method: "POST",
       body: { device: deviceID, ...tokenParams },
     });
+
+    dateParser(result, ["expire_date"]);
 
     return result;
   }
@@ -200,8 +213,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * Delete a token
    * @param token Token
    */
-  tokenDelete(token: GenericToken): Promise<string> {
-    const result = this.doRequest<string>({
+  public async tokenDelete(token: GenericToken): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/device/token/${token}`,
       method: "DELETE",
     });

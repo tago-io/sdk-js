@@ -6,8 +6,8 @@ type Condition = "None" | "Pending" | "Accepted" | "Refused";
 
 interface NotificationQuery {
   type: NotificationType;
-  start_date: string;
-  end_date: string;
+  start_date: Date;
+  end_date: Date;
   ref_id: GenericID;
 }
 
@@ -20,7 +20,7 @@ interface NotificationInfo {
   message: string;
   read: boolean;
   condition: Condition;
-  created_at: string;
+  created_at: Date;
 }
 
 export { NotificationQuery, NotificationInfo, NotificationType };

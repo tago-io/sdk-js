@@ -19,9 +19,9 @@ interface DashboardCreateInfo {
 
 interface DashboardInfo extends DashboardCreateInfo {
   id: GenericID;
-  created_at: string;
-  updated_at: string;
-  last_access: string;
+  created_at: Date;
+  updated_at: Date;
+  last_access: Date | null;
   group_by: [];
   tabs: [];
   icon: {
@@ -40,7 +40,7 @@ interface DashboardInfo extends DashboardCreateInfo {
     name: string;
     free_account: boolean;
     allow_tags: boolean;
-    expire_time: ExpireTimeOption;
+    expire_time: string;
     allow_share: boolean;
   };
 }
@@ -61,7 +61,7 @@ interface DevicesRelated extends BucketDeviceInfo {
 
 type DashboardQuery = Query<DashboardInfo, "name" | "label" | "active" | "created_at" | "updated_at">;
 
-type PublicKeyResponse = { token: GenericToken; expire_time: "never" };
+type PublicKeyResponse = { token: GenericToken; expire_time: ExpireTimeOption };
 
 type widgetOverwriteOptions = "start_date" | "end_date" | "timezone";
 

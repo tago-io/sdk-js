@@ -1,5 +1,6 @@
 import { GenericToken, ListTokenQuery, TokenCreateResponse, TokenData, TokenDataList } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 
 class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   /**
@@ -14,8 +15,8 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    * }
    * @param query Search query params
    */
-  tokenList(query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
-    const result = this.doRequest<Partial<TokenDataList>[]>({
+  public async tokenList(query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
+    const result = await this.doRequest<Partial<TokenDataList>[]>({
       path: `/serviceauth`,
       method: "GET",
       params: {
@@ -27,6 +28,8 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
       },
     });
 
+    dateParser(result, ["created_at", "last_authorization", "expire_time"]);
+
     return result;
   }
 
@@ -34,12 +37,14 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    * Generates and retrieves a new token
    * @param tokenParams Token params to create new token
    */
-  tokenCreate(tokenParams: TokenData): Promise<TokenCreateResponse> {
-    const result = this.doRequest<TokenCreateResponse>({
+  public async tokenCreate(tokenParams: TokenData): Promise<TokenCreateResponse> {
+    const result = await this.doRequest<TokenCreateResponse>({
       path: `/serviceauth`,
       method: "POST",
       body: tokenParams,
     });
+
+    dateParser(result, ["expire_date"]);
 
     return result;
   }
@@ -48,8 +53,8 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    * Deletes a token
    * @param token Token
    */
-  tokenDelete(token: GenericToken): Promise<string> {
-    const result = this.doRequest<string>({
+  public async tokenDelete(token: GenericToken): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/serviceauth/${token}`,
       method: "DELETE",
     });
@@ -57,8 +62,8 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  tokenEdit(token: GenericToken, verificationCode?: string): Promise<string> {
-    const result = this.doRequest<string>({
+  public async tokenEdit(token: GenericToken, verificationCode?: string): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/serviceauth/${token}`,
       method: "PUT",
       body: {

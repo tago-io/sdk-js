@@ -1,5 +1,6 @@
 import { GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import { NotificationInfo, NotificationQuery } from "./notifications.types";
 
 class Notifications extends TagoIOModule<GenericModuleParams> {
@@ -13,6 +14,8 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
       method: "GET",
       params: queryObj,
     });
+
+    dateParser(result, ["created_at"]);
 
     return result;
   }

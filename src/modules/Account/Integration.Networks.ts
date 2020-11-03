@@ -1,5 +1,6 @@
 import { GenericID, GenericToken, ListTokenQuery, TokenCreateResponse, TokenData } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import { NetworkCreateInfo, NetworkInfo, NetworkQuery, NetworkTokenInfo } from "./integration.networks.types";
 
 class Networks extends TagoIOModule<GenericModuleParams> {
@@ -98,8 +99,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    * @param networkID Network ID
    * @param queryObj Search query params
    */
-  tokenList(networkID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<NetworkTokenInfo>[]> {
-    const result = this.doRequest<Partial<NetworkTokenInfo>[]>({
+  public async tokenList(networkID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<NetworkTokenInfo>[]> {
+    const result = await this.doRequest<Partial<NetworkTokenInfo>[]>({
       path: `/integration/network/token/${networkID}`,
       method: "GET",
       params: {
@@ -111,6 +112,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
       },
     });
 
+    dateParser(result, ["created_at", "updated_at"]);
+
     return result;
   }
 
@@ -119,8 +122,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    * @param networkID Network ID
    * @param tokenParams Details of new token
    */
-  tokenCreate(networkID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
-    const result = this.doRequest<TokenCreateResponse>({
+  public async tokenCreate(networkID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
+    const result = await this.doRequest<TokenCreateResponse>({
       path: `/integration/network/token`,
       method: "POST",
       body: { network: networkID, ...tokenParams },
@@ -133,8 +136,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    * Deletes a token
    * @param token Token ID
    */
-  tokenDelete(token: GenericToken): Promise<string> {
-    const result = this.doRequest<string>({
+  public async tokenDelete(token: GenericToken): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/integration/network/token/${token}`,
       method: "DELETE",
     });

@@ -8,7 +8,7 @@ interface FileListInfo {
   files: {
     filename: string;
     size: number;
-    last_modified: string;
+    last_modified: Date | null;
   }[];
   folders: string[];
 }

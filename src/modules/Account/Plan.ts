@@ -1,4 +1,5 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import { CurrentPrices, PlanInfo, PlanSetInfo, Summary } from "./plan.types";
 
 class Plan extends TagoIOModule<GenericModuleParams> {
@@ -32,6 +33,8 @@ class Plan extends TagoIOModule<GenericModuleParams> {
       path: "/account/plan",
       method: "GET",
     });
+
+    dateParser(result, ["created_at", "end_date"]);
 
     return result;
   }
