@@ -1,6 +1,7 @@
 import { GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { doRequestParams, GenericModuleParams } from "../../common/TagoIOModule";
 import { Regions } from "../../regions";
+import dateParser from "../Utils/dateParser";
 import {
   RunNotificationInfo,
   RunUserCreateInfo,
@@ -16,10 +17,13 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
    * @param tagoIORunURL TagoIO Run url without http
    */
   public async info(tagoIORunURL: string): Promise<RunUserInfo> {
+    console.log(`/run/${tagoIORunURL}/info`);
     const result = await this.doRequest<RunUserInfo>({
       path: `/run/${tagoIORunURL}/info`,
       method: "GET",
     });
+
+    dateParser(result, ["created_at"]);
 
     return result;
   }
@@ -75,6 +79,8 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
     };
 
     const result = await TagoIOModule.doRequestAnonymous<RunUserLoginResponse>(params, region);
+
+    dateParser(result, ["expire_date"]);
 
     return result;
   }
@@ -139,6 +145,8 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
       path: `/run/${tagoIORunURL}/notification`,
       method: "GET",
     });
+
+    dateParser<RunNotificationInfo>(result, ["created_at", "updated_at"]);
 
     return result;
   }

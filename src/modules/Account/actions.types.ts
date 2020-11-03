@@ -1,4 +1,4 @@
-import { GenericID, Conditionals, TagsObj, Query } from "../../common/common.types";
+import { GenericID, Conditionals, TagsObj, Query, ExpireTimeOption } from "../../common/common.types";
 
 type ActionType = "condition" | "resource" | "interval" | "schedule" | "mqtt_topic";
 
@@ -105,32 +105,13 @@ interface ActionCreateInfo {
   id?: GenericID;
 }
 
-interface ActionInfo {
+interface ActionInfo extends ActionCreateInfo {
   id: GenericID;
-  active: boolean;
-  blocked: boolean;
-  company: string;
-  created_at: string;
-  email: string;
-  language: string;
-  last_login: string;
-  name: string;
-  newsletter: boolean;
-  options: {
-    user_view_welcome: boolean;
-    decimal_separator: string;
-    thousand_separator: string;
-    last_whats_new: string;
-  };
-  phone: string;
-  send_invoice: boolean;
-  stripe_id: string;
-  timezone: string;
-  type: string;
-  updated_at: string;
-  plan: string;
+  last_triggered: ExpireTimeOption;
+  updated_at: Date;
+  created_at: Date;
 }
 
-type ActionQuery = Query<ActionInfo, "name" | "active" | "locked" | "last_triggered" | "created_at" | "updated_at">;
+type ActionQuery = Query<ActionInfo, "name" | "active" | "last_triggered" | "created_at" | "updated_at">;
 
 export { ActionInfo, ActionCreateInfo, ActionQuery };

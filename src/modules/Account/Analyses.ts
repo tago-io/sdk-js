@@ -1,5 +1,6 @@
 import { GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import { AnalysisCreateInfo, AnalysisInfo, AnalysisQuery, ScriptFile } from "./analysis.types";
 
 class Analyses extends TagoIOModule<GenericModuleParams> {
@@ -29,6 +30,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
       },
     });
+
+    dateParser(result, ["created_at", "updated_at", "last_run"]);
 
     return result;
   }
@@ -86,6 +89,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
       path: `/analysis/${analysisID}`,
       method: "GET",
     });
+
+    dateParser(result, ["created_at", "updated_at", "last_run"]);
 
     return result;
   }
@@ -145,11 +150,12 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    */
   public async downloadScript(
     analysisID: GenericID
-  ): Promise<{ url: string; size_unit: string; size: number; expire_at: string }> {
-    const result = await this.doRequest<{ url: string; size_unit: string; size: number; expire_at: string }>({
+  ): Promise<{ url: string; size_unit: string; size: number; expire_at: Date }> {
+    const result = await this.doRequest<{ url: string; size_unit: string; size: number; expire_at: Date }>({
       path: `/analysis/${analysisID}/download`,
       method: "GET",
     });
+    dateParser(result, ["expire_at"]);
 
     return result;
   }

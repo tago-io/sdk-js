@@ -1,5 +1,6 @@
 import { GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import { AccessCreateInfo, AccessInfo, AccessQuery } from "./access.types";
 
 class Access extends TagoIOModule<GenericModuleParams> {
@@ -29,6 +30,8 @@ class Access extends TagoIOModule<GenericModuleParams> {
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
       },
     });
+
+    dateParser(result, ["created_at", "updated_at"]);
 
     return result;
   }
@@ -88,6 +91,8 @@ class Access extends TagoIOModule<GenericModuleParams> {
       path: `/am/${accessID}`,
       method: "GET",
     });
+
+    dateParser(result, ["created_at", "updated_at"]);
 
     return result;
   }

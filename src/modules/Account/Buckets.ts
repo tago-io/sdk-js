@@ -1,5 +1,6 @@
 import { ExportOption, GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import {
   BucketCreateInfo,
   BucketDeviceInfo,
@@ -26,8 +27,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * ```
    * @param queryObj Search query params
    */
-  list(queryObj?: BucketQuery): Promise<BucketInfo[]> {
-    const result = this.doRequest<BucketInfo[]>({
+  public async list(queryObj?: BucketQuery): Promise<BucketInfo[]> {
+    const result = await this.doRequest<BucketInfo[]>({
       path: "/bucket",
       method: "GET",
       params: {
@@ -39,6 +40,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
       },
     });
 
+    dateParser(result, ["created_at", "updated_at"]);
+
     return result;
   }
 
@@ -46,8 +49,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * Generates and retrieves a new bucket for the account
    * @param bucketObj Object with data to create new bucket
    */
-  create(bucketObj: BucketCreateInfo): Promise<{ bucket: string }> {
-    const result = this.doRequest<{ bucket: string }>({
+  public async create(bucketObj: BucketCreateInfo): Promise<{ bucket: string }> {
+    const result = await this.doRequest<{ bucket: string }>({
       path: "/bucket",
       method: "POST",
       body: bucketObj,
@@ -61,8 +64,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * @param bucketID Bucket ID
    * @param bucketObj Bucket Object data to be replaced
    */
-  edit(bucketID: GenericID, bucketObj: Partial<BucketCreateInfo>): Promise<string> {
-    const result = this.doRequest<string>({
+  public async edit(bucketID: GenericID, bucketObj: Partial<BucketCreateInfo>): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/bucket/${bucketID}`,
       method: "PUT",
       body: bucketObj,
@@ -75,8 +78,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * Deletes a bucket from the account
    * @param bucketID Bucket ID
    */
-  delete(bucketID: GenericID): Promise<string> {
-    const result = this.doRequest<string>({
+  public async delete(bucketID: GenericID): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/bucket/${bucketID}`,
       method: "DELETE",
     });
@@ -88,11 +91,12 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * Gets information about the bucket
    * @param bucketID Bucket ID
    */
-  info(bucketID: GenericID): Promise<BucketInfo> {
-    const result = this.doRequest<BucketInfo>({
+  public async info(bucketID: GenericID): Promise<BucketInfo> {
+    const result = await this.doRequest<BucketInfo>({
       path: `/bucket/${bucketID}`,
       method: "GET",
     });
+    dateParser(result, ["created_at", "updated_at"]);
 
     return result;
   }
@@ -101,8 +105,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * Get Amount of data on the Bucket
    * @param bucketID Bucket ID
    */
-  amount(bucketID: GenericID): Promise<number> {
-    const result = this.doRequest<number>({
+  public async amount(bucketID: GenericID): Promise<number> {
+    const result = await this.doRequest<number>({
       path: `/bucket/${bucketID}/data_amount`,
       method: "GET",
     });
@@ -123,8 +127,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * @param bucketID Bucket ID
    * @param optionsObj Request options
    */
-  listVariables(bucketID: GenericID, optionsObj?: ListVariablesOptions): Promise<VariablesInfo[]> {
-    const result = this.doRequest<VariablesInfo[]>({
+  public async listVariables(bucketID: GenericID, optionsObj?: ListVariablesOptions): Promise<VariablesInfo[]> {
+    const result = await this.doRequest<VariablesInfo[]>({
       path: `/bucket/${bucketID}/variable`,
       method: "GET",
       params: {
@@ -142,8 +146,11 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * @param bucketID Bucket ID
    * @param deleteParams Variable Details
    */
-  deleteVariable(bucketID: GenericID, deleteParams: { variable: string; origin: string }): Promise<string> {
-    const result = this.doRequest<string>({
+  public async deleteVariable(
+    bucketID: GenericID,
+    deleteParams: { variable: string; origin: string }
+  ): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/bucket/${bucketID}/variable`,
       method: "DELETE",
       body: deleteParams || {},
@@ -156,8 +163,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * Get all device associated with bucket
    * @param bucketID Bucket ID
    */
-  getDevicesAssociated(bucketID: GenericID): Promise<BucketDeviceInfo[]> {
-    const result = this.doRequest<BucketDeviceInfo[]>({
+  public async getDevicesAssociated(bucketID: GenericID): Promise<BucketDeviceInfo[]> {
+    const result = await this.doRequest<BucketDeviceInfo[]>({
       path: `/bucket/${bucketID}/device`,
       method: "GET",
     });
@@ -171,8 +178,12 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * @param output Type of output
    * @param optionsObj Options of request
    */
-  exportData(buckets: ExportBucket, output: ExportOption, optionsObj?: ExportBucketOption): Promise<string> {
-    const result = this.doRequest<string>({
+  public async exportData(
+    buckets: ExportBucket,
+    output: ExportOption,
+    optionsObj?: ExportBucketOption
+  ): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/data/export?output=${output}`,
       method: "POST",
       body: {

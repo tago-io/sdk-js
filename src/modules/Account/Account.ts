@@ -21,6 +21,7 @@ import Tags from "./Tags";
 import Template from "./Template";
 import { Regions } from "../../regions";
 import Integration from "./Integration";
+import dateParser from "../Utils/dateParser";
 
 /**
  * To set up an account object, you need a token that you need to get from our
@@ -34,23 +35,28 @@ class Account extends TagoIOModule<GenericModuleParams> {
   /**
    * Gets all account information
    */
-  info(): Promise<AccountInfo> {
-    const result = this.doRequest<AccountInfo>({
+  public async info(): Promise<AccountInfo> {
+    const result = await this.doRequest<AccountInfo>({
       path: "/account",
       method: "GET",
     });
 
+    dateParser(result, ["created_at", "updated_at", "last_login"]);
+    dateParser(result.options, ["last_whats_new"]);
     return result;
   }
 
   /**
    * Gets account summary
    */
-  summary(): Promise<AccountInfo> {
-    const result = this.doRequest<AccountInfo>({
+  public async summary(): Promise<AccountInfo> {
+    const result = await this.doRequest<AccountInfo>({
       path: "/account/summary",
       method: "GET",
     });
+
+    dateParser(result, ["created_at", "updated_at", "last_login"]);
+    dateParser(result.options, ["last_whats_new"]);
 
     return result;
   }
@@ -59,8 +65,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Edit account
    * @param accountObj Account data to edit
    */
-  edit(accountObj: Partial<AccountInfo>): Promise<string> {
-    const result = this.doRequest<string>({
+  public async edit(accountObj: Partial<AccountInfo>): Promise<string> {
+    const result = await this.doRequest<string>({
       path: "/account",
       method: "PUT",
       body: accountObj,
@@ -72,8 +78,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
   /**
    * Delete account
    */
-  delete(): Promise<string> {
-    const result = this.doRequest<string>({
+  public async delete(): Promise<string> {
+    const result = await this.doRequest<string>({
       path: "/account",
       method: "DELETE",
     });
@@ -86,14 +92,14 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @param tokenParams Token data
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static tokenCreate(tokenParams: TokenCreateInfo, region?: Regions): Promise<{ token: GenericToken }> {
+  public static async tokenCreate(tokenParams: TokenCreateInfo, region?: Regions): Promise<{ token: GenericToken }> {
     const params: doRequestParams = {
       path: "/account/profile/token",
       method: "POST",
       body: tokenParams,
     };
 
-    const result = TagoIOModule.doRequestAnonymous<{ token: GenericToken }>(params, region);
+    const result = await TagoIOModule.doRequestAnonymous<{ token: GenericToken }>(params, region);
 
     return result;
   }
@@ -103,14 +109,17 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @param credentials Credentials
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static login(credentials: { email: string; password: string }, region?: Regions): Promise<LoginResponse> {
+  public static async login(
+    credentials: { email: string; password: string },
+    region?: Regions
+  ): Promise<LoginResponse> {
     const params: doRequestParams = {
       path: "/account/login",
       method: "POST",
       body: credentials,
     };
 
-    const result = TagoIOModule.doRequestAnonymous<LoginResponse>(params, region);
+    const result = await TagoIOModule.doRequestAnonymous<LoginResponse>(params, region);
 
     return result;
   }
@@ -120,13 +129,13 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @param email E-mail to recovery
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static passwordRecover(email: string, region?: Regions): Promise<string> {
+  public static async passwordRecover(email: string, region?: Regions): Promise<string> {
     const params: doRequestParams = {
       path: `/account/passwordreset/${email}`,
       method: "GET",
     };
 
-    const result = TagoIOModule.doRequestAnonymous<string>(params, region);
+    const result = await TagoIOModule.doRequestAnonymous<string>(params, region);
 
     return result;
   }
@@ -135,8 +144,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * Change account password
    * @param password New Password
    */
-  passwordChange(password: string): Promise<string> {
-    const result = this.doRequest<string>({
+  public async passwordChange(password: string): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/account/passwordreset`,
       method: "POST",
       body: {
@@ -152,14 +161,14 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @param createParams New account details
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static create(createParams: AccountCreateInfo, region?: Regions): Promise<string> {
+  public static async create(createParams: AccountCreateInfo, region?: Regions): Promise<string> {
     const params: doRequestParams = {
       path: `/account`,
       method: "POST",
       body: createParams,
     };
 
-    const result = TagoIOModule.doRequestAnonymous<string>(params, region);
+    const result = await TagoIOModule.doRequestAnonymous<string>(params, region);
 
     return result;
   }
@@ -169,13 +178,13 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @param email E-mail address
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static resendConfirmation(email: string, region?: Regions): Promise<string> {
+  public static async resendConfirmation(email: string, region?: Regions): Promise<string> {
     const params: doRequestParams = {
       path: `/account/resend_confirmation/${email}`,
       method: "GET",
     };
 
-    const result = TagoIOModule.doRequestAnonymous<string>(params, region);
+    const result = await TagoIOModule.doRequestAnonymous<string>(params, region);
 
     return result;
   }
@@ -185,13 +194,13 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @param token Confirmation token
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static confirmAccount(token: GenericToken, region?: Regions): Promise<string> {
+  public static async confirmAccount(token: GenericToken, region?: Regions): Promise<string> {
     const params: doRequestParams = {
       path: `/account/confirm/${token}`,
       method: "GET",
     };
 
-    const result = TagoIOModule.doRequestAnonymous<string>(params, region);
+    const result = await TagoIOModule.doRequestAnonymous<string>(params, region);
 
     return result;
   }

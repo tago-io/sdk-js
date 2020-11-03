@@ -1,4 +1,5 @@
 import TagoIOModule, { AuthorizationModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import { AuthorizationInfo } from "./authorization.types";
 
 class Authorization extends TagoIOModule<AuthorizationModuleParams> {
@@ -14,6 +15,7 @@ class Authorization extends TagoIOModule<AuthorizationModuleParams> {
       },
     });
 
+    dateParser(result, ["created_at", "expire_time", "last_authorization"]);
     return result;
   }
 }

@@ -36,4 +36,26 @@ describe("Object parameter date parser", () => {
     expect(data.a instanceof Date).toBeFalsy();
     expect(data.b).toEqual("test");
   });
+
+  test("Should work with array", () => {
+    const data = [
+      {
+        a: "2020-09-28T18:10:21.000Z",
+        b: "test",
+      },
+      {
+        a: "2020-09-28T18:10:21.000Z",
+        b: "test",
+      },
+    ];
+
+    // @ts-ignore
+    dateParser(data, ["a"]);
+    // @ts-ignore
+    expect(data[0].a instanceof Date).toBeTruthy();
+    expect(data[0].b).toEqual("test");
+    // @ts-ignore
+    expect(data[1].a instanceof Date).toBeTruthy();
+    expect(data[1].b).toEqual("test");
+  });
 });

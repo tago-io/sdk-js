@@ -37,24 +37,24 @@ interface AccountCreateInfo {
 }
 
 interface AccountInfo extends Omit<AccountCreateInfo, "password" | "cpassword" | "country"> {
-  active: Boolean;
-  blocked: Boolean;
-  created_at: String;
+  active: boolean;
+  blocked: boolean;
   id: GenericID;
-  language: String;
-  last_login: Date | String;
+  language: string;
+  last_login: Date | null;
   options: {
-    user_view_welcome: Boolean;
+    user_view_welcome: boolean;
     decimal_separator: string;
-    thousand_separator: String;
-    last_whats_new: String;
+    thousand_separator: string;
+    last_whats_new: Date | null;
   };
-  phone: String | null;
-  send_invoice: Boolean;
-  stripe_id: String | null;
-  type: String;
-  updated_at: String;
-  plan: String;
+  phone: string | null;
+  send_invoice: boolean;
+  stripe_id: string | null;
+  type: string;
+  plan: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 interface LoginResponse {

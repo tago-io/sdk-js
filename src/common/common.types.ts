@@ -64,7 +64,7 @@ type Base64 = string;
 
 type PermissionOption = "write" | "read" | "full" | "deny";
 
-type ExpireTimeOption = "never" | string;
+type ExpireTimeOption = "never" | Date;
 
 type ExportOption = "csv" | "json" | "xml";
 
