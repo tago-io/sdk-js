@@ -1,5 +1,13 @@
 import { ExpireTimeOption, GenericID, GenericToken } from "../../common/common.types";
 
+interface UserOptions {
+  decimal_separator?: string;
+  thousand_separator?: string;
+  date_format?: string;
+  time_format?: string;
+  show_last_updated_at?: string;
+}
+
 interface RunUserCreateInfo {
   name: string;
   email: string;
@@ -10,7 +18,11 @@ interface RunUserCreateInfo {
   language?: string;
   active: boolean;
   newsletter?: boolean;
-  options?: {};
+  options?: UserOptions;
+}
+
+interface RunUserCreate {
+  user: GenericID;
 }
 
 interface RunUserInfo {
@@ -42,4 +54,4 @@ interface RunNotificationInfo {
   buttons_autodisable: boolean;
 }
 
-export { RunUserInfo, RunUserCreateInfo, RunUserLogin, RunUserLoginResponse, RunNotificationInfo };
+export { RunUserInfo, RunUserCreateInfo, RunUserCreate, RunUserLogin, RunUserLoginResponse, RunNotificationInfo };

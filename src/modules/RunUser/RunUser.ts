@@ -5,6 +5,7 @@ import dateParser from "../Utils/dateParser";
 import {
   RunNotificationInfo,
   RunUserCreateInfo,
+  RunUserCreate,
   RunUserInfo,
   RunUserLogin,
   RunUserLoginResponse,
@@ -34,14 +35,18 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
    * @param newUserObj New user data
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static async create(tagoIORunURL: string, newUserObj: RunUserCreateInfo, region?: Regions): Promise<string> {
+  public static async create(
+    tagoIORunURL: string,
+    newUserObj: RunUserCreateInfo,
+    region?: Regions
+  ): Promise<RunUserCreate> {
     const params: doRequestParams = {
       path: `/run/${tagoIORunURL}/signup`,
       method: "POST",
       body: newUserObj,
     };
 
-    const result = await TagoIOModule.doRequestAnonymous<string>(params, region);
+    const result = await TagoIOModule.doRequestAnonymous<RunUserCreate>(params, region);
 
     return result;
   }

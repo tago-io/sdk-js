@@ -1,11 +1,4 @@
-import {
-  GenericID,
-  GenericToken,
-  ListTokenQuery,
-  TokenCreateResponse,
-  TokenData,
-  TokenDataList,
-} from "../../common/common.types";
+import { GenericID, GenericToken, TokenCreateResponse, TokenData } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
 import {
@@ -15,6 +8,8 @@ import {
   DeviceInfo,
   DeviceQuery,
   DeviceListItem,
+  DeviceTokenDataList,
+  ListDeviceTokenQuery,
 } from "./devices.types";
 
 class Devices extends TagoIOModule<GenericModuleParams> {
@@ -174,6 +169,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    * @param queryObj Search query params
    */
+
   public async tokenList(deviceID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
     const result = await this.doRequest<Partial<TokenDataList>[]>({
       path: `/device/token/${deviceID}`,
