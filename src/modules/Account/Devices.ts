@@ -170,8 +170,11 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
 
-  public async tokenList(deviceID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
-    const result = await this.doRequest<Partial<TokenDataList>[]>({
+  public async tokenList(
+    deviceID: GenericID,
+    queryObj?: ListDeviceTokenQuery
+  ): Promise<Partial<DeviceTokenDataList>[]> {
+    const result = await this.doRequest<Partial<DeviceTokenDataList>[]>({
       path: `/device/token/${deviceID}`,
       method: "GET",
       params: {
