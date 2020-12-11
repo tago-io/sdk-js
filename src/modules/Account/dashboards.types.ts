@@ -59,6 +59,11 @@ interface DevicesRelated extends BucketDeviceInfo {
   bucket: GenericID;
 }
 
+interface AnalysisRelated {
+  id: GenericID;
+  name: string;
+}
+
 type DashboardQuery = Query<DashboardInfo, "name" | "label" | "active" | "created_at" | "updated_at">;
 
 type PublicKeyResponse = { token: GenericToken; expire_time: ExpireTimeOption };
@@ -73,6 +78,7 @@ export {
   DashboardQuery,
   PublicKeyResponse,
   DevicesRelated,
+  AnalysisRelated,
   DashboardCreateInfo,
   DashboardInfo,
   WidgetInfo,
