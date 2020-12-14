@@ -19,7 +19,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
   public async list(queryObj?: AnalysisQuery): Promise<AnalysisInfo[]> {
-    const result = await this.doRequest<AnalysisInfo[]>({
+    let result = await this.doRequest<AnalysisInfo[]>({
       path: "/analysis/",
       method: "GET",
       params: {
@@ -31,7 +31,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["created_at", "updated_at", "last_run"]);
+    result = result.map((data) => dateParser(data, ["created_at", "updated_at", "last_run"]));
 
     return result;
   }
@@ -85,12 +85,12 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * @param analysisID Analyze identification
    */
   public async info(analysisID: GenericID): Promise<AnalysisInfo> {
-    const result = await this.doRequest<AnalysisInfo>({
+    let result = await this.doRequest<AnalysisInfo>({
       path: `/analysis/${analysisID}`,
       method: "GET",
     });
 
-    dateParser(result, ["created_at", "updated_at", "last_run"]);
+    result = dateParser(result, ["created_at", "updated_at", "last_run"]);
 
     return result;
   }
@@ -151,11 +151,11 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   public async downloadScript(
     analysisID: GenericID
   ): Promise<{ url: string; size_unit: string; size: number; expire_at: Date }> {
-    const result = await this.doRequest<{ url: string; size_unit: string; size: number; expire_at: Date }>({
+    let result = await this.doRequest<{ url: string; size_unit: string; size: number; expire_at: Date }>({
       path: `/analysis/${analysisID}/download`,
       method: "GET",
     });
-    dateParser(result, ["expire_at"]);
+    result = dateParser(result, ["expire_at"]);
 
     return result;
   }

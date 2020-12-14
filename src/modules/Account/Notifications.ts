@@ -9,13 +9,13 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
   public async list(queryObj?: NotificationQuery): Promise<NotificationInfo[]> {
-    const result = await this.doRequest<NotificationInfo[]>({
+    let result = await this.doRequest<NotificationInfo[]>({
       path: "/notification/",
       method: "GET",
       params: queryObj,
     });
 
-    dateParser(result, ["created_at"]);
+    result = result.map((data) => dateParser(data, ["created_at"]));
 
     return result;
   }

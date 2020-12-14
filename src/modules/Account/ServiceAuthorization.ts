@@ -16,7 +16,7 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    * @param query Search query params
    */
   public async tokenList(query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
-    const result = await this.doRequest<Partial<TokenDataList>[]>({
+    let result = await this.doRequest<Partial<TokenDataList>[]>({
       path: `/serviceauth`,
       method: "GET",
       params: {
@@ -28,7 +28,7 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["created_at", "last_authorization", "expire_time"]);
+    result = result.map((data) => dateParser(data, ["created_at", "last_authorization", "expire_time"]));
 
     return result;
   }
@@ -38,13 +38,13 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    * @param tokenParams Token params to create new token
    */
   public async tokenCreate(tokenParams: TokenData): Promise<TokenCreateResponse> {
-    const result = await this.doRequest<TokenCreateResponse>({
+    let result = await this.doRequest<TokenCreateResponse>({
       path: `/serviceauth`,
       method: "POST",
       body: tokenParams,
     });
 
-    dateParser(result, ["expire_date"]);
+    result = dateParser(result, ["expire_date"]);
 
     return result;
   }

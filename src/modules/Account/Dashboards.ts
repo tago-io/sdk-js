@@ -28,7 +28,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
   public async list(queryObj?: DashboardQuery): Promise<DashboardInfo[]> {
-    const result = await this.doRequest<DashboardInfo[]>({
+    let result = await this.doRequest<DashboardInfo[]>({
       path: "/dashboard",
       method: "GET",
       params: {
@@ -40,7 +40,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["created_at", "updated_at", "last_access"]);
+    result = result.map((data) => dateParser(data, ["created_at", "updated_at", "last_access"]));
 
     return result;
   }
@@ -95,12 +95,12 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    * @param dashboardID Dashboard identification
    */
   public async info(dashboardID: GenericID): Promise<DashboardInfo> {
-    const result = await this.doRequest<DashboardInfo>({
+    let result = await this.doRequest<DashboardInfo>({
       path: `/dashboard/${dashboardID}`,
       method: "GET",
     });
 
-    dateParser(result, ["created_at", "updated_at", "last_access"]);
+    result = dateParser(result, ["created_at", "updated_at", "last_access"]);
     return result;
   }
 
@@ -165,7 +165,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
     dashboardID: GenericID,
     expireTime: ExpireTimeOption = "never"
   ): Promise<PublicKeyResponse> {
-    const result = await this.doRequest<PublicKeyResponse>({
+    let result = await this.doRequest<PublicKeyResponse>({
       path: `/dashboard/${dashboardID}/share/public`,
       method: "GET",
       params: {
@@ -173,7 +173,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["expire_time"]);
+    result = dateParser(result, ["expire_time"]);
 
     return result;
   }

@@ -29,12 +29,12 @@ class Plan extends TagoIOModule<GenericModuleParams> {
    * Get Active Plan and Services
    */
   public async getActivePlan(): Promise<PlanInfo> {
-    const result = await this.doRequest<PlanInfo>({
+    let result = await this.doRequest<PlanInfo>({
       path: "/account/plan",
       method: "GET",
     });
 
-    dateParser(result, ["created_at", "end_date"]);
+    result = dateParser(result, ["created_at", "end_date"]);
 
     return result;
   }

@@ -19,7 +19,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
   public async list(queryObj?: ActionQuery): Promise<ActionInfo[]> {
-    const result = await this.doRequest<ActionInfo[]>({
+    let result = await this.doRequest<ActionInfo[]>({
       path: "/action",
       method: "GET",
       params: {
@@ -31,7 +31,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["created_at", "updated_at", "last_triggered"]);
+    result = result.map((data) => dateParser(data, ["created_at", "updated_at", "last_triggered"]));
 
     return result;
   }
@@ -83,12 +83,12 @@ class Actions extends TagoIOModule<GenericModuleParams> {
    * @param actionID Action ID
    */
   public async info(actionID: GenericID): Promise<ActionInfo> {
-    const result = await this.doRequest<ActionInfo>({
+    let result = await this.doRequest<ActionInfo>({
       path: `/action/${actionID}`,
       method: "GET",
     });
 
-    dateParser(result, ["created_at", "updated_at", "last_triggered"]);
+    result = dateParser(result, ["created_at", "updated_at", "last_triggered"]);
 
     return result;
   }

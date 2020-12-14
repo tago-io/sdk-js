@@ -100,7 +100,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
   public async tokenList(networkID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<NetworkTokenInfo>[]> {
-    const result = await this.doRequest<Partial<NetworkTokenInfo>[]>({
+    let result = await this.doRequest<Partial<NetworkTokenInfo>[]>({
       path: `/integration/network/token/${networkID}`,
       method: "GET",
       params: {
@@ -112,7 +112,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["created_at", "updated_at"]);
+    result = result.map((data) => dateParser(data, ["created_at", "updated_at"]));
 
     return result;
   }
