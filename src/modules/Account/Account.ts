@@ -42,7 +42,9 @@ class Account extends TagoIOModule<GenericModuleParams> {
     });
 
     result = dateParser(result, ["created_at", "updated_at", "last_login"]);
-    result.options = dateParser(result.options, ["last_whats_new"]);
+
+    if (result.options) result.options = dateParser(result.options, ["last_whats_new"]);
+
     return result;
   }
 
@@ -56,7 +58,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
     });
 
     result = dateParser(result, ["created_at", "updated_at", "last_login"]);
-    result.options = dateParser(result.options, ["last_whats_new"]);
+
+    if (result.options) result.options = dateParser(result.options, ["last_whats_new"]);
 
     return result;
   }

@@ -33,8 +33,8 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       method: "GET",
     });
 
-    result.info = dateParser(result.info, ["created_at", "updated_at"]);
-    result.limits = dateParser(result.limits, ["updated_at"]);
+    if (result.info) result.info = dateParser(result.info, ["created_at", "updated_at"]);
+    if (result.limits) result.limits = dateParser(result.limits, ["updated_at"]);
 
     return result;
   }
@@ -114,7 +114,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       params: filterObj || {},
     });
 
-    result.events = result.events.map((data) => dateParser(data, ["date"]));
+    result.events = result?.events.map((data) => dateParser(data, ["date"]));
     return result;
   }
 

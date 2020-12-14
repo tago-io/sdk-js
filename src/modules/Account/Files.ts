@@ -21,7 +21,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    result.files = result.files.map((data) => dateParser(data, ["last_modified"]));
+    result.files = result?.files.map((data) => dateParser(data, ["last_modified"]));
 
     return result;
   }
