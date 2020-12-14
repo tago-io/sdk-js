@@ -49,22 +49,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets account summary
-   */
-  public async summary(): Promise<AccountInfo> {
-    let result = await this.doRequest<AccountInfo>({
-      path: "/account/summary",
-      method: "GET",
-    });
-
-    result = dateParser(result, ["created_at", "updated_at", "last_login"]);
-
-    if (result.options) result.options = dateParser(result.options, ["last_whats_new"]);
-
-    return result;
-  }
-
-  /**
    * Edit account
    * @param accountObj Account data to edit
    */

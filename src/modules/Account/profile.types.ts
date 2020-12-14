@@ -6,6 +6,17 @@ interface ProfileListInfo {
   logo_url: string | null;
 }
 
+interface ProfileLimit {
+  profile: string;
+  updated_at: Date;
+  input: number;
+  output: number;
+  sms: number;
+  email: number;
+  analysis: number;
+  data_records: number;
+}
+
 interface ProfileInfo {
   info: {
     id: GenericID;
@@ -15,18 +26,31 @@ interface ProfileInfo {
     created_at: Date;
     updated_at: Date;
   };
-  limits: {
-    profile: string;
-    updated_at: Date;
-    input: number;
-    output: number;
-    sms: number;
-    email: number;
-    analysis: number;
-    data_records: number;
-  };
+  limits: ProfileLimit;
   auto_scale: object;
   account_plan: string;
+}
+
+interface ProfileSummary {
+  limit: ProfileLimit;
+  amount: {
+    device: number;
+    bucket: number;
+    dashboard: number;
+    dashboard_shared: number;
+    analysis: number;
+    action: number;
+    am: number;
+    run_users: number;
+  };
+  limit_used: {
+    input: number;
+    output: number;
+    analysis: number;
+    sms: number;
+    email: number;
+    data_records: number;
+  };
 }
 
 interface UsageStatistic {
@@ -69,4 +93,4 @@ interface AddonInfo {
   logo_url: string | null;
 }
 
-export { ProfileListInfo, ProfileInfo, UsageStatistic, AuditLog, AuditLogFilter, AddonInfo };
+export { ProfileListInfo, ProfileInfo, UsageStatistic, AuditLog, AuditLogFilter, AddonInfo, ProfileSummary };

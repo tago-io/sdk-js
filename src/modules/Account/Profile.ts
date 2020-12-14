@@ -8,7 +8,15 @@ import {
 } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import { AddonInfo, AuditLog, AuditLogFilter, ProfileInfo, ProfileListInfo, UsageStatistic } from "./profile.types";
+import {
+  AddonInfo,
+  AuditLog,
+  AuditLogFilter,
+  ProfileInfo,
+  ProfileListInfo,
+  ProfileSummary,
+  UsageStatistic,
+} from "./profile.types";
 
 class Profile extends TagoIOModule<GenericModuleParams> {
   /**
@@ -35,6 +43,20 @@ class Profile extends TagoIOModule<GenericModuleParams> {
 
     if (result.info) result.info = dateParser(result.info, ["created_at", "updated_at"]);
     if (result.limits) result.limits = dateParser(result.limits, ["updated_at"]);
+
+    return result;
+  }
+
+  /**
+   * Gets profile summary
+   */
+  public async summary(profileID: GenericID): Promise<ProfileSummary> {
+    const result = await this.doRequest<ProfileSummary>({
+      path: `/profile/${profileID}/summary`,
+      method: "GET",
+    });
+
+    if (result?.limit) result.limit = dateParser(result.limit, ["updated_at"]);
 
     return result;
   }
