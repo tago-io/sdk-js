@@ -11,8 +11,10 @@ interface EmailData {
   subject: string;
   /**
    * Message scope for the e-mail
+   *
+   * If you use template, this parameter will be ignored.
    */
-  message: string;
+  message?: string;
   /**
    * E-mail to be indicated for reply
    */
@@ -35,9 +37,32 @@ interface EmailData {
    */
   html?: string;
   /**
-   * Whitelabel url to set domain
+   * Use TagoRUN E-Mail Template
+   *
+   * Tip: If you use template together with attachment the
+   * back-end will generate a parameter called 'URL';
    */
-  whitelabel_url?: string;
+  template?: {
+    /**
+     * Template name
+     *
+     * You can create an e-mail template on TagoRUN options at
+     * https://admin.tago.io/run
+     */
+    name: string;
+    /**
+     * Parameters to parse on Template
+     *
+     * You can use that parameter as local variable
+     * using $PARAMETER_KEY$
+     *
+     * example: params = { name: 'John' }
+     * will be $name$ on template document
+     */
+    params?: {
+      [key: string]: string | number;
+    };
+  };
 }
 
 class Email extends TagoIOModule<GenericModuleParams> {
