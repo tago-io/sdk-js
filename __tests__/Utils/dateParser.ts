@@ -36,4 +36,14 @@ describe("Object parameter date parser", () => {
     expect(data.a instanceof Date).toBeFalsy();
     expect(data.b).toEqual("test");
   });
+
+  test("Input object should be different from output", () => {
+    const dataInput = {
+      a: "2020-09-28T18:10:21.000Z",
+    };
+
+    const dataResult = dateParser(dataInput, ["a"]);
+    // @ts-ignore
+    expect(dataResult).not.toEqual(dataInput);
+  });
 });
