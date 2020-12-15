@@ -1,13 +1,13 @@
 import TagoIOModule, { ConnectorModuleParams } from "../../common/TagoIOModule";
-import { ConnectorInfo } from "./connector.types";
+import { INetworkInfo } from "./network.types";
 import { GenericToken } from "../../common/common.types";
 
-class Connector extends TagoIOModule<ConnectorModuleParams> {
+class Network extends TagoIOModule<ConnectorModuleParams> {
   /**
-   * Get information about the current connector
+   * Get information about the current network
    */
-  public async info(): Promise<ConnectorInfo> {
-    const result = await this.doRequest<ConnectorInfo>({
+  public async info(): Promise<INetworkInfo> {
+    const result = await this.doRequest<INetworkInfo>({
       path: "/info",
       method: "GET",
       params: {
@@ -24,7 +24,7 @@ class Connector extends TagoIOModule<ConnectorModuleParams> {
    * @param authorization
    */
   public async resolveToken(serieNumber: string, authorization?: string): Promise<GenericToken> {
-    let path = `/connector/resolve/${serieNumber}`;
+    let path = `/integration/network/resolve/${serieNumber}`;
 
     if (authorization) path = `${path}/${authorization}`;
 
@@ -40,4 +40,4 @@ class Connector extends TagoIOModule<ConnectorModuleParams> {
   }
 }
 
-export default Connector;
+export default Network;

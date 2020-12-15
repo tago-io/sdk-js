@@ -1,4 +1,4 @@
-import { GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
+import { GenericID, GenericToken, Query, TagsObj, PermissionOption, ExpireTimeOption } from "../../common/common.types";
 
 interface DeviceQuery
   extends Query<
@@ -37,14 +37,17 @@ interface DeviceCreateInfo {
    * Device Serie Number
    */
   serie_number?: string;
-  /**
-   * Verification code
-   */
-  verification_code?: string;
+
   /**
    * Connector ID
    */
   connector?: GenericID;
+
+  /**
+   * Network ID
+   */
+  network?: GenericID;
+
   /**
    * If device will use connector parser
    */
@@ -73,9 +76,33 @@ interface ConfigurationParams {
   sent: boolean;
   key: string;
   value: string | number | boolean;
+  id?: string;
 }
 
 type DeviceCreateResponse = { device_id: GenericID; bucket_id: GenericID; token: GenericToken };
 type DeviceListItem = Omit<DeviceInfo, "bucket"> & { bucket: GenericID };
 
-export { DeviceQuery, DeviceCreateInfo, ConfigurationParams, DeviceInfo, DeviceCreateResponse, DeviceListItem };
+interface DeviceTokenDataList {
+  token: GenericToken;
+  device_id: GenericID;
+  network_id: GenericID;
+  name: string;
+  permission: PermissionOption;
+  serie_number: string | void;
+  last_authorization: string | void;
+  expire_time: ExpireTimeOption;
+  created_at: string;
+}
+interface ListDeviceTokenQuery
+  extends Query<DeviceTokenDataList, "name" | "permission" | "serie_number" | "last_authorization" | "created_at"> {}
+
+export {
+  DeviceQuery,
+  DeviceCreateInfo,
+  ConfigurationParams,
+  DeviceInfo,
+  DeviceCreateResponse,
+  DeviceListItem,
+  DeviceTokenDataList,
+  ListDeviceTokenQuery,
+};

@@ -1,11 +1,4 @@
-import {
-  GenericID,
-  GenericToken,
-  ListTokenQuery,
-  TokenCreateResponse,
-  TokenData,
-  TokenDataList,
-} from "../../common/common.types";
+import { GenericID, GenericToken, TokenCreateResponse, TokenData } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import {
   ConfigurationParams,
@@ -14,6 +7,8 @@ import {
   DeviceInfo,
   DeviceQuery,
   DeviceListItem,
+  DeviceTokenDataList,
+  ListDeviceTokenQuery,
 } from "./devices.types";
 
 class Devices extends TagoIOModule<GenericModuleParams> {
@@ -128,8 +123,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    * @param sentStatus True return only sent=true, False return only sent=false
    */
-  paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<ConfigurationParams> {
-    const result = this.doRequest<ConfigurationParams>({
+  paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<ConfigurationParams[]> {
+    const result = this.doRequest<ConfigurationParams[]>({
       path: `/device/${deviceID}/params`,
       method: "GET",
       params: { sent_status: sentStatus },
@@ -165,8 +160,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    * @param queryObj Search query params
    */
-  tokenList(deviceID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
-    const result = this.doRequest<Partial<TokenDataList>[]>({
+  tokenList(deviceID: GenericID, queryObj?: ListDeviceTokenQuery): Promise<Partial<DeviceTokenDataList>[]> {
+    const result = this.doRequest<Partial<DeviceTokenDataList>[]>({
       path: `/device/token/${deviceID}`,
       method: "GET",
       params: {

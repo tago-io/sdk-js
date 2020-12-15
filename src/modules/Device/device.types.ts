@@ -4,7 +4,10 @@ import { Regions } from "../../regions";
 interface DeviceInfo {
   id: GenericID;
   profile: string;
-  bucket: string;
+  bucket: {
+    id: GenericID;
+    name: string;
+  };
   name: string;
   description: string | void;
   visible: boolean;
@@ -12,6 +15,7 @@ interface DeviceInfo {
   last_output: string;
   last_input: string;
   connector: string;
+  network: string;
   connector_parse: boolean;
   parse_function: string;
   tags: TagsObj[];

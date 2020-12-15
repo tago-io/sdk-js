@@ -7,6 +7,7 @@ import {
   DashboardInfo,
   DashboardQuery,
   DevicesRelated,
+  AnalysisRelated,
   PublicKeyResponse,
 } from "./dashboards.types";
 import _Share from "./_Share";
@@ -179,6 +180,19 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   public async listDevicesRelated(dashboardID: GenericID): Promise<DevicesRelated[]> {
     const result = await this.doRequest<DevicesRelated[]>({
       path: `/dashboard/${dashboardID}/devices`,
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
+   * Get list of analysis related with a dashboard
+   * @param dashboardID Dashboard identification
+   */
+  public async listAnalysisRelated(dashboardID: GenericID): Promise<AnalysisRelated[]> {
+    const result = await this.doRequest<AnalysisRelated[]>({
+      path: `/dashboard/${dashboardID}/analysis`,
       method: "GET",
     });
 
