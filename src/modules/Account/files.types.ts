@@ -14,8 +14,19 @@ interface FileListInfo {
 }
 
 interface Base64File {
+  /**
+   * Name of file
+   */
   filename: string;
+  /**
+   * String of Base64
+   */
   file: string;
+  /**
+   * Make file public
+   * default: false
+   */
+  public?: boolean;
 }
 
 interface MoveFiles {
