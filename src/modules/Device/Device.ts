@@ -205,7 +205,6 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     const poolingTime = options?.poolingTime || 1000; // 1 seg
     const neverStop = options?.neverStop || false;
 
-    // TODO: split poolingRecordQty and resolve it using Promise.all
     if (poolingRecordQty > 10000) {
       throw new Error("The maximum of poolingRecordQty is 10000");
     }
