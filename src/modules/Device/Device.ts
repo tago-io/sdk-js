@@ -4,7 +4,14 @@ import { Data, GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
 import { ConfigurationParams } from "../Account/devices.types";
-import { DataQuery, DataToSend, DeviceConstructorParams, DeviceInfo } from "./device.types";
+import {
+  DataQuery,
+  DataQueryStreaming,
+  DataToSend,
+  DeviceConstructorParams,
+  DeviceInfo,
+  OptionsStreaming,
+} from "./device.types";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
@@ -181,32 +188,51 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
    * Get Data Streaming
    *
-   * ! WARNING: not working yet.
-   * In development.
-   * @param params Data Query
+   * @experimental
    * @param qtyOfDataBySecond Qty of Data by second
-   * @internal
-   * @hidden
+   * @param params Data Query
+   * @example
+   * ```js
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * for await (const items of myDevice.getDataStreaming()) {
+   *  console.log(items);
+   * }
+   * ```
    */
-  public async getDataStreaming(params?: DataQuery, qtyOfDataBySecond = 1000): Promise<Data[]> {
-    if (!params.qty || (params.qty <= qtyOfDataBySecond && params.qty <= 10000)) {
-      return this.getData(params);
-    }
-    const qtyByRequest = Math.ceil(params.qty / qtyOfDataBySecond);
-    const data: Data[] = [];
+  public async *getDataStreaming(params?: DataQueryStreaming, options?: OptionsStreaming) {
+    const qtyOfDataBySecond = options?.qtyOfDataBySecond || 1000;
+    const neverStop = options?.neverStop || false;
 
-    for (const _ of Array.from(Array(qtyByRequest).keys())) {
-      data.push(...(await this.getData({ ...params, qty: qtyByRequest })));
+    // TODO: split qtyOfDataBySecond and resolve it using Promise.all
+    if (qtyOfDataBySecond > 10000) {
+      throw new Error("The maximum of qtyOfDataBySecond is 10000");
+    }
+
+    const qty: number = Math.ceil(qtyOfDataBySecond);
+    let skip: number = 0;
+    let stop: boolean = false;
+
+    while (!stop) {
       await sleep(1000);
-    }
 
-    return data;
+      yield (async () => {
+        const data = await this.getData({ ...params, qty, skip, query: "default", ordination: "ascending" });
+        skip += data.length;
+
+        if (!neverStop) {
+          stop = data.length === 0 || data.length < qtyOfDataBySecond;
+        }
+
+        return data;
+      })();
+    }
   }
 
   /**
    * Stream data to device
-   * ! WARNING: not working yet.
-   * In development.
+   *
+   * @experimental
    * @param data An array or one object with data to be send to TagoIO using device token
    * @param qtyOfDataBySecond Quantity of data per second to be sent
    * @example
@@ -225,7 +251,9 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * );
    * ```
    */
-  public async sendDataStreaming(data: DataToSend[], qtyOfDataBySecond = 1000) {
+  public async sendDataStreaming(data: DataToSend[], options: Omit<OptionsStreaming, "neverStop">) {
+    const qtyOfDataBySecond = options?.qtyOfDataBySecond || 1000;
+
     if (!Array.isArray(data)) {
       return Promise.reject("Only data array is allowed");
     }

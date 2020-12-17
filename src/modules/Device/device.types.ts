@@ -39,9 +39,26 @@ type DataToSend = Omit<Data, "id" | "created_at" | "origin" | "time"> & { time?:
 type valuesTypes = string | number | boolean | void;
 
 interface DataQuery {
-  query?: "default" | "last_item" | "last_value" | "last_location" | "last_insert" | "min" | "max" | "count";
+  query?:
+    | "default"
+    | "last_item"
+    | "last_value"
+    | "last_location"
+    | "last_insert"
+    | "first_item"
+    | "first_value"
+    | "first_location"
+    | "first_insert"
+    | "min"
+    | "max"
+    | "avg"
+    | "sum"
+    | "count";
+
   qty?: number;
   details?: boolean;
+  ordination?: "descending" | "ascending";
+  skip?: number;
 
   // Plural
   variables?: string[] | string;
@@ -60,6 +77,22 @@ interface DataQuery {
   end_date?: Date | string;
 }
 
+interface OptionsStreaming {
+  qtyOfDataBySecond: number;
+  neverStop?: boolean;
+}
+
+type DataQueryStreaming = Omit<DataQuery, "qty" | "skip" | "query" | "ordination">;
+
 type ListResponse = DeviceInfo[];
 
-export { DeviceConstructorParams, DeviceInfo, DataToSend, DataQuery, ListResponse, valuesTypes };
+export {
+  DeviceConstructorParams,
+  DeviceInfo,
+  DataToSend,
+  DataQuery,
+  DataQueryStreaming,
+  OptionsStreaming,
+  ListResponse,
+  valuesTypes,
+};
