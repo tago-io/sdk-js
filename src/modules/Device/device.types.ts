@@ -38,9 +38,67 @@ type DataToSend = Omit<Data, "id" | "created_at" | "origin" | "time"> & { time?:
 
 type valuesTypes = string | number | boolean | void;
 
-interface DataQuery {
-  query?:
-    | "default"
+interface DataQueryBase {
+  /**
+   * Filter by variables
+   * It can ben a array of string or only one string
+   */
+  variables?: string[] | string;
+  /**
+   * Filter by origins
+   * It can ben a array of string or only one string
+   */
+  origins?: string[] | string;
+  /**
+   * Filter by series
+   * It can ben a array of string or only one string
+   */
+  series?: string[] | string;
+  /**
+   * Filter by ids
+   * It can ben a array of string or only one string
+   */
+  ids?: string[] | string;
+  /**
+   * Filter by values
+   * It can ben a array or only one element
+   */
+  values?: valuesTypes[] | valuesTypes;
+  /**
+   * Set the start date of query
+   */
+  start_date?: Date | string;
+  /**
+   * Set the end date of query
+   * @default
+   * Date.now()
+   */
+  end_date?: Date | string;
+}
+
+type DataQueryDefault = DataQueryBase & {
+  query?: "default";
+  /**
+   * Qty of records to retrieve
+   */
+  qty?: number;
+  /**
+   * Add internal details in each record
+   */
+  details?: boolean;
+  /**
+   * Change ordination of query
+   * @default "descending"
+   */
+  ordination?: "descending" | "ascending";
+  /**
+   * Skip records, used on pagination or pooling
+   */
+  skip?: number;
+};
+
+type DataQueryFirstLast = DataQueryBase & {
+  query:
     | "last_item"
     | "last_value"
     | "last_location"
@@ -48,41 +106,40 @@ interface DataQuery {
     | "first_item"
     | "first_value"
     | "first_location"
-    | "first_insert"
-    | "min"
-    | "max"
-    | "avg"
-    | "sum"
-    | "count";
+    | "first_insert";
+};
 
-  qty?: number;
-  details?: boolean;
-  ordination?: "descending" | "ascending";
-  skip?: number;
+type DataQueryAggregation = Omit<DataQueryBase, "start_date"> & {
+  query: "avg" | "sum";
+  start_date: Date | string;
+};
 
-  // Plural
-  variables?: string[] | string;
-  origins?: string[] | string;
-  series?: string[] | string;
-  ids?: string[] | string;
-  values?: valuesTypes[] | valuesTypes;
-  // Singular
-  variable?: string[] | string;
-  origin?: string[] | string;
-  serie?: string[] | string;
-  id?: string[] | string;
-  value?: valuesTypes[] | valuesTypes;
+type DataQuerySummary = DataQueryBase & {
+  query: "min" | "max" | "count";
+};
 
-  start_date?: Date | string;
-  end_date?: Date | string;
-}
+type DataQuery = DataQueryDefault | DataQueryFirstLast | DataQuerySummary | DataQueryAggregation;
+
+type DataQueryStreaming = Omit<DataQueryDefault, "qty" | "skip" | "query" | "ordination">;
 
 interface OptionsStreaming {
-  qtyOfDataBySecond: number;
+  /**
+   * Qty of records by pooling
+   * @default 1000
+   */
+  poolingRecordQty?: number;
+  /**
+   * Time (milliseconds) between each request
+   * @default 1000 = (1 second)
+   */
+  poolingTime?: number;
+  /**
+   * Never Stop pooling data
+   * The streaming will not stop after get all data
+   * @default false
+   */
   neverStop?: boolean;
 }
-
-type DataQueryStreaming = Omit<DataQuery, "qty" | "skip" | "query" | "ordination">;
 
 type ListResponse = DeviceInfo[];
 

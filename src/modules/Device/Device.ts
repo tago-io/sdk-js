@@ -189,8 +189,8 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * Get Data Streaming
    *
    * @experimental
-   * @param qtyOfDataBySecond Qty of Data by second
    * @param params Data Query
+   * @param options Stream options
    * @example
    * ```js
    * const myDevice = new Device({ token: "my_device_token" });
@@ -201,27 +201,28 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * ```
    */
   public async *getDataStreaming(params?: DataQueryStreaming, options?: OptionsStreaming) {
-    const qtyOfDataBySecond = options?.qtyOfDataBySecond || 1000;
+    const poolingRecordQty = options?.poolingRecordQty || 1000;
+    const poolingTime = options?.poolingTime || 1000; // 1 seg
     const neverStop = options?.neverStop || false;
 
-    // TODO: split qtyOfDataBySecond and resolve it using Promise.all
-    if (qtyOfDataBySecond > 10000) {
-      throw new Error("The maximum of qtyOfDataBySecond is 10000");
+    // TODO: split poolingRecordQty and resolve it using Promise.all
+    if (poolingRecordQty > 10000) {
+      throw new Error("The maximum of poolingRecordQty is 10000");
     }
 
-    const qty: number = Math.ceil(qtyOfDataBySecond);
+    const qty: number = Math.ceil(poolingRecordQty);
     let skip: number = 0;
     let stop: boolean = false;
 
     while (!stop) {
-      await sleep(1000);
+      await sleep(poolingTime);
 
       yield (async () => {
         const data = await this.getData({ ...params, qty, skip, query: "default", ordination: "ascending" });
         skip += data.length;
 
         if (!neverStop) {
-          stop = data.length === 0 || data.length < qtyOfDataBySecond;
+          stop = data.length === 0 || data.length < poolingRecordQty;
         }
 
         return data;
@@ -234,7 +235,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    *
    * @experimental
    * @param data An array or one object with data to be send to TagoIO using device token
-   * @param qtyOfDataBySecond Quantity of data per second to be sent
+   * @param options Stream options
    * @example
    * ```js
    * const myDevice = new Device({ token: "my_device_token" });
@@ -252,17 +253,18 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * ```
    */
   public async sendDataStreaming(data: DataToSend[], options: Omit<OptionsStreaming, "neverStop">) {
-    const qtyOfDataBySecond = options?.qtyOfDataBySecond || 1000;
+    const poolingRecordQty = options?.poolingRecordQty || 1000;
+    const poolingTime = options?.poolingTime || 1000; // 1 seg
 
     if (!Array.isArray(data)) {
       return Promise.reject("Only data array is allowed");
     }
 
-    const dataChunk = chunk(data, qtyOfDataBySecond);
+    const dataChunk = chunk(data, poolingRecordQty);
     for (const items of dataChunk) {
       await this.sendData(items);
 
-      await sleep(1000);
+      await sleep(poolingTime);
     }
 
     return `${data.length} Data added.`;
