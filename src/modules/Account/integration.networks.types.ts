@@ -55,8 +55,8 @@ interface NetworkInfo extends NetworkCreateInfo {
 }
 
 interface NetworkTokenInfo extends TokenData {
-  created_at: string;
-  updated_at: string;
+  created_at: Date;
+  updated_at: Date;
   Network: GenericID;
   type: "type" | "Network";
 }

@@ -12,16 +12,16 @@ interface DeviceInfo {
   description: string | void;
   visible: boolean;
   active: boolean;
-  last_output: string;
-  last_input: string;
+  last_output: Date | null;
+  last_input: Date | null;
   connector: string;
   network: string;
   connector_parse: boolean;
   parse_function: string;
   tags: TagsObj[];
-  updated_at: string;
-  created_at: string;
-  inspected_at: string;
+  updated_at: Date;
+  created_at: Date;
+  inspected_at: Date | null;
   bucket_name?: string;
 }
 

@@ -26,8 +26,8 @@ interface ConnectorInfo extends ConnectorCreateInfo {
   public: boolean;
   description?: string;
   logo_url?: string;
-  created_at: string;
-  updated_at: string;
+  created_at: Date;
+  updated_at: Date;
   device_parameters?: IDeviceParameters[];
   networks?: string[];
   install_text?: string;

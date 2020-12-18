@@ -13,8 +13,8 @@ interface AccessCreateInfo {
 
 interface AccessInfo extends AccessCreateInfo {
   id: GenericID;
-  created_at: string;
-  updated_at: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 type AccessQuery = Query<AccessInfo, "name" | "active" | "created_at" | "updated_at">;

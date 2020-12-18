@@ -12,9 +12,9 @@ interface PlanSetInfo {
 interface PlanInfo extends PlanSetInfo {
   id: GenericID;
   active: number;
-  end_date: string | null;
+  end_date: Date | null;
   price: number;
-  created_at: string;
+  created_at: Date;
   next_plan: string;
 }
 

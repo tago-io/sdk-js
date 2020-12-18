@@ -11,6 +11,7 @@ import {
   PublicKeyResponse,
 } from "./dashboards.types";
 import _Share from "./_Share";
+import dateParser from "../Utils/dateParser";
 
 class Dashboards extends TagoIOModule<GenericModuleParams> {
   /**
@@ -39,6 +40,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "label,asc",
       },
     });
+
+    dateParser(result, ["created_at", "updated_at", "last_access"]);
 
     return result;
   }
@@ -98,6 +101,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
       method: "GET",
     });
 
+    dateParser(result, ["created_at", "updated_at", "last_access"]);
     return result;
   }
 
@@ -169,6 +173,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
         expire_time: expireTime,
       },
     });
+
+    dateParser(result, ["expire_time"]);
 
     return result;
   }

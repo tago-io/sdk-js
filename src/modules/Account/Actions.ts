@@ -1,5 +1,6 @@
 import { GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import { ActionCreateInfo, ActionInfo, ActionQuery } from "./actions.types";
 
 class Actions extends TagoIOModule<GenericModuleParams> {
@@ -17,8 +18,8 @@ class Actions extends TagoIOModule<GenericModuleParams> {
    * ```
    * @param queryObj Search query params
    */
-  list(queryObj?: ActionQuery): Promise<ActionInfo[]> {
-    const result = this.doRequest<ActionInfo[]>({
+  public async list(queryObj?: ActionQuery): Promise<ActionInfo[]> {
+    const result = await this.doRequest<ActionInfo[]>({
       path: "/action",
       method: "GET",
       params: {
@@ -30,6 +31,8 @@ class Actions extends TagoIOModule<GenericModuleParams> {
       },
     });
 
+    dateParser(result, ["created_at", "updated_at", "last_triggered"]);
+
     return result;
   }
 
@@ -37,8 +40,8 @@ class Actions extends TagoIOModule<GenericModuleParams> {
    * Generates and retrieves a new action from the account
    * @param actionObj Object data to create new TagoIO Action
    */
-  create(actionObj: ActionCreateInfo): Promise<{ action: string }> {
-    const result = this.doRequest<{ action: string }>({
+  public async create(actionObj: ActionCreateInfo): Promise<{ action: string }> {
+    const result = await this.doRequest<{ action: string }>({
       path: "/action",
       method: "POST",
       body: actionObj,
@@ -52,8 +55,8 @@ class Actions extends TagoIOModule<GenericModuleParams> {
    * @param actionID Action ID
    * @param actionObj Action Object with data to be replaced
    */
-  edit(actionID: GenericID, actionObj: Partial<ActionCreateInfo>): Promise<string> {
-    const result = this.doRequest<string>({
+  public async edit(actionID: GenericID, actionObj: Partial<ActionCreateInfo>): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/action/${actionID}`,
       method: "PUT",
       body: actionObj,
@@ -66,8 +69,8 @@ class Actions extends TagoIOModule<GenericModuleParams> {
    * Deletes an action from the account
    * @param actionID Action ID
    */
-  delete(actionID: GenericID): Promise<string> {
-    const result = this.doRequest<string>({
+  public async delete(actionID: GenericID): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/action/${actionID}`,
       method: "DELETE",
     });
@@ -79,11 +82,13 @@ class Actions extends TagoIOModule<GenericModuleParams> {
    * Gets information about the action
    * @param actionID Action ID
    */
-  info(actionID: GenericID): Promise<ActionInfo> {
-    const result = this.doRequest<ActionInfo>({
+  public async info(actionID: GenericID): Promise<ActionInfo> {
+    const result = await this.doRequest<ActionInfo>({
       path: `/action/${actionID}`,
       method: "GET",
     });
+
+    dateParser(result, ["created_at", "updated_at", "last_triggered"]);
 
     return result;
   }

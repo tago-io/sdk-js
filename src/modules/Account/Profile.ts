@@ -7,7 +7,8 @@ import {
   TokenDataList,
 } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { AddonInfo, AuditLogFilter, ProfileInfo, ProfileListInfo, UsageStatistic } from "./profile.types";
+import dateParser from "../Utils/dateParser";
+import { AddonInfo, AuditLog, AuditLogFilter, ProfileInfo, ProfileListInfo, UsageStatistic } from "./profile.types";
 
 class Profile extends TagoIOModule<GenericModuleParams> {
   /**
@@ -31,6 +32,9 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       path: `/profile/${profileID}`,
       method: "GET",
     });
+
+    dateParser(result.info, ["created_at", "updated_at"]);
+    dateParser(result.limits, ["updated_at"]);
 
     return result;
   }
@@ -93,6 +97,8 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       },
     });
 
+    dateParser(result, ["time"]);
+
     return result;
   }
 
@@ -101,13 +107,14 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @param profileID Profile identification
    * @param filterObj auditlog filter object
    */
-  public async auditLog(profileID: GenericID, filterObj?: AuditLogFilter): Promise<AuditLogFilter> {
-    const result = await this.doRequest<AuditLogFilter>({
+  public async auditLog(profileID: GenericID, filterObj?: AuditLogFilter): Promise<AuditLog> {
+    const result = await this.doRequest<AuditLog>({
       path: `/profile/${profileID}/auditlog`,
       method: "GET",
       params: filterObj || {},
     });
 
+    dateParser(result.events, ["date"]);
     return result;
   }
 
@@ -176,8 +183,8 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @param profileID Profile ID
    * @param queryObj Search query params
    */
-  tokenList(profileID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
-    const result = this.doRequest<Partial<TokenDataList>[]>({
+  public async tokenList(profileID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
+    const result = await this.doRequest<Partial<TokenDataList>[]>({
       path: `/profile/${profileID}/token`,
       method: "GET",
       params: {
@@ -189,6 +196,8 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       },
     });
 
+    dateParser(result, ["last_authorization", "expire_time", "created_at"]);
+
     return result;
   }
 
@@ -197,12 +206,14 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @param profileID Profile ID
    * @param tokenParams Token params for new token
    */
-  tokenCreate(profileID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
-    const result = this.doRequest<TokenCreateResponse>({
+  public async tokenCreate(profileID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
+    const result = await this.doRequest<TokenCreateResponse>({
       path: `/profile/${profileID}/token`,
       method: "POST",
       body: tokenParams,
     });
+
+    dateParser(result, ["expire_date"]);
 
     return result;
   }
@@ -211,8 +222,8 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * Deletes a token
    * @param token Token
    */
-  tokenDelete(token: GenericToken): Promise<string> {
-    const result = this.doRequest<string>({
+  public async tokenDelete(token: GenericToken): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/profile/token/${token}`,
       method: "DELETE",
     });

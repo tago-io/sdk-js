@@ -1,4 +1,4 @@
-import { Base64, RunTypeOptions, GenericID, TagsObj, Query } from "../../common/common.types";
+import { Base64, RunTypeOptions, GenericID, TagsObj, Query, ExpireTimeOption } from "../../common/common.types";
 
 interface ScriptFile {
   name: string;
@@ -25,9 +25,9 @@ interface AnalysisCreateInfo {
 interface AnalysisInfo extends AnalysisCreateInfo {
   id: GenericID;
   token: string;
-  last_run: string;
-  created_at: string;
-  updated_at: string;
+  last_run: ExpireTimeOption;
+  created_at: Date;
+  updated_at: Date;
   locked_at: any;
   console?: string[];
 }

@@ -7,8 +7,8 @@ type ExportBucket = {
 }[];
 
 interface ExportBucketOption {
-  start_date?: string;
-  end_date?: string;
+  start_date?: Date;
+  end_date?: Date;
 }
 
 interface BucketCreateInfo {
@@ -38,8 +38,8 @@ interface BucketInfo extends BucketCreateInfo {
   database: string | void;
   last_backup: string | void;
   last_retention: string | void;
-  created_at: string;
-  updated_at: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 interface BucketDeviceInfo {

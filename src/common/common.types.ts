@@ -64,7 +64,7 @@ type Base64 = string;
 
 type PermissionOption = "write" | "read" | "full" | "deny";
 
-type ExpireTimeOption = "never" | string;
+type ExpireTimeOption = "never" | Date;
 
 type ExportOption = "csv" | "json" | "xml";
 
@@ -81,13 +81,13 @@ interface TokenDataList {
   name: string;
   type: string;
   permission: PermissionOption;
-  serie_number: string | void;
-  last_authorization: string | void;
-  verification_code: string | void;
-  expire_time: string;
+  serie_number: string | null;
+  last_authorization: Date | null;
+  verification_code: string | null;
+  expire_time: ExpireTimeOption;
   ref_id: string;
-  created_at: string;
-  created_by: string | void;
+  created_at: Date;
+  created_by: string | null;
 }
 
 interface TokenData {

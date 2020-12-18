@@ -1,4 +1,4 @@
-import { GenericID, GenericToken } from "../../common/common.types";
+import { ExpireTimeOption, GenericID, GenericToken } from "../../common/common.types";
 
 interface UserOptions {
   decimal_separator?: string;
@@ -28,12 +28,12 @@ interface RunUserCreate {
 interface RunUserInfo {
   id: GenericID;
   company: string;
-  created_at: string;
+  created_at: Date;
 }
 
 interface RunUserLoginResponse {
   token: GenericToken;
-  expire_date: string;
+  expire_date: ExpireTimeOption;
 }
 
 interface RunUserLogin {
@@ -48,8 +48,8 @@ interface RunNotificationInfo {
   message: string;
   buttons: [];
   read: boolean;
-  created_at: string;
-  updated_at: string;
+  created_at: Date;
+  updated_at: Date;
   buttons_enabled: boolean;
   buttons_autodisable: boolean;
 }

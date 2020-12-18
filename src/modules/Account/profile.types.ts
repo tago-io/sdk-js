@@ -12,12 +12,12 @@ interface ProfileInfo {
     account: GenericID;
     name: string;
     logo_url: string | null;
-    created_at: string;
-    updated_at: string;
+    created_at: Date;
+    updated_at: Date;
   };
   limits: {
     profile: string;
-    updated_at: string;
+    updated_at: Date;
     input: number;
     output: number;
     sms: number;
@@ -35,7 +35,7 @@ interface UsageStatistic {
   output: number;
   analysis: number;
   data_records: number;
-  time: string;
+  time: Date;
   sms: number;
   email: number;
 }
@@ -46,7 +46,7 @@ interface AuditLog {
     message: string;
     resourceID: GenericID;
     who: GenericID;
-    date: string;
+    date: Date;
   }[];
   searchedLogStreams: {
     logStreamName: GenericID;
@@ -59,8 +59,8 @@ interface AuditLogFilter {
   nextToken?: string;
   ref_id?: GenericID;
   find?: "*" | string;
-  start_date?: string;
-  end_date?: string;
+  start_date?: Date;
+  end_date?: Date;
 }
 
 interface AddonInfo {

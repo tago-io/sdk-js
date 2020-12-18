@@ -1,5 +1,6 @@
 import { GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import {
   TemplateObjDashboard,
   TemplateObjAnalysis,
@@ -12,8 +13,8 @@ import {
 type TemplateInstallParams = TemplateInstallDashboard | TemplateInstallAnalysis;
 
 class Template extends TagoIOModule<GenericModuleParams> {
-  generateTemplate(template: TemplateObjDashboard | TemplateObjAnalysis) {
-    const result = this.doRequest<string>({
+  public async generateTemplate(template: TemplateObjDashboard | TemplateObjAnalysis): Promise<string> {
+    const result = await this.doRequest<string>({
       path: `/template`,
       method: "POST",
       body: template,
@@ -22,8 +23,11 @@ class Template extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  installTemplate(templateID: GenericID, installParams?: TemplateInstallParams): Promise<TemplateInstallReturn> {
-    const result = this.doRequest<TemplateInstallReturn>({
+  public async installTemplate(
+    templateID: GenericID,
+    installParams?: TemplateInstallParams
+  ): Promise<TemplateInstallReturn> {
+    const result = await this.doRequest<TemplateInstallReturn>({
       path: `/template/${templateID}`,
       method: "POST",
       body: installParams,
@@ -32,11 +36,13 @@ class Template extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  getTemplate(templateID: GenericID): Promise<TemplateObj> {
-    const result = this.doRequest<TemplateObj>({
+  public async getTemplate(templateID: GenericID): Promise<TemplateObj> {
+    const result = await this.doRequest<TemplateObj>({
       path: `/template/${templateID}`,
       method: "GET",
     });
+
+    dateParser(result, ["created_at", "updated_at"]);
 
     return result;
   }

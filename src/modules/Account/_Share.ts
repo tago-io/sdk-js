@@ -1,5 +1,6 @@
 import { ExpireTimeOption, GenericID, PermissionOption } from "../../common/common.types";
 import TagoIOModule, { ShareModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import { InviteInfo, InviteResponse } from "./_share.types";
 
 class _Share extends TagoIOModule<ShareModuleParams> {
@@ -11,6 +12,8 @@ class _Share extends TagoIOModule<ShareModuleParams> {
         ...data,
       },
     });
+
+    dateParser(result, ["expire_time"]);
 
     return result;
   }
@@ -30,6 +33,8 @@ class _Share extends TagoIOModule<ShareModuleParams> {
       path: `/share/${this.params.type}/${id}`,
       method: "GET",
     });
+
+    dateParser(result, ["expire_time"]);
 
     return result;
   }

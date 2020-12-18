@@ -2,6 +2,7 @@ import FormData from "form-data";
 import { GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import dateParser from "../Utils/dateParser";
 import { Base64File, FileListInfo, FileQuery, FilesPermission, MoveFiles, Options } from "./files.types";
 
 class Files extends TagoIOModule<GenericModuleParams> {
@@ -19,6 +20,8 @@ class Files extends TagoIOModule<GenericModuleParams> {
         qty: queryObj?.quantity || 300,
       },
     });
+
+    dateParser(result.files, ["last_modified"]);
 
     return result;
   }

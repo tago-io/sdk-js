@@ -76,9 +76,9 @@ interface UserInfo extends Omit<UserCreateInfo, "password"> {
   profile: GenericID;
   active: boolean;
   newsletter: boolean;
-  last_login: string;
-  created_at: string;
-  updated_at: string;
+  last_login: Date | null;
+  created_at: Date;
+  updated_at: Date;
   options: object;
   tags: TagsObj[];
 }

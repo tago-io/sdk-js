@@ -4,6 +4,7 @@ import { Data, GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
 import { ConfigurationParams } from "../Account/devices.types";
+import dateParser from "../Utils/dateParser";
 import { DataQuery, DataToSend, DeviceConstructorParams, DeviceInfo } from "./device.types";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
@@ -22,6 +23,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
       method: "GET",
     });
 
+    dateParser(result, ["created_at", "updated_at", "last_input", "last_output"]);
     return result;
   }
 

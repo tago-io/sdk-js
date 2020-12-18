@@ -65,11 +65,11 @@ interface DeviceInfo extends Omit<DeviceCreateInfo, "configuration_params"> {
     id: GenericID;
     name: string;
   };
-  last_output: Date | string;
-  last_input: Date | string;
+  last_output: Date | null;
+  last_input: Date | null;
   updated_at: Date;
   created_at: Date;
-  inspected_at: Date | void;
+  inspected_at: Date | null;
 }
 
 interface ConfigurationParams {
