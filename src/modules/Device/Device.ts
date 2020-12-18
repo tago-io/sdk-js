@@ -5,7 +5,14 @@ import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
 import { ConfigurationParams } from "../Account/devices.types";
 import dateParser from "../Utils/dateParser";
-import { DataQuery, DataToSend, DeviceConstructorParams, DeviceInfo } from "./device.types";
+import {
+  DataQuery,
+  DataQueryStreaming,
+  DataToSend,
+  DeviceConstructorParams,
+  DeviceInfo,
+  OptionsStreaming,
+} from "./device.types";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
@@ -178,6 +185,90 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     });
 
     return result;
+  }
+
+  /**
+   * Get Data Streaming
+   *
+   * @experimental
+   * @param params Data Query
+   * @param options Stream options
+   * @example
+   * ```js
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * for await (const items of myDevice.getDataStreaming()) {
+   *  console.log(items);
+   * }
+   * ```
+   */
+  public async *getDataStreaming(params?: DataQueryStreaming, options?: OptionsStreaming) {
+    const poolingRecordQty = options?.poolingRecordQty || 1000;
+    const poolingTime = options?.poolingTime || 1000; // 1 seg
+    const neverStop = options?.neverStop || false;
+
+    if (poolingRecordQty > 10000) {
+      throw new Error("The maximum of poolingRecordQty is 10000");
+    }
+
+    const qty: number = Math.ceil(poolingRecordQty);
+    let skip: number = 0;
+    let stop: boolean = false;
+
+    while (!stop) {
+      await sleep(poolingTime);
+
+      yield (async () => {
+        const data = await this.getData({ ...params, qty, skip, query: "default", ordination: "ascending" });
+        skip += data.length;
+
+        if (!neverStop) {
+          stop = data.length === 0 || data.length < poolingRecordQty;
+        }
+
+        return data;
+      })();
+    }
+  }
+
+  /**
+   * Stream data to device
+   *
+   * @experimental
+   * @param data An array or one object with data to be send to TagoIO using device token
+   * @param options Stream options
+   * @example
+   * ```js
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * const result = await myDevice.sendDataStreaming(
+   *   {
+   *     variable: "temperature",
+   *     unit: "F",
+   *     value: 55,
+   *     time: "2015-11-03 13:44:33",
+   *     location: { lat: 42.2974279, lng: -85.628292 },
+   *   },
+   *   2000
+   * );
+   * ```
+   */
+  public async sendDataStreaming(data: DataToSend[], options: Omit<OptionsStreaming, "neverStop">) {
+    const poolingRecordQty = options?.poolingRecordQty || 1000;
+    const poolingTime = options?.poolingTime || 1000; // 1 seg
+
+    if (!Array.isArray(data)) {
+      return Promise.reject("Only data array is allowed");
+    }
+
+    const dataChunk = chunk(data, poolingRecordQty);
+    for (const items of dataChunk) {
+      await this.sendData(items);
+
+      await sleep(poolingTime);
+    }
+
+    return `${data.length} Data added.`;
   }
 
   public batch = new Batch(this.params);

@@ -12,7 +12,7 @@ interface Data {
   unit?: string;
   origin: string;
   time: Date;
-  created_at: Date;
+  created_at?: Date;
 }
 
 interface TagsObj {
