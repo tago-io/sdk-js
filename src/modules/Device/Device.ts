@@ -99,14 +99,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
       ] as Data[];
     }
 
-    return result.map((item) => {
-      item.time = new Date(item.time);
-      if (item.created_at) {
-        item.created_at = new Date(item.created_at);
-      }
-
-      return item;
-    });
+    return result.map((item) => dateParser(item, ["time", "created_at"]));
   }
 
   /**
