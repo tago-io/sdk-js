@@ -1,6 +1,6 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
-interface EmailAttachment {
+interface AttachmentOptions {
   /**
    * Archive itself
    */
@@ -11,7 +11,7 @@ interface EmailAttachment {
   filename: string;
 }
 
-interface EmailTemplate {
+interface TemplateOptions {
   /**
    * Template name
    *
@@ -33,7 +33,7 @@ interface EmailTemplate {
   };
 }
 
-interface EmailData {
+interface EmailBase {
   /**
    * E-mail address to be sent
    *
@@ -55,24 +55,24 @@ interface EmailData {
   /**
    * Attachment for the e-mail
    */
-  attachment?: EmailAttachment;
+  attachment?: AttachmentOptions;
 }
 
-interface EmailWithText {
+interface EmailRawText {
   /**
    * Message in raw text for email body
    */
   message: string;
 }
 
-interface EmailWithHTML {
+interface EmailHTML {
   /**
    * HTML email body
    */
   html: string;
 }
 
-interface EmailTemplate {
+interface EmailWithTemplate {
   /**
    * E-mail address to be sent
    *
@@ -88,18 +88,18 @@ interface EmailTemplate {
   /**
    * Attachment for the e-mail
    */
-  attachment?: EmailAttachment;
+  attachment?: AttachmentOptions;
   /**
    * Use TagoRUN E-Mail Template
    *
    * Tip: If you use template together with attachment the
    * back-end will generate a parameter called 'URL';
    */
-  template?: EmailTemplate;
+  template?: TemplateOptions;
 }
 
-type EmailHTML = EmailData & EmailWithHTML;
-type EmailRawMessage = EmailData & EmailWithText;
+type EmailWithHTML = EmailBase & EmailHTML;
+type EmailWithRawText = EmailBase & EmailRawText;
 
 class Email extends TagoIOModule<GenericModuleParams> {
   /**
@@ -113,9 +113,9 @@ class Email extends TagoIOModule<GenericModuleParams> {
    * { to: "client(at)company.com", template: { name: "my_template" } }
    * ```
    */
-  public async send(email: EmailRawMessage): Promise<string>;
-  public async send(email: EmailHTML): Promise<string>;
-  public async send(email: EmailTemplate): Promise<string>;
+  public async send(email: EmailWithRawText): Promise<string>;
+  public async send(email: EmailWithHTML): Promise<string>;
+  public async send(email: EmailWithTemplate): Promise<string>;
   public async send(email: any): Promise<string> {
     if (email.html && email.message) {
       console.warn(new Error("HTML field will overwrite message field"));
