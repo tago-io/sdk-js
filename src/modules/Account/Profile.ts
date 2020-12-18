@@ -8,7 +8,15 @@ import {
 } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import { AddonInfo, AuditLog, AuditLogFilter, ProfileInfo, ProfileListInfo, UsageStatistic } from "./profile.types";
+import {
+  AddonInfo,
+  AuditLog,
+  AuditLogFilter,
+  ProfileInfo,
+  ProfileListInfo,
+  ProfileSummary,
+  UsageStatistic,
+} from "./profile.types";
 
 class Profile extends TagoIOModule<GenericModuleParams> {
   /**
@@ -33,8 +41,22 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       method: "GET",
     });
 
-    dateParser(result.info, ["created_at", "updated_at"]);
-    dateParser(result.limits, ["updated_at"]);
+    if (result.info) result.info = dateParser(result.info, ["created_at", "updated_at"]);
+    if (result.limits) result.limits = dateParser(result.limits, ["updated_at"]);
+
+    return result;
+  }
+
+  /**
+   * Gets profile summary
+   */
+  public async summary(profileID: GenericID): Promise<ProfileSummary> {
+    const result = await this.doRequest<ProfileSummary>({
+      path: `/profile/${profileID}/summary`,
+      method: "GET",
+    });
+
+    if (result?.limit) result.limit = dateParser(result.limit, ["updated_at"]);
 
     return result;
   }
@@ -89,7 +111,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
     profileID: GenericID,
     dateObj?: { date?: string; timezone?: string }
   ): Promise<UsageStatistic[]> {
-    const result = await this.doRequest<UsageStatistic[]>({
+    let result = await this.doRequest<UsageStatistic[]>({
       path: `/profile/${profileID}/statistics`,
       method: "GET",
       params: {
@@ -97,7 +119,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["time"]);
+    result = result.map((data) => dateParser(data, ["time"]));
 
     return result;
   }
@@ -114,7 +136,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       params: filterObj || {},
     });
 
-    dateParser(result.events, ["date"]);
+    result.events = result?.events.map((data) => dateParser(data, ["date"]));
     return result;
   }
 
@@ -184,7 +206,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
   public async tokenList(profileID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
-    const result = await this.doRequest<Partial<TokenDataList>[]>({
+    let result = await this.doRequest<Partial<TokenDataList>[]>({
       path: `/profile/${profileID}/token`,
       method: "GET",
       params: {
@@ -196,7 +218,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["last_authorization", "expire_time", "created_at"]);
+    result = result.map((data) => dateParser(data, ["last_authorization", "expire_time", "created_at"]));
 
     return result;
   }
@@ -207,13 +229,13 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @param tokenParams Token params for new token
    */
   public async tokenCreate(profileID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
-    const result = await this.doRequest<TokenCreateResponse>({
+    let result = await this.doRequest<TokenCreateResponse>({
       path: `/profile/${profileID}/token`,
       method: "POST",
       body: tokenParams,
     });
 
-    dateParser(result, ["expire_date"]);
+    result = dateParser(result, ["expire_date"]);
 
     return result;
   }

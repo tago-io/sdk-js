@@ -37,12 +37,12 @@ class Template extends TagoIOModule<GenericModuleParams> {
   }
 
   public async getTemplate(templateID: GenericID): Promise<TemplateObj> {
-    const result = await this.doRequest<TemplateObj>({
+    let result = await this.doRequest<TemplateObj>({
       path: `/template/${templateID}`,
       method: "GET",
     });
 
-    dateParser(result, ["created_at", "updated_at"]);
+    result = dateParser(result, ["created_at", "updated_at"]);
 
     return result;
   }

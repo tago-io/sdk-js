@@ -5,7 +5,7 @@ import { InviteInfo, InviteResponse } from "./_share.types";
 
 class _Share extends TagoIOModule<ShareModuleParams> {
   public async invite(id: GenericID, data: InviteInfo): Promise<InviteResponse> {
-    const result = await this.doRequest<InviteResponse>({
+    let result = await this.doRequest<InviteResponse>({
       path: `/share/${this.params.type}/${id}`,
       method: "POST",
       body: {
@@ -13,7 +13,7 @@ class _Share extends TagoIOModule<ShareModuleParams> {
       },
     });
 
-    dateParser(result, ["expire_time"]);
+    result = dateParser(result, ["expire_time"]);
 
     return result;
   }
@@ -29,12 +29,12 @@ class _Share extends TagoIOModule<ShareModuleParams> {
     return result;
   }
   public async list(id: GenericID): Promise<InviteInfo[]> {
-    const result = await this.doRequest<InviteInfo[]>({
+    let result = await this.doRequest<InviteInfo[]>({
       path: `/share/${this.params.type}/${id}`,
       method: "GET",
     });
 
-    dateParser(result, ["expire_time"]);
+    result = result.map((data) => dateParser(data, ["expire_time"]));
 
     return result;
   }

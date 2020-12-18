@@ -19,7 +19,7 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
   public async list(queryObj?: ConnectorQuery): Promise<ConnectorInfo[]> {
-    const result = await this.doRequest<ConnectorInfo[]>({
+    let result = await this.doRequest<ConnectorInfo[]>({
       path: "/integration/connector/",
       method: "GET",
       params: {
@@ -31,7 +31,7 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["created_at", "updated_at"]);
+    result = result.map((data) => dateParser(data, ["created_at", "updated_at"]));
 
     return result;
   }
@@ -42,7 +42,7 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    * @param fields Fields to fetch.
    */
   public async info(connectorID: GenericID, fields?: string[]): Promise<ConnectorInfo> {
-    const result = await this.doRequest<ConnectorInfo>({
+    let result = await this.doRequest<ConnectorInfo>({
       path: `/integration/connector/${connectorID}`,
       method: "GET",
       params: {
@@ -50,7 +50,7 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["created_at", "updated_at"]);
+    result = dateParser(result, ["created_at", "updated_at"]);
 
     return result;
   }

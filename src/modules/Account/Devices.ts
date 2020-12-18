@@ -27,7 +27,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
   public async list(queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
-    const result = await this.doRequest<DeviceListItem[]>({
+    let result = await this.doRequest<DeviceListItem[]>({
       path: "/device",
       method: "GET",
       params: {
@@ -40,7 +40,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"]);
+    result = result.map((data) =>
+      dateParser(data, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"])
+    );
 
     return result;
   }
@@ -92,12 +94,12 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    */
   public async info(deviceID: GenericID): Promise<DeviceInfo> {
-    const result = await this.doRequest<DeviceInfo>({
+    let result = await this.doRequest<DeviceInfo>({
       path: `/device/${deviceID}`,
       method: "GET",
     });
 
-    dateParser(result, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"]);
+    result = dateParser(result, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"]);
 
     return result;
   }
@@ -174,7 +176,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     deviceID: GenericID,
     queryObj?: ListDeviceTokenQuery
   ): Promise<Partial<DeviceTokenDataList>[]> {
-    const result = await this.doRequest<Partial<DeviceTokenDataList>[]>({
+    let result = await this.doRequest<Partial<DeviceTokenDataList>[]>({
       path: `/device/token/${deviceID}`,
       method: "GET",
       params: {
@@ -186,7 +188,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["created_at", "last_authorization", "expire_time"]);
+    result = result.map((data) => dateParser(data, ["created_at", "last_authorization", "expire_time"]));
 
     return result;
   }
@@ -197,13 +199,13 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param tokenParams Params for new token
    */
   public async tokenCreate(deviceID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
-    const result = await this.doRequest<TokenCreateResponse>({
+    let result = await this.doRequest<TokenCreateResponse>({
       path: `/device/token`,
       method: "POST",
       body: { device: deviceID, ...tokenParams },
     });
 
-    dateParser(result, ["expire_date"]);
+    result = dateParser(result, ["expire_date"]);
 
     return result;
   }

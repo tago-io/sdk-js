@@ -28,7 +28,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
   public async list(queryObj?: BucketQuery): Promise<BucketInfo[]> {
-    const result = await this.doRequest<BucketInfo[]>({
+    let result = await this.doRequest<BucketInfo[]>({
       path: "/bucket",
       method: "GET",
       params: {
@@ -40,7 +40,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["created_at", "updated_at"]);
+    result = result.map((data) => dateParser(data, ["created_at", "updated_at"]));
 
     return result;
   }
@@ -92,11 +92,11 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * @param bucketID Bucket ID
    */
   public async info(bucketID: GenericID): Promise<BucketInfo> {
-    const result = await this.doRequest<BucketInfo>({
+    let result = await this.doRequest<BucketInfo>({
       path: `/bucket/${bucketID}`,
       method: "GET",
     });
-    dateParser(result, ["created_at", "updated_at"]);
+    result = dateParser(result, ["created_at", "updated_at"]);
 
     return result;
   }

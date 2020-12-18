@@ -19,7 +19,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
   public async list(queryObj?: AccessQuery): Promise<AccessInfo[]> {
-    const result = await this.doRequest<AccessInfo[]>({
+    let result = await this.doRequest<AccessInfo[]>({
       path: "/am",
       method: "GET",
       params: {
@@ -31,7 +31,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["created_at", "updated_at"]);
+    result = result.map((data) => dateParser(data, ["created_at", "updated_at"]));
 
     return result;
   }
@@ -87,12 +87,12 @@ class Access extends TagoIOModule<GenericModuleParams> {
    * @param accessID Access policy identification
    */
   public async info(accessID: GenericID): Promise<AccessInfo> {
-    const result = await this.doRequest<AccessInfo>({
+    let result = await this.doRequest<AccessInfo>({
       path: `/am/${accessID}`,
       method: "GET",
     });
 
-    dateParser(result, ["created_at", "updated_at"]);
+    result = dateParser(result, ["created_at", "updated_at"]);
 
     return result;
   }

@@ -7,7 +7,7 @@ class Authorization extends TagoIOModule<AuthorizationModuleParams> {
    * Get information about the current Authorization
    */
   public async info(): Promise<AuthorizationInfo> {
-    const result = await this.doRequest<AuthorizationInfo>({
+    let result = await this.doRequest<AuthorizationInfo>({
       path: "/info",
       method: "GET",
       params: {
@@ -15,7 +15,7 @@ class Authorization extends TagoIOModule<AuthorizationModuleParams> {
       },
     });
 
-    dateParser(result, ["created_at", "expire_time", "last_authorization"]);
+    result = dateParser(result, ["created_at", "expire_time", "last_authorization"]);
     return result;
   }
 }

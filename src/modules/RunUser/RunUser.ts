@@ -18,13 +18,12 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
    * @param tagoIORunURL TagoIO Run url without http
    */
   public async info(tagoIORunURL: string): Promise<RunUserInfo> {
-    console.log(`/run/${tagoIORunURL}/info`);
-    const result = await this.doRequest<RunUserInfo>({
+    let result = await this.doRequest<RunUserInfo>({
       path: `/run/${tagoIORunURL}/info`,
       method: "GET",
     });
 
-    dateParser(result, ["created_at"]);
+    result = dateParser(result, ["created_at"]);
 
     return result;
   }
@@ -83,9 +82,9 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
       body: credentialsObj,
     };
 
-    const result = await TagoIOModule.doRequestAnonymous<RunUserLoginResponse>(params, region);
+    let result = await TagoIOModule.doRequestAnonymous<RunUserLoginResponse>(params, region);
 
-    dateParser(result, ["expire_date"]);
+    result = dateParser(result, ["expire_date"]);
 
     return result;
   }
@@ -146,12 +145,12 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
    * @param tagoIORunURL TagoIO Run url without http
    */
   public async notificationList(tagoIORunURL: string): Promise<RunNotificationInfo[]> {
-    const result = await this.doRequest<RunNotificationInfo[]>({
+    let result = await this.doRequest<RunNotificationInfo[]>({
       path: `/run/${tagoIORunURL}/notification`,
       method: "GET",
     });
 
-    dateParser<RunNotificationInfo>(result, ["created_at", "updated_at"]);
+    result = result.map((data) => dateParser(data, ["created_at", "updated_at"]));
 
     return result;
   }

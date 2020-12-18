@@ -32,7 +32,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   public async listUsers(query: UserQuery): Promise<Partial<UserInfo>[]> {
-    const result = await this.doRequest<Partial<UserInfo>[]>({
+    let result = await this.doRequest<Partial<UserInfo>[]>({
       path: "/run/users",
       method: "GET",
       params: {
@@ -44,18 +44,18 @@ class Run extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    dateParser(result, ["created_at", "updated_at", "last_login"]);
+    result = result.map((data) => dateParser(data, ["created_at", "updated_at", "last_login"]));
 
     return result;
   }
 
   public async userInfo(userID: GenericID): Promise<UserInfo> {
-    const result = await this.doRequest<UserInfo>({
+    let result = await this.doRequest<UserInfo>({
       path: `/run/users/${userID}`,
       method: "GET",
     });
 
-    dateParser(result, ["created_at", "updated_at", "last_login"]);
+    result = dateParser(result, ["created_at", "updated_at", "last_login"]);
 
     return result;
   }
@@ -90,13 +90,13 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   public async loginAsUser(userID: GenericID, options?: LoginAsUserOptions): Promise<LoginResponse> {
-    const result = await this.doRequest<LoginResponse>({
+    let result = await this.doRequest<LoginResponse>({
       path: `/run/users/${userID}/login`,
       params: options,
       method: "GET",
     });
 
-    dateParser(result, ["expire_date"]);
+    result = dateParser(result, ["expire_date"]);
 
     return result;
   }

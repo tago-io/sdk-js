@@ -25,12 +25,12 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * ```
    */
   public async info(): Promise<DeviceInfo> {
-    const result = await this.doRequest<DeviceInfo>({
+    let result = await this.doRequest<DeviceInfo>({
       path: "/info",
       method: "GET",
     });
 
-    dateParser(result, ["created_at", "updated_at", "last_input", "last_output"]);
+    result = dateParser(result, ["created_at", "updated_at", "last_input", "last_output"]);
     return result;
   }
 
