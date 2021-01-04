@@ -17,7 +17,6 @@ describe("applyToString", () => {
     expect(noLanguage).toEqual("Some string");
   });
 
-
   it("does not apply to a string that does not contain hashes", async () => {
     const rawString = "This string does not even get parsed";
     const applied = await dictionary.applyToString(rawString, options);
@@ -40,15 +39,17 @@ describe("applyToString", () => {
   });
 
   it("applies the dictionary to a big string covering all the dictionary functionality", async () => {
-    const rawString = "Simple expression first: #TEST.APPLY_ONE#. Then we have a #TEST.BROKEN_EXPRESSION."
-      + " Followed by #TEST.APPLY_ANOTHER_ONE#. Also, #NOTADICT.APPLY_ONE# and #TEST.NON_EXISTING_KEY# are kept as is."
-      + ' Finish it with #TEST.APPLY_WITH_COMMA,"a , in the parameter"##TEST.APPLY_WITH_HASH," and #5 has the # symbol"#.';
+    const rawString =
+      "Simple expression first: #TEST.APPLY_ONE#. Then we have a #TEST.BROKEN_EXPRESSION." +
+      " Followed by #TEST.APPLY_ANOTHER_ONE#. Also, #NOTADICT.APPLY_ONE# and #TEST.NON_EXISTING_KEY# are kept as is." +
+      ' Finish it with #TEST.APPLY_WITH_COMMA,"a , in the parameter"##TEST.APPLY_WITH_HASH," and #5 has the # symbol"#.';
     const applied = await dictionary.applyToString(rawString, options);
 
     expect(applied).toEqual(
-      "Simple expression first: which is parsed and resolved. Then we have a #TEST.BROKEN_EXPRESSION."
-      + " Followed by one to see if the broken one does not break everything after."
-      + " Also, #NOTADICT.APPLY_ONE# and #TEST.NON_EXISTING_KEY# are kept as is."
-      + " Finish it with one including a , in the parameter and #5 has the # symbol (because # should work here as well).");
+      "Simple expression first: which is parsed and resolved. Then we have a #TEST.BROKEN_EXPRESSION." +
+        " Followed by one to see if the broken one does not break everything after." +
+        " Also, #NOTADICT.APPLY_ONE# and #TEST.NON_EXISTING_KEY# are kept as is." +
+        " Finish it with one including a , in the parameter and #5 has the # symbol (because # should work here as well)."
+    );
   });
 });

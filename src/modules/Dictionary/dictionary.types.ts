@@ -19,17 +19,10 @@ interface IApplyToStringOptions {
   language?: string;
 }
 
-
 interface IDictionaryJSON {
   [dictionary: string]: {
     [key: string]: string;
-  }
-};
-
-export {
-  IDictionaryModuleParams,
-  IParsedExpression,
-  IResolveExpressionParams,
-  IApplyToStringOptions,
-  IDictionaryJSON,
+  };
 }
+
+export { IDictionaryModuleParams, IParsedExpression, IResolveExpressionParams, IApplyToStringOptions, IDictionaryJSON };

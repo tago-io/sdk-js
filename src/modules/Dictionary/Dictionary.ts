@@ -7,7 +7,7 @@ import {
   IResolveExpressionParams,
   IApplyToStringOptions,
   IDictionaryJSON,
-} from "./dictionary.types"
+} from "./dictionary.types";
 
 // TODO Remove temporary static dictionaries
 import * as enUS from "./en-US.json";
@@ -37,11 +37,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * const value = dictionary.getValueFromKey("en-US", "TEST", "OK_BUTTON_LABEL");
    * ```
    */
-  public async getValueFromKey(
-    language: string,
-    dictionary: string,
-    key: string,
-  ): Promise<string> {
+  public async getValueFromKey(language: string, dictionary: string, key: string): Promise<string> {
     // TODO Handle localStorage, fetching JSON, checking JSON cache, etc
     if (!language || !dictionary || !key) {
       throw new Error("Missing parameters");
@@ -49,7 +45,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
 
     // TODO Replace this mock language switching
     // TODO Handle language fallback for "en" over "en-US", etc
-    const json = language === "pt-BR" ? ptBR : enUS as IDictionaryJSON;
+    const json = language === "pt-BR" ? ptBR : (enUS as IDictionaryJSON);
 
     // Return expression as is if either dictionary or key do not exist
     if (!json[dictionary] || !json[dictionary][key]) {
@@ -57,7 +53,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
     }
 
     return json[dictionary][key];
-  };
+  }
 
   /**
    * Parse an expression and extract the names of the dictionary, the key, and
@@ -84,7 +80,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
     }
 
     return { dictionary, key: keyWithParams };
-  };
+  }
 
   /**
    * Resolve an expression in a language, replacing the parameters in the
@@ -120,7 +116,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
     });
 
     return resolvedString;
-  };
+  }
 
   /**
    * Get all (and only) the expressions in a string and their parameters if applicable,
@@ -142,7 +138,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
       .map((expression) => this.parseExpression(expression));
 
     return expressions;
-  };
+  }
 
   /**
    * Apply the dictionary over a string, parsing the expressions in the string and
@@ -163,10 +159,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * );
    * ```
    */
-  public async applyToString(
-    rawString: string,
-    options?: IApplyToStringOptions,
-  ): Promise<string> {
+  public async applyToString(rawString: string, options?: IApplyToStringOptions): Promise<string> {
     const { language } = options || {};
 
     // TODO Possibly handle fallback differently if language is not passed
@@ -202,8 +195,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
     });
 
     return resultString;
-  };
-
+  }
 }
 
 export default Dictionary;
