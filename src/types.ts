@@ -7,3 +7,4 @@ export * as RunUser from "./modules/RunUser/types";
 export * as Connector from "./modules/Network/types";
 // export * as Services from "./modules/Services/types";
 // export * as Utils from "./modules/Utils/types";
+export * as Dictionary from "./modules/Dictionary/types";

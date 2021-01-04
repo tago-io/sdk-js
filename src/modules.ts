@@ -5,5 +5,6 @@ export { default as Services } from "./modules/Services/Services";
 export { default as Network } from "./modules/Network/Network";
 export { default as Authorization } from "./modules/Authorization/Authorization";
 export { default as Utils } from "./modules/Utils/Utils";
+export { default as Dictionary } from "./modules/Dictionary/Dictionary";
 
 export * as Types from "./types";

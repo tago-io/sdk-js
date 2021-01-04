@@ -1,0 +1,25 @@
+{
+  "TEST": {
+    "STRING_WITH_PARAMETER": "Essa string tem $0 como parâmetro",
+    "STRING_WITH_TWO_PARAMETERS": "Essa string tem $0 e $1 como parâmetros",
+    "STRING_WITH_REPEATED_PARAMETERS": "Essa string tem $0, $0, $0 como parâmetro três vezes",
+    "STRING_WITH_OUT_OF_RANGE_PARAMETERS": "Essa string tem $0 e $1 como parâmetros, $2 é ignorado",
+    "VARIABLE_LABEL": "Rótulo: $0 (substituídos)",
+    "VARIABLE_VALUE": "Valores: $0 & $1 (substituídos)",
+    "VARIABLE_ONE": "e funciona",
+    "VARIABLE_TWO": "ainda funciona",
+    "VARIABLE_THREE": "funciona até o fim",
+    "VARIABLE_PARAMS_ONE": "e isso $0",
+    "VARIABLE_PARAMS_TWO": "e isso $0 $1",
+    "VARIABLE_PARAMS_THREE": "e $0 $1 até o $2 de $0 tudo",
+    "VARIABLE_PARAMS_NO_ARGS": "$0, $1, e $2",
+    "VARIABLE_NO_PARAMS": "essa variável não tem parâmetros",
+    "BALANCE_LABEL": "Saldo (BRL): R$ $0"
+  },
+  "APP_LOJA": {
+    "HELP_MESSAGE": "Se você precisar de ajuda, entre em contato conosco via ajuda@tago.io.",
+    "HELP_BUTTON": "Me Ajuda",
+    "CANCEL_MESSAGE": "Tem certeza que gostaria de cancelar essa operação?",
+    "CANCEL_BUTTON": "Cancelar"
+  }
+}
