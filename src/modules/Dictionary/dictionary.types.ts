@@ -1,7 +1,8 @@
 import { GenericModuleParams } from "../../common/TagoIOModule";
 
 interface IDictionaryModuleParams extends GenericModuleParams {
-  options?: Object;
+  language?: string;
+  options?: object;
 }
 
 interface IParsedExpression {

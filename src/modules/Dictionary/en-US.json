@@ -14,6 +14,7 @@
     "VARIABLE_PARAMS_THREE": "and $0 $1 to the $2 of $0 all",
     "VARIABLE_PARAMS_NO_ARGS": "$0, $1, and $2",
     "VARIABLE_NO_PARAMS": "this variable has no parameters",
+    "BALANCE_LABEL": "Balance (USD): $ $0",
 
     "TEST_KEY": "Some test value",
     "TEST_RESOLVE_SINGLE_PARAM": "Resolved single param $0",
@@ -25,14 +26,13 @@
     "APPLY_MESSY_PART_ONE": "FirstPart",
     "APPLY_MESSY_PART_TWO": "$0Part"
   },
-  "ABCD": {
-    "HELP_MESSAGE": "If you need any help, please contact us at help@tago.io.",
-    "HELP_BUTTON": "Help Me",
-    "CANCEL_MESSAGE": "Are you sure you want to cancel this operation?",
-    "CANCEL_BUTTON": "Cancel"
-  },
-  "PROJETO": {
-    "VARIABLE_TITLE": "Display with Dictionary",
-    "HELP_TEXT": "This is some helpful text."
+  "WIDGETS": {
+    "DISPLAY_TITLE": "Display with Dictionary",
+    "DISPLAY_HELP_TEXT": "This is some helpful text.",
+    "DISPLAY_HEADER_BUTTON1": "Run Main Analysis",
+    "DISPLAY_HEADER_BUTTON2": "Run Other Analysis",
+    "DISPLAY_VALUE": "Some value in English $0",
+    "DISPLAY_LABEL": "Some label in English $0 ($1)",
+    "DISPLAY_ALIAS": "Some alias in English $0"
   }
 }

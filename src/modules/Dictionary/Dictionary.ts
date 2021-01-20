@@ -16,12 +16,15 @@ import * as ptBR from "./pt-BR.json";
 // Regular expressions that are used for parsing the strings:
 // - SPLIT is used to split the string into normal words/phrases and expressions
 // - MATCH is used to extract the parts that compose an expression
-const RE_SPLIT_EXPRESSION = /(#[A-Z0-9]+\.[A-Z_]+(?:,(?:[^,#"]+|\"[^\"]+\")+)*#)/;
-const RE_MATCH_EXPRESSION = /#([A-Z0-9]+)\.([A-Z_]+(?:,(?:[^,#"]+|\"[^\"]+\")+)*)#/;
+const RE_SPLIT_EXPRESSION = /(#[A-Z0-9]+\.[A-Z0-9_]+(?:,(?:[^,#"]+|\"[^\"]+\")+)*#)/;
+const RE_MATCH_EXPRESSION = /#([A-Z0-9]+)\.([A-Z0-9_]+(?:,(?:[^,#"]+|\"[^\"]+\")+)*)#/;
 
 class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
+  private language: string;
+
   constructor(params?: IDictionaryModuleParams) {
     super(params || { token: "unknown" });
+    this.language = params?.language || "en-US";
   }
 
   /**
@@ -160,7 +163,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * ```
    */
   public async applyToString(rawString: string, options?: IApplyToStringOptions): Promise<string> {
-    const { language } = options || {};
+    const { language } = this;
 
     // TODO Possibly handle fallback differently if language is not passed
     // TODO Throw an error if the string is undefined?
