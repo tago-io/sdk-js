@@ -1,9 +1,11 @@
 import { GenericModuleParams } from "../../common/TagoIOModule";
+import { Regions } from "../../regions";
 
 interface IDictionaryModuleParams extends GenericModuleParams {
+  token?: string;
+  region?: Regions;
   language?: string;
   options?: object;
-  profileId?: string;
 }
 
 interface IParsedExpression {

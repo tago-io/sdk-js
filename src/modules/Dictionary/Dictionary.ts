@@ -1,15 +1,13 @@
 import * as Papa from "papaparse";
 
-import Account from "../Account/Account";
-
 import TagoIOModule from "../../common/TagoIOModule";
 import {
   IDictionaryModuleParams,
   IParsedExpression,
   IResolveExpressionParams,
   IApplyToStringOptions,
-  IDictionaryJSON,
 } from "./dictionary.types";
+import { LanguageData } from "../Account/dictionaries.types";
 
 // Regular expressions that are used for parsing the strings:
 // - SPLIT is used to split the string into normal words/phrases and expressions
@@ -19,37 +17,39 @@ const RE_MATCH_EXPRESSION = /#([A-Z0-9]+)\.([A-Z0-9_]+(?:,(?:[^,#"]+|\"[^\"]+\")
 
 class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
   private language: string;
-  private languagesData: IDictionaryJSON;
-  private profileId: string;
-  private account: any;
 
   constructor(params?: IDictionaryModuleParams) {
     super(params || { token: "unknown" });
     this.language = params?.language || "en-US";
-    this.languagesData = {};
-    this.profileId = params?.profileId || "";
-    this.account = new Account({ token: params?.token });
   }
 
   /**
    * Get the language data for a dictionary.
    *
-   * @param profileId
-   * @param language
-   * @param dictionary
+   * @param language Language
+   * @param dictionary ID or Slug
+   * @param runURL Make anonymous request
    */
-  public async getLanguagesData(profileId: string, language: string, dictionary: string): Promise<any> {
-    if (!profileId || !language || !dictionary) {
+  public async getLanguagesData(dictionary: string, language = this.language, runURL?: string): Promise<LanguageData> {
+    if (!language || !dictionary) {
       throw new Error("Missing parameters");
     }
 
-    // Store the dictionary for a language if the language data has not been fetched for that language yet
-    if (!this.languagesData[language]) {
-      const response = await this.account.dictionaries.languageInfoBySlug(this.profileId, dictionary, language);
-      this.languagesData[language] = response;
+    if (!runURL) {
+      const response = await this.doRequest<LanguageData>({
+        path: `/dictionary/${dictionary}/${language}`,
+        method: "GET",
+        cacheTTL: 3600000,
+      });
+      return response;
+    } else {
+      const response = await TagoIOModule.doRequestAnonymous<LanguageData>({
+        path: `/dictionary/${runURL}/${dictionary}/${language}`,
+        method: "GET",
+        cacheTTL: 3600000,
+      });
+      return response;
     }
-
-    return this.languagesData[language];
   }
 
   /**
@@ -71,7 +71,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
       throw new Error("Missing parameters");
     }
 
-    const languagesData = await this.getLanguagesData(this.profileId, language, dictionary);
+    const languagesData = await this.getLanguagesData(dictionary, language);
 
     // Return expression as is if either dictionary or key do not exist
     if (!languagesData || !languagesData[key]) {

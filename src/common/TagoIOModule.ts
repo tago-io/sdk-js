@@ -38,6 +38,11 @@ interface doRequestParams {
   params?: any;
   headers?: any;
   overwriteAxiosConfig?: AxiosRequestConfig;
+  /**
+   * Cache for request
+   * default: false (disabled)
+   */
+  cacheTTL?: number;
 }
 
 /**
