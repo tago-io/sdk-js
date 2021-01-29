@@ -5,6 +5,7 @@ interface IDictionaryModuleParams extends GenericModuleParams {
   token?: string;
   region?: Regions;
   language?: string;
+  runURL?: string;
   options?: object;
 }
 

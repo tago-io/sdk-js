@@ -17,10 +17,12 @@ const RE_MATCH_EXPRESSION = /#([A-Z0-9]+)\.([A-Z0-9_]+(?:,(?:[^,#"]+|\"[^\"]+\")
 
 class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
   private language: string;
+  private runURL: string;
 
   constructor(params?: IDictionaryModuleParams) {
     super(params || { token: "unknown" });
     this.language = params?.language || "en-US";
+    this.runURL = params?.runURL;
   }
 
   /**
@@ -35,20 +37,24 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
       throw new Error("Missing parameters");
     }
 
-    if (!runURL) {
-      const response = await this.doRequest<LanguageData>({
-        path: `/dictionary/${dictionary}/${language}`,
-        method: "GET",
-        cacheTTL: 3600000,
-      });
-      return response;
-    } else {
-      const response = await TagoIOModule.doRequestAnonymous<LanguageData>({
-        path: `/dictionary/${runURL}/${dictionary}/${language}`,
-        method: "GET",
-        cacheTTL: 3600000,
-      });
-      return response;
+    try {
+      if (!runURL) {
+        const response = await this.doRequest<LanguageData>({
+          path: `/dictionary/${dictionary}/${language}`,
+          method: "GET",
+          cacheTTL: 3600000,
+        });
+        return response;
+      } else {
+        const response = await TagoIOModule.doRequestAnonymous<LanguageData>({
+          path: `/dictionary/${runURL}/${dictionary}/${language}`,
+          method: "GET",
+          cacheTTL: 3600000,
+        });
+        return response;
+      }
+    } catch (e) {
+      return null;
     }
   }
 
@@ -66,14 +72,14 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * ```
    */
   public async getValueFromKey(language: string, dictionary: string, key: string): Promise<string> {
-    // TODO Handle localStorage, fetching JSON, checking JSON cache, etc
     if (!language || !dictionary || !key) {
       throw new Error("Missing parameters");
     }
 
-    const languagesData = await this.getLanguagesData(dictionary, language);
+    // Get the dictionary language data from the profile route or anonymous route (Run)
+    const languagesData = await this.getLanguagesData(dictionary, language, this.runURL);
 
-    // Return expression as is if either dictionary or key do not exist
+    // Return expression as is if the request fails or either dictionary/key do not exist
     if (!languagesData || !languagesData[key]) {
       return `#${dictionary}.${key}#`;
     }
@@ -188,7 +194,6 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
   public async applyToString(rawString: string, options?: IApplyToStringOptions): Promise<string> {
     const { language } = this;
 
-    // TODO Possibly handle fallback differently if language is not passed
     // TODO Throw an error if the string is undefined?
     if (!rawString || !language) {
       return rawString || "";
