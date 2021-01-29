@@ -1,5 +1,7 @@
 import * as Papa from "papaparse";
 
+import Account from "../Account/Account";
+
 import TagoIOModule from "../../common/TagoIOModule";
 import {
   IDictionaryModuleParams,
@@ -9,10 +11,6 @@ import {
   IDictionaryJSON,
 } from "./dictionary.types";
 
-// TODO Remove temporary static dictionaries
-import * as enUS from "./en-US.json";
-import * as ptBR from "./pt-BR.json";
-
 // Regular expressions that are used for parsing the strings:
 // - SPLIT is used to split the string into normal words/phrases and expressions
 // - MATCH is used to extract the parts that compose an expression
@@ -21,10 +19,37 @@ const RE_MATCH_EXPRESSION = /#([A-Z0-9]+)\.([A-Z0-9_]+(?:,(?:[^,#"]+|\"[^\"]+\")
 
 class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
   private language: string;
+  private languagesData: IDictionaryJSON;
+  private profileId: string;
+  private account: any;
 
   constructor(params?: IDictionaryModuleParams) {
     super(params || { token: "unknown" });
     this.language = params?.language || "en-US";
+    this.languagesData = {};
+    this.profileId = params?.profileId || "";
+    this.account = new Account({ token: params?.token });
+  }
+
+  /**
+   * Get the language data for a dictionary.
+   *
+   * @param profileId
+   * @param language
+   * @param dictionary
+   */
+  public async getLanguagesData(profileId: string, language: string, dictionary: string): Promise<any> {
+    if (!profileId || !language || !dictionary) {
+      throw new Error("Missing parameters");
+    }
+
+    // Store the dictionary for a language if the language data has not been fetched for that language yet
+    if (!this.languagesData[language]) {
+      const response = await this.account.dictionaries.languageInfoBySlug(this.profileId, dictionary, language);
+      this.languagesData[language] = response;
+    }
+
+    return this.languagesData[language];
   }
 
   /**
@@ -46,16 +71,14 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
       throw new Error("Missing parameters");
     }
 
-    // TODO Replace this mock language switching
-    // TODO Handle language fallback for "en" over "en-US", etc
-    const json = language === "pt-BR" ? ptBR : (enUS as IDictionaryJSON);
+    const languagesData = await this.getLanguagesData(this.profileId, language, dictionary);
 
     // Return expression as is if either dictionary or key do not exist
-    if (!json[dictionary] || !json[dictionary][key]) {
+    if (!languagesData || !languagesData[key]) {
       return `#${dictionary}.${key}#`;
     }
 
-    return json[dictionary][key];
+    return languagesData[key];
   }
 
   /**

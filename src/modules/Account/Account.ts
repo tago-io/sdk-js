@@ -8,6 +8,7 @@ import Analyses from "./Analyses";
 import Buckets from "./Buckets";
 import Dashboards from "./Dashboards";
 import Devices from "./Devices";
+import Dictionaries from "./Dictionaries";
 import Explore from "./Explore";
 import Files from "./Files";
 import Notifications from "./Notifications";
@@ -238,6 +239,13 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * functions like create, edit and delete.
    */
   public devices = new Devices(this.params);
+
+  /**
+   * Manage dictionaries in account
+   * Be sure to use an account token with “write” permissions when using
+   * functions like create, edit and delete.
+   */
+  public dictionaries = new Dictionaries(this.params);
 
   /**
    * Manage notifications in account
