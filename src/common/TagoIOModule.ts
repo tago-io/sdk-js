@@ -2,6 +2,7 @@ import { AxiosRequestConfig, Method } from "axios";
 import qs from "qs";
 import apiRequest from "../infrastructure/apiRequest";
 import regions, { Regions } from "../regions";
+import { addCache, getCache } from "./Cache";
 import { RefType, GenericID } from "./common.types";
 
 interface GenericModuleParams {
@@ -38,6 +39,11 @@ interface doRequestParams {
   params?: any;
   headers?: any;
   overwriteAxiosConfig?: AxiosRequestConfig;
+  /**
+   * Cache for request
+   * default: false (disabled)
+   */
+  cacheTTL?: number;
 }
 
 /**
@@ -61,6 +67,7 @@ function mountAxiosRequest(uri: string, requestObj: doRequestParams): AxiosReque
 
   return axiosObj;
 }
+
 /**
  * Abstract class to wrap all TagoIO SDK Modules
  * @internal
@@ -100,7 +107,19 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
       ...axiosObj.headers,
     };
 
-    return apiRequest(axiosObj) as Promise<TR>;
+    const cacheKey = JSON.stringify(axiosObj);
+    const objCached = requestObj.cacheTTL ? getCache(cacheKey) : null;
+    if (objCached) {
+      return Promise.resolve<TR>(objCached);
+    }
+
+    return apiRequest(axiosObj).then((r) => {
+      if (requestObj.cacheTTL) {
+        addCache(cacheKey, r, requestObj.cacheTTL);
+      }
+
+      return r as TR;
+    });
   }
 
   protected static doRequestAnonymous<TR>(requestObj: doRequestParams, region?: Regions): Promise<TR> {
@@ -111,7 +130,19 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
 
     const axiosObj = mountAxiosRequest(apiURI, requestObj);
 
-    return apiRequest(axiosObj) as Promise<TR>;
+    const cacheKey = JSON.stringify(axiosObj);
+    const objCached = requestObj.cacheTTL ? getCache(cacheKey) : null;
+    if (objCached) {
+      return Promise.resolve<TR>(objCached);
+    }
+
+    return apiRequest(axiosObj).then((r) => {
+      if (requestObj.cacheTTL) {
+        addCache(cacheKey, r, requestObj.cacheTTL);
+      }
+
+      return r as TR;
+    });
   }
 }
 
