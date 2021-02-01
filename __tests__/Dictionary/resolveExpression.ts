@@ -1,9 +1,18 @@
 import { Dictionary } from "../../src/modules";
 
+import { enUS, ptBR } from "./__mocks__/dictionaries";
+
 describe("resolveExpression", () => {
   let dictionary: Dictionary;
+  let fn: jest.SpyInstance;
+
   beforeAll(() => {
-    dictionary = new Dictionary();
+    dictionary = new Dictionary({ token: "mockToken" });
+
+    // Mock the function that gets data from the API
+    fn = jest.spyOn(dictionary, "getLanguagesData").mockImplementation(async (slug, language) => {
+      return language === "pt-BR" ? ptBR[slug] : enUS[slug];
+    });
   });
 
   it("resolves an expression with a single parameter", async () => {
