@@ -3,7 +3,7 @@ type expireTimestamp = number;
 
 const cacheObj = new Map<[keyName, expireTimestamp], any>();
 
-function clearCache() {
+function clearCacheTTL() {
   for (const item of cacheObj.keys()) {
     if (item[1] < Date.now()) {
       cacheObj.delete(item);
@@ -12,12 +12,12 @@ function clearCache() {
 }
 
 function addCache(key: string, obj: any, ttlMS = 5000) {
-  clearCache();
+  clearCacheTTL();
   cacheObj.set([key, Date.now() + ttlMS], obj);
 }
 
 function getCache(key: string) {
-  clearCache();
+  clearCacheTTL();
 
   for (const item of cacheObj.keys()) {
     if (item[0] === key) {
@@ -28,4 +28,8 @@ function getCache(key: string) {
   return undefined;
 }
 
-export { addCache, getCache };
+function clearCache() {
+  cacheObj.clear();
+}
+
+export { addCache, getCache, clearCache };

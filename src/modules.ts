@@ -7,4 +7,5 @@ export { default as Authorization } from "./modules/Authorization/Authorization"
 export { default as Utils } from "./modules/Utils/Utils";
 export { default as Dictionary } from "./modules/Dictionary/Dictionary";
 
+export * as Cache from "./common/Cache";
 export * as Types from "./types";
