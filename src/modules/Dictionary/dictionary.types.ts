@@ -2,10 +2,16 @@ import { GenericModuleParams } from "../../common/TagoIOModule";
 import { Regions } from "../../regions";
 
 interface IDictionaryModuleParams extends GenericModuleParams {
-  token?: string;
+  token: string;
   region?: Regions;
   language?: string;
-  runURL?: string;
+  options?: object;
+}
+
+interface IDictionaryModuleParamsAnonymous extends GenericModuleParams {
+  runURL: string;
+  region?: Regions;
+  language?: string;
   options?: object;
 }
 
@@ -30,4 +36,11 @@ interface IDictionaryJSON {
   };
 }
 
-export { IDictionaryModuleParams, IParsedExpression, IResolveExpressionParams, IApplyToStringOptions, IDictionaryJSON };
+export {
+  IDictionaryModuleParams,
+  IDictionaryModuleParamsAnonymous,
+  IParsedExpression,
+  IResolveExpressionParams,
+  IApplyToStringOptions,
+  IDictionaryJSON,
+};
