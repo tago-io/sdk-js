@@ -2,7 +2,15 @@ import { GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
 
-import { DictionaryCreateInfo, DictionaryInfo, DictionaryQuery, LanguageData } from "./dictionaries.types";
+import {
+  DictionaryCreateInfo,
+  DictionaryInfo,
+  LanguageInfoQuery,
+  DictionaryQuery,
+  LanguageData,
+} from "./dictionaries.types";
+
+import { Cache } from "../../modules";
 
 class Dictionaries extends TagoIOModule<GenericModuleParams> {
   /**
@@ -19,7 +27,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
    * }
    * ```
    *
-   * @param queryObj Search query params
+   * @param queryObj Search query params.
    */
   public async list(queryObj?: DictionaryQuery): Promise<DictionaryInfo[]> {
     let result = await this.doRequest<DictionaryInfo[]>({
@@ -40,8 +48,9 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates and retrieves a new dictionary for the account
-   * @param dictionaryObj Object with data to create new dictionary
+   * Generates and retrieves a new dictionary for the account.
+   *
+   * @param dictionaryObj Object with data to create new dictionary.
    */
   public async create(dictionaryObj: DictionaryCreateInfo): Promise<{ dictionary: string }> {
     const result = await this.doRequest<{ dictionary: string }>({
@@ -55,8 +64,9 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Modifies any property of a dictionary.
-   * @param dictionaryID Dictionary ID
-   * @param dictionaryObj Dictionary Object data to be replaced
+   *
+   * @param dictionaryID Dictionary ID.
+   * @param dictionaryObj Dictionary Object data to be replaced.
    */
   public async edit(dictionaryID: GenericID, dictionaryObj: Partial<DictionaryCreateInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -70,7 +80,8 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Deletes a dictionary from the account.
-   * @param dictionaryID Dictionary ID
+   *
+   * @param dictionaryID Dictionary ID.
    */
   public async delete(dictionaryID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -78,12 +89,15 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
       method: "DELETE",
     });
 
+    Cache.clearCache();
+
     return result;
   }
 
   /**
    * Gets information about a dictionary.
-   * @param dictionaryID Dictionary ID
+   *
+   * @param dictionaryID Dictionary ID.
    */
   public async info(dictionaryID: GenericID): Promise<DictionaryInfo> {
     let result = await this.doRequest<DictionaryInfo>({
@@ -102,32 +116,69 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
       body: languageObj,
     });
 
+    Cache.clearCache();
+
     return result;
   }
 
   /**
-   * Gets information about a dictionary.
-   * @param dictionaryID Dictionary ID
-   * @param locale Locale string (e.g. `en-US`)
+   * Deletes a language from a dictionary.
+   *
+   * @param dictionaryID Dictionary ID.
+   * @param locale Language locale string (e.g. `en-US`).
    */
-  public async languageInfo(dictionaryID: GenericID, locale: string): Promise<LanguageData> {
+  public async languageDelete(dictionaryID: GenericID, locale: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/dictionary/${dictionaryID}/${locale}`,
+      method: "DELETE",
+    });
+
+    Cache.clearCache();
+
+    return result;
+  }
+
+  /**
+   * Gets information about a dictionary by ID.
+   *
+   * @param dictionaryID Dictionary ID.
+   * @param locale Language locale string (e.g. `en-US`).
+   * @param queryObj Language info query params.
+   */
+  public async languageInfo(
+    dictionaryID: GenericID,
+    locale: string,
+    queryObj?: LanguageInfoQuery
+  ): Promise<LanguageData> {
     const result = await this.doRequest<LanguageData>({
       path: `/dictionary/${dictionaryID}/${locale}`,
       method: "GET",
+      params: {
+        // Default to not getting the fallback language info if language is not found
+        // as this route is mainly used to edit a dictionary
+        fallback: queryObj?.fallback || false,
+      },
     });
 
     return result;
   }
 
   /**
-   * Gets information about a dictionary.
-   * @param dictionaryID Dictionary ID
-   * @param locale Locale string (e.g. `en-US`)
+   * Gets information about a dictionary querying by slug instead of the dictionary's ID.
+   *
+   * @param slug Dictionary slug.
+   * @param locale Language locale string (e.g. `en-US`).
+   * @param queryObj Language info query params.
    */
-  public async languageInfoBySlug(profileId: string, slug: string, locale: string): Promise<LanguageData> {
+  public async languageInfoBySlug(slug: string, locale: string, queryObj?: LanguageInfoQuery): Promise<LanguageData> {
     const result = await this.doRequest<LanguageData>({
-      path: `/dictionary/${profileId}/${slug}/${locale}`,
+      path: `/dictionary/${slug}/${locale}`,
       method: "GET",
+      params: {
+        // Default to getting the fallback language info if language is not found
+        // as this route is mainly used to use the dictionary strings in applications
+        fallback: queryObj?.fallback || true,
+      },
     });
 
     return result;

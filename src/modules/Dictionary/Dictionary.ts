@@ -31,9 +31,9 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
   /**
    * Get the language data for a dictionary.
    *
-   * @param language Language
-   * @param dictionary ID or Slug
-   * @param runURL Make anonymous request
+   * @param language Language.
+   * @param dictionary ID or Slug.
+   * @param runURL URL for the Run to make anonymous request.
    */
   public async getLanguagesData(dictionary: string, language = this.language): Promise<LanguageData> {
     if (!language || !dictionary) {
@@ -46,6 +46,9 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
           path: `/dictionary/${dictionary}/${language}`,
           method: "GET",
           cacheTTL: 3600000,
+          params: {
+            fallback: true,
+          },
         });
         return response;
       } else {
@@ -197,7 +200,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
   public async applyToString(rawString: string, options?: IApplyToStringOptions): Promise<string> {
     const { language } = this;
 
-    // TODO Throw an error if the string is undefined?
+    // Handling undefined strings is not this function's job
     if (!rawString || !language) {
       return rawString || "";
     }
