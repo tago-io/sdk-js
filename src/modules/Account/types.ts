@@ -5,6 +5,7 @@ export * as Analysis from "./analysis.types";
 export * as Buckets from "./buckets.types";
 export * as Dashboards from "./dashboards.types";
 export * as Devices from "./devices.types";
+export * as Dictionaries from "./dictionaries.types";
 export * as Files from "./files.types";
 export * as Notifications from "./notifications.types";
 export * as Plan from "./plan.types";
