@@ -11,18 +11,16 @@ function clearCache() {
   }
 }
 
-function addCache(key: any, obj: any, ttlMS = 5000) {
+function addCache(key: string, obj: any, ttlMS = 5000) {
   clearCache();
-  const keyString = JSON.stringify(key);
-  cacheObj.set([keyString, Date.now() + ttlMS], obj);
+  cacheObj.set([key, Date.now() + ttlMS], obj);
 }
 
-function getCache(key: any) {
+function getCache(key: string) {
   clearCache();
-  const keyString = JSON.stringify(key);
 
   for (const item of cacheObj.keys()) {
-    if (item[0] === keyString) {
+    if (item[0] === key) {
       return cacheObj.get(item);
     }
   }

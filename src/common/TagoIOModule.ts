@@ -107,14 +107,15 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
       ...axiosObj.headers,
     };
 
-    const objCached = requestObj.cacheTTL ? getCache(axiosObj) : null;
+    const cacheKey = JSON.stringify(axiosObj);
+    const objCached = requestObj.cacheTTL ? getCache(cacheKey) : null;
     if (objCached) {
       return Promise.resolve<TR>(objCached);
     }
 
     return apiRequest(axiosObj).then((r) => {
       if (requestObj.cacheTTL) {
-        addCache(axiosObj, r, requestObj.cacheTTL);
+        addCache(cacheKey, r, requestObj.cacheTTL);
       }
 
       return r as TR;
@@ -129,14 +130,15 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
 
     const axiosObj = mountAxiosRequest(apiURI, requestObj);
 
-    const objCached = requestObj.cacheTTL ? getCache(axiosObj) : null;
+    const cacheKey = JSON.stringify(axiosObj);
+    const objCached = requestObj.cacheTTL ? getCache(cacheKey) : null;
     if (objCached) {
       return Promise.resolve<TR>(objCached);
     }
 
     return apiRequest(axiosObj).then((r) => {
       if (requestObj.cacheTTL) {
-        addCache(axiosObj, r, requestObj.cacheTTL);
+        addCache(cacheKey, r, requestObj.cacheTTL);
       }
 
       return r as TR;
