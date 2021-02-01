@@ -11,14 +11,14 @@ function clearCache() {
   }
 }
 
-setInterval(clearCache, 999);
-
 function addCache(key: any, obj: any, ttlMS = 5000) {
+  clearCache();
   const keyString = JSON.stringify(key);
   cacheObj.set([keyString, Date.now() + ttlMS], obj);
 }
 
 function getCache(key: any) {
+  clearCache();
   const keyString = JSON.stringify(key);
 
   for (const item of cacheObj.keys()) {
