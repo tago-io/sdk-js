@@ -2,8 +2,9 @@ import { Dictionary } from "../../src/modules";
 
 describe("parseExpression", () => {
   let dictionary: Dictionary;
+
   beforeAll(() => {
-    dictionary = new Dictionary();
+    dictionary = new Dictionary({ token: "mockToken" });
   });
 
   it("parses an expression without parameters", () => {

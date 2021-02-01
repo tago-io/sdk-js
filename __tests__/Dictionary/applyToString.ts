@@ -1,12 +1,20 @@
 import { Dictionary } from "../../src/modules";
 
+import { enUS, ptBR } from "./__mocks__/dictionaries";
+
 describe("applyToString", () => {
   let dictionary: Dictionary;
   let options: Object;
+  let fn: jest.SpyInstance;
 
   beforeAll(() => {
-    dictionary = new Dictionary();
+    dictionary = new Dictionary({ token: "mockToken" });
     options = { language: "en-US" };
+
+    // Mock the function that gets data from the API
+    fn = jest.spyOn(dictionary, "getLanguagesData").mockImplementation(async (slug, language) => {
+      return language === "pt-BR" ? ptBR[slug] : enUS[slug];
+    });
   });
 
   it("does not run if the string is undefined", async () => {

@@ -2,8 +2,9 @@ import { Dictionary } from "../../src/modules";
 
 describe("getExpressionsFromString", () => {
   let dictionary: Dictionary;
+
   beforeAll(() => {
-    dictionary = new Dictionary();
+    dictionary = new Dictionary({ token: "mockToken" });
   });
 
   it("gets expressions from a well separated string", async () => {
