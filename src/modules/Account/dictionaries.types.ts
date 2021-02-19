@@ -6,9 +6,14 @@ interface DictionaryCreateInfo {
   fallback: string;
 }
 
+interface DictionaryLanguage {
+  code: string;
+  active: boolean;
+}
+
 interface DictionaryInfo extends DictionaryCreateInfo {
   id: GenericID;
-  languages: string[];
+  languages: DictionaryLanguage[];
   created_at: Date;
   updated_at: Date;
 }

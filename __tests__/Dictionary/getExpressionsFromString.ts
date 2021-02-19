@@ -50,6 +50,23 @@ describe("getExpressionsFromString", () => {
     ]);
   });
 
+  it("gets expressions from well separated strings with some extra hashes", async () => {
+    const parsedOne = await dictionary.getExpressionsFromString("aaa ##TEST.TEST_KEY## ##TEST.ANOTHER_TEST_KEY## bbb");
+    const parsedTwo = await dictionary.getExpressionsFromString(
+      "aaa ####TEST.TEST_KEY## ### ###TEST.ANOTHER_TEST_KEY## ## ##a#TEST.LAST_TEST_KEY#b## # bbb"
+    );
+
+    expect(parsedOne).toEqual([
+      { dictionary: "TEST", key: "TEST_KEY" },
+      { dictionary: "TEST", key: "ANOTHER_TEST_KEY" },
+    ]);
+    expect(parsedTwo).toEqual([
+      { dictionary: "TEST", key: "TEST_KEY" },
+      { dictionary: "TEST", key: "ANOTHER_TEST_KEY" },
+      { dictionary: "TEST", key: "LAST_TEST_KEY" },
+    ]);
+  });
+
   it("does not get any expression if the string doesn't contain one", async () => {
     const parsed = await dictionary.getExpressionsFromString("regular string with no expressions");
 

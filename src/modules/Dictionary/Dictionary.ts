@@ -73,7 +73,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    *
    * @example
    * ```
-   * const dictionary = new Dictionary({ token: "my-token" });
+   * const dictionary = new Dictionary({ language: "en-US", token: "my-token" });
    * const value = dictionary.getValueFromKey("en-US", "TEST", "OK_BUTTON_LABEL");
    * ```
    */
@@ -101,7 +101,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    *
    * @example
    * ```
-   * const dictionary = new Dictionary({ token: "my-token" });
+   * const dictionary = new Dictionary({ language: "en-US", token: "my-token" });
    * const value = dictionary.parseExpression("#TAGORUN.WELCOME_TEXT,Hello");
    * ```
    */
@@ -128,7 +128,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    *
    * @example
    * ```
-   * const dictionary = new Dictionary({ token: "my-token" });
+   * const dictionary = new Dictionary({ language: "en-US", token: "my-token" });
    * const value = dictionary.resolveExpression({
    *   language: "en-US",
    *   expression: {
@@ -164,7 +164,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    *
    * @example
    * ```
-   * const dictionary = new Dictionary({ token: "my-token" });
+   * const dictionary = new Dictionary({ language: "en-US", token: "my-token" });
    * const expressions = dictionary.getExpressionsFromString("Words are ignored #TEST.DICT_KEY#");
    * ```
    */
@@ -172,7 +172,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
     const tokens = rawString.split(RE_SPLIT_EXPRESSION);
 
     const expressions = tokens
-      .filter((token) => token.startsWith("#") && token.endsWith("#"))
+      .filter((token) => RE_SPLIT_EXPRESSION.test(token))
       .map((expression) => this.parseExpression(expression));
 
     return expressions;
@@ -183,18 +183,17 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * replacing them with the values found for the respective keys inside the dictionary
    * for a language.
    *
+   * Always returns a string. Return the translated string if there are dictionary expressions,
+   * the raw string with no changes if there are no expressions, and an empty string if `rawString`
+   * is undefined.
+   *
    * @param rawString String with words and/or expressions.
    * @param options Object containing options for the dictionary, including the language.
    *
    * @example
    * ```
-   * const dictionary = new Dictionary({ token: "my-token" });
-   * const result = dictionary.applyToString(
-   *   "Words are ignored #TEST.DICT_KEY#",
-   *   {
-   *     language: "en-US",
-   *   },
-   * );
+   * const dictionary = new Dictionary({ language: "en-US", token: "my-token" });
+   * const result = dictionary.applyToString("Words are ignored #TEST.DICT_KEY#");
    * ```
    */
   public async applyToString(rawString: string, options?: IApplyToStringOptions): Promise<string> {

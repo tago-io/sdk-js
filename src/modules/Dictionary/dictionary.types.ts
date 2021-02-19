@@ -30,17 +30,10 @@ interface IApplyToStringOptions {
   language?: string;
 }
 
-interface IDictionaryJSON {
-  [dictionary: string]: {
-    [key: string]: string;
-  };
-}
-
 export {
   IDictionaryModuleParams,
   IDictionaryModuleParamsAnonymous,
   IParsedExpression,
   IResolveExpressionParams,
   IApplyToStringOptions,
-  IDictionaryJSON,
 };
