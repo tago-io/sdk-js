@@ -5,22 +5,23 @@ import dateParser from "../Utils/dateParser";
 import {
   DictionaryCreateInfo,
   DictionaryInfo,
-  LanguageInfoQuery,
   DictionaryQuery,
   LanguageData,
+  LanguageEditData,
+  LanguageInfoQuery,
 } from "./dictionaries.types";
 
 import { Cache } from "../../modules";
 
 class Dictionaries extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieves a list with all dictionaries from an account.
+   * Retrieve a list with all dictionaries from an account.
    *
    * @default
    * ```json
    * queryObj: {
    *   page: 1,
-   *   fields: ["id", "name"],
+   *   fields: ["id", "name", "slug", "languages"],
    *   filter: {},
    *   amount: 20,
    *   orderBy: "name,asc",
@@ -48,7 +49,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates and retrieves a new dictionary for the account.
+   * Generate a new dictionary for the account.
    *
    * @param dictionaryObj Object with data to create new dictionary.
    */
@@ -63,7 +64,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modifies any property of a dictionary.
+   * Modify any property of a dictionary.
    *
    * @param dictionaryID Dictionary ID.
    * @param dictionaryObj Dictionary Object data to be replaced.
@@ -79,7 +80,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a dictionary from the account.
+   * Delete a dictionary from the account.
    *
    * @param dictionaryID Dictionary ID.
    */
@@ -95,7 +96,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets information about a dictionary.
+   * Get information about a dictionary.
    *
    * @param dictionaryID Dictionary ID.
    */
@@ -109,7 +110,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async languageEdit(dictionaryID: GenericID, locale: string, languageObj: LanguageData): Promise<string> {
+  public async languageEdit(dictionaryID: GenericID, locale: string, languageObj: LanguageEditData): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/dictionary/${dictionaryID}/${locale}`,
       method: "PUT",
@@ -122,7 +123,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a language from a dictionary.
+   * Delete a language from a dictionary.
    *
    * @param dictionaryID Dictionary ID.
    * @param locale Language locale string (e.g. `en-US`).
@@ -139,7 +140,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets information about a dictionary by ID.
+   * Get information about a dictionary by ID.
    *
    * @param dictionaryID Dictionary ID.
    * @param locale Language locale string (e.g. `en-US`).
@@ -164,7 +165,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets information about a dictionary querying by slug instead of the dictionary's ID.
+   * Get information about a dictionary querying by slug instead of the dictionary's ID.
    *
    * @param slug Dictionary slug.
    * @param locale Language locale string (e.g. `en-US`).

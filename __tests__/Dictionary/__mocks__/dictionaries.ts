@@ -1,4 +1,10 @@
-const enUS: any = {
+import { LanguageData } from "../../../src/modules/Account/dictionaries.types";
+
+interface IMockLanguageData {
+  [slug: string]: LanguageData;
+}
+
+const enUS: IMockLanguageData = {
   TEST: {
     STRING_WITH_PARAMETER: "This string has $0 as parameter",
     STRING_WITH_TWO_PARAMETERS: "This string has $0 and $1 as parameters",
@@ -37,7 +43,7 @@ const enUS: any = {
   },
 };
 
-const ptBR: any = {
+const ptBR: IMockLanguageData = {
   TEST: {
     STRING_WITH_PARAMETER: "Essa string tem $0 como parâmetro",
     STRING_WITH_TWO_PARAMETERS: "Essa string tem $0 e $1 como parâmetros",
