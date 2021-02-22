@@ -19,9 +19,11 @@ interface DictionaryInfo extends DictionaryCreateInfo {
 }
 
 interface LanguageData {
-  dictionary: {
-    [key: string]: string;
-  };
+  [key: string]: string;
+}
+
+interface LanguageEditData {
+  dictionary: LanguageData[];
   active: boolean;
 }
 
@@ -31,4 +33,4 @@ interface LanguageInfoQuery {
 
 type DictionaryQuery = Query<DictionaryInfo, "name" | "slug" | "languages" | "fallback" | "created_at" | "updated_at">;
 
-export { DictionaryCreateInfo, DictionaryInfo, LanguageInfoQuery, DictionaryQuery, LanguageData };
+export { DictionaryCreateInfo, DictionaryInfo, LanguageInfoQuery, DictionaryQuery, LanguageData, LanguageEditData };

@@ -7,6 +7,7 @@ import {
   DictionaryInfo,
   DictionaryQuery,
   LanguageData,
+  LanguageEditData,
   LanguageInfoQuery,
 } from "./dictionaries.types";
 
@@ -109,7 +110,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async languageEdit(dictionaryID: GenericID, locale: string, languageObj: LanguageData): Promise<string> {
+  public async languageEdit(dictionaryID: GenericID, locale: string, languageObj: LanguageEditData): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/dictionary/${dictionaryID}/${locale}`,
       method: "PUT",

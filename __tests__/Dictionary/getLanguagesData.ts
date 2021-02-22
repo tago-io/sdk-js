@@ -29,11 +29,8 @@ describe("getLanguagesData", () => {
         res.send({
           status: true,
           result: {
-            dictionary: {
-              KEY1: "first value",
-              KEY2: "second value",
-            },
-            active: true,
+            KEY1: "first value",
+            KEY2: "second value",
           },
         });
       });
