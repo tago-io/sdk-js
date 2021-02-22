@@ -86,11 +86,11 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
     const languagesData = await this.getLanguagesData(dictionary, language);
 
     // Return expression as is if the request fails or either dictionary/key do not exist
-    if (!languagesData || !languagesData[key]) {
+    if (!languagesData || !languagesData?.dictionary[key]) {
       return `#${dictionary}.${key}#`;
     }
 
-    return languagesData[key];
+    return languagesData.dictionary[key];
   }
 
   /**

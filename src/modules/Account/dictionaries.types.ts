@@ -19,7 +19,10 @@ interface DictionaryInfo extends DictionaryCreateInfo {
 }
 
 interface LanguageData {
-  [key: string]: string;
+  dictionary: {
+    [key: string]: string;
+  };
+  active: boolean;
 }
 
 interface LanguageInfoQuery {
