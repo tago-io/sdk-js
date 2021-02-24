@@ -7,17 +7,19 @@ interface Metadata {
     url: string;
     md5: string;
     path: string;
-  }
+  };
   icon?: string;
-  fixed_position?: [{
-    [key: string]: {
-      color: string;
-      icon: string;
-      value: string;
-      x: string;
-      y: string;
+  fixed_position?: [
+    {
+      [key: string]: {
+        color: string;
+        icon: string;
+        value: string;
+        x: string;
+        y: string;
+      };
     }
-  }]
+  ];
   [key: string]: any;
 }
 

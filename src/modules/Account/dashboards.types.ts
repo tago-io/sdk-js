@@ -17,7 +17,6 @@ interface DashboardCreateInfo {
   visible?: boolean;
 }
 
-
 interface DashboardInfo extends DashboardCreateInfo {
   id: GenericID;
   created_at: Date;
@@ -33,17 +32,21 @@ interface DashboardInfo extends DashboardCreateInfo {
   type: string;
   blueprint_device_behavior: "more_than_one" | "always";
   blueprint_selector_behavior: void | "open" | "closed" | "always_open" | "always_closed";
-  blueprint_devices: [{
-    conditions: [{ key: string; value: string }];
-    name: string;
-    id: string;
-    label?: string;
-    filter_conditions?: [{
-      blueprint_device: string;
-      tag_key: string;
-      type: string;
-    }];
-  }];
+  blueprint_devices: [
+    {
+      conditions: [{ key: string; value: string }];
+      name: string;
+      id: string;
+      label?: string;
+      filter_conditions?: [
+        {
+          blueprint_device: string;
+          tag_key: string;
+          type: string;
+        }
+      ];
+    }
+  ];
   theme: any;
   setup: any;
   shared: {
