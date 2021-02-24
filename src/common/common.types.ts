@@ -1,5 +1,25 @@
 interface Metadata {
-  [key: string]: string | number | boolean | void | Metadata;
+  color?: string;
+  x?: string | number;
+  y?: string | number;
+  label?: string;
+  file?: {
+    url: string;
+    md5: string;
+    path: string;
+  };
+  icon?: string;
+  fixed_position?: {
+    [key: string]: {
+      color: string;
+      icon: string;
+      value: string;
+      x: string;
+      y: string;
+    };
+  };
+  sentValues?: [{ label: string; value: string | number | boolean }];
+  [key: string]: any;
 }
 
 interface Data {
@@ -17,7 +37,7 @@ interface Data {
 
 interface TagsObj {
   key: string;
-  value: string | number | boolean;
+  value: string;
 }
 
 type RecursivePartial<T> = {

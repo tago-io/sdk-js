@@ -75,7 +75,7 @@ interface DeviceInfo extends Omit<DeviceCreateInfo, "configuration_params"> {
 interface ConfigurationParams {
   sent: boolean;
   key: string;
-  value: string | number | boolean;
+  value: string;
   id?: string;
 }
 
