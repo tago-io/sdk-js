@@ -9,6 +9,8 @@ import {
   UserInfo,
   UserQuery,
   LoginAsUserOptions,
+  RunSAMLInfo,
+  RunSAMLEditInfo,
 } from "./run.types";
 
 class Run extends TagoIOModule<GenericModuleParams> {
@@ -147,6 +149,33 @@ class Run extends TagoIOModule<GenericModuleParams> {
     const result = await this.doRequest<string>({
       path: `/run/notification/${notificationID}`,
       method: "DELETE",
+    });
+
+    return result;
+  }
+
+  /**
+   * Get the SAML Single Sign-On information for the account's RUN.
+   */
+  public async ssoSAMLInfo(): Promise<RunSAMLInfo> {
+    const result = await this.doRequest<RunSAMLInfo>({
+      path: "/run/sso/saml",
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
+   * Edit the SAML Single Sign-On metadata and mappings for the account's RUN.
+   *
+   * @param data Updated data for a RUN's SAML Single Sign-On configuration.
+   */
+  public async ssoSAMLEdit(data: RunSAMLEditInfo): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: "/run/sso/saml",
+      method: "PUT",
+      body: data,
     });
 
     return result;

@@ -57,6 +57,7 @@ interface RunInfo {
   };
   theme: { [option in ThemeOption]: string };
   integration: object;
+  sso_saml_active: boolean;
 }
 
 interface UserCreateInfo {
@@ -116,6 +117,51 @@ interface LoginAsUserOptions {
    * @default "8 hours"
    */
   expire_time?: string;
+}
+
+interface SAMLAttributeMappings {
+  email: string;
+  firstName: string;
+  lastName?: string;
+  phone?: string;
+  company?: string;
+  language?: string;
+  timezone?: string;
+  tags?: {
+    [tag: string]: string;
+  };
+}
+
+interface RunSAMLInfo {
+  /**
+   * Information for TagoIO's API routes to use as a Service Provider in SAML authentication flows.
+   */
+  sp: {
+    entity_id: string;
+    acs_url: string;
+    metadata: string;
+  };
+  /**
+   * Relevant information from the Identity Provider's metadata after being parsed by TagoIO.
+   */
+  idp: {
+    issuer: string;
+  };
+  /**
+   * Attribute mappings for the Identity Provider's attributes to the attributes used in TagoIO.
+   */
+  mapping: SAMLAttributeMappings;
+}
+
+interface RunSAMLEditInfo {
+  /**
+   * Identity Provider's XML metadata encoded in a base 64 string.
+   */
+  idp_metadata?: string;
+  /**
+   * Attribute mappings for the Identity Provider's attributes to the attributes used in TagoIO.
+   */
+  mapping?: SAMLAttributeMappings;
 }
 
 type ThemeOption =
@@ -238,4 +284,14 @@ type ThemeOption =
 
 type UserQuery = Query<UserInfo, "name" | "active" | "last_login" | "created_at" | "updated_at">;
 
-export { RunInfo, UserCreateInfo, UserInfo, LoginResponse, NotificationCreateInfo, UserQuery, LoginAsUserOptions };
+export {
+  RunInfo,
+  UserCreateInfo,
+  UserInfo,
+  LoginResponse,
+  NotificationCreateInfo,
+  UserQuery,
+  LoginAsUserOptions,
+  RunSAMLInfo,
+  RunSAMLEditInfo,
+};
