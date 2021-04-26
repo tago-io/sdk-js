@@ -1,3 +1,6 @@
+import { Query } from "../../common/common.types";
+import { DeviceInfo } from "../Device/device.types";
+
 interface IDeviceParameters {
   name?: string;
   label?: string;
@@ -28,6 +31,17 @@ interface INetworkInfo {
     help?: string;
     required?: boolean;
   };
+  require_devices_access?: boolean;
 }
 
-export { INetworkInfo };
+interface NetworkDeviceListQuery
+  extends Omit<
+    Query<DeviceInfo, "name" | "visible" | "last_input" | "last_output" | "created_at" | "updated_at">,
+    "fields"
+  > {}
+
+interface NetworkDeviceListQueryInfo extends DeviceInfo {
+  token: string;
+}
+
+export { INetworkInfo, NetworkDeviceListQuery, NetworkDeviceListQueryInfo };

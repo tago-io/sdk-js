@@ -29,6 +29,7 @@ interface NetworkCreateInfo {
     help?: string;
     required?: boolean;
   };
+  require_devices_access?: boolean;
 }
 
 interface NetworkInfo extends NetworkCreateInfo {
