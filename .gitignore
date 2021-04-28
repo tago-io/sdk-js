@@ -20,3 +20,4 @@ yarn.lock
 *.tgz
 examples/**/package-lock.json
 docs/
+src/infrastructure/envParams.json
