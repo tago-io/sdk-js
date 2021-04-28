@@ -42,7 +42,7 @@ async function apiRequest(axiosObj: AxiosRequestConfig) {
     };
   } else if (typeof process !== "undefined") {
     const banner = !process.env.TAGO_RUNTIME
-      ? `(External; ${process.platform}/${process.arch})`
+      ? `(External; Node.js/${process.version} ${process.platform}/${process.arch})`
       : `(Running at TagoIO)`;
 
     axiosObj.headers = {
