@@ -234,16 +234,28 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * ```js
    * const myDevice = new Device({ token: "my_device_token" });
    *
-   * const result = await myDevice.sendDataStreaming(
-   *   {
-   *     variable: "temperature",
-   *     unit: "F",
-   *     value: 55,
-   *     time: "2015-11-03 13:44:33",
-   *     location: { lat: 42.2974279, lng: -85.628292 },
-   *   },
-   *   2000
-   * );
+   * const data = [
+   *     {
+   *       variable: "temperature",
+   *       unit: "F",
+   *       value: 55,
+   *       time: "2015-11-03 13:44:33",
+   *       location: { lat: 42.2974279, lng: -85.628292 },
+   *     },
+   *     {
+   *       variable: "temperature",
+   *       unit: "F",
+   *       value: 53,
+   *       time: "2015-11-03 13:44:33",
+   *       location: { lat: 43.2974279, lng: -86.628292 },
+   *     },
+   *     // ...
+   *   ];
+   *
+   *   const result = await myDevice.sendDataStreaming(data, {
+   *     poolingRecordQty: 1000,
+   *     poolingTime: 1000,
+   *   });
    * ```
    */
   public async sendDataStreaming(data: DataToSend[], options: Omit<OptionsStreaming, "neverStop">) {
