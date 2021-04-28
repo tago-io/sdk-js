@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import config from "../config";
 import sleep from "../common/sleep";
+import isBrowser from "./isBrowser";
+import envParams from "./envParams.json";
 
 /**
  * Handle the TagoIO Response
@@ -31,12 +33,22 @@ function resultHandler(result: AxiosResponse) {
 async function apiRequest(axiosObj: AxiosRequestConfig) {
   axiosObj.timeout = config.requestTimeout;
 
-  // Prevent cache on IE
-  axiosObj.headers = {
-    ...axiosObj.headers,
-    Pragma: "no-cache",
-    "Cache-Control": "no-cache",
-  };
+  if (isBrowser()) {
+    // Prevent cache on Browsers
+    axiosObj.headers = {
+      ...axiosObj.headers,
+      Pragma: "no-cache",
+      "Cache-Control": "no-cache",
+    };
+  } else if (typeof process !== "undefined") {
+    const env = !process.env.TAGO_RUNTIME ? "TagoIO" : "External";
+    const banner = env === "External" ? `(${env}; ${process.platform}/${process.arch})` : `(Running at TagoIO)`;
+
+    axiosObj.headers = {
+      ...axiosObj.headers,
+      "User-Agent": `TagoIO-SDK|JS|${envParams.version} ${banner}`,
+    };
+  }
 
   const request = () => {
     return axios(axiosObj)

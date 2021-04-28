@@ -24,7 +24,7 @@
     "node": ">= 12.0"
   },
   "scripts": {
-    "prepublishOnly": "rm -rf ./out; eslint .; tsc",
+    "prepublishOnly": "node updateEnv.js; rm -rf ./out; eslint .; tsc",
     "build": "tsc",
     "linter": "eslint .",
     "test": "jest",
