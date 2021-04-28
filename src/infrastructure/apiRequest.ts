@@ -41,8 +41,9 @@ async function apiRequest(axiosObj: AxiosRequestConfig) {
       "Cache-Control": "no-cache",
     };
   } else if (typeof process !== "undefined") {
-    const env = !process.env.TAGO_RUNTIME ? "TagoIO" : "External";
-    const banner = env === "External" ? `(${env}; ${process.platform}/${process.arch})` : `(Running at TagoIO)`;
+    const banner = !process.env.TAGO_RUNTIME
+      ? `(External; ${process.platform}/${process.arch})`
+      : `(Running at TagoIO)`;
 
     axiosObj.headers = {
       ...axiosObj.headers,
