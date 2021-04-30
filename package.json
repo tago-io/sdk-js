@@ -25,7 +25,7 @@
   },
   "scripts": {
     "prepublishOnly": "node updateEnv.js; rm -rf ./out; eslint .; tsc",
-    "build": "tsc",
+    "build": "rm -rf ./out; tsc",
     "linter": "eslint .",
     "test": "jest",
     "docs": "rm -rf ./docs; typedoc --theme ./node_modules/@tago-io/typedoc-tagoio-theme/bin/default && touch ./docs/.nojekyll"
@@ -57,6 +57,6 @@
     "lodash.chunk": "4.2.0",
     "papaparse": "5.3.0",
     "qs": "6.10.1",
-    "socket.io-client": "2.3.1"
+    "socket.io-client": "4.0.1"
   }
 }
