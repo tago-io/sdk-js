@@ -97,6 +97,8 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * Parse an expression and extract the names of the dictionary, the key, and
    * any arguments that are passed in the expression.
    *
+   * Returns `null` if the value passed is not parseable by the RegEx.
+   *
    * @param expression String expression.
    *
    * @example
@@ -107,6 +109,10 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    */
   public parseExpression(expression: string): IParsedExpression {
     const splitExpression = expression.match(RE_MATCH_EXPRESSION);
+    if (!splitExpression) {
+      return null;
+    }
+
     const dictionary = splitExpression[1];
     const keyWithParams = splitExpression[2];
 
@@ -215,6 +221,10 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
       const isExpression = token.startsWith("#") && token.endsWith("#");
       if (isExpression) {
         const expression = this.parseExpression(token);
+        if (!expression) {
+          return token;
+        }
+
         const { dictionary, key, params } = expression;
 
         return params

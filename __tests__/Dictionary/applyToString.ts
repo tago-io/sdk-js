@@ -46,6 +46,29 @@ describe("applyToString", () => {
     expect(applied).toEqual("FirstPartandSecondPart");
   });
 
+  it("does not apply the dictionary to a string enclosed in hashtags but no expression", async () => {
+    const singleValue = await dictionary.applyToString("#NOTSLUG#", options);
+    const multiValue = await dictionary.applyToString("#NOTSLUG##HASHTAG#", options);
+    const multiValueSpaced = await dictionary.applyToString("#NOTSLUG# #HASHTAG#", options);
+
+    expect(singleValue).toEqual("#NOTSLUG#");
+    expect(multiValue).toEqual("#NOTSLUG##HASHTAG#");
+    expect(multiValueSpaced).toEqual("#NOTSLUG# #HASHTAG#");
+  });
+
+  it("does not apply the dictionary to a string enclosed in hashtags with wrong expression syntax", async () => {
+    const almostAnExpression = await dictionary.applyToString("#SLUG.#", options);
+    const validSlugInvalidKey = await dictionary.applyToString("#SLUG.invalid_Key#", options);
+    const invalidSlugValidKey = await dictionary.applyToString("#notSlug.VALID_KEY#", options);
+    const slugWithSpaces = await dictionary.applyToString("#SL UG.VALID_KEY#", options);
+    const keyWithSpaces = await dictionary.applyToString("#SLUG.INVALID KEY#", options);
+    expect(almostAnExpression).toEqual("#SLUG.#");
+    expect(validSlugInvalidKey).toEqual("#SLUG.invalid_Key#");
+    expect(invalidSlugValidKey).toEqual("#notSlug.VALID_KEY#");
+    expect(slugWithSpaces).toEqual("#SL UG.VALID_KEY#");
+    expect(keyWithSpaces).toEqual("#SLUG.INVALID KEY#");
+  });
+
   it("applies the dictionary to a big string covering all the dictionary functionality", async () => {
     const rawString =
       "Simple expression first: #TEST.APPLY_ONE#. Then we have a #TEST.BROKEN_EXPRESSION." +

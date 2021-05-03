@@ -36,4 +36,16 @@ describe("parseExpression", () => {
 
     expect(parsed).toEqual({ dictionary: "TEST", key: "TEST_KEY", params: ["a", "bb", "ccc", "ddd#d"] });
   });
+
+  it("does not parse a value enclosed in hashtags but is not an expression, returning null", () => {
+    expect(dictionary.parseExpression("#slug#")).toEqual(null);
+    expect(dictionary.parseExpression("#slug.#")).toEqual(null);
+    expect(dictionary.parseExpression("#slug.lowercase#")).toEqual(null);
+    expect(dictionary.parseExpression("#slug.VALID_KEY#")).toEqual(null);
+    expect(dictionary.parseExpression("#SLUG.#")).toEqual(null);
+    expect(dictionary.parseExpression("#Slug.MIXED_CASE_SLUG#")).toEqual(null);
+    expect(dictionary.parseExpression("#SLUG.Mixed_Case_Key#")).toEqual(null);
+    expect(dictionary.parseExpression("#SLUG.KEY WITH SPACES#")).toEqual(null);
+    expect(dictionary.parseExpression("#S L U G.VALID_KEY#")).toEqual(null);
+  });
 });
