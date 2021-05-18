@@ -28,14 +28,13 @@ async function getCache(key: string): Promise<any> {
     return getCache(key);
   }
 
-  requestInProgress.add(key);
-
   for (const item of cacheObj.keys()) {
     if (item[0] === key) {
       return cacheObj.get(item);
     }
   }
 
+  requestInProgress.add(key);
   return undefined;
 }
 
