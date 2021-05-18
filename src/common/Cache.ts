@@ -16,8 +16,8 @@ function clearCacheTTL() {
 
 function addCache(key: string, obj: any, ttlMS = 5000) {
   clearCacheTTL();
-  requestInProgress.delete(key);
   cacheObj.set([key, Date.now() + ttlMS], obj);
+  requestInProgress.delete(key);
 }
 
 async function getCache(key: string): Promise<any> {
