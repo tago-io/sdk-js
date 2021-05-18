@@ -2,7 +2,7 @@ import { AxiosRequestConfig, Method } from "axios";
 import qs from "qs";
 import apiRequest from "../infrastructure/apiRequest";
 import regions, { Regions } from "../regions";
-import { addCache, getCache } from "./Cache";
+import { addCache, getCache, removeRequestInprogress } from "./Cache";
 import { RefType, GenericID } from "./common.types";
 
 interface GenericModuleParams {
@@ -95,7 +95,7 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
     // }
   }
 
-  protected doRequest<TR>(requestObj: doRequestParams): Promise<TR> {
+  protected async doRequest<TR>(requestObj: doRequestParams): Promise<TR> {
     const apiURI = regions(this.params.region)?.api;
     if (!apiURI) {
       throw new Error("Invalid region");
@@ -108,18 +108,25 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
     };
 
     const cacheKey = JSON.stringify(axiosObj);
-    const objCached = requestObj.cacheTTL ? getCache(cacheKey) : null;
+    const objCached = requestObj.cacheTTL ? await getCache(cacheKey) : null;
     if (objCached) {
       return Promise.resolve<TR>(objCached);
     }
 
-    return apiRequest(axiosObj).then((r) => {
-      if (requestObj.cacheTTL) {
-        addCache(cacheKey, r, requestObj.cacheTTL);
-      }
+    let result;
 
-      return r as TR;
-    });
+    try {
+      result = apiRequest(axiosObj);
+    } catch (error) {
+      removeRequestInprogress(cacheKey);
+      return Promise.reject(error);
+    }
+
+    if (requestObj.cacheTTL) {
+      addCache(cacheKey, result, requestObj.cacheTTL);
+    }
+
+    return result as Promise<TR>;
   }
 
   protected static doRequestAnonymous<TR>(requestObj: doRequestParams, region?: Regions): Promise<TR> {

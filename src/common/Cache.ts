@@ -1,7 +1,10 @@
+import sleep from "./sleep";
+
 type keyName = string;
 type expireTimestamp = number;
 
 const cacheObj = new Map<[keyName, expireTimestamp], any>();
+const requestInProgress = new Set<string>();
 
 function clearCacheTTL() {
   for (const item of cacheObj.keys()) {
@@ -13,11 +16,19 @@ function clearCacheTTL() {
 
 function addCache(key: string, obj: any, ttlMS = 5000) {
   clearCacheTTL();
+  requestInProgress.delete(key);
   cacheObj.set([key, Date.now() + ttlMS], obj);
 }
 
-function getCache(key: string) {
+async function getCache(key: string): Promise<any> {
   clearCacheTTL();
+
+  if (requestInProgress.has(key)) {
+    await sleep(100);
+    return getCache(key);
+  }
+
+  requestInProgress.add(key);
 
   for (const item of cacheObj.keys()) {
     if (item[0] === key) {
@@ -28,8 +39,12 @@ function getCache(key: string) {
   return undefined;
 }
 
+function removeRequestInprogress(key: string) {
+  requestInProgress.delete(key);
+}
+
 function clearCache() {
   cacheObj.clear();
 }
 
-export { addCache, getCache, clearCache };
+export { addCache, getCache, clearCache, removeRequestInprogress };
