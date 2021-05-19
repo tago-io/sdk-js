@@ -1,10 +1,12 @@
+import { AxiosRequestConfig } from "axios";
+import { generateRequestID } from "./HashGenerator";
+import { isRequestInProgress } from "./RequestInProgress";
 import sleep from "./sleep";
 
-type keyName = string;
+type requestID = number;
 type expireTimestamp = number;
 
-const cacheObj = new Map<[keyName, expireTimestamp], any>();
-const requestInProgress = new Set<string>();
+const cacheObj = new Map<[requestID, expireTimestamp], any>();
 
 function clearCacheTTL() {
   for (const item of cacheObj.keys()) {
@@ -14,18 +16,18 @@ function clearCacheTTL() {
   }
 }
 
-function addCache(key: string, obj: any, ttlMS = 5000) {
+function addCache(axiosObj: AxiosRequestConfig, obj: any, ttlMS = 5000) {
   clearCacheTTL();
-  cacheObj.set([key, Date.now() + ttlMS], obj);
-  requestInProgress.delete(key);
+  cacheObj.set([generateRequestID(axiosObj), Date.now() + ttlMS], obj);
 }
 
-async function getCache(key: string): Promise<any> {
+async function getCache(axiosObj: AxiosRequestConfig): Promise<any> {
   clearCacheTTL();
+  const key = generateRequestID(axiosObj);
 
-  if (requestInProgress.has(key)) {
+  if (isRequestInProgress(axiosObj)) {
     await sleep(100);
-    return getCache(key);
+    return getCache(axiosObj);
   }
 
   for (const item of cacheObj.keys()) {
@@ -34,16 +36,11 @@ async function getCache(key: string): Promise<any> {
     }
   }
 
-  requestInProgress.add(key);
   return undefined;
-}
-
-function removeRequestInprogress(key: string) {
-  requestInProgress.delete(key);
 }
 
 function clearCache() {
   cacheObj.clear();
 }
 
-export { addCache, getCache, clearCache, removeRequestInprogress };
+export { addCache, getCache, clearCache };
