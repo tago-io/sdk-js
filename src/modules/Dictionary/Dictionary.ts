@@ -210,8 +210,10 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
       return rawString || "";
     }
 
-    // Bail early if there are no variables in the string
-    if (!rawString.includes("#")) {
+    // Bail early if there are no variables in the string or if the value passed
+    // is not a string, which can happen when not using TypeScript or passing the
+    // instance to a function without the type
+    if (typeof rawString !== "string" || !rawString.includes("#")) {
       return rawString;
     }
 
