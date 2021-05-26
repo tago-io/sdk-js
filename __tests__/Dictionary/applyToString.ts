@@ -18,11 +18,27 @@ describe("applyToString", () => {
   });
 
   it("does not run if the string is undefined", async () => {
-    const noString = await dictionary.applyToString(undefined, options);
+    const valueUndefined = await dictionary.applyToString(undefined, options);
+    const valueNull = await dictionary.applyToString(null, options);
     const noLanguage = await dictionary.applyToString("Some string", undefined);
 
-    expect(noString).toEqual("");
+    expect(valueUndefined).toStrictEqual("");
+    expect(valueNull).toStrictEqual("");
     expect(noLanguage).toEqual("Some string");
+  });
+
+  it("does not apply if the value passed is not a string", async () => {
+    const valueObject = await dictionary.applyToString({} as any, options);
+    const valueNumber = await dictionary.applyToString(123 as any, options);
+    const valueEmptyArray = await dictionary.applyToString([] as any, options);
+    const valueArray = await dictionary.applyToString([1, 2, 3] as any, options);
+    const valueBoolean = await dictionary.applyToString(true as any, options);
+
+    expect(valueObject).toStrictEqual({});
+    expect(valueNumber).toStrictEqual(123);
+    expect(valueEmptyArray).toStrictEqual([]);
+    expect(valueArray).toStrictEqual([1, 2, 3]);
+    expect(valueBoolean).toStrictEqual(true);
   });
 
   it("does not apply to a string that does not contain hashes", async () => {
