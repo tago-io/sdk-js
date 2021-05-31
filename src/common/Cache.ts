@@ -1,7 +1,12 @@
-type keyName = string;
+import { AxiosRequestConfig } from "axios";
+import { generateRequestID } from "./HashGenerator";
+import { isRequestInProgress } from "./RequestInProgress";
+import sleep from "./sleep";
+
+type requestID = number;
 type expireTimestamp = number;
 
-const cacheObj = new Map<[keyName, expireTimestamp], any>();
+const cacheObj = new Map<[requestID, expireTimestamp], any>();
 
 function clearCacheTTL() {
   for (const item of cacheObj.keys()) {
@@ -11,13 +16,19 @@ function clearCacheTTL() {
   }
 }
 
-function addCache(key: string, obj: any, ttlMS = 5000) {
+function addCache(axiosObj: AxiosRequestConfig, obj: any, ttlMS = 5000) {
   clearCacheTTL();
-  cacheObj.set([key, Date.now() + ttlMS], obj);
+  cacheObj.set([generateRequestID(axiosObj), Date.now() + ttlMS], obj);
 }
 
-function getCache(key: string) {
+async function getCache(axiosObj: AxiosRequestConfig): Promise<any> {
   clearCacheTTL();
+  const key = generateRequestID(axiosObj);
+
+  if (isRequestInProgress(axiosObj)) {
+    await sleep(100);
+    return getCache(axiosObj);
+  }
 
   for (const item of cacheObj.keys()) {
     if (item[0] === key) {

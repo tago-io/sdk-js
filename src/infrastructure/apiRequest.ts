@@ -3,6 +3,8 @@ import config from "../config";
 import sleep from "../common/sleep";
 import isBrowser from "./isBrowser";
 import envParams from "./envParams.json";
+import { addRequestInProgress, removeRequestInProgress } from "../common/RequestInProgress";
+import { addCache, getCache } from "../common/Cache";
 
 /**
  * Handle the TagoIO Response
@@ -30,7 +32,16 @@ function resultHandler(result: AxiosResponse) {
  * @internal
  * @param axiosObj Axios Object
  */
-async function apiRequest(axiosObj: AxiosRequestConfig) {
+async function apiRequest(axiosObj: AxiosRequestConfig, cacheTTL?: number): Promise<any> {
+  if (cacheTTL) {
+    const objCached = await getCache(axiosObj);
+    if (objCached) {
+      return objCached;
+    }
+  }
+
+  addRequestInProgress(axiosObj);
+
   axiosObj.timeout = config.requestTimeout;
 
   if (isBrowser()) {
@@ -94,6 +105,12 @@ async function apiRequest(axiosObj: AxiosRequestConfig) {
 
     await sleep(1500);
   }
+
+  if (cacheTTL && !result && resulterror) {
+    addCache(axiosObj, result, cacheTTL);
+  }
+
+  removeRequestInProgress(axiosObj);
 
   if (!result && resulterror) {
     throw resulterror;

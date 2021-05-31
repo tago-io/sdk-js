@@ -2,7 +2,6 @@ import { AxiosRequestConfig, Method } from "axios";
 import qs from "qs";
 import apiRequest from "../infrastructure/apiRequest";
 import regions, { Regions } from "../regions";
-import { addCache, getCache } from "./Cache";
 import { RefType, GenericID } from "./common.types";
 
 interface GenericModuleParams {
@@ -95,7 +94,7 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
     // }
   }
 
-  protected doRequest<TR>(requestObj: doRequestParams): Promise<TR> {
+  protected async doRequest<TR>(requestObj: doRequestParams): Promise<TR> {
     const apiURI = regions(this.params.region)?.api;
     if (!apiURI) {
       throw new Error("Invalid region");
@@ -107,22 +106,12 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
       ...axiosObj.headers,
     };
 
-    const cacheKey = JSON.stringify(axiosObj);
-    const objCached = requestObj.cacheTTL ? getCache(cacheKey) : null;
-    if (objCached) {
-      return Promise.resolve<TR>(objCached);
-    }
+    const result = await apiRequest(axiosObj, requestObj.cacheTTL);
 
-    return apiRequest(axiosObj).then((r) => {
-      if (requestObj.cacheTTL) {
-        addCache(cacheKey, r, requestObj.cacheTTL);
-      }
-
-      return r as TR;
-    });
+    return result as Promise<TR>;
   }
 
-  protected static doRequestAnonymous<TR>(requestObj: doRequestParams, region?: Regions): Promise<TR> {
+  protected static async doRequestAnonymous<TR>(requestObj: doRequestParams, region?: Regions): Promise<TR> {
     const apiURI = regions(region)?.api;
     if (!apiURI) {
       throw new Error("Invalid region");
@@ -130,19 +119,9 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
 
     const axiosObj = mountAxiosRequest(apiURI, requestObj);
 
-    const cacheKey = JSON.stringify(axiosObj);
-    const objCached = requestObj.cacheTTL ? getCache(cacheKey) : null;
-    if (objCached) {
-      return Promise.resolve<TR>(objCached);
-    }
+    const result = await apiRequest(axiosObj, requestObj.cacheTTL);
 
-    return apiRequest(axiosObj).then((r) => {
-      if (requestObj.cacheTTL) {
-        addCache(cacheKey, r, requestObj.cacheTTL);
-      }
-
-      return r as TR;
-    });
+    return result as Promise<TR>;
   }
 }
 
