@@ -1,7 +1,5 @@
 import { AxiosRequestConfig } from "axios";
 import { generateRequestID } from "./HashGenerator";
-import { addRequestInProgress, isRequestInProgress } from "./RequestInProgress";
-import sleep from "./sleep";
 
 type requestID = number;
 type expireTimestamp = number;
@@ -21,22 +19,15 @@ function addCache(axiosObj: AxiosRequestConfig, obj: any, ttlMS = 5000) {
   cacheObj.set([generateRequestID(axiosObj), Date.now() + ttlMS], obj);
 }
 
-async function getCache(axiosObj: AxiosRequestConfig): Promise<any> {
+function getCache(axiosObj: AxiosRequestConfig): any {
   clearCacheTTL();
   const key = generateRequestID(axiosObj);
-
-  if (isRequestInProgress(axiosObj)) {
-    await sleep(100);
-    return getCache(axiosObj);
-  }
 
   for (const item of cacheObj.keys()) {
     if (item[0] === key) {
       return cacheObj.get(item);
     }
   }
-
-  addRequestInProgress(axiosObj);
 
   return undefined;
 }
