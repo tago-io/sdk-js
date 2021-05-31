@@ -3,7 +3,7 @@ import config from "../config";
 import sleep from "../common/sleep";
 import isBrowser from "./isBrowser";
 import envParams from "./envParams.json";
-import { addRequestInProgress, removeRequestInProgress } from "../common/RequestInProgress";
+import { removeRequestInProgress } from "../common/RequestInProgress";
 import { addCache, getCache } from "../common/Cache";
 
 /**
@@ -39,8 +39,6 @@ async function apiRequest(axiosObj: AxiosRequestConfig, cacheTTL?: number): Prom
       return objCached;
     }
   }
-
-  addRequestInProgress(axiosObj);
 
   axiosObj.timeout = config.requestTimeout;
 
@@ -106,7 +104,7 @@ async function apiRequest(axiosObj: AxiosRequestConfig, cacheTTL?: number): Prom
     await sleep(1500);
   }
 
-  if (cacheTTL && !result && resulterror) {
+  if (cacheTTL && result && !resulterror) {
     addCache(axiosObj, result, cacheTTL);
   }
 

@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 import { generateRequestID } from "./HashGenerator";
-import { isRequestInProgress } from "./RequestInProgress";
+import { addRequestInProgress, isRequestInProgress } from "./RequestInProgress";
 import sleep from "./sleep";
 
 type requestID = number;
@@ -35,6 +35,8 @@ async function getCache(axiosObj: AxiosRequestConfig): Promise<any> {
       return cacheObj.get(item);
     }
   }
+
+  addRequestInProgress(axiosObj);
 
   return undefined;
 }
