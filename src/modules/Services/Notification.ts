@@ -1,20 +1,6 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { GenericID } from "../../common/common.types";
-
-interface NotificationData {
-  /**
-   * topic of the message
-   */
-  title: string;
-  /**
-   * Message scope
-   */
-  message: string;
-  /**
-   * Dashboard/Bucket ID for "Go To" button.
-   */
-  ref_id?: GenericID;
-}
+import { NotificationCreate } from "../Account/notifications.types";
 
 class Notification extends TagoIOModule<GenericModuleParams> {
   /**
@@ -24,7 +10,7 @@ class Notification extends TagoIOModule<GenericModuleParams> {
    * Any account with share of the dashboard/bucket will receive too.
    * @param notification Notification Object
    */
-  public async send(notification: NotificationData): Promise<string> {
+  public async send(notification: NotificationCreate): Promise<string> {
     const result = await this.doRequest<string>({
       path: "/analysis/services/notification/send",
       method: "POST",
