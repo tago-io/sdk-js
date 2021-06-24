@@ -23,7 +23,7 @@ interface LanguageData {
 }
 
 interface LanguageEditData {
-  dictionary: LanguageData[];
+  dictionary: LanguageData;
   active: boolean;
 }
 

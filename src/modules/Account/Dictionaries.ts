@@ -150,8 +150,8 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
     dictionaryID: GenericID,
     locale: string,
     queryObj?: LanguageInfoQuery
-  ): Promise<LanguageData[]> {
-    const result = await this.doRequest<LanguageData[]>({
+  ): Promise<LanguageData> {
+    const result = await this.doRequest<LanguageData>({
       path: `/dictionary/${dictionaryID}/${locale}`,
       method: "GET",
       params: {
