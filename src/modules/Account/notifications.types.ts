@@ -1,26 +1,40 @@
-import { GenericID } from "../../common/common.types";
+import { GenericID, Query } from "../../common/common.types";
 
-type NotificationType = "dashboard" | "bucket" | "analysis" | "profile" | "tago" | "limit_alert";
-
-type Condition = "None" | "Pending" | "Accepted" | "Refused";
-
-interface NotificationQuery {
-  type: NotificationType;
-  start_date: Date;
-  end_date: Date;
-  ref_id: GenericID;
+interface NotificationTriggerAnalysis {
+  analysis_id: GenericID;
 }
-
-interface NotificationInfo {
-  id: GenericID;
-  ref_id: GenericID | null;
-  ref_from: { id: GenericID; name: string };
-  type: NotificationType;
-  sub_type: string;
+interface NotificationTriggerHTTP {
+  url: string;
+  method: "POST" | "GET" | "PUT" | "DELETE" | "REDIRECT";
+  body: { [key: string]: any };
+}
+interface NotificationTriggerProfile {
+  share_profile: "accept" | "refuse";
+}
+interface NotificationButton {
+  id: string;
+  label: string;
+  color?: string;
+  triggers: (NotificationTriggerAnalysis | NotificationTriggerHTTP | NotificationTriggerProfile)[];
+}
+interface NotificationCreate {
+  title: string;
   message: string;
-  read: boolean;
-  condition: Condition;
-  created_at: Date;
+  read?: boolean;
+  image?: string;
+  buttons?: NotificationButton[];
+  buttons_enabled?: boolean;
+  buttons_autodisable?: boolean;
 }
+type NotificationQuery = Query<{ read: boolean }, "created_at">;
+type NotificationInfo = { id: GenericID; created_at: Date } & Required<NotificationCreate>;
 
-export { NotificationQuery, NotificationInfo, NotificationType };
+export {
+  NotificationCreate,
+  NotificationQuery,
+  NotificationInfo,
+  NotificationButton,
+  NotificationTriggerProfile,
+  NotificationTriggerHTTP,
+  NotificationTriggerAnalysis,
+};

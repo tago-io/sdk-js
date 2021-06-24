@@ -1,9 +1,9 @@
 import { GenericID, RecursivePartial } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
+import { NotificationCreate, NotificationInfo } from "./notifications.types";
 import {
   LoginResponse,
-  NotificationCreateInfo,
   RunInfo,
   UserCreateInfo,
   UserInfo,
@@ -113,8 +113,8 @@ class Run extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async notificationList(userID: GenericID): Promise<NotificationCreateInfo[]> {
-    const result = await this.doRequest<NotificationCreateInfo[]>({
+  public async notificationList(userID: GenericID): Promise<NotificationInfo[]> {
+    const result = await this.doRequest<NotificationInfo[]>({
       path: `/run/notification/${userID}`,
       method: "GET",
     });
@@ -122,7 +122,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async notificationCreate(userID: GenericID, data: NotificationCreateInfo): Promise<{ id: GenericID }> {
+  public async notificationCreate(userID: GenericID, data: NotificationCreate): Promise<{ id: GenericID }> {
     const result = await this.doRequest<{ id: GenericID }>({
       path: `/run/notification/`,
       method: "POST",
@@ -135,7 +135,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async notificationEdit(notificationID: GenericID, data: Partial<NotificationCreateInfo>): Promise<string> {
+  public async notificationEdit(notificationID: GenericID, data: Partial<NotificationCreate>): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/run/notification/${notificationID}`,
       method: "PUT",

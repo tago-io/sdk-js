@@ -1,15 +1,9 @@
 import { GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { doRequestParams, GenericModuleParams } from "../../common/TagoIOModule";
 import { Regions } from "../../regions";
+import { NotificationInfo, NotificationQuery } from "../Account/notifications.types";
 import dateParser from "../Utils/dateParser";
-import {
-  RunNotificationInfo,
-  RunUserCreateInfo,
-  RunUserCreate,
-  RunUserInfo,
-  RunUserLogin,
-  RunUserLoginResponse,
-} from "./runUser.types";
+import { RunUserCreateInfo, RunUserCreate, RunUserInfo, RunUserLogin, RunUserLoginResponse } from "./runUser.types";
 import SDB from "./SDB";
 
 class RunUser extends TagoIOModule<GenericModuleParams> {
@@ -144,13 +138,13 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
    * List notifications.
    * @param tagoIORunURL TagoIO Run url without http
    */
-  public async notificationList(tagoIORunURL: string): Promise<RunNotificationInfo[]> {
-    let result = await this.doRequest<RunNotificationInfo[]>({
+  public async notificationList(tagoIORunURL: string, queryObj?: NotificationQuery): Promise<NotificationInfo[]> {
+    let result = await this.doRequest<NotificationInfo[]>({
       path: `/run/${tagoIORunURL}/notification`,
       method: "GET",
+      params: queryObj,
     });
-
-    result = result.map((data) => dateParser(data, ["created_at", "updated_at"]));
+    result = result.map((data) => dateParser(data, ["created_at"]));
 
     return result;
   }
@@ -176,6 +170,18 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Mark all notifications as read
+   * @param tagoIORunURL TagoIO Run url without http
+   */
+  public async notificationMarkAllRead(tagoIORunURL: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/run/${tagoIORunURL}/notification/markallread`,
+      method: "PUT",
+    });
+
+    return result;
+  }
   /**
    * Trigger notification button
    * @param tagoIORunURL TagoIO Run url without http

@@ -41,26 +41,26 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Accept a notification
-   * @param notificationID Notification identification
+   * Mark all notifications as read
    */
-  public async accept(notificationID: GenericID): Promise<string> {
+  public async markAllAsRead(): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/notification/accept/${notificationID}`,
-      method: "POST",
+      path: "/notification/markallread",
+      method: "PUT",
     });
 
     return result;
   }
 
   /**
-   * Refuse a notification
-   * @param notificationID Notification identification
+   * Acknowledge notification button pressed
+   * @param notificationID ID of the notification
+   * @param buttonID ID of the button
    */
-  public async refuse(notificationID: GenericID): Promise<string> {
+  public async notificationButton(notificationID: GenericID, buttonID: string): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/notification/refuse/${notificationID}`,
-      method: "POST",
+      path: `/notification/${notificationID}/${buttonID}`,
+      method: "PUT",
     });
 
     return result;
