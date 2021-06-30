@@ -200,13 +200,16 @@ class Account extends TagoIOModule<GenericModuleParams> {
    */
   public async requestLoginPINCode(
     credentials: { email: string; password: string },
-    typeOTP: OTPType
+    typeOTP: OTPType,
+    region?: Regions
   ): Promise<string> {
-    const result = await this.doRequest<string>({
+    const params: doRequestParams = {
       path: `/account/login/otp`,
       method: "POST",
       body: { ...credentials, otp_type: typeOTP },
-    });
+    };
+
+    const result = await TagoIOModule.doRequestAnonymous<string>(params, region);
 
     return result;
   }
