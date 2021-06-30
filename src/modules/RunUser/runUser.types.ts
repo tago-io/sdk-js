@@ -1,4 +1,5 @@
 import { ExpireTimeOption, GenericID, GenericToken } from "../../common/common.types";
+import { OTPType } from "../Account/account.types";
 
 interface UserOptions {
   decimal_separator?: string;
@@ -25,10 +26,14 @@ interface RunUserCreate {
   user: GenericID;
 }
 
-interface RunUserInfo {
+interface RunUserInfo extends RunUserCreateInfo {
   id: GenericID;
-  company: string;
   created_at: Date;
+  otp?: {
+    authenticator: boolean;
+    sms: boolean;
+    email: boolean;
+  };
 }
 
 interface RunUserLoginResponse {
@@ -36,9 +41,13 @@ interface RunUserLoginResponse {
   expire_date: ExpireTimeOption;
 }
 
-interface RunUserLogin {
+interface RunUserCredentials {
   email: string;
   password: string;
+}
+interface RunUserLogin extends RunUserCredentials {
+  otp_type?: OTPType;
+  pin_code?: string;
 }
 
 interface RunNotificationInfo {
@@ -54,4 +63,12 @@ interface RunNotificationInfo {
   buttons_autodisable: boolean;
 }
 
-export { RunUserInfo, RunUserCreateInfo, RunUserCreate, RunUserLogin, RunUserLoginResponse, RunNotificationInfo };
+export {
+  RunUserInfo,
+  RunUserCreateInfo,
+  RunUserCreate,
+  RunUserLogin,
+  RunUserCredentials,
+  RunUserLoginResponse,
+  RunNotificationInfo,
+};
