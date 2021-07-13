@@ -40,6 +40,10 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
         console.log(...args);
       }
 
+      if (args[0]?.stack) {
+        args[0] = args[0].stack;
+      }
+
       const argsStrings = Object.keys(args).map((x: any) => this.stringifyMsg(args[x]));
 
       tagoConsole.log(argsStrings.join(" ")).catch(console.error);
