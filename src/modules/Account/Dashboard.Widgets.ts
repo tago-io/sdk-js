@@ -1,6 +1,6 @@
-import { GenericID, GenericToken } from "../../common/common.types";
+import { Data, GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { WidgetInfo, widgetOverwrite } from "./dashboards.types";
+import { EditDataModel, EditDeviceResource, PostDataModel, WidgetInfo, widgetOverwrite } from "./dashboards.types";
 
 class Widgets extends TagoIOModule<GenericModuleParams> {
   /**
@@ -63,7 +63,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get all data for the current widget
+   * Get all data or resource list for the current widget
    * @param dashboardID Dashboard identification
    * @param widgetID Widget identification
    * @param overwrite It can overwrite 'start_date', 'end_date', 'timezone' fields
@@ -81,7 +81,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Update value of variable for the current widget
+   * Send value of variable for the current widget
    * @param dashboardID Dashboard identification
    * @param widgetID Widget identification
    * @param data
@@ -90,7 +90,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   public async sendData(
     dashboardID: GenericID,
     widgetID: GenericID,
-    data: object,
+    data: PostDataModel | PostDataModel[],
     bypassBucket: boolean = false
   ): Promise<object> {
     const result = await this.doRequest<object>({
@@ -106,12 +106,63 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * Update value of variable for the current widget
+   * @param dashboardID Dashboard identification
+   * @param widgetID Widget identification
+   * @param data
+   * @param bypassBucket
+   */
+  public async editData(
+    dashboardID: GenericID,
+    widgetID: GenericID,
+    data: EditDataModel | EditDataModel[],
+    bypassBucket: boolean = false
+  ): Promise<object> {
+    const result = await this.doRequest<object>({
+      path: `/data/${dashboardID}/${widgetID}`,
+      method: "PUT",
+      params: {
+        bypass_bucket: bypassBucket,
+        type: "data",
+      },
+      body: data,
+    });
+
+    return result;
+  }
+
+  /**
+   * Update value of a resource for the current widget
+   * @param dashboardID Dashboard identification
+   * @param widgetID Widget identification
+   * @param data
+   * @param bypassBucket
+   */
+  public async editResource(
+    dashboardID: GenericID,
+    widgetID: GenericID,
+    resourceData: EditDeviceResource | EditDeviceResource[]
+  ): Promise<object> {
+    const result = await this.doRequest<object>({
+      path: `/data/${dashboardID}/${widgetID}`,
+      method: "PUT",
+      params: {
+        bypass_bucket: false,
+        type: "resource",
+      },
+      body: resourceData,
+    });
+
+    return result;
+  }
+
+  /**
    * Run analysis without inserting data to bucket
    * @param dashboardID Dashboard identification
    * @param widgetID Widget identification
    * @param data
    */
-  public async runAnalysis(dashboardID: GenericID, widgetID: GenericID, data: object): Promise<object> {
+  public async runAnalysis(dashboardID: GenericID, widgetID: GenericID, data: [object | Data]): Promise<object> {
     const result = await this.doRequest<object>({
       path: `/data/${dashboardID}/${widgetID}/run`,
       method: "POST",
