@@ -198,7 +198,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @param credentials Credentials
    * @param typeOTP authenticator, sms or email
    */
-  public async requestLoginPINCode(
+  public static async requestLoginPINCode(
     credentials: { email: string; password: string },
     typeOTP: OTPType,
     region?: Regions

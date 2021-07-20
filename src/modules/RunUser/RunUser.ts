@@ -212,12 +212,12 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
    * @param credentials Credentials
    * @param typeOTP authenticator, sms or email
    */
-  public async requestLoginPINCode(
+  public static async requestLoginPINCode(
     tagoIORunURL: string,
     credentials: RunUserCredentials,
     typeOTP: OTPType
   ): Promise<string> {
-    const result = await this.doRequest<string>({
+    const result = await this.doRequestAnonymous<string>({
       path: `/run/${tagoIORunURL}/login/otp`,
       method: "POST",
       body: { ...credentials, otp_type: typeOTP },
