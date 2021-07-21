@@ -190,7 +190,7 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
    */
   public async notificationButton(tagoIORunURL: string, notificationID: GenericID, buttonID: GenericID): Promise<any> {
     const result = await this.doRequest<any>({
-      path: `/run/${tagoIORunURL}/notification${notificationID}/${buttonID}`,
+      path: `/run/${tagoIORunURL}/notification/${notificationID}/${buttonID}`,
       method: "PUT",
     });
 
