@@ -34,6 +34,7 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
       method: "PUT",
       body: {
         notification_ids: notificationIDS,
+        read: true,
       },
     });
 
@@ -41,26 +42,47 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Accept a notification
-   * @param notificationID Notification identification
+   * Mark notifications as unread
+   * @param notificationIDS An array of ids or a single id
    */
-  public async accept(notificationID: GenericID): Promise<string> {
+  public async markAsUnread(notificationIDS: GenericID[] | GenericID): Promise<string> {
+    if (!Array.isArray(notificationIDS)) {
+      notificationIDS = [notificationIDS];
+    }
+
     const result = await this.doRequest<string>({
-      path: `/notification/accept/${notificationID}`,
-      method: "POST",
+      path: "/notification/read",
+      method: "PUT",
+      body: {
+        notification_ids: notificationIDS,
+        read: false,
+      },
     });
 
     return result;
   }
 
   /**
-   * Refuse a notification
-   * @param notificationID Notification identification
+   * Mark all notifications as read
    */
-  public async refuse(notificationID: GenericID): Promise<string> {
+  public async markAllAsRead(): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/notification/refuse/${notificationID}`,
-      method: "POST",
+      path: "/notification/markallread",
+      method: "PUT",
+    });
+
+    return result;
+  }
+
+  /**
+   * Acknowledge notification button pressed
+   * @param notificationID ID of the notification
+   * @param buttonID ID of the button
+   */
+  public async notificationButton(notificationID: GenericID, buttonID: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/notification/${notificationID}/${buttonID}`,
+      method: "PUT",
     });
 
     return result;
