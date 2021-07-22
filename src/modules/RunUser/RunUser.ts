@@ -153,13 +153,8 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
    * Mark notification as read
    * @param tagoIORunURL TagoIO Run url without http
    * @param notificationIDs array of notification ids or a single id
-   * @param read If the notification should be marked as read or unread
    */
-  public async notificationMarkRead(
-    tagoIORunURL: string,
-    notificationIDs: GenericID | GenericID[],
-    read: boolean
-  ): Promise<string> {
+  public async notificationMarkRead(tagoIORunURL: string, notificationIDs: GenericID | GenericID[]): Promise<string> {
     if (!Array.isArray(notificationIDs)) {
       notificationIDs = [notificationIDs];
     }
@@ -169,7 +164,29 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
       method: "PUT",
       body: {
         notification_ids: notificationIDs,
-        read,
+        read: true,
+      },
+    });
+
+    return result;
+  }
+
+  /**
+   * Mark notification as unread
+   * @param tagoIORunURL TagoIO Run url without http
+   * @param notificationIDs array of notification ids or a single id
+   */
+  public async notificationMarkUnread(tagoIORunURL: string, notificationIDs: GenericID | GenericID[]): Promise<string> {
+    if (!Array.isArray(notificationIDs)) {
+      notificationIDs = [notificationIDs];
+    }
+
+    const result = await this.doRequest<string>({
+      path: `/run/${tagoIORunURL}/notification`,
+      method: "PUT",
+      body: {
+        notification_ids: notificationIDs,
+        read: false,
       },
     });
 

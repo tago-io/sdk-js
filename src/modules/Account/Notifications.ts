@@ -23,9 +23,8 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
   /**
    * Mark notifications as read
    * @param notificationIDS An array of ids or a single id
-   * @param read If the notification should be marked as read or unread
    */
-  public async markAsRead(notificationIDS: GenericID[] | GenericID, read: boolean): Promise<string> {
+  public async markAsRead(notificationIDS: GenericID[] | GenericID): Promise<string> {
     if (!Array.isArray(notificationIDS)) {
       notificationIDS = [notificationIDS];
     }
@@ -35,7 +34,28 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
       method: "PUT",
       body: {
         notification_ids: notificationIDS,
-        read,
+        read: true,
+      },
+    });
+
+    return result;
+  }
+
+  /**
+   * Mark notifications as unread
+   * @param notificationIDS An array of ids or a single id
+   */
+  public async markAsUnread(notificationIDS: GenericID[] | GenericID): Promise<string> {
+    if (!Array.isArray(notificationIDS)) {
+      notificationIDS = [notificationIDS];
+    }
+
+    const result = await this.doRequest<string>({
+      path: "/notification/read",
+      method: "PUT",
+      body: {
+        notification_ids: notificationIDS,
+        read: false,
       },
     });
 
