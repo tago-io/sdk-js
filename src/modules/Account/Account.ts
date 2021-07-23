@@ -2,7 +2,7 @@ import Batch from "../../common/BatchRequest";
 import { GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams, doRequestParams } from "../../common/TagoIOModule";
 import Access from "./Access";
-import { AccountCreateInfo, AccountInfo, LoginResponse, TokenCreateInfo } from "./account.types";
+import { AccountCreateInfo, AccountInfo, LoginResponse, OTPType, TokenCreateInfo } from "./account.types";
 import Actions from "./Actions";
 import Analyses from "./Analyses";
 import Buckets from "./Buckets";
@@ -189,6 +189,75 @@ class Account extends TagoIOModule<GenericModuleParams> {
     };
 
     const result = await TagoIOModule.doRequestAnonymous<string>(params, region);
+
+    return result;
+  }
+
+  /**
+   * Request the PIN Code for a given OTP Type.
+   * @param credentials Credentials
+   * @param typeOTP authenticator, sms or email
+   */
+  public static async requestLoginPINCode(
+    credentials: { email: string; password: string },
+    typeOTP: OTPType,
+    region?: Regions
+  ): Promise<string> {
+    const params: doRequestParams = {
+      path: `/account/login/otp`,
+      method: "POST",
+      body: { ...credentials, otp_type: typeOTP },
+    };
+
+    const result = await TagoIOModule.doRequestAnonymous<string>(params, region);
+
+    return result;
+  }
+
+  /**
+   * Enable OTP for a given OTP Type.
+   * You will be requested to confirm the operation with a pin code.
+   * @param credentials Credentials
+   * @param typeOTP authenticator, sms or email
+   */
+  public async enableOTP(credentials: { email: string; password: string }, typeOTP: OTPType): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/account/otp/${typeOTP}/enable`,
+      method: "POST",
+      body: credentials,
+    });
+
+    return result;
+  }
+
+  /**
+   * Enable OTP for a given OTP Type
+   * @param credentials Credentials
+   * @param typeOTP authenticator, sms or email
+   */
+  public async disableOTP(credentials: { email: string; password: string }, typeOTP: OTPType): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/account/otp/${typeOTP}/disable`,
+      method: "POST",
+      body: credentials,
+    });
+
+    return result;
+  }
+
+  /**
+   * Confirm OTP enabling proccses for a given OTP Type
+   * @param credentials Credentials
+   * @param typeOTP authenticator, sms or email
+   */
+  public async confirmOTP(pinCode: string, typeOTP: OTPType): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/account/otp/${typeOTP}/confirm`,
+      method: "POST",
+      body: {
+        pin_code: pinCode,
+      },
+    });
 
     return result;
   }

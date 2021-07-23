@@ -59,6 +59,13 @@ interface RunInfo {
   theme: { [option in ThemeOption]: string };
   integration: object;
   sso_saml_active: boolean;
+  security: {
+    otp: {
+      authenticator: boolean;
+      sms: boolean;
+      email: boolean;
+    };
+  };
 }
 
 interface UserCreateInfo {

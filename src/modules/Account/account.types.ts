@@ -55,6 +55,11 @@ interface AccountInfo extends Omit<AccountCreateInfo, "password" | "cpassword" |
   plan: string;
   created_at: Date;
   updated_at: Date;
+  otp?: {
+    authenticator: boolean;
+    sms: boolean;
+    email: boolean;
+  };
 }
 
 interface LoginResponse {
@@ -71,6 +76,7 @@ interface LoginResponse {
   }[];
 }
 
+type OTPType = "sms" | "email" | "authenticator";
 interface TokenCreateInfo {
   /**
    * Id of profile to create the token
@@ -84,6 +90,15 @@ interface TokenCreateInfo {
    * Password of the account
    */
   password: string;
+
+  /**
+   * OTP Pin Code
+   */
+  pin_code: string;
+  /**
+   * OTP Type
+   */
+  otp_type: OTPType;
 }
 
-export { AccountInfo, AccountCreateInfo, LoginResponse, TokenCreateInfo };
+export { AccountInfo, AccountCreateInfo, LoginResponse, TokenCreateInfo, OTPType };
