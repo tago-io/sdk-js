@@ -11,6 +11,7 @@ import dateParser from "../Utils/dateParser";
 import {
   AddonInfo,
   AuditLog,
+  AuditLogCreateResponse,
   AuditLogFilter,
   ProfileInfo,
   ProfileListInfo,
@@ -125,15 +126,30 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Fetches the information from auditlog of this profile
+   * Create a query for auditlog
    * @param profileID Profile identification
    * @param filterObj auditlog filter object
    */
-  public async auditLog(profileID: GenericID, filterObj?: AuditLogFilter): Promise<AuditLog> {
+  public async auditLogCreate(profileID: GenericID, filterObj?: AuditLogFilter): Promise<AuditLogCreateResponse> {
     const result = await this.doRequest<AuditLog>({
       path: `/profile/${profileID}/auditlog`,
       method: "GET",
       params: filterObj || {},
+    });
+
+    result.events = result?.events.map((data) => dateParser(data, ["date"]));
+    return result;
+  }
+
+  /**
+   * Fetches the information from an auditlog query
+   * @param profileID Profile identification
+   * @param queryId auditlog queryId from auditLogCreate
+   */
+  public async auditLogQuery(profileID: GenericID, queryId?: string): Promise<AuditLog> {
+    const result = await this.doRequest<AuditLog>({
+      path: `/profile/${profileID}/auditlog/${queryId}`,
+      method: "GET",
     });
 
     result.events = result?.events.map((data) => dateParser(data, ["date"]));

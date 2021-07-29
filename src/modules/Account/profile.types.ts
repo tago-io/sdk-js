@@ -72,19 +72,23 @@ interface AuditLog {
     who: GenericID;
     date: Date;
   }[];
-  searchedLogStreams: {
-    logStreamName: GenericID;
-    searchedCompletely: boolean;
-  }[];
-  nextToken: string;
+  statistics: {
+    recordsMatched: number;
+    recordsScanned: number;
+  };
+  status: "Running" | "Complete" | "Failed" | "Timeout" | "Unknown";
+  queryId: string;
 }
 
 interface AuditLogFilter {
-  nextToken?: string;
   ref_id?: GenericID;
   find?: "*" | string;
   start_date?: Date;
   end_date?: Date;
+}
+
+interface AuditLogCreateResponse {
+  queryId: string;
 }
 
 interface AddonInfo {
@@ -93,4 +97,13 @@ interface AddonInfo {
   logo_url: string | null;
 }
 
-export { ProfileListInfo, ProfileInfo, UsageStatistic, AuditLog, AuditLogFilter, AddonInfo, ProfileSummary };
+export {
+  ProfileListInfo,
+  ProfileInfo,
+  UsageStatistic,
+  AuditLog,
+  AuditLogCreateResponse,
+  AuditLogFilter,
+  AddonInfo,
+  ProfileSummary,
+};
