@@ -74,6 +74,29 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * Copy Files
+   * @param fileList Array of copy actions to be made
+   * @example
+   * ```json
+   * fileList: [
+   *   {
+   *     from: "/myfiles/myOldName.ext",
+   *     to: "/myfiles/newFolder/andNewName.ext"
+   *   }
+   * ]
+   * ```
+   */
+  public async copy(fileList: MoveFiles[]): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: "/files/copy",
+      method: "PUT",
+      body: fileList,
+    });
+
+    return result;
+  }
+
+  /**
    * Delete Folder or Files
    * @param files An array of files or folders to be deleted
    */
