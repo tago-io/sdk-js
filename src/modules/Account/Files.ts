@@ -3,7 +3,7 @@ import { GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import { Base64File, FileListInfo, FileQuery, FilesPermission, MoveFiles, Options } from "./files.types";
+import { Base64File, CopyFiles, FileListInfo, FileQuery, FilesPermission, MoveFiles, Options } from "./files.types";
 
 class Files extends TagoIOModule<GenericModuleParams> {
   /**
@@ -86,7 +86,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * ]
    * ```
    */
-  public async copy(fileList: MoveFiles[]): Promise<string> {
+  public async copy(fileList: CopyFiles[]): Promise<string> {
     const result = await this.doRequest<string>({
       path: "/files/copy",
       method: "PUT",

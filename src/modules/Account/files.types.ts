@@ -29,6 +29,11 @@ interface Base64File {
   public?: boolean;
 }
 
+interface CopyFiles {
+  from: string;
+  to: string;
+}
+
 interface MoveFiles {
   from: string;
   to: string;
@@ -77,4 +82,4 @@ interface Options {
    */
   onProgress: Function;
 }
-export { FileQuery, FileListInfo, Base64File, MoveFiles, FilesPermission, Options };
+export { FileQuery, FileListInfo, Base64File, MoveFiles, FilesPermission, Options, CopyFiles };
