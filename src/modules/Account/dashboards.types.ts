@@ -131,6 +131,13 @@ interface PostDataModel extends Omit<Data, "id" | "created_at"> {
   variable: string;
 }
 
+interface GetDataModel {
+  overwrite?: widgetOverwrite;
+  blueprint_devices?: { origin: GenericID; id: GenericID; bucket?: GenericID }[];
+  page?: number;
+  amount?: number;
+}
+
 type EditDataModel = PostDataModel & { id: GenericID };
 
 type DashboardQuery = Query<DashboardInfo, "name" | "label" | "active" | "created_at" | "updated_at">;
@@ -155,4 +162,5 @@ export {
   PostDataModel,
   EditDataModel,
   EditDeviceResource,
+  GetDataModel,
 };

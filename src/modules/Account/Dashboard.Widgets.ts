@@ -1,6 +1,6 @@
 import { Data, GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { EditDataModel, EditDeviceResource, PostDataModel, WidgetInfo, widgetOverwrite } from "./dashboards.types";
+import { EditDataModel, EditDeviceResource, GetDataModel, PostDataModel, WidgetInfo } from "./dashboards.types";
 
 class Widgets extends TagoIOModule<GenericModuleParams> {
   /**
@@ -68,13 +68,11 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
    * @param widgetID Widget identification
    * @param overwrite It can overwrite 'start_date', 'end_date', 'timezone' fields
    */
-  public async getData(dashboardID: GenericID, widgetID: GenericID, overwrite: widgetOverwrite): Promise<object> {
+  public async getData(dashboardID: GenericID, widgetID: GenericID, params?: GetDataModel): Promise<object> {
     const result = await this.doRequest<object>({
       path: `/data/${dashboardID}/${widgetID}`,
       method: "GET",
-      params: {
-        overwrite,
-      },
+      params,
     });
 
     return result;
