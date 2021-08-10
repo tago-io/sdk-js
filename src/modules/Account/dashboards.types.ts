@@ -76,9 +76,12 @@ interface WidgetResource {
   filter: TagsObj[];
 }
 
+type ResourceTag = `tags.${string}`;
+type ResourceParam = `param.${string}`;
+
 type DeviceResourceView =
-  | "tags.*"
-  | "param."
+  | ResourceTag
+  | ResourceParam
   | "name"
   | "id"
   | "bucket_name"
@@ -89,12 +92,12 @@ type DeviceResourceView =
   | "bucket"
   | "last_input"
   | "created_at"
-  | "active"
-  | string;
+  | "active";
+
 interface WidgetDeviceResource extends WidgetResource {
   type: "device";
   view: DeviceResourceView;
-  editable: "name" | "tags.*" | "param." | string;
+  editable: "name" | ResourceTag | ResourceParam;
 }
 interface EditDeviceResource {
   device: GenericID;
