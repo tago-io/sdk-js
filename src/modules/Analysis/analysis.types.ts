@@ -12,4 +12,16 @@ interface AnalysisEnvironment {
   [key: string]: string;
 }
 
-export { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment };
+type AnalysisToken = string;
+type AnalysisID = string;
+/**
+ * As current version of the SDK doesn't provide the TagoContext interface.
+ */
+interface TagoContext {
+  token: AnalysisToken;
+  analysis_id: AnalysisID;
+  environment: AnalysisEnvironment[];
+  log: (...args: any[]) => void;
+}
+
+export { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment, TagoContext };
