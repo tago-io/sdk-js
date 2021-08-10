@@ -17,6 +17,14 @@ class RouterConstructor {
 class AnalysisRouter {
   services: RouterService[] = [];
 
+  /**
+   * Create an Analysis Router.
+   * Use router.register to register new routes for your analysis.
+   * Use router.exec() to execute the router and run your functions.
+   * Example:
+   *      router.register(myFunction).whenInputFormID('create-device-input');
+   *      router.exec();
+   */
   constructor(private params: RouterConstructor) {}
 
   public register(func: (parameters: RouterConstructor) => any) {

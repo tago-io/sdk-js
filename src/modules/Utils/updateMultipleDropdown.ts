@@ -1,23 +1,32 @@
 import Device from "../Device/Device";
 
-async function fixSentValues(device: Device, variables: string | string[], value: string) {
-  const dataList = await device.getData({ variables, qty: 999 });
+/**
+ * Go through variables used in Multiple Dropdown variables and remove a specified value.
+ * Then updates the variables.
+ * @param device TagoIO Device instanced class.
+ * @param variables variables inside the device to be verified.
+ * @param value value to be removed.
+ */
+async function updateMultipleDropdown(device: Device, variables: string | string[], values: string | string[]) {
+  const fixed_values = Array.isArray(values) ? values : [values];
 
-  dataList.forEach((item) => {
+  const data_list = await device.getData({ variables, qty: 999 });
+
+  data_list.forEach((item) => {
     let sentValues = (item.metadata?.sentValues as any) as { value: string; label: string }[];
-    let new_value = (item.value as string).split(";");
+    let new_data_value = (item.value as string).split(";");
 
-    if (sentValues.find((x) => x.value === value)) {
+    if (sentValues.find((x) => fixed_values.includes(x.value))) {
       sentValues = sentValues.filter((x) => {
-        if (x.value === value) {
-          new_value = new_value.filter((y) => y !== value && y !== x.label);
+        if (fixed_values.includes(x.value)) {
+          new_data_value = new_data_value.filter((y) => !fixed_values.includes(y) && !fixed_values.includes(x.label));
         }
-        return x.value !== value;
+        return !fixed_values.includes(x.value);
       });
 
       const new_item = {
         ...item,
-        value: new_value.join(";"),
+        value: new_data_value.join(";"),
         metadata: { ...item.metadata, sentValues },
       } as any;
 
@@ -27,4 +36,4 @@ async function fixSentValues(device: Device, variables: string | string[], value
   });
 }
 
-export { fixSentValues };
+export { updateMultipleDropdown };

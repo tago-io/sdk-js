@@ -24,7 +24,6 @@ interface UploadFileOptions {
 }
 
 type HexadecimalPayload = string;
-
 interface DownlinkOptions {
   payload: HexadecimalPayload;
   port: string;

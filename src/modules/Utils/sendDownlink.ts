@@ -2,6 +2,16 @@ import axios from "axios";
 import Account from "../Account/Account";
 import { DownlinkOptions } from "./utils.types";
 
+/**
+ * Perform downlink to a device using official TagoIO support.
+ * @param {Class} account TagoIO SDK Account instanced class
+ * @param {String} device_id id of your device
+ * @param {Object} dn_options downlink parameter options.
+ * @param {String} dn_options.payload hexadecimal payload to be sent to the device.
+ * @param {Number} [dn_options.port] port to be used for the downlink. Default is 1.
+ * @param {Boolean} [dn_options.confirmed] confirmed status, default is false.
+ * @returns
+ */
 async function sendDownlink(account: Account, device_id: string, dn_options: DownlinkOptions) {
   if (!(account instanceof Account)) {
     throw "The parameter 'account' must be an instance of a TagoIO Account.";
@@ -43,17 +53,14 @@ async function sendDownlink(account: Account, device_id: string, dn_options: Dow
     port: dn_options.port,
   };
 
-  return axios
-    .post(`https://${network.middleware_endpoint}/downlink`, data)
-    .then((result) => {
-      return `Downlink accepted with status ${result.status}`;
-    })
-    .catch((error) => {
-      if (error.response?.data.includes("Authorization is missing")) {
-        throw "Additional parameter with in the Authorization used for this device";
-      }
-      throw `Downlink failed with status ${error.response.status}: ${error.response.data}`;
-    });
+  const result = await axios.post(`https://${network.middleware_endpoint}/downlink`, data).catch((error) => {
+    if (error.response?.data.includes("Authorization is missing")) {
+      throw "Additional parameter with in the Authorization used for this device";
+    }
+    throw `Downlink failed with status ${error.response.status}: ${error.response.data}`;
+  });
+
+  return `Downlink accepted with status ${result.status}`;
 }
 
 export { sendDownlink };
