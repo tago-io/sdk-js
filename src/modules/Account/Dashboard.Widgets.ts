@@ -117,11 +117,10 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
     bypassBucket: boolean = false
   ): Promise<object> {
     const result = await this.doRequest<object>({
-      path: `/data/${dashboardID}/${widgetID}`,
+      path: `/data/${dashboardID}/${widgetID}/data`,
       method: "PUT",
       params: {
         bypass_bucket: bypassBucket,
-        type: "data",
       },
       body: data,
     });
@@ -142,12 +141,9 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
     resourceData: EditDeviceResource | EditDeviceResource[]
   ): Promise<object> {
     const result = await this.doRequest<object>({
-      path: `/data/${dashboardID}/${widgetID}`,
+      path: `/data/${dashboardID}/${widgetID}/resource`,
       method: "PUT",
-      params: {
-        bypass_bucket: false,
-        type: "resource",
-      },
+      params: {},
       body: resourceData,
     });
 
