@@ -57,7 +57,7 @@ async function sendDownlink(account: Account, device_id: string, dn_options: Dow
     if (error.response?.data.includes("Authorization is missing")) {
       throw "Additional parameter with in the Authorization used for this device";
     }
-    throw `Downlink failed with status ${error.response.status}: ${error.response.data}`;
+    throw `Downlink failed with status ${error.response.status}: ${JSON.stringify(error.response.data)}`;
   });
 
   return `Downlink accepted with status ${result.status}`;
