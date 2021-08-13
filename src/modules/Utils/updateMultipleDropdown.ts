@@ -36,4 +36,4 @@ async function updateMultipleDropdown(device: Device, variables: string | string
   });
 }
 
-export { updateMultipleDropdown };
+export default updateMultipleDropdown;

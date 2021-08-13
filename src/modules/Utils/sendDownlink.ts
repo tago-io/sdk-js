@@ -63,4 +63,4 @@ async function sendDownlink(account: Account, device_id: string, dn_options: Dow
   return `Downlink accepted with status ${result.status}`;
 }
 
-export { sendDownlink };
+export default sendDownlink;

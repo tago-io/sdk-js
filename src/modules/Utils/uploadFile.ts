@@ -32,4 +32,4 @@ async function uploadFile(account: Account, options: UploadFileOptions): Promise
   return `https://api.tago.io/file/${account_id}/${fixed_path}`;
 }
 
-export { uploadFile };
+export default uploadFile;
