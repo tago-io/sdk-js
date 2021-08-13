@@ -1,7 +1,7 @@
 import envToJson from "./envToJson";
 import getAPIVersion from "./getAPIVersion";
 import getTokenByName from "./getTokenByName";
-import router from "./router/router";
+import AnalysisRouter from "./router/router";
 import getDevice from "./getDevice";
 import uploadFile from "./uploadFile";
 import sendDownlink from "./sendDownlink";
@@ -12,7 +12,7 @@ const Utils = {
   envToJson,
   getAPIVersion,
   getTokenByName,
-  router,
+  AnalysisRouter,
   getDevice,
   uploadFile,
   sendDownlink,
