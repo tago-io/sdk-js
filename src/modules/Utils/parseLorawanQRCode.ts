@@ -35,4 +35,4 @@ function parseQRCode(qr_code: string): QRCodeFormat {
   };
 }
 
-export { parseQRCode };
+export default parseQRCode;

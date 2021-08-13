@@ -6,6 +6,7 @@ import getDevice from "./getDevice";
 import uploadFile from "./uploadFile";
 import sendDownlink from "./sendDownlink";
 import updateMultipleDropdown from "./updateMultipleDropdown";
+import parseLorawanQRCode from "./parseLorawanQRCode";
 
 const Utils = {
   envToJson,
@@ -16,6 +17,7 @@ const Utils = {
   uploadFile,
   sendDownlink,
   updateMultipleDropdown,
+  parseLorawanQRCode,
 };
 
 export default Utils;
