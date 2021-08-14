@@ -6,8 +6,9 @@ import { TagoContext } from "../../Analysis/analysis.types";
 import Device from "../../Device/Device";
 import RouterService from "./service";
 
+type Scope = (Data | DeviceCreateInfo | { input_form_button_id: string } | MQTTResourceAction)[];
 class RouterConstructor {
-  scope: Data[] | DeviceCreateInfo[] | { input_form_button_id: string }[] | MQTTResourceAction[];
+  scope: Scope;
   environment: { [key: string]: string };
   account?: Account;
   config_dev?: Device;
@@ -42,12 +43,12 @@ class AnalysisRouter {
   public async exec() {
     const my_list: string[] = [];
     for (const service of this.services) {
-      if (!service.internal.whenConditionsTrue(this.params.scope, this.params.environment)) {
+      if (!service.verifyConditionsTrue(this.params.scope, this.params.environment)) {
         continue;
       }
 
-      service.internal.runService(this.params);
-      my_list.push(service.internal.getServiceName());
+      service.runService(this.params);
+      my_list.push(service.getServiceName());
     }
 
     return { status: !!my_list.length, services: my_list };

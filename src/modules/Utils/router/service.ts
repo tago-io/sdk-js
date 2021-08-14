@@ -97,7 +97,7 @@ class RouterService {
   /**
    * Start whening if all conditions are true.
    */
-  private whenConditionsTrue(scope: any, environment: any) {
+  public verifyConditionsTrue(scope: any, environment: any) {
     for (const func of this.whenList) {
       const result = func(scope, environment);
       if (!result) {
@@ -113,19 +113,13 @@ class RouterService {
    * @param router_params
    * @returns
    */
-  private runService(router_params: RouterConstructor) {
+  public runService(router_params: RouterConstructor) {
     return this.serviceFunction(router_params);
   }
 
-  private getServiceName() {
+  public getServiceName() {
     return this.serviceFunction.name;
   }
-
-  public internal = {
-    getServiceName: this.getServiceName,
-    runService: this.runService,
-    whenConditionsTrue: this.whenConditionsTrue,
-  };
 }
 
 export default RouterService;
