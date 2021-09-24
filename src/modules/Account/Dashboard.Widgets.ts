@@ -1,5 +1,6 @@
 import { Data, GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { DataToEdit } from "../Device/device.types";
 import { EditDataModel, EditDeviceResource, GetDataModel, PostDataModel, WidgetInfo } from "./dashboards.types";
 
 class Widgets extends TagoIOModule<GenericModuleParams> {
@@ -113,7 +114,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   public async editData(
     dashboardID: GenericID,
     widgetID: GenericID,
-    data: EditDataModel | EditDataModel[],
+    data: DataToEdit | DataToEdit[],
     bypassBucket: boolean = false
   ): Promise<object> {
     const result = await this.doRequest<object>({

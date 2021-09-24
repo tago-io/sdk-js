@@ -144,6 +144,7 @@ interface ListTokenQuery
 
 export {
   Data,
+  Metadata,
   TagsObj,
   Query,
   Base64,

@@ -1,4 +1,4 @@
-import { Data, GenericID, GenericToken, TagsObj } from "../../common/common.types";
+import { Data, GenericID, GenericToken, Metadata, TagsObj } from "../../common/common.types";
 import { Regions } from "../../regions";
 
 interface DeviceInfo {
@@ -35,6 +35,19 @@ interface DeviceConstructorParams {
 }
 
 type DataToSend = Omit<Data, "id" | "created_at" | "origin" | "time"> & { time?: Date | string };
+
+interface DataToEdit {
+  id?: string;
+  variable?: string;
+  value?: string | number | boolean | void;
+  location?: { lat: number; lng: number };
+  metadata?: Metadata;
+  serie?: string;
+  unit?: string;
+  origin?: string;
+  time?: Date;
+  created_at?: Date;
+}
 
 type valuesTypes = string | number | boolean | void;
 
@@ -147,6 +160,7 @@ export {
   DeviceConstructorParams,
   DeviceInfo,
   DataToSend,
+  DataToEdit,
   DataQuery,
   DataQueryStreaming,
   OptionsStreaming,

@@ -8,6 +8,7 @@ import dateParser from "../Utils/dateParser";
 import {
   DataQuery,
   DataQueryStreaming,
+  DataToEdit,
   DataToSend,
   DeviceConstructorParams,
   DeviceInfo,
@@ -56,6 +57,33 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     const result = await this.doRequest<string>({
       path: "/data",
       method: "POST",
+      body: data,
+    });
+
+    return result;
+  }
+
+  /**
+   * Edit data to device
+   * @param variable_id ID of data sent to TagoIO using device token
+   * @param data Variable data object
+   * @example
+   * ```js
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * const result = await myDevice.editData("61119478ed5dd50c71c31779", {
+   *   variable: "temperature",
+   *   unit: "F",
+   *   value: 55,
+   *   time: "2015-11-03 13:44:33",
+   *   location: { lat: 42.2974279, lng: -85.628292 },
+   * });
+   * ```
+   */
+  public async editData(variable_id: GenericID, data: DataToEdit): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/data/${variable_id}`,
+      method: "PUT",
       body: data,
     });
 
