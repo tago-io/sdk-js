@@ -112,7 +112,7 @@ interface EditDeviceResource {
 interface WidgetInfo {
   analysis_run?: GenericID;
   dashboard?: GenericID;
-  display: object;
+  display: any;
   data?: WidgetData[];
   resource?: WidgetDeviceResource[];
   id?: GenericID;
