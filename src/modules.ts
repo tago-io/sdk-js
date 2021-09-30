@@ -7,6 +7,7 @@ export { default as Authorization } from "./modules/Authorization/Authorization"
 export { default as RunUser } from "./modules/RunUser/RunUser";
 export { default as Utils } from "./modules/Utils/Utils";
 export { default as Dictionary } from "./modules/Dictionary/Dictionary";
+export { default as Migration } from "./modules/Migration/Migration";
 
 export * as Cache from "./common/Cache";
 export * as Types from "./types";
