@@ -57,9 +57,10 @@ async function apiRequest(axiosObj: AxiosRequestConfig, cacheTTL?: number): Prom
       "Cache-Control": "no-cache",
     };
   } else if (typeof process !== "undefined") {
-    const banner = !process.env.TAGO_RUNTIME
-      ? `(External; Node.js/${process.version} ${process.platform}/${process.arch})`
-      : `(Running at TagoIO)`;
+    const banner =
+      process.env.T_ANALYSIS_CONTEXT === "tago-io"
+        ? `(Running at TagoIO)`
+        : `(External; Node.js/${process.version} ${process.platform}/${process.arch})`;
 
     axiosObj.headers = {
       ...axiosObj.headers,

@@ -95,7 +95,7 @@ class RouterService {
   }
 
   /**
-   * Start whening if all conditions are true.
+   * Start verifying if all when conditions are true.
    */
   public verifyConditionsTrue(scope: any, environment: any) {
     for (const func of this.whenList) {

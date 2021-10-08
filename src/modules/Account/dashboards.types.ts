@@ -1,4 +1,4 @@
-import { ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
+import { Data, ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
 import { BucketDeviceInfo } from "./buckets.types";
 
 interface Arrangement {
@@ -60,11 +60,61 @@ interface DashboardInfo extends DashboardCreateInfo {
   };
 }
 
+interface WidgetData {
+  origin: GenericID;
+  qty?: number;
+  timezone?: string;
+  variables?: string;
+  bucket?: GenericID;
+  query?: "min" | "max" | "count" | "avg" | "sum";
+  start_date?: Date | string;
+  end_date?: Date | string;
+  overwrite?: boolean;
+}
+
+interface WidgetResource {
+  filter: TagsObj[];
+}
+
+type ResourceTag = `tags.${string}`;
+type ResourceParam = `param.${string}`;
+
+type DeviceResourceView =
+  | ResourceTag
+  | ResourceParam
+  | "name"
+  | "id"
+  | "bucket_name"
+  | "network_name"
+  | "connector_name"
+  | "connector"
+  | "network"
+  | "bucket"
+  | "last_input"
+  | "created_at"
+  | "active";
+
+interface WidgetDeviceResource extends WidgetResource {
+  type: "device";
+  view: DeviceResourceView;
+  editable: "name" | ResourceTag | ResourceParam;
+}
+interface EditDeviceResource {
+  device: GenericID;
+  name?: string;
+  active?: boolean;
+  /**
+   * Allowed keys: tags.*, param.*
+   * The value must always be a string.
+   */
+  [key: string]: string | boolean;
+}
 interface WidgetInfo {
   analysis_run?: GenericID;
   dashboard?: GenericID;
-  display?: object;
-  data: object[];
+  display: any;
+  data?: WidgetData[];
+  resource?: WidgetDeviceResource[];
   id?: GenericID;
   label: string;
   realtime?: boolean | null;
@@ -78,6 +128,20 @@ interface AnalysisRelated {
   id: GenericID;
   name: string;
 }
+
+interface PostDataModel extends Omit<Data, "id" | "created_at"> {
+  origin: GenericID;
+  variable: string;
+}
+
+interface GetDataModel {
+  overwrite?: widgetOverwrite;
+  blueprint_devices?: { origin: GenericID; id: GenericID; bucket?: GenericID }[];
+  page?: number;
+  amount?: number;
+}
+
+type EditDataModel = PostDataModel & { id: GenericID };
 
 type DashboardQuery = Query<DashboardInfo, "name" | "label" | "active" | "created_at" | "updated_at">;
 
@@ -98,4 +162,8 @@ export {
   DashboardInfo,
   WidgetInfo,
   widgetOverwrite,
+  PostDataModel,
+  EditDataModel,
+  EditDeviceResource,
+  GetDataModel,
 };
