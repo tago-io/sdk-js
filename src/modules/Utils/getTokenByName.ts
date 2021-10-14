@@ -6,8 +6,12 @@ import Account from "../Account/Account";
  * @param deviceID Id of device
  * @param names Array of names of the token, if null will return the first token found
  */
-async function getTokenByName(Account: Account, deviceID: string, names?: string[] | string): Promise<string> {
-  const tokens = await Account.devices.tokenList(deviceID);
+async function getTokenByName(account: Account, deviceID: string, names?: string[] | string): Promise<string> {
+  if (!(account instanceof Account)) {
+    throw "Account parameter must be an instance of TagoIO Account.";
+  }
+
+  const tokens = await account.devices.tokenList(deviceID);
   if (!tokens || !tokens[0]) {
     return null;
   }

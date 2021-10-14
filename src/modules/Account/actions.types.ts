@@ -112,6 +112,12 @@ interface ActionInfo extends ActionCreateInfo {
   created_at: Date;
 }
 
+interface MQTTResourceAction {
+  client_id: string;
+  connected_at: string;
+  disconnect_at?: string;
+}
+
 type ActionQuery = Query<ActionInfo, "name" | "active" | "last_triggered" | "created_at" | "updated_at">;
 
-export { ActionInfo, ActionCreateInfo, ActionQuery };
+export { ActionInfo, ActionCreateInfo, ActionQuery, MQTTResourceAction };
