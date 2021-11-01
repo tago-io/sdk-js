@@ -48,6 +48,7 @@ import { convert as convertVuMeter, isOldStructure as isOldStructureVuMeter } fr
 import TagoIOModule from "../../common/TagoIOModule";
 
 class Migration extends TagoIOModule<any> {
+  
   public static convertImagerMarkerData(widget: any, widgetData: any) {
     return convertLayerData(widget, widgetData);
   }
@@ -277,6 +278,7 @@ class Migration extends TagoIOModule<any> {
         return convertTile(widget);
       case "keypad":
         return convertKeypad(widget);
+      case "incremental_button":
       case "step_button":
         return convertStepButton(widget);
       case "push_button":

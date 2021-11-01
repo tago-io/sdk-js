@@ -77,8 +77,22 @@ export function convert(oldWidget: any): WidgetInfo {
         position,
         size,
       });
+
+      /**
+       * Formulas by variable are not working because the data structure is not
+       * encapsuling the new variables.
+       */
+      if (formula?.enable && formula?.formula_type === "variable" && formula?.variable) {
+        const formulaVariable = formula?.variable;
+        oldWidget.data.push({
+          bucket: formulaVariable?.bucket,
+          origin: formulaVariable?.origin,
+          variables: [formulaVariable?.variable],
+        });
+      }
     }
   }
+
   newStructure.data = oldWidget.data; // transfers the .data property
 
   return newStructure;
