@@ -59,6 +59,15 @@ class RouterService {
   }
 
   /**
+   * Return true if a parameter in the scope exists
+   * Useful to be used with Device List widget.
+   */
+  public whenParameterExists(parameter: string) {
+    this.addFunc((scope: any, environment: any) => !!scope.find((x: any) => parameter in x));
+    return this;
+  }
+
+  /**
    * Return true if widget_exec is the same
    * Information is available if Analysis is triggered by an widget.
    */
