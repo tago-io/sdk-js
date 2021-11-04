@@ -88,6 +88,7 @@ export function convert(oldWidget: any): WidgetInfo {
           bucket: formulaVariable?.bucket,
           origin: formulaVariable?.origin,
           variables: [formulaVariable?.variable],
+          query: "last_value",
         });
       }
     }
