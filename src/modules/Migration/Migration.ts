@@ -48,7 +48,6 @@ import { convert as convertVuMeter, isOldStructure as isOldStructureVuMeter } fr
 import TagoIOModule from "../../common/TagoIOModule";
 
 class Migration extends TagoIOModule<any> {
-  
   public static convertImagerMarkerData(widget: any, widgetData: any) {
     return convertLayerData(widget, widgetData);
   }

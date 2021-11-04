@@ -78,7 +78,7 @@ function convertGroupBy(oldGroupBy: string): string {
   if (oldGroupBy === "date") {
     return "time";
   }
-  return oldGroupBy ?? "time"; 
+  return oldGroupBy ?? "time";
 }
 
 export function convert(oldWidget: any): WidgetInfo {
