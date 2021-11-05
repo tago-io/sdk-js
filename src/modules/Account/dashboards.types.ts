@@ -109,6 +109,14 @@ interface EditDeviceResource {
    */
   [key: string]: string | boolean;
 }
+
+interface EditResourceOptions {
+  /**
+   * Identifier to send to the Analysis scope in `widget_exec`.
+   */
+  identifier?: string;
+}
+
 interface WidgetInfo {
   analysis_run?: GenericID;
   dashboard?: GenericID;
@@ -165,5 +173,6 @@ export {
   PostDataModel,
   EditDataModel,
   EditDeviceResource,
+  EditResourceOptions,
   GetDataModel,
 };

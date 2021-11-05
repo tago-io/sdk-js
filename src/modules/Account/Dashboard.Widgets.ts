@@ -1,6 +1,13 @@
 import { Data, GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { EditDataModel, EditDeviceResource, GetDataModel, PostDataModel, WidgetInfo } from "./dashboards.types";
+import {
+  EditDataModel,
+  EditDeviceResource,
+  EditResourceOptions,
+  GetDataModel,
+  PostDataModel,
+  WidgetInfo,
+} from "./dashboards.types";
 
 class Widgets extends TagoIOModule<GenericModuleParams> {
   /**
@@ -132,18 +139,21 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
    * Update value of a resource for the current widget
    * @param dashboardID Dashboard identification
    * @param widgetID Widget identification
-   * @param data
-   * @param bypassBucket
+   * @param resourceData Updated data for the resource
+   * @param options Additional options
    */
   public async editResource(
     dashboardID: GenericID,
     widgetID: GenericID,
-    resourceData: EditDeviceResource | EditDeviceResource[]
+    resourceData: EditDeviceResource | EditDeviceResource[],
+    options?: EditResourceOptions
   ): Promise<object> {
     const result = await this.doRequest<object>({
       path: `/data/${dashboardID}/${widgetID}/resource`,
       method: "PUT",
-      params: {},
+      params: {
+        widget_exec: options?.identifier,
+      },
       body: resourceData,
     });
 
