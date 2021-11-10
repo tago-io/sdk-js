@@ -46,7 +46,7 @@ export function convertSubmitButton(oldDisplay: any, runAnalysis: string): Objec
     run_analysis: !!runAnalysis,
     send_data: !oldDisplay?.form?.bypass_bucket,
     show_confirmation: !!oldDisplay?.form?.confirm_before_submit,
-    text: oldDisplay?.form?.label_submit ?? "Submit",
+    text: !oldDisplay?.form?.label_submit ? "Send" : oldDisplay?.form?.label_submit,
     wait_for_validation: !!oldDisplay?.form?.wait_validation_unlock,
   };
 }
