@@ -13,8 +13,9 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
   private analysis: analysisFunction;
   public started = false;
 
-  constructor(analysis: analysisFunction, params: AnalysisConstructorParams = { token: "unknown" }) {
-    super(params);
+  constructor(analysis: analysisFunction, params: AnalysisConstructorParams) {
+    // ? params.token can be empty or anything when analysis run on TagoIO
+    super({ ...params, token: params.token ? params.token : "unknown" });
     this.analysis = analysis;
 
     if (params.autostart !== false) {
