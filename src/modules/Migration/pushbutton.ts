@@ -4,6 +4,17 @@
 // ? ====================================================================================
 import { WidgetInfo } from "../Account/dashboards.types";
 
+function convertState(oldState: any) {
+  const newState = {
+    ...oldState,
+    type: oldState?.type || "text",
+    color: oldState?.text_color || "",
+  };
+  delete newState.text_color;
+
+  return newState;
+}
+
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};
 
@@ -16,8 +27,8 @@ export function convert(oldWidget: any): WidgetInfo {
       header_buttons: oldDisplay.header_buttons || [],
       help: oldDisplay.help || "",
       show_variables: !oldDisplay?.hide_variables,
-      state_one: oldDisplay?.state_one,
-      state_two: oldDisplay?.state_two,
+      state_one: convertState(oldDisplay?.state_one),
+      state_two: convertState(oldDisplay?.state_two),
       theme: {
         color: {
           background: null,
