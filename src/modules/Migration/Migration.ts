@@ -105,6 +105,7 @@ class Migration extends TagoIOModule<any> {
         return true;
       case "keypad":
         return true;
+      case "incremental_button":
       case "step_button":
         return true;
       case "push_button":
@@ -191,6 +192,7 @@ class Migration extends TagoIOModule<any> {
         return isOldStructureTile(widget);
       case "keypad":
         return isOldStructureKeypad(widget);
+      case "incremental_button":
       case "step_button":
         return isOldStructureStepButton(widget);
       case "push_button":
@@ -277,6 +279,7 @@ class Migration extends TagoIOModule<any> {
         return convertTile(widget);
       case "keypad":
         return convertKeypad(widget);
+      case "incremental_button":
       case "step_button":
         return convertStepButton(widget);
       case "push_button":

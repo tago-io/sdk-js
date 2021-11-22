@@ -74,6 +74,13 @@ function parserIcon(cssClass: string): string {
   }
 }
 
+function convertGroupBy(oldGroupBy: string): string {
+  if (oldGroupBy === "date") {
+    return "time";
+  }
+  return oldGroupBy ?? "time";
+}
+
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};
   const geofence = convertGeofence(oldDisplay);
@@ -102,7 +109,8 @@ export function convert(oldWidget: any): WidgetInfo {
       filter_by: filterBy,
       filter_list_by: canListByDevice && filterBy === "device" ? "device" : "variable", // The old widget does not have this feature
       filter_variables: convertFilterVariables(oldDisplay?.filter_variable),
-      group_by: oldDisplay?.group_by !== undefined ? oldDisplay?.group_by : "time",
+      group_by: convertGroupBy(oldDisplay?.group_by),
+      group_markers: oldDisplay?.group_markers ?? true,
       header_buttons: oldDisplay.header_buttons || [],
       help: oldDisplay.help || "",
       infobox_config: {

@@ -24,7 +24,7 @@ export function convert(oldWidget: any): WidgetInfo {
           header: null,
           hover: null,
           icon: oldDisplay?.icon_color || null,
-          title: oldDisplay?.label_button || null,
+          title: oldDisplay?.label_color || null,
         },
       },
       title: oldDisplay?.label_button || "",
