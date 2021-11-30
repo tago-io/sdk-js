@@ -126,6 +126,8 @@ class Migration extends TagoIOModule<any> {
           return true;
         } else if (layer_type === "compose") {
           return true;
+        } else if (layer_type === "virtualization_layer") {
+          return true;
         }
         return false;
       case "grainbin":
@@ -216,6 +218,8 @@ class Migration extends TagoIOModule<any> {
           return isOldStructureImageMarker(widget);
         } else if (layer_type === "compose") {
           return isOldStructureCompose(widget);
+        } else if (layer_type === "virtualization_layer") {
+          return isOldStructureCompose(widget);
         }
         return widget;
       case "grainbin":
@@ -302,6 +306,8 @@ class Migration extends TagoIOModule<any> {
         } else if (layer_type === "image_marker") {
           return convertImageMarker(widget);
         } else if (layer_type === "compose") {
+          return convertCompose(widget);
+        } else if (layer_type === "virtualization_layer") {
           return convertCompose(widget);
         }
         return widget;
