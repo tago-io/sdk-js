@@ -13,6 +13,10 @@ export function convert(oldWidget: any): WidgetInfo {
     decimalsString = oldDisplay?.numberformat?.split(".")?.[1] || "";
   }
   const decimals = decimalsString.length || -1;
+  
+  const conditions =
+    Array.isArray(oldDisplay?.conditions) && oldDisplay?.conditions.length > 0 ? oldDisplay?.conditions : [];
+  conditions.reverse();
 
   const newStructure: any = {
     dashboard: oldWidget.dashboard,
@@ -33,8 +37,7 @@ export function convert(oldWidget: any): WidgetInfo {
       theme: {
         color: {
           background: null,
-          fill:
-            Array.isArray(oldDisplay?.conditions) && oldDisplay?.conditions.length > 0 ? oldDisplay?.conditions : null,
+          fill:conditions,
           glass: null,
           header: null,
           text: null,
