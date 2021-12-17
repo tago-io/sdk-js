@@ -112,14 +112,15 @@ export function convert(oldWidget: any): WidgetInfo {
 }
 
 export function isOldStructure(widget: any) {
-  const isOld = !!(
-    widget?.display?.vars_labels ||
-    widget?.display?.vars_format ||
-    widget?.display?.vars_formula ||
-    widget?.display?.numberformat ||
-    widget?.display?.hide_values ||
-    widget?.display?.hide_variables
-  );
+  const isOld =
+    !!(
+      widget?.display?.vars_labels ||
+      widget?.display?.vars_format ||
+      widget?.display?.vars_formula ||
+      widget?.display?.numberformat ||
+      widget?.display?.hide_values ||
+      widget?.display?.hide_variables
+    ) && !widget?.display?.variables;
 
   return isOld;
 }
