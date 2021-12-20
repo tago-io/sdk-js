@@ -65,11 +65,20 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * Create a profile
    * @param profileObj Profile object with data to be created
    */
-  public async create(profileObj: { name: string }): Promise<{ id: GenericID }> {
+  public async create(
+    profileObj: { name: string },
+    options?: { allocate_free_resources?: boolean }
+  ): Promise<{ id: GenericID }> {
+    const { allocate_free_resources } = options || {};
+    const params = options && {
+      ...(allocate_free_resources && { allocate_free_resources }),
+    };
+
     const result = await this.doRequest<{ id: GenericID }>({
       path: `/profile/`,
       method: "POST",
       body: profileObj,
+      params,
     });
 
     return result;
