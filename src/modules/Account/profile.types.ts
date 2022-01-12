@@ -65,30 +65,41 @@ interface UsageStatistic {
 }
 
 interface AuditLog {
-  events: {
+  events?: {
     resourceName: string;
     message: string;
     resourceID: GenericID;
     who: GenericID;
     date: Date;
   }[];
-  statistics: {
+  statistics?: {
     recordsMatched: number;
     recordsScanned: number;
+    bytesScanned: number;
   };
-  status: "Running" | "Complete" | "Failed" | "Timeout" | "Unknown";
+  status?: "Running" | "Complete" | "Failed" | "Timeout" | "Unknown";
   queryId: string;
 }
 
+type resourceNameType =
+  | "action"
+  | "am"
+  | "analysis"
+  | "connector"
+  | "dashboard"
+  | "device"
+  | "dictionary"
+  | "network"
+  | "profile"
+  | "run"
+  | "runuser";
 interface AuditLogFilter {
-  ref_id?: GenericID;
+  resourceID?: GenericID;
+  resourceName?: resourceNameType;
   find?: "*" | string;
   start_date?: Date;
   end_date?: Date;
-}
-
-interface AuditLogCreateResponse {
-  queryId: string;
+  limit?: number;
 }
 
 interface AddonInfo {
@@ -97,13 +108,4 @@ interface AddonInfo {
   logo_url: string | null;
 }
 
-export {
-  ProfileListInfo,
-  ProfileInfo,
-  UsageStatistic,
-  AuditLog,
-  AuditLogCreateResponse,
-  AuditLogFilter,
-  AddonInfo,
-  ProfileSummary,
-};
+export { ProfileListInfo, ProfileInfo, UsageStatistic, AuditLog, AuditLogFilter, AddonInfo, ProfileSummary };

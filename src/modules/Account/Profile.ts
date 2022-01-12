@@ -11,7 +11,6 @@ import dateParser from "../Utils/dateParser";
 import {
   AddonInfo,
   AuditLog,
-  AuditLogCreateResponse,
   AuditLogFilter,
   ProfileInfo,
   ProfileListInfo,
@@ -130,7 +129,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @param profileID Profile identification
    * @param filterObj auditlog filter object
    */
-  public async auditLogCreate(profileID: GenericID, filterObj?: AuditLogFilter): Promise<AuditLogCreateResponse> {
+  public async auditLogCreate(profileID: GenericID, filterObj?: AuditLogFilter): Promise<AuditLog> {
     const result = await this.doRequest<AuditLog>({
       path: `/profile/${profileID}/auditlog`,
       method: "GET",
