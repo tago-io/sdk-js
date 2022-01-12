@@ -145,15 +145,24 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get a url to download the analysis
-   * @param analysisID Analyze identification
+   * Get a url to download the analysis.
+   * If `version` is specified in `options`, downloads a specific version.
+   *
+   * @param analysisID Analysis identification
+   * @param options Options for the Analysis script to download
    */
   public async downloadScript(
-    analysisID: GenericID
+    analysisID: GenericID,
+    options?: { version?: number }
   ): Promise<{ url: string; size_unit: string; size: number; expire_at: Date }> {
+    const { version } = options || {};
+
     let result = await this.doRequest<{ url: string; size_unit: string; size: number; expire_at: Date }>({
       path: `/analysis/${analysisID}/download`,
       method: "GET",
+      params: {
+        ...(version && { version }),
+      },
     });
     result = dateParser(result, ["expire_at"]);
 

@@ -2,6 +2,7 @@ import TagoIOModule from "../../common/TagoIOModule";
 import ConsoleService from "../Services/Console";
 import apiSocket, { channels } from "../../infrastructure/apiSocket";
 import { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment } from "./analysis.types";
+import { JSONParseSafe } from "../../common/JSONParseSafe";
 
 /**
  * This class is used to instance an analysis
@@ -10,14 +11,46 @@ import { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment } from
  */
 class Analysis extends TagoIOModule<AnalysisConstructorParams> {
   private analysis: analysisFunction;
+  public started = false;
 
-  constructor(analysis: analysisFunction, params?: AnalysisConstructorParams) {
-    super(params || { token: "unknown" });
+  constructor(analysis: analysisFunction, params: AnalysisConstructorParams = { token: "unknown" }) {
+    super(params);
     this.analysis = analysis;
 
-    if (!process.env.TAGO_RUNTIME) {
-      this.localRuntime();
+    if (params.autostart !== false) {
+      this.start();
     }
+  }
+
+  public start() {
+    if (this.started) {
+      return;
+    } else {
+      this.started = true;
+    }
+
+    if (!process.env.T_ANALYSIS_CONTEXT) {
+      this.localRuntime();
+    } else {
+      this.runOnTagoIO();
+    }
+  }
+
+  private runOnTagoIO() {
+    if (!this.analysis || typeof this.analysis !== "function") {
+      throw "Invalid analysis function";
+    }
+
+    const context = {
+      log: console.log,
+      token: process.env.T_ANALYSIS_TOKEN,
+      environment: JSONParseSafe(process.env.T_ANALYSIS_ENV, []),
+      analysis_id: process.env.T_ANALYSIS_ID,
+    };
+
+    const data = JSONParseSafe(process.env.T_ANALYSIS_DATA, []);
+
+    this.analysis(context, data);
   }
 
   private stringifyMsg(msg: any) {
@@ -32,11 +65,15 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
    * @param analysis_id
    * @param token
    */
-  public run(environment: AnalysisEnvironment, data: any[], analysis_id: string, token: string) {
+  private runLocal(environment: AnalysisEnvironment[], data: any[], analysis_id: string, token: string) {
+    if (!this.analysis || typeof this.analysis !== "function") {
+      throw "Invalid analysis function";
+    }
+
     const tagoConsole = new ConsoleService({ token, region: this.params.region });
 
     const log = (...args: any[]) => {
-      if (!process.env.TAGO_RUNTIME) {
+      if (!process.env.T_ANALYSIS_AUTO_RUN) {
         console.log(...args);
       }
 
@@ -55,10 +92,6 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
       environment,
       analysis_id,
     };
-
-    if (!this.analysis || typeof this.analysis !== "function") {
-      throw "Invalid analysis function";
-    }
 
     if (this.analysis.constructor.name === "AsyncFunction") {
       this.analysis(context, data || []).catch(log);
@@ -87,8 +120,12 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     socket.on("ready", (analysis: any) => console.info(`Analysis [${analysis.name}] Started.`));
 
     socket.on(channels.analysisTrigger, (scope: any) => {
-      this.run(scope.environment, scope.data, scope.analysis_id, scope.token);
+      this.runLocal(scope.environment, scope.data, scope.analysis_id, scope.token);
     });
+  }
+
+  public static use(analysis: analysisFunction, params?: AnalysisConstructorParams) {
+    return new Analysis(analysis, params);
   }
 }
 

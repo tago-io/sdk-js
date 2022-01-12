@@ -3,7 +3,7 @@ import { GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import { Base64File, FileListInfo, FileQuery, FilesPermission, MoveFiles, Options } from "./files.types";
+import { Base64File, CopyFiles, FileListInfo, FileQuery, FilesPermission, MoveFiles, Options } from "./files.types";
 
 class Files extends TagoIOModule<GenericModuleParams> {
   /**
@@ -66,6 +66,29 @@ class Files extends TagoIOModule<GenericModuleParams> {
   public async move(fileList: MoveFiles[]): Promise<string> {
     const result = await this.doRequest<string>({
       path: "/files",
+      method: "PUT",
+      body: fileList,
+    });
+
+    return result;
+  }
+
+  /**
+   * Copy Files
+   * @param fileList Array of copy actions to be made
+   * @example
+   * ```json
+   * fileList: [
+   *   {
+   *     from: "/myfiles/myOldName.ext",
+   *     to: "/myfiles/newFolder/andNewName.ext"
+   *   }
+   * ]
+   * ```
+   */
+  public async copy(fileList: CopyFiles[]): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: "/files/copy",
       method: "PUT",
       body: fileList,
     });
@@ -169,8 +192,9 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @param filename the path + filename for the file
    * @param options the upload options for this file
    */
-  private async createMultipartUpload(filename: string, options: Options) {
-    const path = options.dashboard && options.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
+  private async createMultipartUpload(filename: string, options?: Options) {
+    const path =
+      options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
 
     const result = await this.doRequest<any>({
       path,
@@ -178,8 +202,8 @@ class Files extends TagoIOModule<GenericModuleParams> {
       body: {
         multipart_action: "start",
         filename,
-        public: options.isPublic,
-        contentType: options.contentType,
+        public: options?.isPublic,
+        contentType: options?.contentType,
       },
     });
 
@@ -194,22 +218,27 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @param blob the portion of the file to be uploaded
    * @param options the upload options for this file
    */
-  async _uploadPart(filename: string, uploadID: string, partNumber: number, blob: Buffer | Blob, options: Options) {
-    const path = options.dashboard && options.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
+  async _uploadPart(filename: string, uploadID: string, partNumber: number, blob: Buffer | Blob, options?: Options) {
+    const path =
+      options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
 
     const form = new FormData();
     form.append("filename", filename);
     form.append("upload_id", uploadID);
     form.append("part", String(partNumber));
-    form.append("file", blob as Blob, filename);
+    form.append("file", blob, filename);
     form.append("multipart_action", "upload");
 
-    const headers = { "Content-Type": "multipart/form-data" };
+    let headers: any = { "Content-Type": "multipart/form-data" };
+    if (form.getHeaders) {
+      headers = form.getHeaders();
+    }
 
-    const result = await this.doRequest<any>({
+    const result = await this.doRequest<{ ETag: string }>({
       path,
       method: "POST",
       body: form,
+      maxContentLength: Infinity,
       headers,
     });
 
@@ -229,9 +258,9 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @param blob the portion of the file to be uploaded
    * @param options see the uploadFile function
    */
-  async _addToQueue(filename: string, uploadID: GenericID, partNumber: number, blob: Buffer | Blob, options: Options) {
-    const maxTries = options.maxTriesForEachChunk || 5;
-    const timeout = options.timeoutForEachFailedChunk || 2000;
+  async _addToQueue(filename: string, uploadID: GenericID, partNumber: number, blob: Buffer | Blob, options?: Options) {
+    const maxTries = options?.maxTriesForEachChunk || 5;
+    const timeout = options?.timeoutForEachFailedChunk || 2000;
 
     let tries = 0;
 
@@ -261,15 +290,16 @@ class Files extends TagoIOModule<GenericModuleParams> {
     filename: string,
     uploadID: string,
     parts: { ETag: String; PartNumber: number }[],
-    options: Options
+    options?: Options
   ) {
-    const path = options.dashboard && options.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
+    const path =
+      options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
 
     const partsOrdered = parts.sort((a, b) => a.PartNumber - b.PartNumber);
 
     const headers = { "Content-Type": "multipart/form-data" };
 
-    const result = await this.doRequest<any>({
+    const result = await this.doRequest<{ file: string }>({
       path,
       method: "POST",
       body: {
@@ -279,6 +309,8 @@ class Files extends TagoIOModule<GenericModuleParams> {
         parts: partsOrdered,
       },
     });
+
+    return result;
   }
 
   /**
@@ -289,11 +321,11 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @param filename the path + filename for the file
    * @param options the upload options for this file
    */
-  public async uploadFile(file: Buffer | Blob, filename: string, options: Options) {
+  public async uploadFile(file: Buffer | Blob, filename: string, options?: Options) {
     const MB = Math.pow(2, 20);
 
     let cancelled = false;
-    if (options.onCancelToken) {
+    if (options?.onCancelToken) {
       options.onCancelToken(() => {
         cancelled = true;
       });
@@ -303,8 +335,8 @@ class Files extends TagoIOModule<GenericModuleParams> {
 
     const uploadID = await this.createMultipartUpload(filename, options);
 
-    const bytesPerChunk = options.chunkSize || 7 * MB;
-    const fileSize = (file as Buffer).length || (file as Blob).size;
+    const bytesPerChunk = options?.chunkSize || 7 * MB;
+    const fileSize = file instanceof Buffer ? file.length : file.size;
     const chunkAmount = Math.floor(fileSize / bytesPerChunk) + 1;
     const partsPerTime = 3;
 
@@ -344,7 +376,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
 
         parts.push(partData);
 
-        if (options.onProgress) {
+        if (options?.onProgress) {
           const percentage = (parts.length * 100) / chunkAmount;
           const limitedPercentage = Math.min(percentage, 100).toFixed(2);
           const roundedPercentage = Number(limitedPercentage);

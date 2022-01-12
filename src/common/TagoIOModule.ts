@@ -38,6 +38,7 @@ interface doRequestParams {
   params?: any;
   headers?: any;
   overwriteAxiosConfig?: AxiosRequestConfig;
+  maxContentLength?: number;
   /**
    * Cache for request
    * default: false (disabled)
@@ -57,6 +58,7 @@ function mountAxiosRequest(uri: string, requestObj: doRequestParams): AxiosReque
     method: requestObj.method,
     data: requestObj.body,
     params: requestObj.params,
+    maxContentLength: requestObj.maxContentLength,
     paramsSerializer: (p) => qs.stringify(p),
     headers: {
       ...requestObj.headers,

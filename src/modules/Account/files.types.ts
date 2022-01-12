@@ -29,6 +29,11 @@ interface Base64File {
   public?: boolean;
 }
 
+interface CopyFiles {
+  from: string;
+  to: string;
+}
+
 interface MoveFiles {
   from: string;
   to: string;
@@ -55,7 +60,7 @@ interface Options {
   /**
    * if the file can be accessed by anybody with a link or not
    */
-  isPublic: boolean;
+  isPublic?: boolean;
   /**
    * will upload simulating an input form on the dashboard. widget also needs to be specified with this
    */
@@ -67,7 +72,7 @@ interface Options {
   /**
    * will provide a cancel token for you to cancel the request
    */
-  onCancelToken?: Function;
+  onCancelToken?: (cancel: () => void) => any;
   /**
    * the byte size of each chunk sent to TagoIO. This will influence how many requests this function will perform
    */
@@ -75,6 +80,6 @@ interface Options {
   /**
    * will provide the upload percentage for this file
    */
-  onProgress: Function;
+  onProgress?: (percentage: number) => any;
 }
-export { FileQuery, FileListInfo, Base64File, MoveFiles, FilesPermission, Options };
+export { FileQuery, FileListInfo, Base64File, MoveFiles, FilesPermission, Options, CopyFiles };
