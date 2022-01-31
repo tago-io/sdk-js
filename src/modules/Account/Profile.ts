@@ -17,6 +17,7 @@ import {
   ProfileSummary,
   UsageStatistic,
 } from "./profile.types";
+import TagoCore from "./TagoCore";
 
 class Profile extends TagoIOModule<GenericModuleParams> {
   /**
@@ -252,6 +253,11 @@ class Profile extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
+  /**
+   * Manage TagoCore in profile
+   */
+  public tagocores = new TagoCore(this.params);
 }
 
 export default Profile;

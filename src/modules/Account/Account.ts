@@ -23,6 +23,7 @@ import Template from "./Template";
 import { Regions } from "../../regions";
 import Integration from "./Integration";
 import dateParser from "../Utils/dateParser";
+import TagoCore from "./TagoCore";
 
 /**
  * To set up an account object, you need a token that you need to get from our
