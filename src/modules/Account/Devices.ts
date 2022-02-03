@@ -28,7 +28,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    */
   public async list(queryObj?: DeviceQuery, tCoreID?: GenericID): Promise<DeviceListItem[]> {
     let result = await this.doRequest<DeviceListItem[]>({
-      path: `/device${tCoreID ? `?tcore=${tCoreID}` : ""}`,
+      path: "/device",
       method: "GET",
       params: {
         page: queryObj?.page || 1,
