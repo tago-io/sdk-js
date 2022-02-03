@@ -126,8 +126,13 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * ```
    * @param bucketID Bucket ID
    * @param optionsObj Request options
+   * @param tCoreID TagoCore ID
    */
-  public async listVariables(bucketID: GenericID, optionsObj?: ListVariablesOptions, tCoreID?: GenericID): Promise<VariablesInfo[]> {
+  public async listVariables(
+    bucketID: GenericID, 
+    optionsObj?: ListVariablesOptions, 
+    tCoreID?: GenericID
+  ): Promise<VariablesInfo[]> {
     const result = await this.doRequest<VariablesInfo[]>({
       path: `/bucket/${bucketID}/variable`,
       method: "GET",
