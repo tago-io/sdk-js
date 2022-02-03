@@ -26,9 +26,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * }
    * @param queryObj Search query params
    */
-  public async list(queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
+  public async list(queryObj?: DeviceQuery, tCoreID?: GenericID): Promise<DeviceListItem[]> {
     let result = await this.doRequest<DeviceListItem[]>({
-      path: "/device",
+      path: `/device${tCoreID ? `?tcore=${tCoreID}` : ""}`,
       method: "GET",
       params: {
         page: queryObj?.page || 1,
@@ -37,6 +37,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
         amount: queryObj?.amount || 20,
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
         resolveBucketName: queryObj?.resolveBucketName || false,
+        ...(tCoreID ? {tcore: tCoreID} : {})
       },
     });
 
@@ -93,10 +94,13 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * Get Info of the Device
    * @param deviceID Device ID
    */
-  public async info(deviceID: GenericID): Promise<DeviceInfo> {
+  public async info(deviceID: GenericID, tCoreID?: GenericID): Promise<DeviceInfo> {
     let result = await this.doRequest<DeviceInfo>({
       path: `/device/${deviceID}`,
       method: "GET",
+      params: {
+        ...(tCoreID ? {tcore: tCoreID} : {})
+      }
     });
 
     result = dateParser(result, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"]);
