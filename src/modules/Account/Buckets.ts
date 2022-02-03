@@ -135,7 +135,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
         amount: optionsObj?.showAmount || false,
         deleted: optionsObj?.showDeleted || false,
         resolveOriginName: optionsObj?.resolveOriginName || false,
-        ...(tCoreID ? {tcore: tCoreID} : {})
+        tcore: tCoreID ?? undefined,
       },
     });
 

@@ -37,7 +37,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
         amount: queryObj?.amount || 20,
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
         resolveBucketName: queryObj?.resolveBucketName || false,
-        ...(tCoreID ? {tcore: tCoreID} : {})
+        tcore: tCoreID ?? undefined,
       },
     });
 
@@ -99,8 +99,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
       path: `/device/${deviceID}`,
       method: "GET",
       params: {
-        ...(tCoreID ? {tcore: tCoreID} : {})
-      }
+        tcore: tCoreID ?? undefined,
+      },
     });
 
     result = dateParser(result, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"]);
