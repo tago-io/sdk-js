@@ -7,14 +7,15 @@ interface ProfileListInfo {
 }
 
 interface ProfileLimit {
-  profile: string;
-  updated_at: Date;
   input: number;
   output: number;
   sms: number;
   email: number;
   analysis: number;
   data_records: number;
+  run_users: number;
+  push_notification: number;
+  file_storage: number;
 }
 
 interface ProfileInfo {
@@ -42,6 +43,9 @@ interface ProfileSummary {
     action: number;
     am: number;
     run_users: number;
+    dictionary: number;
+    connectors: number;
+    networks: number;
   };
   limit_used: {
     input: number;
@@ -50,6 +54,13 @@ interface ProfileSummary {
     sms: number;
     email: number;
     data_records: number;
+    run_users: number;
+    push_notification: number;
+    file_storage: number;
+  };
+  addons: {
+    custom_dns: boolean;
+    mobile: boolean;
   };
 }
 

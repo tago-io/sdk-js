@@ -323,24 +323,6 @@ class Billing extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
-
-  /**
-   * Remove an add-on from a profile at the end of the billing cycle.
-   *
-   * @throws If profile ID is invalid.
-   * @throws If profile doesn't have the add-on.
-   *
-   * @returns Success message.
-   */
-  // TODO Move to Profile?
-  public async removeAddOn(profileId: GenericID, addon: BillingAddOn): Promise<string> {
-    const result = await this.doRequest<string>({
-      path: `/profile/${profileId}/${addon}`,
-      method: "DELETE",
-    });
-
-    return result;
-  }
 }
 
 export default Billing;
