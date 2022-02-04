@@ -1,7 +1,7 @@
 import { GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import { NotificationInfo, NotificationQuery } from "./notifications.types";
+import { NotificationCreate, NotificationInfo, NotificationQuery } from "./notifications.types";
 
 class Notifications extends TagoIOModule<GenericModuleParams> {
   /**
@@ -83,6 +83,20 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
     const result = await this.doRequest<string>({
       path: `/notification/${notificationID}/${buttonID}`,
       method: "PUT",
+    });
+
+    return result;
+  }
+
+  /**
+   * Create a notification
+   * @param notificationID Notification identification
+   */
+  public async create(data: NotificationCreate): Promise<{ id: GenericID }> {
+    const result = await this.doRequest<{ id: GenericID }>({
+      path: `/notification`,
+      method: "POST",
+      body: { ...data },
     });
 
     return result;
