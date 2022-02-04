@@ -90,13 +90,22 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Create a notification
-   * @param notificationID Notification identification
+   * @param notification Notification Object
+   * @example
+   * ```json
+   * notificationData: [
+   *   {
+   *     title: "My notification title",
+   *     message: "My notification message"
+   *   }
+   * ]
+   * ```
    */
-  public async create(data: NotificationCreate): Promise<{ id: GenericID }> {
+  public async create(notificationData: NotificationCreate): Promise<{ id: GenericID }> {
     const result = await this.doRequest<{ id: GenericID }>({
       path: `/notification`,
       method: "POST",
-      body: { ...data },
+      body: { ...notificationData },
     });
 
     return result;
