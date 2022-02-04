@@ -90,7 +90,7 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Create a notification
-   * @param notification Notification Object
+   * @param notificationData Notification Object
    * @example
    * ```json
    * notificationData: [
