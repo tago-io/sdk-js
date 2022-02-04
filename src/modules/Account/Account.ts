@@ -5,6 +5,7 @@ import Access from "./Access";
 import { AccountCreateInfo, AccountInfo, LoginResponse, OTPType, TokenCreateInfo } from "./account.types";
 import Actions from "./Actions";
 import Analyses from "./Analyses";
+import Billing from "./Billing";
 import Buckets from "./Buckets";
 import Dashboards from "./Dashboards";
 import Devices from "./Devices";
@@ -315,6 +316,13 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * functions like create, edit and delete.
    */
   public dictionaries = new Dictionaries(this.params);
+
+  /**
+   * Manage Billing for the account.
+   * Be sure to use an account token with “write” permissions when using
+   * functions like create, edit and delete.
+   */
+  public billing = new Billing(this.params);
 
   /**
    * Manage notifications in account
