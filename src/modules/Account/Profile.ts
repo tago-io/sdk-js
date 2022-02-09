@@ -129,7 +129,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @param profileID Profile identification
    * @param filterObj auditlog filter object
    */
-  public async auditLogCreate(profileID: GenericID, filterObj?: AuditLogFilter): Promise<AuditLog> {
+  public async auditLog(profileID: GenericID, filterObj?: AuditLogFilter): Promise<AuditLog> {
     const result = await this.doRequest<AuditLog>({
       path: `/profile/${profileID}/auditlog`,
       method: "GET",
