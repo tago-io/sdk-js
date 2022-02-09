@@ -95,6 +95,10 @@ type BillingSubscription = {
    * Value of the upcoming invoice.
    */
   upcoming_invoice_total: number;
+  /**
+   * Timestamp when the trial for the subscription ends if the subscription has a trial active.
+   */
+  trial_end: string | null;
 };
 
 type BillingEditSubscription = {
