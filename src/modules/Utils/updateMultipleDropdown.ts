@@ -13,7 +13,7 @@ async function updateMultipleDropdown(device: Device, variables: string | string
   const data_list = await device.getData({ variables, qty: 999 });
 
   data_list.forEach((item) => {
-    let sentValues = (item.metadata?.sentValues as any) as { value: string; label: string }[];
+    let sentValues = item.metadata?.sentValues as { value: string; label: string }[];
     let new_data_value = (item.value as string).split(";");
 
     if (sentValues.find((x) => fixed_values.includes(x.value))) {
