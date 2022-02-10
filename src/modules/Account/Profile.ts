@@ -60,14 +60,28 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Create a profile
+   * Create a profile.
+   *
+   * If `allocate_free_resources` is passed as an option, all the free resources available
+   * in allocation will be allocated to the new profile.
+   *
    * @param profileObj Profile object with data to be created
+   * @param options Options for the created profile.
    */
-  public async create(profileObj: { name: string }): Promise<{ id: GenericID }> {
+  public async create(
+    profileObj: { name: string },
+    options?: { allocate_free_resources?: boolean }
+  ): Promise<{ id: GenericID }> {
+    const { allocate_free_resources } = options || {};
+    const params = {
+      ...(allocate_free_resources && { allocate_free_resources }),
+    };
+
     const result = await this.doRequest<{ id: GenericID }>({
       path: `/profile/`,
       method: "POST",
       body: profileObj,
+      params,
     });
 
     return result;
