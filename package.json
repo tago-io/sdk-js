@@ -32,11 +32,10 @@
     "docs": "typedoc"
   },
   "devDependencies": {
-    "@tago-io/typedoc-tagoio-theme": "0.10.3",
     "@types/express": "4.17.13",
     "@types/jest": "27.4.0",
     "@types/lodash.chunk": "4.2.6",
-    "@types/node": "17.0.16",
+    "@types/node": "17.0.17",
     "@types/papaparse": "5.3.2",
     "@types/qs": "6.9.7",
     "@types/socket.io-client": "1.4.36",
