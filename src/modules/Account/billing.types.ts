@@ -126,12 +126,15 @@ type BillingEditSubscription = {
   coupon?: string;
 };
 
-type BillingServiceSubscriptionSchedule = BillingSubscriptionSchedule & {
-  /**
-   * Amount of proportional change the service's allocation will undergo.
-   */
-  proportional_change?: number | undefined;
-};
+type BillingServiceSubscriptionSchedule = Record<
+  BillingService,
+  BillingServiceSubscription & {
+    /**
+     * Amount of proportional change the service's allocation will undergo.
+     */
+    proportional_change?: number | undefined;
+  }
+>;
 
 type BillingSubscriptionSchedule = {
   /**
@@ -176,27 +179,37 @@ type BillingServicePrice = {
 
 type BillingAllServicePrices = Record<BillingService, BillingServicePrice[]>;
 
+type BillingPlanPrices = Array<{
+  /**
+   * Plan name.
+   */
+  name: BillingPlan;
+  /**
+   * Plan price.
+   */
+  price: number;
+}>;
+
+type BillingAddOnPrices = Array<{
+  /**
+   * Add-on name.
+   */
+  name: BillingAddOn;
+  /**
+   * Add-on price.
+   */
+  price: number;
+}>;
+
 type BillingPrices = {
-  plans: Array<{
-    /**
-     * Plan name.
-     */
-    name: BillingAddOn;
-    /**
-     * Plan price.
-     */
-    price: number;
-  }>;
-  addons: Array<{
-    /**
-     * Add-on name.
-     */
-    name: BillingAddOn;
-    /**
-     * Add-on price.
-     */
-    price: number;
-  }>;
+  /**
+   * Prices for each plan.
+   */
+  plans: BillingPlanPrices;
+  /**
+   * Prices for each add-on.
+   */
+  addons: BillingAddOnPrices;
 } & BillingAllServicePrices;
 
 type BillingPaymentMethodCard = {
@@ -447,6 +460,9 @@ export type {
   BillingServiceSubscriptionSchedule,
   BillingSubscriptionSchedule,
   BillingSchedule,
+  BillingServicePrice,
+  BillingPlanPrices,
+  BillingAddOnPrices,
   BillingPrices,
   BillingPaymentMethodCard,
   BillingPaymentMethodBalance,
@@ -456,6 +472,8 @@ export type {
   BillingPaymentHistoryEntry,
   BillingInformation,
   BillingEditInformation,
+  BillingResourceAllocationServices,
   BillingResourceAllocation,
+  BillingProfileResourceAllocation,
   BillingEditResourceAllocation,
 };
