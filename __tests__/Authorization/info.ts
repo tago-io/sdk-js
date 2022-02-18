@@ -3,6 +3,8 @@ import http from "http";
 import { Authorization } from "../../src/modules";
 import { AddressInfo } from "net";
 
+jest.setTimeout(3000);
+
 describe("Authorization class", () => {
   let app: Express;
   let service: http.Server;
