@@ -12,3 +12,4 @@ docs/
 .DS_Store
 jest.config.js
 typedoc.json
+assets/
