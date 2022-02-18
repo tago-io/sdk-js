@@ -18,6 +18,7 @@ jobs:
           npm run docs
           rm -rf __tests__ src .github *.js *.json *.md *.MD
           rm -rf .editorconfig .eslintignore .eslintrc.js .npmignore .npmrc .prettierrc
+          rm -rf assets
           mv docs/* .
           rm -rf docs/
           touch .nojekyll
