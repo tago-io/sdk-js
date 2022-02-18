@@ -3,6 +3,8 @@ import http from "http";
 import { AddressInfo } from "net";
 import { Utils } from "../../src/modules";
 
+jest.setTimeout(3000);
+
 describe("Get Api version", () => {
   let app: Express;
   let service: http.Server;

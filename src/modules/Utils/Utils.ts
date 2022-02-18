@@ -1,23 +1,9 @@
-import envToJson from "./envToJson";
-import getAPIVersion from "./getAPIVersion";
-import getTokenByName from "./getTokenByName";
-import AnalysisRouter from "./router/router";
-import getDevice from "./getDevice";
-import uploadFile from "./uploadFile";
-import sendDownlink from "./sendDownlink";
-import updateMultipleDropdown from "./updateMultipleDropdown";
-import parseLorawanQRCode from "./parseLorawanQRCode";
-
-const Utils = {
-  envToJson,
-  getAPIVersion,
-  getTokenByName,
-  AnalysisRouter,
-  getDevice,
-  uploadFile,
-  sendDownlink,
-  updateMultipleDropdown,
-  parseLorawanQRCode,
-};
-
-export default Utils;
+export { default as envToJson } from "./envToJson";
+export { default as getAPIVersion } from "./getAPIVersion";
+export { default as getTokenByName } from "./getTokenByName";
+export { default as AnalysisRouter } from "./router/router";
+export { default as getDevice } from "./getDevice";
+export { default as uploadFile } from "./uploadFile";
+export { default as sendDownlink } from "./sendDownlink";
+export { default as updateMultipleDropdown } from "./updateMultipleDropdown";
+export { default as parseLorawanQRCode } from "./parseLorawanQRCode";

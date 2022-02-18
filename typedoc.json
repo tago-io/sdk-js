@@ -12,6 +12,6 @@
   "githubPages": true,
   "hideGenerator": true,
   "cleanOutputDir": true,
-  "internalNamespace": "System",
+  "internalNamespace": "<internal>",
   "favicon": "assets/favicon.png"
 }
