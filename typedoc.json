@@ -11,5 +11,6 @@
   "excludeInternal": true,
   "githubPages": true,
   "hideGenerator": true,
-  "cleanOutputDir": true
+  "cleanOutputDir": true,
+  "internalNamespace": "System"
 }
