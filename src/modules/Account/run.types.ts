@@ -153,6 +153,30 @@ interface RunSAMLEditInfo {
   mapping?: SAMLAttributeMappings;
 }
 
+interface CustomDomainResponse {
+  profile: string;
+  domain: string;
+  subdomain: string;
+  email: string;
+  dns_ssl_key: string;
+  dns_ssl_value: string;
+  dns_page_key: string;
+  dns_page_value: string;
+  dns_email_1_key: string;
+  dns_email_1_value: string;
+  dns_email_2_key: string;
+  dns_email_2_value: string;
+  dns_email_3_key: string;
+  dns_email_3_value: string;
+  created_at: Date;
+}
+
+interface CustomDomain {
+  profile: string;
+  domain: string;
+  subdomain: string;
+}
+
 type ThemeOption =
   | "actionSchedule"
   | "actionTriggerByData"
@@ -282,4 +306,6 @@ export {
   LoginAsUserOptions,
   RunSAMLInfo,
   RunSAMLEditInfo,
+  CustomDomain,
+  CustomDomainResponse,
 };

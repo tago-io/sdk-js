@@ -11,6 +11,8 @@ import {
   LoginAsUserOptions,
   RunSAMLInfo,
   RunSAMLEditInfo,
+  CustomDomain,
+  CustomDomainResponse,
 } from "./run.types";
 
 class Run extends TagoIOModule<GenericModuleParams> {
@@ -176,6 +178,63 @@ class Run extends TagoIOModule<GenericModuleParams> {
       path: "/run/sso/saml",
       method: "PUT",
       body: data,
+    });
+
+    return result;
+  }
+
+  /**
+   * Create a TagoRUN custom domain for the profile.
+   *
+   * @param customDomainData query params
+   * @returns Success message.
+   */
+  public async createCustomDomain(customDomainData: CustomDomain): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: "run/custom_domain",
+      method: "PUT",
+    });
+
+    return result;
+  }
+
+  /**
+   * Get details of TagoRun custom domain for the profile.
+   *
+   * @returns CustomDomainResponse.
+   */
+  public async getCustomDomain(): Promise<CustomDomainResponse> {
+    const result = await this.doRequest<CustomDomainResponse>({
+      path: "run/custom_domain",
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
+   * delete a TagoRUN custom domain for the profile.
+   *
+   * @returns Success message.
+   */
+  public async deleteCustomDomain(): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: "run/custom_domain",
+      method: "DELETE",
+    });
+
+    return result;
+  }
+
+  /**
+   * Regenerate a TagoRUN custom domain for the profile.
+   *
+   * @returns Success message.
+   */
+  public async regenerateCustomDomain(): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: "run/custom_domain/regenerate",
+      method: "PUT",
     });
 
     return result;
