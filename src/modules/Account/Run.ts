@@ -184,14 +184,46 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * Create a TagoRUN custom domain for the profile.
+   *
+   * @param profile_id id of profile
+   * @param customDomainData query params
+   * @returns Success message.
+   */
+  public async createCustomDomain(profile_id: string, customDomainData: CustomDomain): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `run/${profile_id}/customdomain`,
+      method: "POST",
+    });
+
+    return result;
+  }
+
+  /**
    * Get details of TagoRun custom domain for the profile.
    *
+   * @param profile_id id of profile
    * @returns CustomDomainResponse.
    */
-  public async getCustomDomain(): Promise<CustomDomainResponse> {
+  public async getCustomDomain(profile_id: string): Promise<CustomDomainResponse> {
     const result = await this.doRequest<CustomDomainResponse>({
-      path: "run/custom_domain",
+      path: `run/${profile_id}/customdomain`,
       method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
+   * delete a TagoRUN custom domain for the profile.
+   *
+   * @param profile_id id of profile
+   * @returns Success message.
+   */
+  public async deleteCustomDomain(profile_id: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `run/${profile_id}/customdomain`,
+      method: "DELETE",
     });
 
     return result;
@@ -200,11 +232,12 @@ class Run extends TagoIOModule<GenericModuleParams> {
   /**
    * Regenerate a TagoRUN custom domain for the profile.
    *
+   * @param profile_id id of profile
    * @returns Success message.
    */
-  public async regenerateCustomDomain(): Promise<string> {
+  public async regenerateCustomDomain(profile_id: string): Promise<string> {
     const result = await this.doRequest<string>({
-      path: "run/custom_domain/regenerate",
+      path: `run/${profile_id}/customdomain/regenerate`,
       method: "PUT",
     });
 
