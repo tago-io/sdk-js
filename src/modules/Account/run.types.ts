@@ -153,22 +153,24 @@ interface RunSAMLEditInfo {
   mapping?: SAMLAttributeMappings;
 }
 
+type DnsItem = {
+  status: boolean;
+  type: string;
+  current_value: string;
+  key: string;
+  value: string;
+};
 interface CustomDomainResponse {
-  profile: string;
+  created_at: Date | string;
+  active: boolean;
   domain: string;
   subdomain: string;
   email: string;
-  dns_ssl_key: string;
-  dns_ssl_value: string;
-  dns_page_key: string;
-  dns_page_value: string;
-  dns_email_1_key: string;
-  dns_email_1_value: string;
-  dns_email_2_key: string;
-  dns_email_2_value: string;
-  dns_email_3_key: string;
-  dns_email_3_value: string;
-  created_at: Date;
+  dns_ssl: DnsItem;
+  dns_page: DnsItem;
+  dns_email_1: DnsItem;
+  dns_email_2: DnsItem;
+  dns_email_3: DnsItem;
 }
 
 interface CustomDomain {
