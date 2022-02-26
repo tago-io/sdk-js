@@ -1,4 +1,4 @@
-import { TagoCoreInfo, TagoCoreQuery } from "./tagocore.types";
+import { TagoCoreInfo, TagoCoreListInfo, TagoCoreQuery } from "./tagocore.types";
 import { GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
@@ -18,8 +18,8 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * ```json
    * @param queryObj Search query params
    */
-  public async list(queryObj?: TagoCoreQuery): Promise<TagoCoreInfo[]> {
-    let result = await this.doRequest<TagoCoreInfo[]>({
+  public async list(queryObj?: TagoCoreQuery): Promise<TagoCoreListInfo[]> {
+    let result = await this.doRequest<TagoCoreListInfo[]>({
       path: "/tcore",
       method: "GET",
       params: {

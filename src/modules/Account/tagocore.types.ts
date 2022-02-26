@@ -9,6 +9,12 @@ interface TagoCoreComputerUsage {
   detail: string;
 }
 
+interface TagoCoreOS {
+  device: number;
+  action: number;
+  analysis: number;
+}
+
 interface TagoCoreSummary {
   device: number;
   action: number;
@@ -16,23 +22,41 @@ interface TagoCoreSummary {
 }
 
 interface TagoCoreInfo {
+  active: boolean;
+  computer_usage: TagoCoreComputerUsage;
+  connected: boolean;
+  created_at: string;
   id: GenericID;
+  internet_ip: string;
+  last_connection: string;
+  local_ips: string;
   name: string;
+  os: TagoCoreOS;
+  profile: string;
+  summary: TagoCoreSummary;
+  system_start_time: string;
+  tags: TagsObj[];
+  tcore_start_time: string;
+  tcore_version: string;
+  token: GenericToken;
+  updated_at: string;
+}
+
+interface TagoCoreListInfo {
   active: boolean;
   connected: boolean;
-  profile: string;
-  tags: TagsObj[];
   created_at: string;
-  updated_at: string;
-  last_connection: string;
-  system_start_time: string;
-  tcore_start_time: string;
-  token: GenericToken;
-  local_ips: string;
+  id: GenericID;
   internet_ip: string;
+  last_connection: string;
+  local_ips: string;
+  name: string;
+  profile: string;
+  system_start_time: string;
+  tags: TagsObj[];
+  tcore_start_time: string;
   tcore_version: string;
-  summary: TagoCoreSummary;
-  computer_usage: TagoCoreComputerUsage;
+  updated_at: string;
 }
 
 type TagoCoreQuery = Query<
@@ -40,7 +64,6 @@ type TagoCoreQuery = Query<
   | "name"
   | "active"
   | "created_at"
-  | "connected"
   | "updated_at"
   | "last_connection"
   | "local_ips"
@@ -49,4 +72,4 @@ type TagoCoreQuery = Query<
   | "tcore_start_time"
 >;
 
-export { TagoCoreInfo, TagoCoreQuery };
+export { TagoCoreListInfo, TagoCoreInfo, TagoCoreQuery };
