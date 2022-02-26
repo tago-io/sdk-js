@@ -10,9 +10,10 @@ interface TagoCoreComputerUsage {
 }
 
 interface TagoCoreOS {
-  device: number;
-  action: number;
-  analysis: number;
+  name: string;
+  arch: string;
+  version: string;
+  platform?: string;
 }
 
 interface TagoCoreSummary {
