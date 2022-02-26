@@ -1,6 +1,6 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
-type TagTypes = "bucket" | "device" | "dashboard" | "action" | "analysis";
+type TagTypes = "bucket" | "device" | "dashboard" | "action" | "analysis" | "tcore";
 
 class Tags extends TagoIOModule<GenericModuleParams> {
   /**
