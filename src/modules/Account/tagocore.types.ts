@@ -1,6 +1,11 @@
 import { GenericID, GenericToken, TagsObj, Query } from "../../common/common.types";
 
-interface TagoCoreListInfo {
+interface TagoCoreCreateInfo {
+  system_start_time: string;
+  tcore_start_time: string;
+}
+
+interface TagoCoreInfo extends TagoCoreCreateInfo {
   id: GenericID;
   name: string;
   active: boolean;
@@ -11,24 +16,22 @@ interface TagoCoreListInfo {
   updated_at: string;
   last_connection: string;
   token: GenericToken;
-  local_ip: string;
-  public_ip: string;
-  system_uptime: string;
-  tcore_uptime: string;
+  local_ips: string;
+  internet_ip: string;
 }
 
 type TagoCoreQuery = Query<
-  TagoCoreListInfo,
+  TagoCoreInfo,
   | "name"
   | "active"
   | "created_at"
   | "connected"
   | "updated_at"
   | "last_connection"
-  | "local_ip"
-  | "public_ip"
-  | "system_uptime"
-  | "tcore_uptime"
+  | "local_ips"
+  | "internet_ip"
+  | "system_start_time"
+  | "tcore_start_time"
 >;
 
-export { TagoCoreListInfo, TagoCoreQuery };
+export { TagoCoreInfo, TagoCoreQuery };
