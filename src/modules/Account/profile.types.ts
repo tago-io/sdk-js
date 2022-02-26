@@ -7,14 +7,15 @@ interface ProfileListInfo {
 }
 
 interface ProfileLimit {
-  profile: string;
-  updated_at: Date;
   input: number;
   output: number;
   sms: number;
   email: number;
   analysis: number;
   data_records: number;
+  run_users: number;
+  push_notification: number;
+  file_storage: number;
 }
 
 interface ProfileInfo {
@@ -42,6 +43,9 @@ interface ProfileSummary {
     action: number;
     am: number;
     run_users: number;
+    dictionary: number;
+    connectors: number;
+    networks: number;
   };
   limit_used: {
     input: number;
@@ -50,6 +54,13 @@ interface ProfileSummary {
     sms: number;
     email: number;
     data_records: number;
+    run_users: number;
+    push_notification: number;
+    file_storage: number;
+  };
+  addons: {
+    custom_dns: boolean;
+    mobile: boolean;
   };
 }
 
@@ -65,26 +76,41 @@ interface UsageStatistic {
 }
 
 interface AuditLog {
-  events: {
+  events?: {
     resourceName: string;
     message: string;
     resourceID: GenericID;
     who: GenericID;
     date: Date;
   }[];
-  searchedLogStreams: {
-    logStreamName: GenericID;
-    searchedCompletely: boolean;
-  }[];
-  nextToken: string;
+  statistics?: {
+    recordsMatched: number;
+    recordsScanned: number;
+    bytesScanned: number;
+  };
+  status?: "Running" | "Complete" | "Failed" | "Timeout" | "Unknown";
+  queryId: string;
 }
 
+type resourceNameType =
+  | "action"
+  | "am"
+  | "analysis"
+  | "connector"
+  | "dashboard"
+  | "device"
+  | "dictionary"
+  | "network"
+  | "profile"
+  | "run"
+  | "runuser";
 interface AuditLogFilter {
-  nextToken?: string;
-  ref_id?: GenericID;
+  resourceID?: GenericID;
+  resourceName?: resourceNameType;
   find?: "*" | string;
   start_date?: Date;
   end_date?: Date;
+  limit?: number;
 }
 
 interface AddonInfo {

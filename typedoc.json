@@ -1,0 +1,17 @@
+{
+  "name": "TagoIO SDK for JavaScript and TypeScript",
+  "readme": "./DOCS.md",
+  "entryPoints": "./src/modules.ts",
+  "entryPointStrategy": "resolve",
+  "out": "docs",
+  "gaID": "UA-57075518-5",
+  "exclude": ["./src/common/Cache.ts"],
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "githubPages": true,
+  "hideGenerator": true,
+  "cleanOutputDir": true,
+  "internalNamespace": "<internal>",
+  "favicon": "assets/favicon.png"
+}

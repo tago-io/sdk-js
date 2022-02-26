@@ -8,6 +8,7 @@ import {
 } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
+import { BillingAddOn } from "./billing.types";
 import {
   AddonInfo,
   AuditLog,
@@ -17,7 +18,6 @@ import {
   ProfileSummary,
   UsageStatistic,
 } from "./profile.types";
-import TagoCore from "./TagoCore";
 
 class Profile extends TagoIOModule<GenericModuleParams> {
   /**
@@ -43,7 +43,6 @@ class Profile extends TagoIOModule<GenericModuleParams> {
     });
 
     if (result.info) result.info = dateParser(result.info, ["created_at", "updated_at"]);
-    if (result.limits) result.limits = dateParser(result.limits, ["updated_at"]);
 
     return result;
   }
@@ -57,20 +56,32 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       method: "GET",
     });
 
-    if (result?.limit) result.limit = dateParser(result.limit, ["updated_at"]);
-
     return result;
   }
 
   /**
-   * Create a profile
+   * Create a profile.
+   *
+   * If `allocate_free_resources` is passed as an option, all the free resources available
+   * in allocation will be allocated to the new profile.
+   *
    * @param profileObj Profile object with data to be created
+   * @param options Options for the created profile.
    */
-  public async create(profileObj: { name: string }): Promise<{ id: GenericID }> {
+  public async create(
+    profileObj: { name: string },
+    options?: { allocate_free_resources?: boolean }
+  ): Promise<{ id: GenericID }> {
+    const { allocate_free_resources } = options || {};
+    const params = {
+      ...(allocate_free_resources && { allocate_free_resources }),
+    };
+
     const result = await this.doRequest<{ id: GenericID }>({
       path: `/profile/`,
       method: "POST",
       body: profileObj,
+      params,
     });
 
     return result;
@@ -126,7 +137,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Fetches the information from auditlog of this profile
+   * Create a query for auditlog
    * @param profileID Profile identification
    * @param filterObj auditlog filter object
    */
@@ -135,6 +146,21 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       path: `/profile/${profileID}/auditlog`,
       method: "GET",
       params: filterObj || {},
+    });
+
+    result.events = result?.events.map((data) => dateParser(data, ["date"]));
+    return result;
+  }
+
+  /**
+   * Fetches the information from an auditlog query
+   * @param profileID Profile identification
+   * @param queryId auditlog queryId from auditLogCreate
+   */
+  public async auditLogQuery(profileID: GenericID, queryId?: string): Promise<AuditLog> {
+    const result = await this.doRequest<AuditLog>({
+      path: `/profile/${profileID}/auditlog/${queryId}`,
+      method: "GET",
     });
 
     result.events = result?.events.map((data) => dateParser(data, ["date"]));
@@ -255,9 +281,21 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Manage TagoCore in profile
+   * Remove an add-on from a profile at the end of the billing cycle.
+   *
+   * @throws If profile ID is invalid.
+   * @throws If profile doesn't have the add-on.
+   *
+   * @returns Success message.
    */
-  public tagocores = new TagoCore(this.params);
+  public async removeAddOn(profileId: GenericID, addon: BillingAddOn): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/profile/${profileId}/${addon}`,
+      method: "DELETE",
+    });
+
+    return result;
+  }
 }
 
 export default Profile;

@@ -15,17 +15,5 @@
     "resolveJsonModule": true,
     "lib": ["ES2017", "DOM"]
   },
-  "include": ["src/**/*"],
-  "typedocOptions": {
-    "name": "TagoIO SDK for JavaScript and TypeScript",
-    "readme": "./DOCS.md",
-    "inputFiles": ["./src"],
-    "toc": ["Account", "Device", "Analysis", "Services", "Connector", "Authorization", "RunUser", "Utils", "Dictionary"],
-    "mode": "file",
-    "out": "docs",
-    "gaID": "UA-57075518-5",
-    "excludePrivate": true,
-    "excludeProtected": true,
-    "stripInternal": true
-  }
+  "include": ["src/**/*"]
 }
