@@ -24,7 +24,7 @@ interface TagoCoreSummary {
 
 interface TagoCoreInfo {
   active: boolean;
-  computer_usage: TagoCoreComputerUsage;
+  computer_usage: TagoCoreComputerUsage[];
   connected: boolean;
   created_at: string;
   id: GenericID;
@@ -73,4 +73,4 @@ type TagoCoreQuery = Query<
   | "tcore_start_time"
 >;
 
-export { TagoCoreListInfo, TagoCoreInfo, TagoCoreQuery };
+export { TagoCoreComputerUsage, TagoCoreOS, TagoCoreSummary, TagoCoreListInfo, TagoCoreInfo, TagoCoreQuery };
