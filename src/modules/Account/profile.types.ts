@@ -46,6 +46,7 @@ interface ProfileSummary {
     dictionary: number;
     connectors: number;
     networks: number;
+    tcore: number;
   };
   limit_used: {
     input: number;
@@ -57,6 +58,7 @@ interface ProfileSummary {
     run_users: number;
     push_notification: number;
     file_storage: number;
+    tcore: number;
   };
   addons: {
     custom_dns: boolean;
