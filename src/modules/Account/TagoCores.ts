@@ -42,10 +42,11 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * Gets information about the TagoCore
    * @param tagoCoreID TagoCore identification
    */
-  public async info(tagoCoreID: GenericID): Promise<TagoCoreInfo> {
+  public async info(tagoCoreID: GenericID, summary?: boolean): Promise<TagoCoreInfo> {
     const result = await this.doRequest<TagoCoreInfo>({
       path: `/tcore/${tagoCoreID}`,
       method: "GET",
+      params: { summary },
     });
 
     return result;
