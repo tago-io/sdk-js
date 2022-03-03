@@ -41,6 +41,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   /**
    * Gets information about the TagoCore
    * @param tagoCoreID TagoCore identification
+   * @param summary Fetch summary from the instance if it is connected
    */
   public async info(tagoCoreID: GenericID, summary?: boolean): Promise<TagoCoreInfo> {
     const result = await this.doRequest<TagoCoreInfo>({
@@ -75,6 +76,19 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
     const result = await this.doRequest<string>({
       path: `/tcore/${tagoCoreID}/token`,
       method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
+   * Deletes a TagoCore
+   * @param tagoCoreID TagoCore identification
+   */
+  public async delete(tagocoreID: GenericID): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/tcore/${tagocoreID}`,
+      method: "DELETE",
     });
 
     return result;
