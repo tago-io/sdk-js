@@ -30,8 +30,17 @@ interface BucketCreateInfo {
   tags?: TagsObj[];
 }
 
+/**
+ * Type of data storage for a device (bucket).
+ */
+type DataStorageType = "immutable" | "mutable" | "legacy";
+
 interface BucketInfo extends BucketCreateInfo {
   id: GenericID;
+  /**
+   * Data storage type for the bucket.
+   */
+  type: DataStorageType;
   data_retention: string;
   data_retention_ignore: [];
   profile: GenericID;
@@ -84,4 +93,5 @@ export {
   ExportBucketOption,
   BucketQuery,
   ListVariablesOptions,
+  DataStorageType,
 };

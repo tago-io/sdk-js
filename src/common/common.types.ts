@@ -23,15 +23,57 @@ interface Metadata {
 }
 
 interface Data {
-  id?: string;
+  /**
+   * Data ID.
+   */
+  id: string;
+  /**
+   * ID of the device holding the data.
+   */
+  device: GenericID;
+  /**
+   * ID of the device holding the data.
+   *
+   * @deprecated Deprecating this in favor of `device`.
+   */
+  origin: GenericID;
+  /**
+   * Name of the variable for the data.
+   */
   variable: string;
-  value?: string | number | boolean | void;
-  location?: { lat: number; lng: number };
-  metadata?: Metadata;
+  /**
+   * Data value.
+   */
+  value?: string | number | boolean;
+  /**
+   * Group for the data. Used for grouping different data values.
+   */
+  group?: string;
+  /**
+   * Series for the data. Used for grouping different data values.
+   *
+   * @deprecated Deprecating this in favor of `group`.
+   */
   serie?: string;
+  /**
+   * Unit for the data value.
+   */
   unit?: string;
-  origin: string;
+  /**
+   * Location for the data value.
+   */
+  location?: { lat: number; lng: number };
+  /**
+   * Metadata for the data value.
+   */
+  metadata?: Metadata;
+  /**
+   * Timestamp for the data value. Customizable when posting the data.
+   */
   time: Date;
+  /**
+   * Timestamp for the data value. Determined by the API.
+   */
   created_at?: Date;
 }
 
