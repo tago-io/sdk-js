@@ -34,7 +34,7 @@ interface DeviceConstructorParams {
   // options?: any;
 }
 
-type DataToSend = Omit<Data, "id" | "created_at" | "origin" | "time"> & { time?: Date | string };
+type DataToSend = Omit<Data, "id" | "created_at" | "origin" | "device" | "time"> & { time?: Date | string };
 
 type valuesTypes = string | number | boolean | void;
 
