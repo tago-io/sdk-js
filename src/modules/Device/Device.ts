@@ -8,6 +8,7 @@ import dateParser from "../Utils/dateParser";
 import {
   DataQuery,
   DataQueryStreaming,
+  DataToEdit,
   DataToSend,
   DeviceConstructorParams,
   DeviceInfo,
@@ -100,6 +101,34 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     }
 
     return result.map((item) => dateParser(item, ["time", "created_at"]));
+  }
+
+  /**
+   * Edit  data from device
+   * @param data An array or one object with data to be edited at TagoIO using device token
+   * @example
+   * ```js
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * const result = await myDevice.editData({
+   *   id: "619748fb5ef26e0012205378",
+   *   unit: "F",
+   *   value: 55,
+   *   time: "2015-11-03 13:44:33",
+   *   location: { lat: 42.2974279, lng: -85.628292 },
+   * });
+   * ```
+   */
+  public async editData(data: DataToEdit | DataToEdit[]): Promise<string> {
+    data = Array.isArray(data) ? data : [data];
+
+    const result = await this.doRequest<string>({
+      path: "/data",
+      method: "PUT",
+      body: data,
+    });
+
+    return result;
   }
 
   /**

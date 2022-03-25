@@ -35,7 +35,7 @@ interface DeviceConstructorParams {
 }
 
 type DataToSend = Omit<Data, "id" | "created_at" | "origin" | "device" | "time"> & { time?: Date | string };
-
+type DataToEdit = Omit<Data, "created_at" | "origin" | "device" | "time"> & { time?: Date | string };
 type valuesTypes = string | number | boolean | void;
 
 interface DataQueryBase {
@@ -157,6 +157,7 @@ export {
   DeviceConstructorParams,
   DeviceInfo,
   DataToSend,
+  DataToEdit,
   DataQuery,
   DataQueryStreaming,
   OptionsStreaming,
