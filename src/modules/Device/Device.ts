@@ -1,19 +1,11 @@
 import chunk from "lodash.chunk";
 import Batch from "../../common/BatchRequest";
-import { Data, GenericID } from "../../common/common.types";
+import { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
 import { ConfigurationParams } from "../Account/devices.types";
 import dateParser from "../Utils/dateParser";
-import {
-  DataQuery,
-  DataQueryStreaming,
-  DataToEdit,
-  DataToSend,
-  DeviceConstructorParams,
-  DeviceInfo,
-  OptionsStreaming,
-} from "./device.types";
+import { DataQuery, DataQueryStreaming, DeviceConstructorParams, DeviceInfo, OptionsStreaming } from "./device.types";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
@@ -51,7 +43,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * });
    * ```
    */
-  public async sendData(data: DataToSend | DataToSend[]): Promise<string> {
+  public async sendData(data: DataCreate | DataCreate[]): Promise<string> {
     data = Array.isArray(data) ? data : [data];
 
     const result = await this.doRequest<string>({
@@ -104,22 +96,25 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
   }
 
   /**
-   * Edit  data from device
-   * @param data An array or one object with data to be edited at TagoIO using device token
+   * Edit data in a Mutable-type device.
+   *
+   * @param data Array or object with the data to be edited, each object with the data's ID.
+   *
    * @example
-   * ```js
+   * ```ts
    * const myDevice = new Device({ token: "my_device_token" });
    *
    * const result = await myDevice.editData({
-   *   id: "619748fb5ef26e0012205378",
-   *   unit: "F",
-   *   value: 55,
-   *   time: "2015-11-03 13:44:33",
+   *   id: "id_of_the_data_item"
+   *   value: 123,
+   *   time: "2022-04-01 12:34:56",
    *   location: { lat: 42.2974279, lng: -85.628292 },
    * });
    * ```
+   *
+   * @returns Success message with the amount of data items updated.
    */
-  public async editData(data: DataToEdit | DataToEdit[]): Promise<string> {
+  public async editData(data: DataEdit | DataEdit[]): Promise<string> {
     data = Array.isArray(data) ? data : [data];
 
     const result = await this.doRequest<string>({
@@ -287,7 +282,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    *   });
    * ```
    */
-  public async sendDataStreaming(data: DataToSend[], options: Omit<OptionsStreaming, "neverStop">) {
+  public async sendDataStreaming(data: DataCreate[], options: Omit<OptionsStreaming, "neverStop">) {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
     const poolingTime = options?.poolingTime || 1000; // 1 seg
 
