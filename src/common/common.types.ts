@@ -22,6 +22,13 @@ interface Metadata {
   [key: string]: any;
 }
 
+type LocationGeoJSON = {
+  type: "Point";
+  coordinates: number[];
+};
+
+type LocationLatLng = { lat: number; lng: number };
+
 /**
  * Type for the data returned from the API.
  */
@@ -65,10 +72,7 @@ interface Data {
   /**
    * Location for the data value.
    */
-  location?: {
-    type: "Point";
-    coordinates: number[];
-  };
+  location?: LocationGeoJSON;
   /**
    * Metadata for the data value.
    */
@@ -92,16 +96,7 @@ type DataCreate = Required<Pick<Data, "variable">> &
       /**
        * Location for the data value.
        */
-      location: {
-        /**
-         * Latitude for the data.
-         */
-        lat: number;
-        /**
-         * Latitude for the data.
-         */
-        lng: number;
-      };
+      location: LocationGeoJSON | LocationLatLng | null;
       /**
        * Timestamp for the data value.
        */
