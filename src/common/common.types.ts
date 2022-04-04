@@ -46,7 +46,7 @@ interface Data {
    *
    * @deprecated Deprecating this in favor of `device`.
    */
-  origin: GenericID;
+  origin?: GenericID;
   /**
    * Name of the variable for the data.
    */
