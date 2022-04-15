@@ -99,16 +99,19 @@ interface WidgetDeviceResource extends WidgetResource {
   view: DeviceResourceView;
   editable: "name" | ResourceTag | ResourceParam;
 }
-interface EditDeviceResource {
+
+/**
+ * Allowed keys: tags.\* or param.\*
+ *
+ * The value must always be a string or boolean.
+ */
+type EditDeviceResource = {
   device: GenericID;
   name?: string;
   active?: boolean;
-  /**
-   * Allowed keys: tags.*, param.*
-   * The value must always be a string or boolean.
-   */
-  [key: string]: string | boolean | undefined;
-}
+} & {
+  [key: string]: string | boolean;
+};
 
 interface EditResourceOptions {
   /**
