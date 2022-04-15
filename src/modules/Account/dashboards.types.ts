@@ -105,9 +105,9 @@ interface EditDeviceResource {
   active?: boolean;
   /**
    * Allowed keys: tags.*, param.*
-   * The value must always be a string.
+   * The value must always be a string or boolean.
    */
-  [key: string]: string | boolean;
+  [key: string]: string | boolean | undefined;
 }
 
 interface EditResourceOptions {
