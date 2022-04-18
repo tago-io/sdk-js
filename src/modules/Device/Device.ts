@@ -1,4 +1,4 @@
-import chunk from "lodash.chunk";
+import { chunk } from "lodash";
 import Batch from "../../common/BatchRequest";
 import { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
