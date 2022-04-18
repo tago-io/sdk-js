@@ -61,7 +61,7 @@ function mountAxiosRequest(uri: string, requestObj: doRequestParams): AxiosReque
     maxContentLength: requestObj.maxContentLength,
     // ? It should use qs stringify with arrayFormat brackets
     // ? The result will be, variable[]="test1"&variable[]="test2" (when the payload is array)
-    paramsSerializer: (p) => qs.stringify(p, { arrayFormat: "brackets" }),
+    paramsSerializer: (p) => qs.stringify(p),
     headers: {
       ...requestObj.headers,
     },
