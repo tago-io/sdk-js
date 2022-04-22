@@ -120,9 +120,13 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    */
   public async paramSet(
     deviceID: GenericID,
-    configObj: Partial<ConfigurationParams>,
+    configObj: Partial<ConfigurationParams> | Partial<ConfigurationParams>[],
     paramID?: GenericID
   ): Promise<string> {
+    if (paramID && Array.isArray(configObj)) {
+      throw "paramSet must not be supplied with arg3 when using arrays";
+    }
+
     const result = await this.doRequest<string>({
       path: `/device/${deviceID}/params`,
       method: "POST",
