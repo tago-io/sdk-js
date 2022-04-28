@@ -32,7 +32,7 @@ interface DeviceCreateInfo {
   /**
    * Description of the device.
    */
-  description?: string | null;
+  description?: string | void;
   /**
    * Set if the device will be active.
    */

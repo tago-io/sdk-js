@@ -29,6 +29,7 @@
     "build": "rm -rf ./out; tsc",
     "linter": "eslint .",
     "test": "jest",
+    "monacoTypes": "dts-bundle-generator -o docs/tago-io.sdk.d.ts src/modules.ts",
     "docs": "typedoc"
   },
   "devDependencies": {
@@ -41,6 +42,7 @@
     "@types/socket.io-client": "1.4.36",
     "@typescript-eslint/eslint-plugin": "5.19.0",
     "@typescript-eslint/parser": "5.19.0",
+    "dts-bundle-generator": "6.9.0",
     "eslint": "8.13.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.0.0",
