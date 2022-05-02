@@ -2,6 +2,7 @@ import TagoIOModule, { ConnectorModuleParams } from "../../common/TagoIOModule";
 import { NetworkDeviceListQuery, INetworkInfo, NetworkDeviceListQueryInfo } from "./network.types";
 import { GenericID, GenericToken } from "../../common/common.types";
 import dateParser from "../Utils/dateParser";
+import { ConfigurationParams } from "../Account/devices.types";
 
 class Network extends TagoIOModule<ConnectorModuleParams> {
   /**
@@ -72,6 +73,31 @@ class Network extends TagoIOModule<ConnectorModuleParams> {
     result = result.map((data) =>
       dateParser(data, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"])
     );
+
+    return result;
+  }
+
+  /**
+   * Create or edit param for the Device in network
+   * @param deviceID Device ID
+   * @param configObj Configuration Data
+   * @param paramID Parameter ID
+   */
+  public async deviceParamSet(
+    deviceID: GenericID,
+    configObj: Partial<ConfigurationParams>,
+    paramID?: GenericID
+  ): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/integration/network/${deviceID}/params`,
+      method: "POST",
+      body: paramID
+        ? {
+            id: paramID,
+            ...configObj,
+          }
+        : configObj,
+    });
 
     return result;
   }

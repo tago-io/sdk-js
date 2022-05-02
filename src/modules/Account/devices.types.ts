@@ -1,4 +1,5 @@
 import { GenericID, GenericToken, Query, TagsObj, PermissionOption, ExpireTimeOption } from "../../common/common.types";
+import { DataStorageType } from "./buckets.types";
 
 interface DeviceQuery
   extends Query<
@@ -10,13 +11,28 @@ interface DeviceQuery
 
 interface DeviceCreateInfo {
   /**
-   * A name for the device.
+   * Device name.
    */
   name: string;
   /**
+   * Connector ID.
+   */
+  connector: GenericID;
+  /**
+   * Network ID.
+   */
+  network: GenericID;
+
+  /**
+   * Device's data storage (bucket) type.
+   *
+   * @default "legacy"
+   */
+  type?: DataStorageType;
+  /**
    * Description of the device.
    */
-  description?: string | null;
+  description?: string | void;
   /**
    * Set if the device will be active.
    */
@@ -34,20 +50,9 @@ interface DeviceCreateInfo {
    */
   tags?: TagsObj[];
   /**
-   * Device Serie Number
+   * Device serial number.
    */
   serie_number?: string;
-
-  /**
-   * Connector ID
-   */
-  connector?: GenericID;
-
-  /**
-   * Network ID
-   */
-  network?: GenericID;
-
   /**
    * If device will use connector parser
    */
@@ -56,20 +61,56 @@ interface DeviceCreateInfo {
    * Javascript code for use as payload parser
    */
   parse_function?: string;
+  /**
+   * Data retention for the device's data storage.
+   */
+  data_retention?: string;
 }
 
-interface DeviceInfo extends Omit<DeviceCreateInfo, "configuration_params"> {
+interface DeviceInfo extends Required<Omit<DeviceCreateInfo, "configuration_params">> {
+  /**
+   * Device ID.
+   */
   id: GenericID;
+  /**
+   * Device's data storage (bucket) type.
+   */
+  type: DataStorageType;
+  /**
+   * ID of the profile that owns the device.
+   */
   profile: GenericID;
+  /**
+   * Bucket storing the device's data.
+   */
   bucket: {
     id: GenericID;
     name: string;
   };
+  /**
+   * Date for the device's last output.
+   */
   last_output: Date | null;
+  /**
+   * Date for the device's last input.
+   */
   last_input: Date | null;
+  /**
+   * Date for the device's last update.
+   */
   updated_at: Date;
+  /**
+   * Date for the device's creation.
+   */
   created_at: Date;
+  /**
+   * Date for the device's last inspection.
+   */
   inspected_at: Date | null;
+  /**
+   * Date for the device's last data retention.
+   */
+  last_retention: Date | null;
 }
 
 interface ConfigurationParams {
@@ -80,6 +121,7 @@ interface ConfigurationParams {
 }
 
 type DeviceCreateResponse = { device_id: GenericID; bucket_id: GenericID; token: GenericToken };
+
 type DeviceListItem = Omit<DeviceInfo, "bucket"> & { bucket: GenericID };
 
 interface DeviceTokenDataList {

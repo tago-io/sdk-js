@@ -1,18 +1,11 @@
-import chunk from "lodash.chunk";
+import { chunk } from "lodash";
 import Batch from "../../common/BatchRequest";
-import { Data, GenericID } from "../../common/common.types";
+import { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
 import { ConfigurationParams } from "../Account/devices.types";
 import dateParser from "../Utils/dateParser";
-import {
-  DataQuery,
-  DataQueryStreaming,
-  DataToSend,
-  DeviceConstructorParams,
-  DeviceInfo,
-  OptionsStreaming,
-} from "./device.types";
+import { DataQuery, DataQueryStreaming, DeviceConstructorParams, DeviceInfo, OptionsStreaming } from "./device.types";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
@@ -50,7 +43,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * });
    * ```
    */
-  public async sendData(data: DataToSend | DataToSend[]): Promise<string> {
+  public async sendData(data: DataCreate | DataCreate[]): Promise<string> {
     data = Array.isArray(data) ? data : [data];
 
     const result = await this.doRequest<string>({
@@ -100,6 +93,37 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     }
 
     return result.map((item) => dateParser(item, ["time", "created_at"]));
+  }
+
+  /**
+   * Edit data in a Mutable-type device.
+   *
+   * @param data Array or object with the data to be edited, each object with the data's ID.
+   *
+   * @example
+   * ```ts
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * const result = await myDevice.editData({
+   *   id: "id_of_the_data_item"
+   *   value: 123,
+   *   time: "2022-04-01 12:34:56",
+   *   location: { lat: 42.2974279, lng: -85.628292 },
+   * });
+   * ```
+   *
+   * @returns Success message with the amount of data items updated.
+   */
+  public async editData(data: DataEdit | DataEdit[]): Promise<string> {
+    data = Array.isArray(data) ? data : [data];
+
+    const result = await this.doRequest<string>({
+      path: "/data",
+      method: "PUT",
+      body: data,
+    });
+
+    return result;
   }
 
   /**
@@ -258,7 +282,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    *   });
    * ```
    */
-  public async sendDataStreaming(data: DataToSend[], options: Omit<OptionsStreaming, "neverStop">) {
+  public async sendDataStreaming(data: DataCreate[], options: Omit<OptionsStreaming, "neverStop">) {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
     const poolingTime = options?.poolingTime || 1000; // 1 seg
 

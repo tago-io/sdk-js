@@ -24,6 +24,7 @@ import Template from "./Template";
 import { Regions } from "../../regions";
 import Integration from "./Integration";
 import dateParser from "../Utils/dateParser";
+import TagoCores from "./TagoCores";
 
 /**
  * To set up an account object, you need a token that you need to get from our
@@ -407,6 +408,13 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * functions like create, edit and delete.
    */
   public profiles = new Profile(this.params);
+
+  /**
+   * Manage tagocores in account
+   * Be sure to use an account token with “write” permissions when using
+   * functions like create, edit and delete.
+   */
+  public tagocores = new TagoCores(this.params);
 }
 
 export default Account;
