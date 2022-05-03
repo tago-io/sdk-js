@@ -414,7 +414,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
 
     for (let i = 0; i < 3; i += 1) {
       try {
-        return this._completeMultipartUpload(filename, uploadID, parts, options);
+        return await this._completeMultipartUpload(filename, uploadID, parts, options);
       } catch (ex) {
         if (itsLimitError(ex)) {
           throw ex.message;
