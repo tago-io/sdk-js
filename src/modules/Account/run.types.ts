@@ -160,7 +160,8 @@ type DnsItem = {
   key: string;
   value: string;
 };
-interface CustomDomainResponse {
+
+interface CustomDomainInfo {
   created_at: Date | string;
   active: boolean;
   domain: string;
@@ -173,10 +174,10 @@ interface CustomDomainResponse {
   dns_email_3: DnsItem;
 }
 
-interface CustomDomain {
-  profile: string;
+interface CustomDomainCreate {
   domain: string;
   subdomain: string;
+  email: string;
 }
 
 type ThemeOption =
@@ -308,6 +309,6 @@ export {
   LoginAsUserOptions,
   RunSAMLInfo,
   RunSAMLEditInfo,
-  CustomDomain,
-  CustomDomainResponse,
+  CustomDomainCreate,
+  CustomDomainInfo,
 };

@@ -11,8 +11,8 @@ import {
   LoginAsUserOptions,
   RunSAMLInfo,
   RunSAMLEditInfo,
-  CustomDomain,
-  CustomDomainResponse,
+  CustomDomainCreate,
+  CustomDomainInfo,
 } from "./run.types";
 
 class Run extends TagoIOModule<GenericModuleParams> {
@@ -190,7 +190,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @param customDomainData query params
    * @returns Success message.
    */
-  public async createCustomDomain(profile_id: string, customDomainData: CustomDomain): Promise<string> {
+  public async createCustomDomain(profile_id: string, customDomainData: CustomDomainCreate): Promise<string> {
     const result = await this.doRequest<string>({
       path: `run/customdomain/${profile_id}`,
       body: customDomainData,
@@ -204,10 +204,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * Get details of TagoRun custom domain for the profile.
    *
    * @param profile_id ID of the profile
-   * @returns CustomDomainResponse.
+   * @returns Data for the profile's custom DNS configuration.
    */
-  public async getCustomDomain(profile_id: string): Promise<CustomDomainResponse> {
-    const result = await this.doRequest<CustomDomainResponse>({
+  public async getCustomDomain(profile_id: string): Promise<CustomDomainInfo> {
+    const result = await this.doRequest<CustomDomainInfo>({
       path: `run/customdomain/${profile_id}`,
       method: "GET",
     });
