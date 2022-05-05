@@ -18,7 +18,7 @@ interface PlanInfo extends PlanSetInfo {
   next_plan: string;
 }
 
-interface Profile {
+interface ProfileLimit {
   id: GenericID;
   name: string;
   limits: {
@@ -39,7 +39,7 @@ interface Discount {
 }
 
 interface Summary {
-  profiles: Profile[];
+  profiles: ProfileLimit[];
   plan: string;
   discounts: Discount[];
 }
@@ -60,4 +60,4 @@ interface CurrentPrices {
   addons: { name: string; price: number }[];
 }
 
-export { PlanSetInfo, PlanInfo, Profile, Discount, Summary, Price, CurrentPrices };
+export { PlanSetInfo, PlanInfo, ProfileLimit, Discount, Summary, Price, CurrentPrices };

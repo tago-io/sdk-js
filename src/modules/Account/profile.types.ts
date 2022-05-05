@@ -1,4 +1,5 @@
 import { GenericID } from "../../common/common.types";
+import { BillingService } from "./billing.types";
 
 interface ProfileListInfo {
   id: GenericID;
@@ -46,6 +47,7 @@ interface ProfileSummary {
     dictionary: number;
     connectors: number;
     networks: number;
+    tcore: number;
   };
   limit_used: {
     input: number;
@@ -57,6 +59,7 @@ interface ProfileSummary {
     run_users: number;
     push_notification: number;
     file_storage: number;
+    tcore: number;
   };
   addons: {
     custom_dns: boolean;
@@ -64,16 +67,17 @@ interface ProfileSummary {
   };
 }
 
-interface UsageStatistic {
-  input: number;
-  input_peak: number;
-  output: number;
-  analysis: number;
-  data_records: number;
+/**
+ * Type for a single usage statistic with timestamp.
+ *
+ * Not all of the services will be present for every statistic, only if for the usage period the service was used.
+ */
+type UsageStatistic = Partial<Record<BillingService, number>> & {
+  /**
+   * Timestamp for the usage statistic.
+   */
   time: Date;
-  sms: number;
-  email: number;
-}
+};
 
 interface AuditLog {
   events?: {

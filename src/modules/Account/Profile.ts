@@ -115,9 +115,25 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * List all the usage statistics of your profile
+   * List all the usage statistics of a profile.
+   *
+   * Usage statistics are cumulative: if a service was not used in a time period,
+   * the statistics for that time period will not be in the object.
+   *
    * @param profileID Profile identification
    * @param dateObj Object with date and their timezone
+   *
+   * @returns Array of cumulative usage statistics.
+   *
+   * @example
+   *
+   * ```json
+   * [
+   *   { "time": "2022-01-01T00:00:00.000Z", "input": 5 },
+   *   { "time": "2022-01-01T00:00:00.000Z", "input": 5, "output": 10 },
+   *   { "time": "2022-01-01T00:00:00.000Z", "input": 10, "output": 15 },
+   * ]
+   * ```
    */
   public async usageStatisticList(
     profileID: GenericID,

@@ -16,7 +16,7 @@ const params: RouterConstructor = {
 describe("Analysis Router conditions", () => {
   test("All run tests with when conditions", async () => {
     const scope = [
-      { variable: "test", value: 1, origin: "", time: new Date(), serie: "123" },
+      { variable: "test", value: 1, id: "", device: "", origin: "", time: new Date(), serie: "123" },
       { input_form_button_id: "122" },
     ];
     const router = new AnalysisRouter({ ...params, scope });
@@ -43,7 +43,7 @@ describe("Analysis Router conditions", () => {
 
   test("All tests with when invalid conditions", async () => {
     const scope = [
-      { variable: "test", value: 1, origin: "", time: new Date(), serie: "123" },
+      { variable: "test", value: 1, id: "", device: "", origin: "", time: new Date(), serie: "123" },
       { input_form_button_id: "122" },
     ];
     const router = new AnalysisRouter({ ...params, scope });

@@ -1,5 +1,6 @@
-import { GenericID, GenericToken, TokenCreateResponse, TokenData } from "../../common/common.types";
+import { Data, GenericID, GenericToken, TokenCreateResponse, TokenData } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { DataQuery } from "../Device/device.types";
 import dateParser from "../Utils/dateParser";
 import {
   ConfigurationParams,
@@ -99,7 +100,14 @@ class Devices extends TagoIOModule<GenericModuleParams> {
       method: "GET",
     });
 
-    result = dateParser(result, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"]);
+    result = dateParser(result, [
+      "last_input",
+      "last_output",
+      "updated_at",
+      "created_at",
+      "inspected_at",
+      "last_retention",
+    ]);
 
     return result;
   }
@@ -218,6 +226,47 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     const result = await this.doRequest<string>({
       path: `/device/token/${token}`,
       method: "DELETE",
+    });
+
+    return result;
+  }
+
+  /**
+   * Get data from all variables in the device.
+   *
+   * @param deviceId Device ID.
+   * @param queryParams Query parameters to filter the results.
+   *
+   * @returns Array with the data values stored in the device.
+   *
+   * @example
+   * ```ts
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * const lastTenValues = await myDevice.getVariablesData("myDeviceId", { qty: 10 });
+   * ```
+   */
+  public async getDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<Data[]> {
+    const result = await this.doRequest<Data[]>({
+      path: `/device/${deviceId}/data`,
+      method: "GET",
+      params: queryParams,
+    });
+
+    return result.map((item) => dateParser(item, ["time", "created_at"]));
+  }
+
+  /**
+   * Empty all data in a device.
+   *
+   * @param deviceId Device ID.
+   *
+   * @returns Success message.
+   */
+  public async emptyDeviceData(deviceId: GenericID): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/device/${deviceId}/empty`,
+      method: "POST",
     });
 
     return result;

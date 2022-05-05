@@ -1,4 +1,4 @@
-import { Data, GenericID, GenericToken, TagsObj } from "../../common/common.types";
+import { Data, DataCreate, DataEdit, GenericID, GenericToken, TagsObj } from "../../common/common.types";
 import { Regions } from "../../regions";
 
 interface DeviceInfo {
@@ -34,7 +34,8 @@ interface DeviceConstructorParams {
   // options?: any;
 }
 
-type DataToSend = Omit<Data, "id" | "created_at" | "origin" | "time"> & { time?: Date | string };
+type DataToSend = DataCreate;
+type DataToEdit = DataEdit;
 
 type valuesTypes = string | number | boolean | void;
 
@@ -47,13 +48,23 @@ interface DataQueryBase {
   /**
    * Filter by origins
    * It can ben a array of string or only one string
+   *
+   * @deprecated Filtering by origins will be removed along with the Legacy buckets.
    */
   origins?: string[] | string;
   /**
    * Filter by series
    * It can ben a array of string or only one string
+   *
+   * @deprecated Deprecating this in favor of `groups`.
    */
   series?: string[] | string;
+  /**
+   * Filter by groups.
+   *
+   * It can ben a array of strings or only one string, each string being a `group`.
+   */
+  groups?: string[] | string;
   /**
    * Filter by ids
    * It can ben a array of string or only one string
@@ -147,6 +158,7 @@ export {
   DeviceConstructorParams,
   DeviceInfo,
   DataToSend,
+  DataToEdit,
   DataQuery,
   DataQueryStreaming,
   OptionsStreaming,
