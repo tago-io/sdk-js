@@ -19,17 +19,29 @@ interface ProfileLimit {
   file_storage: number;
 }
 
+type ProfileAddOns = {
+  /**
+   * Whether the profile has the Custom Domain add-on purchased.
+   */
+  custom_dns: boolean;
+  /**
+   * Whether the profile has the Custom Mobile App add-on purchased.
+   */
+  mobile: boolean;
+};
+
 interface ProfileInfo {
   info: {
     id: GenericID;
     account: GenericID;
     name: string;
     logo_url: string | null;
+    banner_url: string | null;
     created_at: Date;
     updated_at: Date;
   };
-  limits: ProfileLimit;
-  auto_scale: object;
+  allocation: ProfileLimit;
+  addons: ProfileAddOns;
   account_plan: string;
 }
 
@@ -61,10 +73,7 @@ interface ProfileSummary {
     file_storage: number;
     tcore: number;
   };
-  addons: {
-    custom_dns: boolean;
-    mobile: boolean;
-  };
+  addons: ProfileAddOns;
 }
 
 /**
@@ -123,4 +132,13 @@ interface AddonInfo {
   logo_url: string | null;
 }
 
-export { ProfileListInfo, ProfileInfo, UsageStatistic, AuditLog, AuditLogFilter, AddonInfo, ProfileSummary };
+export {
+  ProfileListInfo,
+  ProfileAddOns,
+  ProfileInfo,
+  UsageStatistic,
+  AuditLog,
+  AuditLogFilter,
+  AddonInfo,
+  ProfileSummary,
+};

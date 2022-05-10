@@ -13,6 +13,7 @@ import {
   RunSAMLEditInfo,
   CustomDomainCreate,
   CustomDomainInfo,
+  CustomDomainResponse,
 } from "./run.types";
 
 class Run extends TagoIOModule<GenericModuleParams> {
@@ -192,7 +193,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    */
   public async createCustomDomain(profile_id: string, customDomainData: CustomDomainCreate): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `run/customdomain/${profile_id}`,
+      path: `/run/customdomain/${profile_id}`,
       body: customDomainData,
       method: "POST",
     });
@@ -207,12 +208,14 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @returns Data for the profile's custom DNS configuration.
    */
   public async getCustomDomain(profile_id: string): Promise<CustomDomainInfo> {
-    const result = await this.doRequest<CustomDomainInfo>({
-      path: `run/customdomain/${profile_id}`,
+    const result = await this.doRequest<CustomDomainResponse>({
+      path: `/run/customdomain/${profile_id}`,
       method: "GET",
     });
 
-    return result;
+    const parsedResult = dateParser(result, ["created_at"]) as unknown as CustomDomainInfo;
+
+    return parsedResult;
   }
 
   /**
@@ -223,7 +226,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    */
   public async deleteCustomDomain(profile_id: string): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `run/customdomain/${profile_id}`,
+      path: `/run/customdomain/${profile_id}`,
       method: "DELETE",
     });
 
@@ -238,7 +241,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    */
   public async regenerateCustomDomain(profile_id: string): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `run/customdomain/regenerate/${profile_id}`,
+      path: `/run/customdomain/regenerate/${profile_id}`,
       method: "PUT",
     });
 
