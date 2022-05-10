@@ -58,6 +58,7 @@ interface TagoCoreListInfo {
   tcore_start_time: string;
   tcore_version: string;
   updated_at: string;
+  machine_id: string;
 }
 
 type TagoCoreQuery = Query<
@@ -71,6 +72,46 @@ type TagoCoreQuery = Query<
   | "internet_ip"
   | "system_start_time"
   | "tcore_start_time"
+  | "machine_id"
 >;
 
-export { TagoCoreComputerUsage, TagoCoreOS, TagoCoreSummary, TagoCoreListInfo, TagoCoreInfo, TagoCoreQuery };
+interface TagoCoreClusterListInfo {
+  created_at: string;
+  id: GenericID;
+  name: string;
+  profile: string;
+  tags: TagsObj[];
+  instance_amount: number;
+  updated_at: string;
+}
+
+interface TagoCoreClusterInfo {
+  created_at: string;
+  id: GenericID;
+  name: string;
+  profile: string;
+  tags: TagsObj[];
+  instance_amount: number;
+  token: string;
+  updated_at: string;
+  state: string;
+}
+
+interface TagoCoreClusterCreateInfo {
+  name: string;
+}
+
+type TagoCoreClusterQuery = Query<TagoCoreInfo, "name" | "created_at" | "updated_at">;
+
+export {
+  TagoCoreClusterCreateInfo,
+  TagoCoreClusterInfo,
+  TagoCoreClusterListInfo,
+  TagoCoreClusterQuery,
+  TagoCoreComputerUsage,
+  TagoCoreInfo,
+  TagoCoreListInfo,
+  TagoCoreOS,
+  TagoCoreQuery,
+  TagoCoreSummary,
+};
