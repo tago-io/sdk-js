@@ -84,7 +84,9 @@ interface DeviceCreateInfoImmutable extends Omit<DeviceCreateInfoBasic, "type"> 
    */
   chunk_retention: number;
 }
-
+/**
+ * @deprecated
+ */
 interface DeviceCreateInfoLegacy extends Omit<DeviceCreateInfoBasic, "type"> {
   type: "legacy";
 }

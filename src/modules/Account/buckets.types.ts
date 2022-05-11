@@ -34,34 +34,53 @@ interface BucketCreateInfo {
  * Type of data storage for a device (bucket).
  */
 type DataStorageType = "immutable" | "mutable" | "legacy";
-
-interface BucketInfo extends BucketCreateInfo {
+type ChunkPeriod = "day" | "week" | "month" | "quarter";
+interface BucketInfoBasic extends BucketCreateInfo {
   id: GenericID;
   /**
    * Data storage type for the bucket.
    */
-  type: DataStorageType;
-  data_retention: string;
-  data_retention_ignore: [];
   profile: GenericID;
-  database: string | void;
-  last_backup: string | void;
   last_retention: string | void;
+  created_at: Date;
+  updated_at: Date;
+  chunk_period?: ChunkPeriod;
+  chunk_retention?: number;
+  data_retention?: string;
+  data_retention_ignore?: [];
+}
+
+type BucketInfoImmutable = Omit<BucketInfoBasic, "data_retention" | "data_retention_ignore"> & {
+  type: "immutable";
   /**
    * Chunk division to retain data in the device.
    *
    * Always returned for Immutable devices.
    */
-  chunk_period?: "day" | "week" | "month" | "quarter";
+  chunk_period: ChunkPeriod;
   /**
    * Amount of chunks to retain data according to the `chunk_period`.
    *
    * Always returned for Immutable devices.
    */
-  chunk_retention?: number;
-  created_at: Date;
-  updated_at: Date;
-}
+  chunk_retention: number;
+};
+type BucketInfoMutable = Omit<
+  BucketInfoBasic,
+  "chunk_period" | "chunk_retention" | "data_retention" | "data_retention_ignore"
+> & {
+  type: "mutable";
+};
+/**
+ * @deprecated
+ */
+type BucketInfoLegacy = Omit<BucketInfoBasic, "chunk_period" | "chunk_retention"> & {
+  type: "legacy";
+  data_retention: string;
+  data_retention_ignore: [];
+};
+
+type BucketInfo = BucketInfoImmutable | BucketInfoMutable | BucketInfoLegacy;
 
 interface BucketDeviceInfo {
   id: GenericID;
