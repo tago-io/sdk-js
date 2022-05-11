@@ -11,6 +11,7 @@ import {
   DeviceListItem,
   DeviceTokenDataList,
   ListDeviceTokenQuery,
+  DeviceEditInfo,
 } from "./devices.types";
 
 class Devices extends TagoIOModule<GenericModuleParams> {
@@ -67,7 +68,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    * @param deviceObj Device object with fields to replace
    */
-  public async edit(deviceID: GenericID, deviceObj: Partial<DeviceInfo>): Promise<string> {
+  public async edit(deviceID: GenericID, deviceObj: DeviceEditInfo): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/device/${deviceID}`,
       method: "PUT",
