@@ -22,7 +22,6 @@ interface DeviceCreateInfo {
    * Network ID.
    */
   network: GenericID;
-
   /**
    * Device's data storage (bucket) type.
    *
@@ -62,12 +61,24 @@ interface DeviceCreateInfo {
    */
   parse_function?: string;
   /**
-   * Data retention for the device's data storage.
+   * Chunk division to retain data in the device.
+   *
+   * Required for Immutable devices.
    */
-  data_retention?: string;
+  chunk_period?: "day" | "week" | "month" | "quarter";
+  /**
+   * Amount of chunks to retain data according to the `chunk_period`.
+   * Integer between in the range of 0 to 36 (inclusive).
+   *
+   * Required for Immutable devices.
+   */
+  chunk_retention?: number;
 }
 
-interface DeviceInfo extends Required<Omit<DeviceCreateInfo, "configuration_params">> {
+type DeviceEditInfo = Partial<Omit<DeviceCreateInfo, "chunk_period">>;
+
+interface DeviceInfo
+  extends Required<Omit<DeviceCreateInfo, "configuration_params" | "chunk_period" | "chunk_retention">> {
   /**
    * Device ID.
    */
@@ -143,6 +154,7 @@ export {
   DeviceCreateInfo,
   ConfigurationParams,
   DeviceInfo,
+  DeviceEditInfo,
   DeviceCreateResponse,
   DeviceListItem,
   DeviceTokenDataList,

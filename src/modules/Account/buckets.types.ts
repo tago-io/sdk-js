@@ -47,6 +47,18 @@ interface BucketInfo extends BucketCreateInfo {
   database: string | void;
   last_backup: string | void;
   last_retention: string | void;
+  /**
+   * Chunk division to retain data in the device.
+   *
+   * Always returned for Immutable devices.
+   */
+  chunk_period?: "day" | "week" | "month" | "quarter";
+  /**
+   * Amount of chunks to retain data according to the `chunk_period`.
+   *
+   * Always returned for Immutable devices.
+   */
+  chunk_retention?: number;
   created_at: Date;
   updated_at: Date;
 }
