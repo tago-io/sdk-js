@@ -9,7 +9,7 @@ interface DeviceQuery
   resolveBucketName?: boolean;
 }
 
-interface DeviceCreateInfo {
+interface DeviceCreateInfoBasic {
   /**
    * Device name.
    */
@@ -60,25 +60,38 @@ interface DeviceCreateInfo {
    * Javascript code for use as payload parser
    */
   parse_function?: string;
+}
+
+interface DeviceCreateInfoMutable extends Omit<DeviceCreateInfoBasic, "type"> {
+  type: "mutable";
+}
+
+interface DeviceCreateInfoImmutable extends Omit<DeviceCreateInfoBasic, "type"> {
+  type: "immutable";
+
   /**
    * Chunk division to retain data in the device.
    *
    * Required for Immutable devices.
    */
-  chunk_period?: "day" | "week" | "month" | "quarter";
+  chunk_period: "day" | "week" | "month" | "quarter";
+
   /**
    * Amount of chunks to retain data according to the `chunk_period`.
    * Integer between in the range of 0 to 36 (inclusive).
    *
    * Required for Immutable devices.
    */
-  chunk_retention?: number;
+  chunk_retention: number;
 }
 
-type DeviceEditInfo = Partial<Omit<DeviceCreateInfo, "chunk_period">>;
+interface DeviceCreateInfoLegacy extends Omit<DeviceCreateInfoBasic, "type"> {
+  type: "legacy";
+}
+type DeviceCreateInfo = DeviceCreateInfoLegacy | DeviceCreateInfoMutable | DeviceCreateInfoImmutable;
+type DeviceEditInfo = Partial<Omit<DeviceCreateInfo, "chunk_period" | "type"> & { chunk_retention: number }>;
 
-interface DeviceInfo
-  extends Required<Omit<DeviceCreateInfo, "configuration_params" | "chunk_period" | "chunk_retention">> {
+interface DeviceInfo extends Required<Omit<DeviceCreateInfoBasic, "configuration_params">> {
   /**
    * Device ID.
    */
