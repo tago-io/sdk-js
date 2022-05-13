@@ -1,5 +1,4 @@
 import { chunk } from "lodash";
-import Batch from "../../common/BatchRequest";
 import { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
@@ -299,8 +298,6 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
 
     return `${data.length} Data added.`;
   }
-
-  public batch = new Batch(this.params);
 }
 
 export default Device;

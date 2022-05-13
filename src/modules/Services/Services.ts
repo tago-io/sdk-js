@@ -5,6 +5,7 @@ import Email from "./Email";
 import MQTT from "./MQTT";
 import Notification from "./Notification";
 import Attachment from "./Attachment";
+import PDFService from "./PDF";
 
 class Services extends TagoIOModule<GenericModuleParams> {
   public console = new ConsoleService(this.params);
@@ -18,6 +19,8 @@ class Services extends TagoIOModule<GenericModuleParams> {
   public Notification = new Notification(this.params);
 
   public Attachment = new Attachment(this.params);
+
+  public PDF = new PDFService(this.params);
 }
 
 export default Services;

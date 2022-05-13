@@ -1,4 +1,3 @@
-import Batch from "../../common/BatchRequest";
 import { GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams, doRequestParams } from "../../common/TagoIOModule";
 import Access from "./Access";
@@ -248,7 +247,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Confirm OTP enabling proccses for a given OTP Type
+   * Confirm OTP enabling process for a given OTP Type
    * @param credentials Credentials
    * @param typeOTP authenticator, sms or email
    */
@@ -263,11 +262,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
-
-  /**
-   * Send a batch commands
-   */
-  public batch = new Batch(this.params);
 
   /**
    * Manage actions in account.
