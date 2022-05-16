@@ -153,6 +153,134 @@ interface RunSAMLEditInfo {
   mapping?: SAMLAttributeMappings;
 }
 
+type CustomDomainDnsRecord = {
+  /**
+   * Status for the DNS record check.
+   *
+   * When `true`, the DNS record is properly configured with the provided key and value.
+   * When `false`, the DNS record is either not yet configured or the `key` exists but the
+   * value in the DNS record does not match the `value` provided.
+   */
+  status: boolean;
+  /**
+   * Type of the DNS record.
+   */
+  type: string;
+  /**
+   * Key for key-value pair in the DNS record.
+   */
+  key: string;
+  /**
+   * Value for the key-value pair the DNS record.
+   */
+  value: string;
+  /**
+   * Current value in the provider's record for the DNS record's `key`.
+   *
+   * Only returned when the DNS record has the matching `key` configured.
+   *
+   * When `status` is `true`, the value here will be the same as the one in `value`.
+   * When `status` is `false`, the value here can is either stale or there was an error
+   * copying the provided `value` in the DNS provider's record.
+   */
+  current_value?: string;
+};
+
+/**
+ * Type for the Custom Domain response from the API, unparsed.
+ *
+ * @internal
+ */
+interface CustomDomainResponse {
+  /**
+   * Whether the custom domain is active.
+   *
+   * This is only `true` when all the required DNS records are properly configured in the DNS provider.
+   */
+  active: boolean;
+  /**
+   * Configured domain for the RUN.
+   */
+  domain: string;
+  /**
+   * Configured subdomain for the RUN.
+   */
+  subdomain: string;
+  /**
+   * Mailing address for the RUN with custom domain.
+   */
+  email: string;
+  /**
+   * DNS record for the SSL certificate.
+   *
+   * The information in this record needs to be configured in the DNS provider for the custom domain.
+   */
+  dns_ssl: CustomDomainDnsRecord;
+  /**
+   * DNS record for the page endpoint.
+   *
+   * The information in this record needs to be configured in the DNS provider for the custom domain.
+   */
+  dns_page: CustomDomainDnsRecord;
+  /**
+   * First DNS record for the e-mail.
+   *
+   * The information in this record needs to be configured in the DNS provider for the custom domain.
+   */
+  dns_email_1: CustomDomainDnsRecord;
+  /**
+   * Second DNS record for the e-mail.
+   *
+   * The information in this record needs to be configured in the DNS provider for the custom domain.
+   */
+  dns_email_2: CustomDomainDnsRecord;
+  /**
+   * Third DNS record for the e-mail.
+   *
+   * The information in this record needs to be configured in the DNS provider for the custom domain.
+   */
+  dns_email_3: CustomDomainDnsRecord;
+  /**
+   * Timestamp (in string format) for when the custom domain was configured.
+   */
+  created_at: string;
+}
+
+/**
+ * Type for the Custom Domain information in a profile's RUN.
+ */
+interface CustomDomainInfo extends Omit<CustomDomainResponse, "created_at"> {
+  /**
+   * Timestamp for when the custom domain was configured.
+   */
+  created_at: Date;
+}
+
+/**
+ * Type for the data required to configure a profile's RUN Custom Domain.
+ */
+interface CustomDomainCreate {
+  /**
+   * Domain for the RUN's custom domain.
+   *
+   * If the desired custom domain is `portal.mycompany.com`, this will be `"mycompany.com"`.
+   */
+  domain: string;
+  /**
+   * Subdomain for the RUN's custom domain.
+   *
+   * If the desired custom domain is `portal.mycompany.com`, this will be `"portal"`.
+   */
+  subdomain: string;
+  /**
+   * Mailing address for the RUN with custom domain.
+   *
+   * If the desired custom domain is `portal.mycompany.com`, this can be either
+   * `"portal.mycompany.com"` or `"mycompany.com"`.
+   */
+  email: string;
+}
+
 type ThemeOption =
   | "actionSchedule"
   | "actionTriggerByData"
@@ -282,4 +410,8 @@ export {
   LoginAsUserOptions,
   RunSAMLInfo,
   RunSAMLEditInfo,
+  CustomDomainCreate,
+  CustomDomainResponse,
+  CustomDomainInfo,
+  CustomDomainDnsRecord,
 };
