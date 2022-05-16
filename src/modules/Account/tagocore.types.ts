@@ -41,6 +41,8 @@ interface TagoCoreInfo {
   tcore_version: string;
   token: GenericToken;
   updated_at: string;
+  machine_id: string;
+  cluster: string;
 }
 
 interface TagoCoreListInfo {
@@ -59,6 +61,7 @@ interface TagoCoreListInfo {
   tcore_version: string;
   updated_at: string;
   machine_id: string;
+  cluster: string;
 }
 
 type TagoCoreQuery = Query<
@@ -101,7 +104,7 @@ interface TagoCoreClusterCreateInfo {
   name: string;
 }
 
-type TagoCoreClusterQuery = Query<TagoCoreInfo, "name" | "created_at" | "updated_at">;
+type TagoCoreClusterQuery = Query<TagoCoreClusterInfo, "name" | "created_at" | "updated_at">;
 
 export {
   TagoCoreClusterCreateInfo,

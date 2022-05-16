@@ -165,7 +165,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * @param clusterID TagoCore Cluster ID
    * @param updateObj TagoCore Cluster Object with data to replace
    */
-  public async editCluster(clusterID: GenericID, updateObj: Partial<TagoCoreClusterInfo>): Promise<string> {
+  public async clusterEdit(clusterID: GenericID, updateObj: Partial<TagoCoreClusterInfo>): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/tcore/cluster/${clusterID}`,
       method: "PUT",
@@ -193,7 +193,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * Deletes a TagoCore Cluster
    * @param clusterID TagoCore Cluster ID
    */
-  public async deleteCluster(clusterID: GenericID): Promise<string> {
+  public async clusterDelete(clusterID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/tcore/cluster/${clusterID}`,
       method: "DELETE",
