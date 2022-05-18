@@ -1,3 +1,8 @@
+<br/>
+<p align="center">
+  <img src="https://assets.tago.io/tagoio/sdk.png" width="250px" alt="TODO"></img>
+</p>
+
 # TagoIO - SDK for Node.js and Browser
 > TagoIO provides easy connection of electronic devices with external data to driver smarter decisions using contextual analysis.
 

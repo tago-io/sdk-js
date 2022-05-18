@@ -1,5 +1,4 @@
 import { chunk } from "lodash";
-import Batch from "../../common/BatchRequest";
 import { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
@@ -105,7 +104,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * const myDevice = new Device({ token: "my_device_token" });
    *
    * const result = await myDevice.editData({
-   *   id: "id_of_the_data_item"
+   *   id: "id_of_the_data_item",
    *   value: 123,
    *   time: "2022-04-01 12:34:56",
    *   location: { lat: 42.2974279, lng: -85.628292 },
@@ -299,8 +298,6 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
 
     return `${data.length} Data added.`;
   }
-
-  public batch = new Batch(this.params);
 }
 
 export default Device;

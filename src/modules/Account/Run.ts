@@ -11,6 +11,9 @@ import {
   LoginAsUserOptions,
   RunSAMLInfo,
   RunSAMLEditInfo,
+  CustomDomainCreate,
+  CustomDomainInfo,
+  CustomDomainResponse,
 } from "./run.types";
 
 class Run extends TagoIOModule<GenericModuleParams> {
@@ -176,6 +179,70 @@ class Run extends TagoIOModule<GenericModuleParams> {
       path: "/run/sso/saml",
       method: "PUT",
       body: data,
+    });
+
+    return result;
+  }
+
+  /**
+   * Create a TagoRUN custom domain for the profile.
+   *
+   * @param profile_id ID of the profile
+   * @param customDomainData query params
+   * @returns Success message.
+   */
+  public async createCustomDomain(profile_id: string, customDomainData: CustomDomainCreate): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/run/customdomain/${profile_id}`,
+      body: customDomainData,
+      method: "POST",
+    });
+
+    return result;
+  }
+
+  /**
+   * Get details of TagoRun custom domain for the profile.
+   *
+   * @param profile_id ID of the profile
+   * @returns Data for the profile's custom DNS configuration.
+   */
+  public async getCustomDomain(profile_id: string): Promise<CustomDomainInfo> {
+    const result = await this.doRequest<CustomDomainResponse>({
+      path: `/run/customdomain/${profile_id}`,
+      method: "GET",
+    });
+
+    const parsedResult = dateParser(result, ["created_at"]) as unknown as CustomDomainInfo;
+
+    return parsedResult;
+  }
+
+  /**
+   * delete a TagoRUN custom domain for the profile.
+   *
+   * @param profile_id ID of the profile
+   * @returns Success message.
+   */
+  public async deleteCustomDomain(profile_id: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/run/customdomain/${profile_id}`,
+      method: "DELETE",
+    });
+
+    return result;
+  }
+
+  /**
+   * Regenerate a TagoRUN custom domain for the profile.
+   *
+   * @param profile_id ID of the profile
+   * @returns Success message.
+   */
+  public async regenerateCustomDomain(profile_id: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/run/customdomain/regenerate/${profile_id}`,
+      method: "PUT",
     });
 
     return result;
