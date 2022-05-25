@@ -269,7 +269,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
         const result = await this._uploadPart(filename, uploadID, partNumber, blob, options);
         return result;
       } catch (ex) {
-        if (itsLimitError(ex)) {
+        if (isLimitError(ex)) {
           throw ex.message;
         }
 
@@ -416,7 +416,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
       try {
         return await this._completeMultipartUpload(filename, uploadID, parts, options);
       } catch (ex) {
-        if (itsLimitError(ex)) {
+        if (isLimitError(ex)) {
           throw ex.message;
         }
 
@@ -440,17 +440,18 @@ class Files extends TagoIOModule<GenericModuleParams> {
 }
 
 /**
- * Check if error it's limit block
- * TODO: Use status code
- * @param error
+ * Check if the error returned from the API is a usage limit exceeded error.
+ *
+ * @param error Error to check.
  */
-function itsLimitError(error: any): boolean {
+function isLimitError(error: any): boolean {
   if (typeof error?.message !== "string") {
     return false;
   }
 
   const message: string = error?.message;
 
+  // TODO: Use status code instead of string error message when available.
   return message.startsWith("You have exceeded the maximum limit");
 }
 
