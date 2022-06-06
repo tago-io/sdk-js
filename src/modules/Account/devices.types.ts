@@ -164,6 +164,51 @@ interface DeviceTokenDataList {
 interface ListDeviceTokenQuery
   extends Query<DeviceTokenDataList, "name" | "permission" | "serie_number" | "last_authorization" | "created_at"> {}
 
+interface DeviceChunkData {
+  amount: number | null;
+  id: string;
+  from: string;
+  to: string;
+}
+
+interface DeviceChunkParams {
+  deviceID: GenericID;
+  chunkID: string;
+  /**
+   * Enable headers to the CSV-generated files.
+   * Headers will describe the variable's
+   * data in each column.
+   */
+  headers: boolean;
+  /**
+   * The file address is the string template used to compose,
+   * the chunk's file path on TagoIO's file system.
+   *
+   * You can use the keys $DEVICE_ID$, $CHUNK_ID$, $FROM$ and $TO$ that
+   * will be automically replaced when building the path.
+   *
+   * $DEVICE_ID$ - Device ID
+   *
+   * $CHUNK_ID$ - Chunk ID
+   *
+   * $FROM$ - The chunk from date (ex: 2022-05-1)
+   *
+   * $TO$ - The chunk to date (ex: 2022-05-2)
+   *
+   * @example
+   *
+   * /devices/$DEVICE_ID$/$FROM$_$TO$
+   *
+   */
+  file_address: string;
+}
+
+interface DeviceChunkCopyResponse {
+  chunk_id: string;
+  file_adress: string;
+  status: "scheduled";
+}
+
 export {
   DeviceQuery,
   DeviceCreateInfo,
@@ -173,5 +218,8 @@ export {
   DeviceCreateResponse,
   DeviceListItem,
   DeviceTokenDataList,
+  DeviceChunkData,
   ListDeviceTokenQuery,
+  DeviceChunkParams,
+  DeviceChunkCopyResponse,
 };
