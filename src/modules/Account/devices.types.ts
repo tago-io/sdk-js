@@ -205,7 +205,7 @@ interface DeviceChunkParams {
 
 interface DeviceChunkCopyResponse {
   chunk_id: string;
-  file_adress: string;
+  file_address: string;
   status: "scheduled";
 }
 
