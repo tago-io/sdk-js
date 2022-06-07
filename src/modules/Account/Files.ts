@@ -3,7 +3,15 @@ import { GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import { Base64File, CopyFiles, FileListInfo, FileQuery, FilesPermission, MoveFiles, Options } from "./files.types";
+import {
+  Base64File,
+  CopyFiles,
+  FileListInfo,
+  FileQuery,
+  FilesPermission,
+  MoveFiles,
+  UploadOptions,
+} from "./files.types";
 
 class Files extends TagoIOModule<GenericModuleParams> {
   /**
@@ -192,9 +200,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @param filename the path + filename for the file
    * @param options the upload options for this file
    */
-  private async createMultipartUpload(filename: string, options?: Options) {
-    const path =
-      options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
+  private async createMultipartUpload(filename: string, options?: UploadOptions) {
+    const { dashboard, widget, fieldId, isPublic, contentType } = options || {};
+
+    const path = dashboard && widget && fieldId ? `/data/files/${dashboard}/${widget}` : `/files`;
 
     const result = await this.doRequest<any>({
       path,
@@ -203,7 +212,8 @@ class Files extends TagoIOModule<GenericModuleParams> {
         multipart_action: "start",
         filename,
         public: options?.isPublic,
-        contentType: options?.contentType,
+        contentType,
+        ...(fieldId && { field_id: fieldId }),
       },
     });
 
@@ -218,7 +228,13 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @param blob the portion of the file to be uploaded
    * @param options the upload options for this file
    */
-  async _uploadPart(filename: string, uploadID: string, partNumber: number, blob: Buffer | Blob, options?: Options) {
+  async _uploadPart(
+    filename: string,
+    uploadID: string,
+    partNumber: number,
+    blob: Buffer | Blob,
+    options?: UploadOptions
+  ) {
     const path =
       options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
 
@@ -258,7 +274,13 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @param blob the portion of the file to be uploaded
    * @param options see the uploadFile function
    */
-  async _addToQueue(filename: string, uploadID: GenericID, partNumber: number, blob: Buffer | Blob, options?: Options) {
+  async _addToQueue(
+    filename: string,
+    uploadID: GenericID,
+    partNumber: number,
+    blob: Buffer | Blob,
+    options?: UploadOptions
+  ) {
     const maxTries = options?.maxTriesForEachChunk || 5;
     const timeout = options?.timeoutForEachFailedChunk || 2000;
 
@@ -294,7 +316,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
     filename: string,
     uploadID: string,
     parts: { ETag: String; PartNumber: number }[],
-    options?: Options
+    options?: UploadOptions
   ) {
     const path =
       options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
@@ -325,7 +347,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @param filename the path + filename for the file
    * @param options the upload options for this file
    */
-  public async uploadFile(file: Buffer | Blob, filename: string, options?: Options) {
+  public async uploadFile(file: Buffer | Blob, filename: string, options?: UploadOptions) {
     const MB = Math.pow(2, 20);
 
     let cancelled = false;
