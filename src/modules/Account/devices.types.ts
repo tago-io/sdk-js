@@ -175,21 +175,23 @@ interface DeviceChunkParams {
   deviceID: GenericID;
   chunkID: string;
   /**
+   *
    * Enable headers to the CSV-generated files.
    * Headers will describe the variable's
    * data in each column.
    */
   headers: boolean;
   /**
+   *
    * The file address is the string template used to compose,
    * the chunk's file path on TagoIO's file system.
    *
-   * You can use the keys $DEVICE_ID$, $CHUNK_ID$, $FROM$ and $TO$ that
+   * You can use the keys $DEVICE$, $CHUNK$, $FROM$ and $TO$ that
    * will be automically replaced when building the path.
    *
-   * $DEVICE_ID$ - Device ID
+   * $DEVICE$ - Device ID
    *
-   * $CHUNK_ID$ - Chunk ID
+   * $CHUNK$ - Chunk ID
    *
    * $FROM$ - The chunk from date (ex: 2022-05-1)
    *
@@ -197,7 +199,7 @@ interface DeviceChunkParams {
    *
    * @example
    *
-   * /devices/$DEVICE_ID$/$FROM$_$TO$
+   * /devices/$DEVICE$/$FROM$_$TO$
    *
    */
   file_address: string;

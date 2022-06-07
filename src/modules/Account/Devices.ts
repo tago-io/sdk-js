@@ -278,6 +278,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Get Info of the Device Chunks.
+   * @experimental
    * @param deviceID Device ID
    */
   public async getChunk(deviceID: GenericID): Promise<DeviceChunkData[]> {
@@ -291,6 +292,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Delete the chunk data.
+   * @experimental
    * @param deviceID Device ID
    * @param chunkID Chunk ID
    */
@@ -305,6 +307,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Schedule to export the Device Chunk's data to the TagoIO's files.
+   * @experimental
    */
   public async copyChunk(params: DeviceChunkParams): Promise<DeviceChunkCopyResponse> {
     const body = {
