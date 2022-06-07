@@ -184,7 +184,7 @@ interface DeviceChunkParams {
   /**
    *
    * The file address is the string template used to compose,
-   * the chunk's file path on TagoIO's file system.
+   * the chunk's file path on TagoIO Files.
    *
    * You can use the keys $DEVICE$, $CHUNK$, $FROM$ and $TO$ that
    * will be automically replaced when building the path.
