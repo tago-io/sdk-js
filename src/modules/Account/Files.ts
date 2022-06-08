@@ -235,6 +235,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
     blob: Buffer | Blob,
     options?: UploadOptions
   ) {
+    const { fieldId } = options || {};
     const path =
       options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
 
@@ -244,6 +245,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
     form.append("part", String(partNumber));
     form.append("file", blob, filename);
     form.append("multipart_action", "upload");
+
+    if (fieldId) {
+      form.append("field_id", fieldId);
+    }
 
     let headers: any = { "Content-Type": "multipart/form-data" };
     if (form.getHeaders) {
@@ -318,6 +323,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
     parts: { ETag: String; PartNumber: number }[],
     options?: UploadOptions
   ) {
+    const { fieldId } = options || {};
     const path =
       options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
 
@@ -333,6 +339,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
         upload_id: uploadID,
         filename,
         parts: partsOrdered,
+        ...(fieldId && { field_id: fieldId }),
       },
     });
 
