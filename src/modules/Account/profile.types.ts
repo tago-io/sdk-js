@@ -132,7 +132,40 @@ interface AddonInfo {
   logo_url: string | null;
 }
 
-export {
+type DateFixed = {
+  /**
+   * Timestamp for fetching the hourly statistics in a day.
+   */
+  date?: string | Date | undefined;
+};
+
+type DateRange = {
+  /**
+   * Starting date for fetching statistics in a interval.
+   */
+  start_date: string | Date;
+  /**
+   * End date for fetching statistics in a interval.
+   */
+  end_date: string | Date;
+  /**
+   * Periodicity of the statistics to fetch.
+   *
+   * @default "hour"
+   */
+  periodicity: "hour" | "day" | "month";
+};
+
+type StatisticsDate = {
+  /**
+   * Timezone to be used in the statistics entries.
+   *
+   * @default "UTC"
+   */
+  timezone?: string;
+} & (DateFixed | DateRange);
+
+export type {
   ProfileListInfo,
   ProfileAddOns,
   ProfileInfo,
@@ -141,4 +174,5 @@ export {
   AuditLogFilter,
   AddonInfo,
   ProfileSummary,
+  StatisticsDate,
 };
