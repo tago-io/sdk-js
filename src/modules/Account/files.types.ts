@@ -44,7 +44,7 @@ interface FilesPermission {
   public: boolean;
 }
 
-interface Options {
+type UploadOptions = {
   /**
    * the maximum amount of tries to upload each chunk to TagoIO. After this many unsuccessful tries of a single chunk, the upload is aborted
    */
@@ -62,13 +62,23 @@ interface Options {
    */
   isPublic?: boolean;
   /**
-   * will upload simulating an input form on the dashboard. widget also needs to be specified with this
+   * Dashboard ID.
+   *
+   * Uploading files from a widget requires `dashboard`, `widget`, and `fieldId` to be provided.
    */
   dashboard?: string;
   /**
-   * will upload simulating an input form on the dashboard. dashboard also needs to be specified with this
+   * Widget ID.
+   *
+   * Uploading files from a widget requires `dashboard`, `widget`, and `fieldId` to be provided.
    */
   widget?: string;
+  /**
+   * ID of the field from the widget where the file is selected.
+   *
+   * Uploading files from a widget requires `dashboard`, `widget`, and `fieldId` to be provided.
+   */
+  fieldId?: string;
   /**
    * will provide a cancel token for you to cancel the request
    */
@@ -81,5 +91,6 @@ interface Options {
    * will provide the upload percentage for this file
    */
   onProgress?: (percentage: number) => any;
-}
-export { FileQuery, FileListInfo, Base64File, MoveFiles, FilesPermission, Options, CopyFiles };
+};
+
+export { FileQuery, FileListInfo, Base64File, MoveFiles, FilesPermission, UploadOptions, CopyFiles };
