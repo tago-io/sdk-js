@@ -19,6 +19,9 @@ import type {
   DeviceTokenDataList,
   ListDeviceTokenQuery,
   DeviceEditInfo,
+  DeviceChunkData,
+  DeviceChunkParams,
+  DeviceChunkCopyResponse,
 } from "./devices.types";
 
 class Devices extends TagoIOModule<GenericModuleParams> {
@@ -332,6 +335,55 @@ class Devices extends TagoIOModule<GenericModuleParams> {
       path: `/device/${deviceId}/data`,
       method: "DELETE",
       params: queryParams,
+    });
+
+    return result;
+  }
+
+  /**
+   * Get Info of the Device Chunks.
+   * @experimental
+   * @param deviceID Device ID
+   */
+  public async getChunk(deviceID: GenericID): Promise<DeviceChunkData[]> {
+    const result = await this.doRequest<DeviceChunkData[]>({
+      path: `/device/${deviceID}/chunk`,
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
+   * Delete the chunk data.
+   * @experimental
+   * @param deviceID Device ID
+   * @param chunkID Chunk ID
+   */
+  public async deleteChunk(deviceID: GenericID, chunkID: GenericID): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/device/${deviceID}/chunk/${chunkID}`,
+      method: "DELETE",
+    });
+
+    return result;
+  }
+
+  /**
+   * Schedule to export the Device Chunk's data to the TagoIO's files.
+   * @experimental
+   */
+  public async copyChunk(params: DeviceChunkParams): Promise<DeviceChunkCopyResponse> {
+    const body = {
+      chunk_id: params?.chunkID,
+      headers: params?.headers,
+      file_address: params?.file_address,
+    };
+
+    const result = await this.doRequest<DeviceChunkCopyResponse>({
+      path: `/device/${params?.deviceID}/chunk/copy`,
+      method: "POST",
+      body,
     });
 
     return result;
