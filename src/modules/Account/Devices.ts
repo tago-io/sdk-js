@@ -1,8 +1,15 @@
-import { Data, GenericID, GenericToken, TokenCreateResponse, TokenData } from "../../common/common.types";
+import type {
+  Data,
+  DataEdit,
+  GenericID,
+  GenericToken,
+  TokenCreateResponse,
+  TokenData,
+} from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { DataQuery } from "../Device/device.types";
+import type { DataQuery } from "../Device/device.types";
 import dateParser from "../Utils/dateParser";
-import {
+import type {
   ConfigurationParams,
   DeviceCreateInfo,
   DeviceCreateResponse,
@@ -271,6 +278,63 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     const result = await this.doRequest<string>({
       path: `/device/${deviceId}/empty`,
       method: "POST",
+    });
+
+    return result;
+  }
+
+  /**
+   * Edit data records in a device using the profile token and device ID.
+   *
+   * The `updatedData` can be a single data record or an array of records to be updated,
+   * each of the records must have the `id` of the record and the fields to be updated.
+   *
+   * @param deviceId Device ID.
+   * @param updatedData A single or an array of updated data records.
+   *
+   * @returns Success message indicating amount of records updated (can be 0).
+   *
+   * @example
+   * ```ts
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * await myDevice.editDeviceData("myDeviceId", { id: "idOfTheRecord", value: "new value", unit: "new unit" });
+   * ```
+   */
+  public async editDeviceData(deviceId: GenericID, updatedData: DataEdit | DataEdit[]): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/device/${deviceId}/data`,
+      method: "PUT",
+      body: updatedData,
+    });
+
+    return result;
+  }
+
+  /**
+   * Delete data records in a device using the profile token and device ID.
+   *
+   * See the example to understand how to use this method properly to have full control on what to delete.
+   *
+   * ! If query parameters are empty, all data for the device will be deleted.
+   *
+   * @param deviceId Device ID.
+   * @param queryParams Parameters to specify what should be deleted on the device's data.
+   *
+   * @returns Success message indicating amount of records deleted (can be 0).
+   *
+   * @example
+   * ```ts
+   * const myDevice = new Device({ token: "my_device_token" });
+   *
+   * await myDevice.deleteDeviceData("myDeviceId", { ids: ["recordIdToDelete", "anotherRecordIdToDelete" ] });
+   * ```
+   */
+  public async deleteDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/device/${deviceId}/data`,
+      method: "DELETE",
+      params: queryParams,
     });
 
     return result;
