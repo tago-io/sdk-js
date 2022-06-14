@@ -1,6 +1,6 @@
 <br/>
 <p align="center">
-  <img src="https://assets.tago.io/tagoio/sdk.png" width="250px" alt="TODO"></img>
+  <img src="https://assets.tago.io/tagoio/sdk.png" width="250px" alt="TagoIO"></img>
 </p>
 
 # TagoIO - SDK for Node.js and Browser

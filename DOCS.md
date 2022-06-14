@@ -1,3 +1,8 @@
+<br/>
+<p align="center">
+  <img src="https://assets.tago.io/tagoio/sdk.png" width="250px" alt="TagoIO"></img>
+</p>
+
 ## Installation
 
 ```bash
