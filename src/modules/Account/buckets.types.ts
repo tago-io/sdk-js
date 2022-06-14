@@ -125,4 +125,5 @@ export {
   BucketQuery,
   ListVariablesOptions,
   DataStorageType,
+  ChunkPeriod,
 };

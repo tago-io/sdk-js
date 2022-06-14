@@ -2,7 +2,7 @@ import { Data, GenericID, GenericToken, TokenCreateResponse, TokenData } from ".
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { DataQuery } from "../Device/device.types";
 import dateParser from "../Utils/dateParser";
-import {
+import type {
   ConfigurationParams,
   DeviceCreateInfo,
   DeviceCreateResponse,
@@ -15,6 +15,7 @@ import {
   DeviceChunkData,
   DeviceChunkParams,
   DeviceChunkCopyResponse,
+  ConvertTypeOptions,
 } from "./devices.types";
 
 class Devices extends TagoIOModule<GenericModuleParams> {
@@ -317,6 +318,35 @@ class Devices extends TagoIOModule<GenericModuleParams> {
       path: `/device/${params?.deviceID}/chunk/copy`,
       method: "POST",
       body,
+    });
+
+    return result;
+  }
+
+  /**
+   * Convert a device into one of the next generation types (Immutable or Mutable).
+   *
+   * To convert a device's bucket, the device should be inactive and it should be empty.
+   * For Immutable devices, empty means no chunks. For Mutable devices, empty means no data.
+   *
+   * @param deviceID Device ID.
+   * @param options Options with the target type, and chunk retention for the Immutable target.
+   *
+   * @returns Success message.
+   */
+  public async convertType(deviceID: string, options: ConvertTypeOptions): Promise<string> {
+    const { type } = options;
+    const chunk_period = type === "immutable" ? options.chunk_period : undefined;
+    const chunk_retention = type === "immutable" ? options.chunk_retention : undefined;
+
+    const result = await this.doRequest<string>({
+      path: `/device/${deviceID}/convert`,
+      method: "POST",
+      body: {
+        type,
+        chunk_period,
+        chunk_retention,
+      },
     });
 
     return result;

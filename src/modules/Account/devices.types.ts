@@ -1,5 +1,5 @@
 import { GenericID, GenericToken, Query, TagsObj, PermissionOption, ExpireTimeOption } from "../../common/common.types";
-import { DataStorageType } from "./buckets.types";
+import type { ChunkPeriod, DataStorageType } from "./buckets.types";
 
 interface DeviceQuery
   extends Query<
@@ -209,6 +209,30 @@ interface DeviceChunkCopyResponse {
   status: "scheduled";
 }
 
+type ConvertTypeImmutable = {
+  /**
+   * Target type to convert the device.
+   */
+  type: "immutable";
+  /**
+   * Chunk period for the converted device.
+   */
+  chunk_period: ChunkPeriod;
+  /**
+   * Chunk retention for the converted device.
+   */
+  chunk_retention: number;
+};
+
+type ConvertTypeMutable = {
+  /**
+   * Target type to convert the device.
+   */
+  type: "mutable";
+};
+
+type ConvertTypeOptions = ConvertTypeImmutable | ConvertTypeMutable;
+
 export {
   DeviceQuery,
   DeviceCreateInfo,
@@ -222,4 +246,5 @@ export {
   ListDeviceTokenQuery,
   DeviceChunkParams,
   DeviceChunkCopyResponse,
+  ConvertTypeOptions,
 };
