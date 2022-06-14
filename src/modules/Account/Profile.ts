@@ -9,13 +9,14 @@ import {
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
 import { BillingAddOn } from "./billing.types";
-import {
+import type {
   AddonInfo,
   AuditLog,
   AuditLogFilter,
   ProfileInfo,
   ProfileListInfo,
   ProfileSummary,
+  StatisticsDate,
   UsageStatistic,
 } from "./profile.types";
 
@@ -130,15 +131,12 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * ```json
    * [
    *   { "time": "2022-01-01T00:00:00.000Z", "input": 5 },
-   *   { "time": "2022-01-01T00:00:00.000Z", "input": 5, "output": 10 },
-   *   { "time": "2022-01-01T00:00:00.000Z", "input": 10, "output": 15 },
+   *   { "time": "2022-01-02T00:00:00.000Z", "input": 5, "output": 10 },
+   *   { "time": "2022-01-03T00:00:00.000Z", "input": 10, "output": 15 },
    * ]
    * ```
    */
-  public async usageStatisticList(
-    profileID: GenericID,
-    dateObj?: { date?: string; timezone?: string }
-  ): Promise<UsageStatistic[]> {
+  public async usageStatisticList(profileID: GenericID, dateObj?: StatisticsDate): Promise<UsageStatistic[]> {
     let result = await this.doRequest<UsageStatistic[]>({
       path: `/profile/${profileID}/statistics`,
       method: "GET",
