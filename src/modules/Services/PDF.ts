@@ -1,6 +1,11 @@
 import axios from "axios";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
+interface PDFResult {
+  status: boolean;
+  result: string;
+}
+
 interface PDFParams {
   /**
    * HTML as string
@@ -122,7 +127,7 @@ class PDFService extends TagoIOModule<GenericModuleParams> {
    * Generate a PDF from html, url or base64
    *
    */
-  public async generate(params: PDFParams): Promise<string> {
+  public async generate(params: PDFParams): Promise<PDFResult> {
     try {
       const result = await axios({
         method: "POST",
@@ -135,7 +140,7 @@ class PDFService extends TagoIOModule<GenericModuleParams> {
 
       return result?.data;
     } catch (error) {
-      return Promise.reject(error?.response?.data || "unknown error");
+      return Promise.reject(error?.response?.data || { result: false, stuats: "unknown error" });
     }
   }
 }
