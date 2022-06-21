@@ -69,6 +69,20 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * Delete Run user info
+   * @param tagoIORunURL TagoIO Run url without http
+   * @param userChangesObj Data to change in user
+   */
+  public async delete(tagoIORunURL: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/run/${tagoIORunURL}/delete`,
+      method: "DELETE",
+    });
+
+    return result;
+  }
+
+  /**
    * Login at TagoIO Run as user (Anonymous)
    * @param tagoIORunURL TagoIO Run url without http
    * @param credentialsObj Run user credentials
