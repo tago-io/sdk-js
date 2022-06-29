@@ -54,8 +54,9 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Edit Run user associated data
+   * Edit Run user info
    * @param tagoIORunURL TagoIO Run url without http
+   * @param userChangesObj Data to change in user
    */
   public async edit(tagoIORunURL: string, userChangesObj: Partial<RunUserInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -70,7 +71,6 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
   /**
    * Delete Run user info
    * @param tagoIORunURL TagoIO Run url without http
-   * @param userChangesObj Data to change in user
    */
   public async delete(tagoIORunURL: string): Promise<string> {
     const result = await this.doRequest<string>({
