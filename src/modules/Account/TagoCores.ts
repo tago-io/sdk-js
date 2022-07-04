@@ -10,6 +10,7 @@ import {
 import { GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
+import { DeviceInfo, DeviceListItem, DeviceQuery } from "./devices.types";
 
 class TagoCores extends TagoIOModule<GenericModuleParams> {
   /**
@@ -198,6 +199,112 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
       path: `/tcore/cluster/${clusterID}`,
       method: "DELETE",
     });
+
+    return result;
+  }
+
+  /**
+   * Get Info of the Device from a Standalone TagoCore instance.
+   * @param tagoCoreID Standalone TagoCore ID
+   * @param deviceID Device ID
+   */
+  public async standaloneDeviceInfo(tagoCoreID: GenericID, deviceID: GenericID): Promise<DeviceInfo> {
+    let result = await this.doRequest<DeviceInfo>({
+      path: `/device/${deviceID}`,
+      method: "GET",
+      params: { tcore: tagoCoreID },
+    });
+
+    result = dateParser(result, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"]);
+
+    return result;
+  }
+
+  /**
+   * Get Info of the Device from a TagoCore Cluster.
+   * @param clusterID TagoCore Cluster ID
+   * @param deviceID Device ID
+   */
+  public async clusterDeviceInfo(clusterID: GenericID, deviceID: GenericID): Promise<DeviceInfo> {
+    let result = await this.doRequest<DeviceInfo>({
+      path: `/device/${deviceID}`,
+      method: "GET",
+      params: { tcore_cluster: clusterID },
+    });
+
+    result = dateParser(result, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"]);
+
+    return result;
+  }
+
+  /**
+   * Retrieves a list with all devices from a Standalone TagoCore instance.
+   * @default
+   * queryObj: {
+   *   page: 1,
+   *   fields: ["id", "name"],
+   *   filter: {},
+   *   amount: 20,
+   *   orderBy: "name,asc",
+   *   resolveBucketName: false,
+   * }
+   * @param tagoCoreID Standalone TagoCore ID
+   * @param queryObj Search query params
+   */
+  public async standaloneDeviceList(tagoCoreID: GenericID, queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
+    let result = await this.doRequest<DeviceListItem[]>({
+      path: "/device",
+      method: "GET",
+      params: {
+        page: queryObj?.page || 1,
+        fields: queryObj?.fields || ["id", "name"],
+        filter: queryObj?.filter || {},
+        amount: queryObj?.amount || 20,
+        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
+        resolveBucketName: queryObj?.resolveBucketName || false,
+        tcore: tagoCoreID || "",
+      },
+    });
+
+    result = result.map((data) =>
+      dateParser(data, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"])
+    );
+
+    return result;
+  }
+
+  /**
+   * Retrieves a list with all devices from a TagoCore Cluster.
+   * @default
+   * queryObj: {
+   *   page: 1,
+   *   fields: ["id", "name"],
+   *   filter: {},
+   *   amount: 20,
+   *   orderBy: "name,asc",
+   *   resolveBucketName: false,
+   * }
+   * @param clusterID TagoCore Cluster ID
+   * @param queryObj Search query params
+   */
+  public async clusterDeviceList(clusterID: GenericID, queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
+    let result = await this.doRequest<DeviceListItem[]>({
+      path: "/device",
+      method: "GET",
+      params: {
+        page: queryObj?.page || 1,
+        fields: queryObj?.fields || ["id", "name"],
+        filter: queryObj?.filter || {},
+        amount: queryObj?.amount || 20,
+        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
+        resolveBucketName: queryObj?.resolveBucketName || false,
+        tcore_cluster: clusterID || "",
+      },
+    });
+
+    result = result.map((data) =>
+      dateParser(data, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"])
+    );
 
     return result;
   }
