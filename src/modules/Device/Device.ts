@@ -206,6 +206,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     const result = await this.doRequest<string>({
       path: `/device/params/${parameterID}`,
       method: "PUT",
+      body: { sent: true },
     });
 
     return result;
