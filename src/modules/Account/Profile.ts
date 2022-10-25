@@ -167,21 +167,6 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Fetches the information from an auditlog query
-   * @param profileID Profile identification
-   * @param queryId auditlog queryId from auditLogCreate
-   */
-  public async auditLogQuery(profileID: GenericID, queryId?: string): Promise<AuditLog> {
-    const result = await this.doRequest<AuditLog>({
-      path: `/profile/${profileID}/auditlog/${queryId}`,
-      method: "GET",
-    });
-
-    result.events = result?.events.map((data) => dateParser(data, ["date"]));
-    return result;
-  }
-
-  /**
    * Gets the information of addons for the profile
    * @param profileID Profile identification
    */

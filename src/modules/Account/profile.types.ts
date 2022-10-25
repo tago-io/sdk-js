@@ -120,7 +120,7 @@ type resourceNameType =
 interface AuditLogFilter {
   resourceID?: GenericID;
   resourceName?: resourceNameType;
-  find?: "*" | string;
+  find?: "" | string;
   start_date?: Date;
   end_date?: Date;
   limit?: number;
