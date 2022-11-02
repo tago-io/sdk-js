@@ -310,6 +310,83 @@ class Profile extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
+  /**
+   * Share a profile to an specific account
+   *
+   * @throws If the email is not a valid TagoIO's account.
+   * @throws If the profile does not exists.
+   *
+   * @returns Success message.
+   */
+  public async shareProfile(id: string, email: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/profile/${id}/team`,
+      method: "POST",
+      body: {
+        email,
+      },
+    });
+
+    return result;
+  }
+
+  /**
+   * Fetch the list of accounts that a profile is shared with.
+   */
+  public async shareList(id: string): Promise<any> {
+    const result = await this.doRequest<string>({
+      path: `/profile/${id}/team`,
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
+   * Remove an account from a profile shared team.
+   *
+   * @throws If the accountId is not a valid TagoIO's account.
+   * @throws If the profile does not exists.
+   *
+   * @returns Success message.
+   */
+  public async deleteShare(id: string, accountId: string): Promise<String> {
+    const result = await this.doRequest<string>({
+      path: `/profile/${id}/team/${accountId}`,
+      method: "DELETE",
+    });
+
+    return result;
+  }
+
+  /**
+   * Accept a share invitation to become a profile's team member.
+   *
+   * @returns Success message.
+   */
+  public static async acceptShare(token: string): Promise<String> {
+    const result = await TagoIOModule.doRequestAnonymous<string>({
+      path: `/profile/team/accept/${token}`,
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
+   * Decline a share invitation to become a profile's team member.
+   *
+   * @returns Success message.
+   */
+  public static async declineShare(token: string): Promise<String> {
+    const result = await TagoIOModule.doRequestAnonymous<string>({
+      path: `/profile/team/decline/${token}`,
+      method: "GET",
+    });
+
+    return result;
+  }
 }
 
 export default Profile;

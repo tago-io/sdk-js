@@ -264,6 +264,18 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * Invite a new user to create a TagoIO account and enjoy the platform
+   */
+  public async inviteMember(email: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/account/invite/${email}`,
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
    * Manage actions in account.
    * Be sure to use an account token with “write” permissions when
    * using functions like create, edit and delete.
