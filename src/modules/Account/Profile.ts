@@ -16,6 +16,7 @@ import type {
   ProfileInfo,
   ProfileListInfo,
   ProfileSummary,
+  ProfileTeam,
   StatisticsDate,
   UsageStatistic,
 } from "./profile.types";
@@ -334,21 +335,9 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   /**
    * Fetch the list of accounts that a profile is shared with.
    */
-  public async teamList(id: string): Promise<any> {
-    const result = await this.doRequest<string>({
+  public async teamList(id: string): Promise<ProfileTeam[]> {
+    const result = await this.doRequest<ProfileTeam[]>({
       path: `/profile/${id}/team`,
-      method: "GET",
-    });
-
-    return result;
-  }
-
-  /**
-   * Get info about the team member invitation
-   */
-  public async teamInvitationInfo(token: string): Promise<any> {
-    const result = await this.doRequest<string>({
-      path: `/profile/team/info/${token}`,
       method: "GET",
     });
 
@@ -367,34 +356,6 @@ class Profile extends TagoIOModule<GenericModuleParams> {
     const result = await this.doRequest<string>({
       path: `/profile/${id}/team/${accountId}`,
       method: "DELETE",
-    });
-
-    return result;
-  }
-
-  /**
-   * Accept a team member invitation to become a profile's team member.
-   *
-   * @returns Success message.
-   */
-  public static async acceptTeamInvitation(token: string): Promise<String> {
-    const result = await TagoIOModule.doRequestAnonymous<string>({
-      path: `/profile/team/accept/${token}`,
-      method: "GET",
-    });
-
-    return result;
-  }
-
-  /**
-   * Decline a team member invitation to become a profile's team member.
-   *
-   * @returns Success message.
-   */
-  public static async declineTeamInvitation(token: string): Promise<String> {
-    const result = await TagoIOModule.doRequestAnonymous<string>({
-      path: `/profile/team/decline/${token}`,
-      method: "GET",
     });
 
     return result;

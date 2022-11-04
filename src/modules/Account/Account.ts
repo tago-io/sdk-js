@@ -264,11 +264,27 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Invite a new user to create a TagoIO account and enjoy the platform
+   * Accept a team member invitation to become a profile's team member.
+   *
+   * @returns Success message.
    */
-  public async inviteMember(email: string): Promise<string> {
-    const result = await this.doRequest<string>({
-      path: `/account/invite/${email}`,
+  public static async acceptTeamInvitation(token: string): Promise<String> {
+    const result = await TagoIOModule.doRequestAnonymous<string>({
+      path: `/profile/team/accept/${token}`,
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
+   * Decline a team member invitation to become a profile's team member.
+   *
+   * @returns Success message.
+   */
+  public static async declineTeamInvitation(token: string): Promise<String> {
+    const result = await TagoIOModule.doRequestAnonymous<string>({
+      path: `/profile/team/decline/${token}`,
       method: "GET",
     });
 
