@@ -344,6 +344,18 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * Get info about the profile to be shared
+   */
+  public async shareInfo(token: string): Promise<any> {
+    const result = await this.doRequest<string>({
+      path: `/profile/team/info/${token}`,
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
    * Remove an account from a profile shared team.
    *
    * @throws If the accountId is not a valid TagoIO's account.
