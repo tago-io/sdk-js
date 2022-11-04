@@ -312,14 +312,14 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Share a profile to an specific account
+   * Add a team member to a profile in a specific account
    *
    * @throws If the email is not a valid TagoIO's account.
    * @throws If the profile does not exists.
    *
    * @returns Success message.
    */
-  public async shareProfile(id: string, email: string): Promise<string> {
+  public async addTeamMember(id: string, email: string): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/profile/${id}/team`,
       method: "POST",
@@ -334,7 +334,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   /**
    * Fetch the list of accounts that a profile is shared with.
    */
-  public async shareList(id: string): Promise<any> {
+  public async teamList(id: string): Promise<any> {
     const result = await this.doRequest<string>({
       path: `/profile/${id}/team`,
       method: "GET",
@@ -344,9 +344,9 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get info about the profile to be shared
+   * Get info about the team member invitation
    */
-  public async shareInfo(token: string): Promise<any> {
+  public async teamInvitationInfo(token: string): Promise<any> {
     const result = await this.doRequest<string>({
       path: `/profile/team/info/${token}`,
       method: "GET",
@@ -363,7 +363,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    *
    * @returns Success message.
    */
-  public async deleteShare(id: string, accountId: string): Promise<String> {
+  public async deleteTeamMember(id: string, accountId: string): Promise<String> {
     const result = await this.doRequest<string>({
       path: `/profile/${id}/team/${accountId}`,
       method: "DELETE",
@@ -373,11 +373,11 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Accept a share invitation to become a profile's team member.
+   * Accept a team member invitation to become a profile's team member.
    *
    * @returns Success message.
    */
-  public static async acceptShare(token: string): Promise<String> {
+  public static async acceptTeamInvitation(token: string): Promise<String> {
     const result = await TagoIOModule.doRequestAnonymous<string>({
       path: `/profile/team/accept/${token}`,
       method: "GET",
@@ -387,11 +387,11 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Decline a share invitation to become a profile's team member.
+   * Decline a team member invitation to become a profile's team member.
    *
    * @returns Success message.
    */
-  public static async declineShare(token: string): Promise<String> {
+  public static async declineTeamInvitation(token: string): Promise<String> {
     const result = await TagoIOModule.doRequestAnonymous<string>({
       path: `/profile/team/decline/${token}`,
       method: "GET",
