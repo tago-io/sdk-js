@@ -2,6 +2,10 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import Account from "../Account/Account";
 import { DownlinkOptions } from "./utils.types";
 
+/**
+ * Handles the message presented to the user when API response 4xx or 5xx
+ * @param {AxiosError} error error object from Axios
+ */
 async function handleDownlinkError(error: AxiosError): Promise<AxiosResponse<any, any>> {
   if (typeof error.response?.data === "string" && error.response?.data.includes("Authorization is missing")) {
     throw "Additional parameter is missing with in the TagoIO Authorization used for this device";
