@@ -16,6 +16,7 @@ import type {
   ProfileInfo,
   ProfileListInfo,
   ProfileSummary,
+  ProfileTeam,
   StatisticsDate,
   UsageStatistic,
 } from "./profile.types";
@@ -308,6 +309,55 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   public async removeAddOn(profileId: GenericID, addon: BillingAddOn): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/profile/${profileId}/${addon}`,
+      method: "DELETE",
+    });
+
+    return result;
+  }
+
+  /**
+   * Add a team member to a profile in a specific account
+   *
+   * @throws If the email is not a valid TagoIO's account.
+   * @throws If the profile does not exists.
+   *
+   * @returns Success message.
+   */
+  public async addTeamMember(id: string, email: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/profile/${id}/team`,
+      method: "POST",
+      body: {
+        email,
+      },
+    });
+
+    return result;
+  }
+
+  /**
+   * Fetch the list of accounts that a profile is shared with.
+   */
+  public async teamList(id: string): Promise<ProfileTeam[]> {
+    const result = await this.doRequest<ProfileTeam[]>({
+      path: `/profile/${id}/team`,
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
+   * Remove an account from a profile shared team.
+   *
+   * @throws If the accountId is not a valid TagoIO's account.
+   * @throws If the profile does not exists.
+   *
+   * @returns Success message.
+   */
+  public async deleteTeamMember(id: string, accountId: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/profile/${id}/team/${accountId}`,
       method: "DELETE",
     });
 
