@@ -29,6 +29,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
    * Send data to device
    * @param data An array or one object with data to be send to TagoIO using device token
+   * @return amount of data added
    * @example
    * ```js
    * const myDevice = new Device({ token: "my_device_token" });
