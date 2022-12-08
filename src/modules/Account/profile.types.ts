@@ -165,10 +165,19 @@ type StatisticsDate = {
   timezone?: string;
 } & (DateFixed | DateRange);
 
+type ProfileTeam = {
+  active: boolean;
+  created_at: Date;
+  email: string;
+  id: string;
+  name: string;
+};
+
 export type {
   ProfileListInfo,
   ProfileAddOns,
   ProfileInfo,
+  ProfileTeam,
   UsageStatistic,
   AuditLog,
   AuditLogFilter,

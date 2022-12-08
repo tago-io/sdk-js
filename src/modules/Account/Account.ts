@@ -264,6 +264,34 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * Accept a team member invitation to become a profile's team member.
+   *
+   * @returns Success message.
+   */
+  public static async acceptTeamInvitation(token: string): Promise<string> {
+    const result = await TagoIOModule.doRequestAnonymous<string>({
+      path: `/profile/team/accept/${token}`,
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
+   * Decline a team member invitation to become a profile's team member.
+   *
+   * @returns Success message.
+   */
+  public static async declineTeamInvitation(token: string): Promise<string> {
+    const result = await TagoIOModule.doRequestAnonymous<string>({
+      path: `/profile/team/decline/${token}`,
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
    * Manage actions in account.
    * Be sure to use an account token with “write” permissions when
    * using functions like create, edit and delete.
