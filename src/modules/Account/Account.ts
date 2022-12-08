@@ -268,7 +268,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
    *
    * @returns Success message.
    */
-  public static async acceptTeamInvitation(token: string): Promise<String> {
+  public static async acceptTeamInvitation(token: string): Promise<string> {
     const result = await TagoIOModule.doRequestAnonymous<string>({
       path: `/profile/team/accept/${token}`,
       method: "GET",
@@ -282,7 +282,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
    *
    * @returns Success message.
    */
-  public static async declineTeamInvitation(token: string): Promise<String> {
+  public static async declineTeamInvitation(token: string): Promise<string> {
     const result = await TagoIOModule.doRequestAnonymous<string>({
       path: `/profile/team/decline/${token}`,
       method: "GET",

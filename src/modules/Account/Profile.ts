@@ -352,7 +352,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    *
    * @returns Success message.
    */
-  public async deleteTeamMember(id: string, accountId: string): Promise<String> {
+  public async deleteTeamMember(id: string, accountId: string): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/profile/${id}/team/${accountId}`,
       method: "DELETE",
