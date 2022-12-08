@@ -39,7 +39,7 @@ interface EmailBase {
    *
    * example: "myclien@tago.io"
    */
-  to: string;
+  to: string | string[];
   /**
    * Name of origin
    *
@@ -78,7 +78,7 @@ interface EmailWithTemplate {
    *
    * example: "myclien@tago.io"
    */
-  to: string;
+  to: string | string[];
   /**
    * Name of origin
    *
@@ -109,6 +109,7 @@ class Email extends TagoIOModule<GenericModuleParams> {
    * @example
    * ```json
    * { to: "client(at)company.com", subject: "Reports", message: "Hello client, it's your report" }
+   * { to: ["client(at)company.com", "client2(at)company.com"], subject: "Reports", message: "Hello client, it's your report" }
    * { to: "client(at)company.com", subject: "Reports", html: "<p>Hello client, it's your report</p>" }
    * { to: "client(at)company.com", template: { name: "my_template" } }
    * ```
