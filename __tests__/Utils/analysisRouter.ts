@@ -1,5 +1,7 @@
+import { Data } from "../../src/common/common.types";
 import { Account, Device } from "../../src/modules";
 import AnalysisRouter, { RouterConstructor } from "../../src/modules/Utils/router/router";
+import { DeviceListScope } from "../../src/modules/Utils/router/router.types";
 
 const func = async () => {
   return true;
@@ -18,6 +20,8 @@ describe("Analysis Router conditions", () => {
     const scope = [
       { variable: "test", value: 1, id: "", device: "", origin: "", time: new Date(), serie: "123" },
       { input_form_button_id: "122" },
+      { device_list_button_id: "125" },
+      { user_list_button_id: "123" },
     ];
     const router = new AnalysisRouter({ ...params, scope });
 
@@ -34,17 +38,21 @@ describe("Analysis Router conditions", () => {
     router.register(func).whenWidgetExec("insert");
     router.register(func).whenEnv("_widget_exec", "insert");
     router.register(func).whenInputFormID("122");
+    router.register(func).whenUserListIdentifier("123");
+    router.register(func).whenDeviceListIdentifier("125");
     const execution = await router.exec();
 
     // @ts-ignore
     expect(execution.status).toBeTruthy();
-    expect(execution.services).toEqual(Array(13).fill("func", 0));
+    expect(execution.services).toEqual(Array(15).fill("func", 0));
   });
 
   test("All tests with when invalid conditions", async () => {
     const scope = [
       { variable: "test", value: 1, id: "", device: "", origin: "", time: new Date(), serie: "123" },
       { input_form_button_id: "122" },
+      { device_list_button_id: "123" },
+      { user_list_button_id: "125" },
     ];
     const router = new AnalysisRouter({ ...params, scope });
 
@@ -61,10 +69,43 @@ describe("Analysis Router conditions", () => {
     router.register(func).whenWidgetExec("delete");
     router.register(func).whenEnv("_widget_exec", "delete");
     router.register(func).whenInputFormID("444");
+    router.register(func).whenUserListIdentifier("423");
+    router.register(func).whenDeviceListIdentifier("425");
     const execution = await router.exec();
 
     // @ts-ignore
     expect(execution.status).toBeFalsy();
     expect(execution.services).toEqual([]);
+  });
+});
+
+describe("Analysis Router conditions", () => {
+  test("Receive data scope in the function", async () => {
+    const scope = [
+      { variable: "test", value: 1, id: "", device: "", origin: "", time: new Date(), group: "123" },
+      { input_form_button_id: "122", device: "" },
+    ];
+
+    const func2 = ({ scope: testScope }: RouterConstructor & { scope: Data[] }) => {
+      expect(testScope).toStrictEqual(scope);
+    };
+
+    const router = new AnalysisRouter({ ...params, scope });
+    router.register(func2).whenInputFormID("122");
+    const execution = await router.exec();
+    expect(execution.status).toBeTruthy();
+  });
+
+  test("Receive device scope in the function", async () => {
+    const scope = [{ name: "test", "tags.user": "xxx", device: "1234", old: {} }, { device_list_button_id: "122" }];
+
+    const func2 = ({ scope: testScope }: RouterConstructor & { scope: DeviceListScope[] }) => {
+      expect(testScope).toStrictEqual(scope);
+    };
+
+    const router = new AnalysisRouter({ ...params, scope });
+    router.register(func2).whenDeviceListIdentifier("122");
+    const execution = await router.exec();
+    expect(execution.status).toBeTruthy();
   });
 });

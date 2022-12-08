@@ -1,20 +1,6 @@
-import { Data } from "../../../common/common.types";
 import Account from "../../Account/Account";
-import { MQTTResourceAction } from "../../Account/actions.types";
-import { DeviceCreateInfo } from "../../Account/devices.types";
-import { TagoContext } from "../../Analysis/analysis.types";
-import Device from "../../Device/Device";
+import { RouterConstructor } from "./router.types";
 import RouterService from "./service";
-
-type Scope = (Data | DeviceCreateInfo | { input_form_button_id: string } | MQTTResourceAction)[];
-class RouterConstructor {
-  scope: Scope;
-  environment: { [key: string]: string };
-  account?: Account;
-  config_dev?: Device;
-  context?: TagoContext;
-}
-
 class AnalysisRouter {
   services: RouterService[] = [];
 
@@ -26,7 +12,11 @@ class AnalysisRouter {
    *      router.register(myFunction).whenInputFormID('create-device-input');
    *      router.exec();
    */
-  constructor(private params: RouterConstructor) {}
+  constructor(private params: RouterConstructor) {
+    if (params.account && !(params.account instanceof Account)) {
+      throw "The parameter 'account' must be an instance of a TagoIO Account.";
+    }
+  }
 
   public register(func: (parameters: RouterConstructor) => any) {
     const service = new RouterService(func);
