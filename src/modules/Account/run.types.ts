@@ -19,6 +19,7 @@ interface RunInfo {
     iconUrl: string;
     text: string;
     type: string;
+    value?: string;
   }[];
   signup_fields: {
     name: string;
@@ -66,6 +67,14 @@ interface RunInfo {
       email: boolean;
     };
   };
+  signin_buttons: {
+    label: string;
+    type: "link";
+    url: string;
+  }[];
+  anonymous_token: string;
+  auth_token_ttl: string;
+  dictionary: GenericID;
 }
 
 interface UserCreateInfo {
@@ -78,6 +87,10 @@ interface UserCreateInfo {
   language?: string;
   tags?: TagsObj[];
   active?: boolean;
+}
+
+interface UserCreateResponse {
+  user: GenericID;
 }
 
 interface UserInfo extends Omit<UserCreateInfo, "password"> {
@@ -404,6 +417,7 @@ type UserQuery = Query<UserInfo, "name" | "active" | "last_login" | "created_at"
 export {
   RunInfo,
   UserCreateInfo,
+  UserCreateResponse,
   UserInfo,
   LoginResponse,
   UserQuery,

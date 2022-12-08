@@ -14,6 +14,7 @@ import {
   CustomDomainCreate,
   CustomDomainInfo,
   CustomDomainResponse,
+  UserCreateResponse,
 } from "./run.types";
 
 class Run extends TagoIOModule<GenericModuleParams> {
@@ -65,8 +66,8 @@ class Run extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async userCreate(data: UserCreateInfo): Promise<string> {
-    const result = await this.doRequest<string>({
+  public async userCreate(data: UserCreateInfo): Promise<UserCreateResponse> {
+    const result = await this.doRequest<UserCreateResponse>({
       path: `/run/users`,
       method: "POST",
       body: data,
