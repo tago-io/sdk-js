@@ -12,7 +12,7 @@ async function uploadFile(account: Account, options: UploadFileOptions): Promise
     throw "The parameter 'account' must be an instance of a TagoIO Account.";
   }
 
-  const { id: account_id } = await account.info();
+  const { info: profileInfo } = await account.profiles.info("current");
 
   if (options.path) {
     if (!options.path.includes("/")) {
@@ -29,7 +29,7 @@ async function uploadFile(account: Account, options: UploadFileOptions): Promise
   const body = { file: options.file_base64, filename: fixed_path };
   await account.files.uploadBase64([{ ...body, public: options.public || true }]);
 
-  return `https://api.tago.io/file/${account_id}/${fixed_path}`;
+  return `https://api.tago.io/file/${profileInfo.id}/${fixed_path}`;
 }
 
 export default uploadFile;

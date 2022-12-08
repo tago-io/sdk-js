@@ -11,17 +11,17 @@ import type { DataQuery } from "../Device/device.types";
 import dateParser from "../Utils/dateParser";
 import type {
   ConfigurationParams,
-  DeviceCreateInfo,
-  DeviceCreateResponse,
-  DeviceInfo,
-  DeviceQuery,
-  DeviceListItem,
-  DeviceTokenDataList,
-  ListDeviceTokenQuery,
-  DeviceEditInfo,
+  DeviceChunkCopyResponse,
   DeviceChunkData,
   DeviceChunkParams,
-  DeviceChunkCopyResponse,
+  DeviceCreateInfo,
+  DeviceCreateResponse,
+  DeviceEditInfo,
+  DeviceInfo,
+  DeviceListItem,
+  DeviceQuery,
+  DeviceTokenDataList,
+  ListDeviceTokenQuery,
 } from "./devices.types";
 
 class Devices extends TagoIOModule<GenericModuleParams> {
@@ -131,18 +131,21 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    */
   public async paramSet(
     deviceID: GenericID,
-    configObj: Partial<ConfigurationParams>,
+    configObj: Partial<ConfigurationParams> | Partial<ConfigurationParams>[],
     paramID?: GenericID
   ): Promise<string> {
+    let body = configObj;
+    if (paramID && !Array.isArray(configObj)) {
+      body = {
+        id: paramID,
+        ...configObj,
+      };
+    }
+
     const result = await this.doRequest<string>({
       path: `/device/${deviceID}/params`,
       method: "POST",
-      body: paramID
-        ? {
-            id: paramID,
-            ...configObj,
-          }
-        : configObj,
+      body,
     });
 
     return result;
@@ -258,11 +261,23 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * ```
    */
   public async getDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<Data[]> {
-    const result = await this.doRequest<Data[]>({
+    let result = await this.doRequest<Data[] | number>({
       path: `/device/${deviceId}/data`,
       method: "GET",
       params: queryParams,
     });
+
+    if (typeof result === "number") {
+      result = [
+        {
+          id: "none",
+          origin: "?",
+          time: new Date(),
+          value: result,
+          variable: "?",
+        },
+      ] as Data[];
+    }
 
     return result.map((item) => dateParser(item, ["time", "created_at"]));
   }
@@ -284,6 +299,36 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * ! Waiting for back-end to implement this endpoint
+   * Send data to device
+   *
+   * @param deviceId Device ID.
+   * @param data An array or one object with data to be send to TagoIO
+   * @return amount of data added
+   * @example
+   * ```js
+   * const myAccount = new Account({ token: "my_device_token" });
+   *
+   * const result = await myAccount.sendDeviceData("myDeviceId", {
+   *   variable: "temperature",
+   *   unit: "F",
+   *   value: 55,
+   *   time: "2015-11-03 13:44:33",
+   *   location: { lat: 42.2974279, lng: -85.628292 },
+   * });
+   * ```
+   */
+  // public async sendDeviceData(deviceId: GenericID, data: DataCreate | DataCreate[]): Promise<string> {
+  //   const result = await this.doRequest<string>({
+  //     path: `/device/${deviceId}/data`,
+  //     method: "POST",
+  //     body: data,
+  //   });
+
+  //   return result;
+  // }
+
+  /**
    * Edit data records in a device using the profile token and device ID.
    *
    * The `updatedData` can be a single data record or an array of records to be updated,
@@ -296,9 +341,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @example
    * ```ts
-   * const myDevice = new Device({ token: "my_device_token" });
+   * const myAccount = new Account({ token: "my_account_token" });
    *
-   * await myDevice.editDeviceData("myDeviceId", { id: "idOfTheRecord", value: "new value", unit: "new unit" });
+   * await myAccount.editDeviceData("myDeviceId", { id: "idOfTheRecord", value: "new value", unit: "new unit" });
    * ```
    */
   public async editDeviceData(deviceId: GenericID, updatedData: DataEdit | DataEdit[]): Promise<string> {
@@ -316,7 +361,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * See the example to understand how to use this method properly to have full control on what to delete.
    *
-   * ! If query parameters are empty, all data for the device will be deleted.
+   * ! If query parameters are empty, last 15 data for the device will be deleted.
    *
    * @param deviceId Device ID.
    * @param queryParams Parameters to specify what should be deleted on the device's data.
@@ -325,9 +370,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @example
    * ```ts
-   * const myDevice = new Device({ token: "my_device_token" });
+   * const myAccount = new Account({ token: "my_account_token" });
    *
-   * await myDevice.deleteDeviceData("myDeviceId", { ids: ["recordIdToDelete", "anotherRecordIdToDelete" ] });
+   * await myAccount.deleteDeviceData("myDeviceId", { ids: ["recordIdToDelete", "anotherRecordIdToDelete" ] });
    * ```
    */
   public async deleteDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<string> {

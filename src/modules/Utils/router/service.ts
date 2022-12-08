@@ -59,7 +59,34 @@ class RouterService {
   }
 
   /**
-   * Return true if a parameter in the scope exists
+   * Return true if device list identifier ID is the same as sent by widget
+   * Information is available if Analysis is triggered by an input widget.
+   */
+  public whenDeviceListIdentifier(id: string) {
+    this.addFunc((scope: any, environment: any) => !!scope.find((x: any) => x.device_list_button_id === id));
+    return this;
+  }
+
+  /**
+   * Return true if user list identifier ID is the same as sent by widget
+   * Information is available if Analysis is triggered by an input widget.
+   */
+  public whenUserListIdentifier(id: string) {
+    this.addFunc((scope: any, environment: any) => !!scope.find((x: any) => x.user_list_button_id === id));
+    return this;
+  }
+
+  /**
+   * Return true if custom btn ID is the same as sent by widget.
+   * Information is available if Analysis is triggered by an input widget.
+   */
+  public whenCustomBtnID(btn_id: string) {
+    this.addFunc((scope: any, environment: any) => environment._widget_exec === btn_id);
+    return this;
+  }
+
+  /**
+   * Return true if a parameter key exists in the scope array
    * Useful to be used with Device List widget.
    */
   public whenParameterExists(parameter: string) {

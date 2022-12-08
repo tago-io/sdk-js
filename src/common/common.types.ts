@@ -18,7 +18,8 @@ interface Metadata {
       y: string;
     };
   };
-  sentValues?: [{ label: string; value: string | number | boolean }];
+  sentValues?: { label: string; value: string | number | boolean }[];
+  old_value?: string | number | boolean;
   [key: string]: any;
 }
 
