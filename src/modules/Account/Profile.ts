@@ -35,9 +35,12 @@ class Profile extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Get Profile info
-   * @param profileID Profile identification
+   * @param profileID Profile identification or "current" for current profile
+   * example:
+   * - account.profiles.info("6126850f58ef8600184dd486");
+   * - account.profiles.info("current");
    */
-  public async info(profileID: GenericID): Promise<ProfileInfo> {
+  public async info(profileID: GenericID | "current"): Promise<ProfileInfo> {
     const result = await this.doRequest<ProfileInfo>({
       path: `/profile/${profileID}`,
       method: "GET",
