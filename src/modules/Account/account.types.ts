@@ -107,6 +107,10 @@ interface TokenCreateInfo {
    * OTP Type
    */
   otp_type: OTPType;
+  /**
+   * Name of the token
+   */
+  name: string;
 }
 
 export { AccountInfo, AccountCreateInfo, LoginResponse, TokenCreateInfo, OTPType, LoginCredentials };
