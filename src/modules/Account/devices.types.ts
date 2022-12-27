@@ -1,4 +1,4 @@
-import { GenericID, GenericToken, Query, TagsObj, PermissionOption, ExpireTimeOption } from "../../common/common.types";
+import { ExpireTimeOption, GenericID, GenericToken, PermissionOption, Query, TagsObj } from "../../common/common.types";
 import { DataStorageType } from "./buckets.types";
 
 interface DeviceQuery

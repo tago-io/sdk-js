@@ -179,7 +179,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * const result = await myDevice.getParameters();
    * ```
    */
-  public async getParameters(status: "all" | "onlyUnRead" | "onlyRead"): Promise<ConfigurationParams[]> {
+  public async getParameters(status: "all" | "onlyUnRead" | "onlyRead"): Promise<Required<ConfigurationParams>[]> {
     const params: { sent_status?: boolean } = {};
 
     if (status === "onlyRead") {
@@ -194,7 +194,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
       params.sent_status = false;
     }
 
-    const result = await this.doRequest<ConfigurationParams[]>({
+    const result = await this.doRequest<Required<ConfigurationParams>[]>({
       path: "/device/params",
       method: "GET",
       params: params,
