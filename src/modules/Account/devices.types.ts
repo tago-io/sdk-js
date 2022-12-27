@@ -148,8 +148,12 @@ interface ConfigurationParams {
 
 type DeviceCreateResponse = { device_id: GenericID; bucket_id: GenericID; token: GenericToken };
 
-type DeviceListItem = Omit<DeviceInfo, "bucket"> & { bucket: GenericID };
+type DeviceListItem<T extends DeviceQuery["fields"][number]> = Pick<
+  Omit<DeviceInfo, "bucket"> & { bucket: GenericID },
+  "id" | "name" | "tags" | T
+>;
 
+// "id" | "name" | "tags" |
 interface DeviceTokenDataList {
   token: GenericToken;
   device_id: GenericID;

@@ -38,13 +38,15 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * }
    * @param queryObj Search query params
    */
-  public async list(queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
-    let result = await this.doRequest<DeviceListItem[]>({
+  // public async list(queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
+  public async list<T extends DeviceQuery>(queryObj?: T) {
+    // type test = keyof Record<, DeviceQuery["fields"][number]>;
+    let result = await this.doRequest<DeviceListItem<"id" | "name" | "tags" | T["fields"][number]>[]>({
       path: "/device",
       method: "GET",
       params: {
         page: queryObj?.page || 1,
-        fields: queryObj?.fields || ["id", "name"],
+        fields: queryObj?.fields || ["id", "name", "tags"],
         filter: queryObj?.filter || {},
         amount: queryObj?.amount || 20,
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
