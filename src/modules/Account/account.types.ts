@@ -73,7 +73,15 @@ interface LoginResponse {
     id: GenericID;
     name: GenericID;
     logo_url: string | null;
+    from_share?: boolean;
   }[];
+}
+
+interface LoginCredentials {
+  email: string;
+  password: string;
+  otp_type: OTPType;
+  pin_code: string;
 }
 
 type OTPType = "sms" | "email" | "authenticator";
@@ -101,4 +109,4 @@ interface TokenCreateInfo {
   otp_type: OTPType;
 }
 
-export { AccountInfo, AccountCreateInfo, LoginResponse, TokenCreateInfo, OTPType };
+export { AccountInfo, AccountCreateInfo, LoginResponse, TokenCreateInfo, OTPType, LoginCredentials };
