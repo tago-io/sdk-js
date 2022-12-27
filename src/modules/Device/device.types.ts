@@ -1,29 +1,6 @@
 import { Data, DataCreate, DataEdit, GenericID, GenericToken, TagsObj } from "../../common/common.types";
 import { Regions } from "../../regions";
-
-interface DeviceInfo {
-  id: GenericID;
-  profile: string;
-  bucket: {
-    id: GenericID;
-    name: string;
-  };
-  name: string;
-  description: string | void;
-  visible: boolean;
-  active: boolean;
-  last_output: Date | null;
-  last_input: Date | null;
-  connector: string;
-  network: string;
-  connector_parse: boolean;
-  parse_function: string;
-  tags: TagsObj[];
-  updated_at: Date;
-  created_at: Date;
-  inspected_at: Date | null;
-  bucket_name?: string;
-}
+import { DeviceInfo } from "../Account/devices.types";
 
 /**
  * @param token token
@@ -156,7 +133,6 @@ type ListResponse = DeviceInfo[];
 
 export {
   DeviceConstructorParams,
-  DeviceInfo,
   DataToSend,
   DataToEdit,
   DataQuery,

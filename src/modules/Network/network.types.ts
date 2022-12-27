@@ -1,5 +1,5 @@
 import { Query } from "../../common/common.types";
-import { DeviceInfo } from "../Device/device.types";
+import { DeviceInfo } from "../Account/devices.types";
 
 interface IDeviceParameters {
   name?: string;
