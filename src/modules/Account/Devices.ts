@@ -39,7 +39,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
   public async list<T extends DeviceQuery>(queryObj?: T) {
-    let result = await this.doRequest<DeviceListItem<"id" | "name" | "tags" | T["fields"][number]>[]>({
+    let result = await this.doRequest<
+      DeviceListItem<T["fields"] extends DeviceQuery["fields"] ? T["fields"][number] : "id" | "name">[]
+    >({
       path: "/device",
       method: "GET",
       params: {
