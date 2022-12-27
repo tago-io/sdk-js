@@ -15,6 +15,7 @@ import {
   CustomDomainInfo,
   CustomDomainResponse,
   UserCreateResponse,
+  UserListItem,
 } from "./run.types";
 
 class Run extends TagoIOModule<GenericModuleParams> {
@@ -37,8 +38,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async listUsers(query: UserQuery): Promise<Partial<UserInfo>[]> {
-    let result = await this.doRequest<Partial<UserInfo>[]>({
+  public async listUsers<T extends UserQuery>(query: T) {
+    let result = await this.doRequest<
+      UserListItem<T["fields"] extends UserQuery["fields"] ? T["fields"][number] : "id" | "name">[]
+    >({
       path: "/run/users",
       method: "GET",
       params: {
