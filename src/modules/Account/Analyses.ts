@@ -1,7 +1,7 @@
 import { GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import { AnalysisCreateInfo, AnalysisInfo, AnalysisQuery, ScriptFile } from "./analysis.types";
+import { AnalysisCreateInfo, AnalysisInfo, AnalysisListItem, AnalysisQuery, ScriptFile } from "./analysis.types";
 
 class Analyses extends TagoIOModule<GenericModuleParams> {
   /**
@@ -18,8 +18,10 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * ```json
    * @param queryObj Search query params
    */
-  public async list(queryObj?: AnalysisQuery): Promise<AnalysisInfo[]> {
-    let result = await this.doRequest<AnalysisInfo[]>({
+  public async list<T extends AnalysisQuery>(queryObj?: T) {
+    let result = await this.doRequest<
+      AnalysisListItem<T["fields"] extends AnalysisQuery["fields"] ? T["fields"][number] : "id" | "name">[]
+    >({
       path: "/analysis/",
       method: "GET",
       params: {
