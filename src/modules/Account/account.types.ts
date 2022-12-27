@@ -1,4 +1,5 @@
 import { GenericID } from "../../common/common.types";
+import { ProfileListInfo } from "./profile.types";
 
 interface AccountCreateInfo {
   /**
@@ -68,13 +69,7 @@ interface LoginResponse {
   email: string;
   company: string;
   name: string;
-  profiles: {
-    account: GenericID;
-    id: GenericID;
-    name: GenericID;
-    logo_url: string | null;
-    from_share?: boolean;
-  }[];
+  profiles: Required<ProfileListInfo>[];
 }
 
 interface LoginCredentials {
