@@ -4,7 +4,17 @@ import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
 import { ConfigurationParams, DeviceInfo } from "../Account/devices.types";
 import dateParser from "../Utils/dateParser";
-import { DataQuery, DataQueryStreaming, DeviceConstructorParams, OptionsStreaming } from "./device.types";
+import {
+  DataQuery,
+  DataQueryAggregation,
+  DataQueryDefault,
+  DataQueryFirstLast,
+  DataQueryNumberResponse,
+  DataQueryStreaming,
+  DataQuerySummary,
+  DeviceConstructorParams,
+  OptionsStreaming,
+} from "./device.types";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
@@ -69,7 +79,11 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * });
    * ```
    */
-  public async getData(queryParams?: DataQuery): Promise<Data[]> {
+  public async getData(queryParams?: DataQuerySummary): Promise<DataQueryNumberResponse[]>;
+  public async getData(queryParams?: DataQueryAggregation): Promise<DataQueryNumberResponse[]>;
+  public async getData(queryParams?: DataQueryDefault): Promise<Data[]>;
+  public async getData(queryParams?: DataQueryFirstLast): Promise<Data[]>;
+  public async getData(queryParams?: DataQuery): Promise<Data[] | DataQueryNumberResponse[]> {
     if (queryParams?.query === "default") {
       delete queryParams.query;
     }
@@ -83,11 +97,8 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     if (typeof result === "number") {
       result = [
         {
-          id: "none",
-          origin: "?",
           time: new Date(),
           value: result,
-          variable: "?",
         },
       ] as Data[];
     }
