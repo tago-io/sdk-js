@@ -155,7 +155,7 @@ type DeviceListItem<T extends DeviceQuery["fields"][number] = "id"> = Pick<
   Partial<DeviceInfo>;
 
 // "id" | "name" | "tags" |
-interface DeviceTokenDataList {
+interface DeviceTokenData {
   token: GenericToken;
   device_id: GenericID;
   network_id: GenericID;
@@ -168,6 +168,9 @@ interface DeviceTokenDataList {
 }
 interface ListDeviceTokenQuery
   extends Query<DeviceTokenDataList, "name" | "permission" | "serie_number" | "last_authorization" | "created_at"> {}
+
+type DeviceTokenDataList<T extends ListDeviceTokenQuery["fields"][number] = null> = Pick<DeviceTokenData, T> &
+  Partial<DeviceTokenData>;
 
 interface DeviceChunkData {
   amount: number | null;
@@ -224,6 +227,7 @@ export {
   DeviceEditInfo,
   DeviceCreateResponse,
   DeviceListItem,
+  DeviceTokenData,
   DeviceTokenDataList,
   DeviceChunkData,
   ListDeviceTokenQuery,
