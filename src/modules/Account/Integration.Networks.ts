@@ -144,6 +144,19 @@ class Networks extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+  
+  /**
+   * Deletes a network from the account
+   * @param deviceID Device ID
+   */
+  public async delete(networkId: GenericID): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/integration/network/${networkID}`,
+      method: "DELETE",
+    });
+
+    return result;
+  }
 }
 
 export default Networks;
