@@ -101,6 +101,19 @@ class Network extends TagoIOModule<ConnectorModuleParams> {
 
     return result;
   }
+
+  /**
+   * Delete the network
+   * @param networkID network identification
+   */
+  public async delete(networkID: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/integration/network/${networkID}`,
+      method: "DELETE",
+    });
+
+    return result;
+  }
 }
 
 export default Network;
