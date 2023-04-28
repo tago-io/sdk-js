@@ -287,11 +287,12 @@ class Profile extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Deletes a token
+   * @profileId Profile ID
    * @param token Token
    */
-  public async tokenDelete(token: GenericToken): Promise<string> {
+  public async tokenDelete(profileId: string, token: GenericToken): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/profile/token/${token}`,
+      path: `/profile/${profileId}/token/${token}`,
       method: "DELETE",
     });
 
