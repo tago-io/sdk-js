@@ -161,7 +161,7 @@ type PublicKeyResponse = { token: GenericToken; expire_time: ExpireTimeOption };
 type widgetOverwriteOptions = "start_date" | "end_date" | "timezone";
 
 type widgetOverwrite = {
-  [key: widgetOverwriteOptions]: any;
+  [key in widgetOverwriteOptions]: any;
 };
 
 export {

@@ -61,7 +61,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       method: "GET",
       params: {
         onlyAmount: options?.onlyAmount || false,
-      }
+      },
     });
 
     return result;
