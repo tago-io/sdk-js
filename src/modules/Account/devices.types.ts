@@ -7,6 +7,7 @@ interface DeviceQuery
     "name" | "visible" | "active" | "last_input" | "last_output" | "created_at" | "updated_at"
   > {
   resolveBucketName?: boolean;
+  resolveConnectorName?: boolean;
 }
 
 interface DeviceCreateInfoBasic {

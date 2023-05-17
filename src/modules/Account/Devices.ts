@@ -35,6 +35,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *   amount: 20,
    *   orderBy: "name,asc",
    *   resolveBucketName: false
+   *   resolveConnectorName: false
    * }
    * @param queryObj Search query params
    */
@@ -49,6 +50,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
         amount: queryObj?.amount || 20,
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
         resolveBucketName: queryObj?.resolveBucketName || false,
+        resolveConnectorName: queryObj?.resolveConnectorName || false
       },
     });
 
