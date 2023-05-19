@@ -255,9 +255,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @example
    * ```ts
-   * const myDevice = new Device({ token: "my_device_token" });
+   * const myAccount = new Account({ token: "ACCOUNT_TOKEN" });
    *
-   * const lastTenValues = await myDevice.getVariablesData("myDeviceId", { qty: 10 });
+   * const lastTenValues = await myAccount.devices.getDeviceData("DEVICE_ID", { qty: 10 });
    * ```
    */
   public async getDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<Data[]> {
