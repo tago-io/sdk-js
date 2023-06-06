@@ -60,7 +60,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       path: `/profile/${profileID}/summary`,
       method: "GET",
       params: {
-        onlyAmount: options?.onlyAmount || false,
+        ...(options?.onlyAmount && { onlyAmount: options.onlyAmount }),
       },
     });
 
