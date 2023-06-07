@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old VIDEO to new VIDEO
 // ? ====================================================================================
-import { WidgetInfo } from "../Account/dashboards.types";
+import { WidgetInfo } from "../Resources/dashboards.types";
 
 function convertSource(oldDisplay: any) {
   return {

@@ -125,6 +125,10 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
   }
 
   public static use(analysis: analysisFunction, params?: AnalysisConstructorParams) {
+    if (!process.env.T_ANALYSIS_TOKEN) {
+      process.env.T_ANALYSIS_TOKEN = params.token;
+    }
+
     return new Analysis(analysis, params);
   }
 }

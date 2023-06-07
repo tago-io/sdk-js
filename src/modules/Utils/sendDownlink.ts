@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import Account from "../Account/Account";
+import Account from "../Resources/AccountDeprecated";
 import { DownlinkOptions } from "./utils.types";
 
 /**

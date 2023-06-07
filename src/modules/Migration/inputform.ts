@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old INPUT FORM to new INPUT FORM
 // ? ====================================================================================
-import { WidgetInfo } from "../Account/dashboards.types";
+import { WidgetInfo } from "../Resources/dashboards.types";
 import { generateWidgetItemId } from "./common";
 import { convertField, convertSubmitButton } from "./convertFields";
 

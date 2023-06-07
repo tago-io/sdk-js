@@ -1,4 +1,4 @@
-import Account from "../Account/Account";
+import Account from "../Resources/AccountDeprecated";
 import { UploadFileOptions } from "./utils.types";
 import path from "path";
 

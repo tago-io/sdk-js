@@ -1,5 +1,5 @@
 export * as Common from "./common/common.types";
-export * as Account from "./modules/Account/types";
+export * as Account from "./modules/Resources/types";
 export * as Analysis from "./modules/Analysis/types";
 export * as Device from "./modules/Device/types";
 export * as Authorization from "./modules/Authorization/types";

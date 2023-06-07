@@ -2,7 +2,7 @@ import { chunk } from "lodash";
 import { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
-import { ConfigurationParams } from "../Account/devices.types";
+import { ConfigurationParams } from "../Resources/devices.types";
 import dateParser from "../Utils/dateParser";
 import { DataQuery, DataQueryStreaming, DeviceConstructorParams, DeviceInfo, OptionsStreaming } from "./device.types";
 

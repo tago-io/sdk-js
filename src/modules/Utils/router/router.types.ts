@@ -1,8 +1,8 @@
 import { Data } from "../../../common/common.types";
-import Account from "../../Account/Account";
-import { MQTTResourceAction } from "../../Account/actions.types";
-import { DeviceCreateInfo } from "../../Account/devices.types";
-import { UserCreateInfo } from "../../Account/run.types";
+import Account from "../../Resources/AccountDeprecated";
+import { MQTTResourceAction } from "../../Resources/actions.types";
+import { DeviceCreateInfo } from "../../Resources/devices.types";
+import { UserCreateInfo } from "../../Resources/run.types";
 import { TagoContext } from "../../Analysis/analysis.types";
 import Device from "../../Device/Device";
 

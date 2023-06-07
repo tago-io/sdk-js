@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old CARD to new CARD.
 // ? ====================================================================================
-import { WidgetInfo } from "../Account/dashboards.types";
+import { WidgetInfo } from "../Resources/dashboards.types";
 import { removeHttpFromURL } from "./common/";
 
 function convert(oldWidget: any): WidgetInfo {

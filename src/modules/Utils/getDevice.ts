@@ -1,4 +1,4 @@
-import Account from "../Account/Account";
+import Account from "../Resources/AccountDeprecated";
 import Device from "../Device/Device";
 import getTokenByName from "./getTokenByName";
 

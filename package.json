@@ -1,6 +1,6 @@
 {
   "name": "@tago-io/sdk",
-  "version": "10.9.5",
+  "version": "11.0.0",
   "description": "TagoIO SDK for JavaScript in the browser and Node.js",
   "author": "Tago LLC",
   "homepage": "https://tago.io",
@@ -33,6 +33,7 @@
     "docs": "typedoc"
   },
   "devDependencies": {
+    "@swc-node/register": "1.6.5",
     "@types/express": "4.17.13",
     "@types/jest": "28.1.1",
     "@types/lodash": "4.14.182",
