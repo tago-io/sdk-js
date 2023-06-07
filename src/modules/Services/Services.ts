@@ -13,33 +13,47 @@ class Services extends TagoIOModule<GenericModuleParams> {
   }
 
   public console = new ConsoleService(this.params);
-  static account = new this().console;
+  static get console() {
+    return new this().console;
+  }
 
   public sms = new SMS(this.params);
-  static sms = new this().sms;
+  static get sms() {
+    return new this().sms;
+  }
 
   public email = new Email(this.params);
-  static email = new this().email;
+  static get email() {
+    return new this().email;
+  }
 
-  /** @deprecated use mqtt instead */
+  /** @internal @deprecated renamed to .mqtt (lowercase) */
   public MQTT = new MQTT(this.params);
   public mqtt = new MQTT(this.params);
-  static mqtt = new this().mqtt;
+  static get mqtt() {
+    return new this().mqtt;
+  }
 
-  /** @deprecated use notification instead  */
+  /** @internal @deprecated renamed to .notification (lowercase)  */
   public Notification = new Notification(this.params);
   public notification = new Notification(this.params);
-  static notification = new this().notification;
+  static get notification() {
+    return new this().notification;
+  }
 
-  /** @deprecated use attachment instead */
+  /** @internal @deprecated renamed to .attachment (lowercase) */
   public Attachment = new Attachment(this.params);
   public attachment = new Attachment(this.params);
-  static attachment = new this().attachment;
+  static get attachment() {
+    return new this().attachment;
+  }
 
-  /** @deprecated use pdf instead */
+  /** @internal @deprecated renamed to .pdf (lowercase) */
   public PDF = new PDFService(this.params);
   public pdf = new PDFService(this.params);
-  static pdf = new this().pdf;
+  static get pdf() {
+    return new this().pdf;
+  }
 }
 
 export default Services;

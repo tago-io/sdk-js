@@ -1,4 +1,4 @@
-import { chunk } from "lodash";
+import { chunk } from "../../common/chunk";
 import { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";

@@ -6,7 +6,6 @@ import Buckets from "./Buckets";
 import Dashboards from "./Dashboards";
 import Devices from "./Devices";
 import Dictionaries from "./Dictionaries";
-import Explore from "./Explore";
 import Files from "./Files";
 import Notifications from "./Notifications";
 import PaymentHistory from "./PaymentHistory";
@@ -81,10 +80,6 @@ class AccountDeprecated extends Account {
    * @deprecated moved to Resources.paymentHistory
    */
   public paymentHistory = new PaymentHistory(this.params);
-  /**
-   * @deprecated moved to Resources.explore
-   */
-  public explore = new Explore(this.params);
   /**
    * @deprecated moved to Resources.integration
    */
