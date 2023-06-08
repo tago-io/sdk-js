@@ -9,6 +9,7 @@ import {
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
 import { BillingAddOn } from "./billing.types";
+
 import type {
   AddonInfo,
   AuditLog,
@@ -38,8 +39,8 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * Get Profile info
    * @param profileID Profile identification or "current" for current profile
    * example:
-   * - account.profiles.info("6126850f58ef8600184dd486");
-   * - account.profiles.info("current");
+   * - Resources.profiles.info("6126850f58ef8600184dd486");
+   * - Resources.profiles.info("current");
    */
   public async info(profileID: GenericID | "current"): Promise<ProfileInfo> {
     const result = await this.doRequest<ProfileInfo>({
