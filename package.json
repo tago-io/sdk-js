@@ -1,13 +1,13 @@
 {
   "name": "@tago-io/sdk",
-  "version": "11.0.1",
+  "version": "11.0.4",
   "description": "TagoIO SDK for JavaScript in the browser and Node.js",
   "author": "Tago LLC",
   "homepage": "https://tago.io",
   "license": "Apache-2.0",
   "repository": "tago-io/sdk-js.git",
-  "main": "./out/modules.js",
-  "types": "./out/modules.d.ts",
+  "main": "./lib/modules.js",
+  "types": "./lib/modules.d.ts",
   "private": false,
   "keywords": [
     "tago",
@@ -25,8 +25,8 @@
     "npm": ">=6.0.0"
   },
   "scripts": {
-    "prepublishOnly": "node updateEnv.js; rm -rf ./out; eslint .; tsc",
-    "build": "rm -rf ./out; tsc",
+    "prepublishOnly": "npm run build",
+    "build": "rm -rf ./lib; node updateEnv.js; tsc",
     "linter": "eslint .",
     "test": "jest",
     "monacoTypes": "dts-bundle-generator -o docs/tago-io.sdk.d.ts src/modules.ts",
