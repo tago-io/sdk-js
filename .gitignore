@@ -12,6 +12,7 @@ node_modules
 *.sublime-*
 build/
 out/
+/lib/
 .vscode
 yarn.lock
 .cache
@@ -19,5 +20,5 @@ yarn.lock
 *.local.*
 *.tgz
 examples/**/package-lock.json
-docs/
+/docs/
 src/infrastructure/envParams.json

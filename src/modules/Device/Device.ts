@@ -1,10 +1,10 @@
-import { chunk } from "lodash";
+import { chunk } from "../../common/chunk";
 import { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
-import { ConfigurationParams } from "../Account/devices.types";
+import { ConfigurationParams } from "../Resources/devices.types";
 import dateParser from "../Utils/dateParser";
-import { DataQuery, DataQueryStreaming, DeviceConstructorParams, DeviceInfo, OptionsStreaming } from "./device.types";
+import { DataQuery, DataQueryStreaming, DeviceConstructorParams, DeviceItem, OptionsStreaming } from "./device.types";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
@@ -16,8 +16,8 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * const result = await myDevice.info();
    * ```
    */
-  public async info(): Promise<DeviceInfo> {
-    let result = await this.doRequest<DeviceInfo>({
+  public async info(): Promise<DeviceItem> {
+    let result = await this.doRequest<DeviceItem>({
       path: "/info",
       method: "GET",
     });

@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old HORIZONTAL BAR CHART to new HORIZONTAL BAR CHART
 // ? ====================================================================================
-import { WidgetInfo } from "../Account/dashboards.types";
+import { WidgetInfo } from "../Resources/dashboards.types";
 import { chartColors, convertDownsample, convertFormula, convertInterval } from "./common";
 
 export function convert(oldWidget: any): WidgetInfo {

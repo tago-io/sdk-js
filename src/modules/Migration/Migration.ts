@@ -1,4 +1,4 @@
-import { WidgetInfo } from "../Account/dashboards.types";
+import { WidgetInfo } from "../Resources/dashboards.types";
 import { convert as convertAngular, isOldStructure as isOldStructureAngular } from "./angular";
 import { convert as convertAreaChart, isOldStructure as isOldStructureAreaChart } from "./areachart";
 import { convert as convertCard, isOldStructure as isOldStructureCard } from "./card";

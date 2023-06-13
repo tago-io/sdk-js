@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./out",
+    "outDir": "./lib",
     "rootDir": "./src",
     "noImplicitAny": true,
     "module": "commonjs",
@@ -15,5 +15,6 @@
     "resolveJsonModule": true,
     "lib": ["ES2020", "DOM"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test.*", "lib"]
 }

@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old CUSTOM to new CUSTOM
 // ? ====================================================================================
-import { WidgetInfo } from "../Account/dashboards.types";
+import { WidgetInfo } from "../Resources/dashboards.types";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};
