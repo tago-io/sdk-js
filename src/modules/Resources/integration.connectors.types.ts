@@ -15,6 +15,7 @@ interface ConnectorCreateInfo {
   logo_url?: string;
   device_parameters?: IDeviceParameters[];
   networks?: string[];
+  payload_encoder?: string;
   payload_decoder?: string;
   install_text?: string;
   install_end_text?: string;

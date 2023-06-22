@@ -23,6 +23,7 @@ interface DeviceItem {
   created_at: Date;
   inspected_at: Date | null;
   bucket_name?: string;
+  payload_decoder?: string;
 }
 
 /**
