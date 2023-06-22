@@ -56,10 +56,13 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   /**
    * Gets profile summary
    */
-  public async summary(profileID: GenericID): Promise<ProfileSummary> {
+  public async summary(profileID: GenericID, options?: { onlyAmount?: boolean }): Promise<ProfileSummary> {
     const result = await this.doRequest<ProfileSummary>({
       path: `/profile/${profileID}/summary`,
       method: "GET",
+      params: {
+        ...(options?.onlyAmount && { onlyAmount: options.onlyAmount }),
+      },
     });
 
     return result;

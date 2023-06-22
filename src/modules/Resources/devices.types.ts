@@ -4,6 +4,7 @@ import { DataStorageType } from "./buckets.types";
 interface DeviceQuery
   extends Query<DeviceInfo, "name" | "visible" | "active" | "last_input" | "created_at" | "updated_at"> {
   resolveBucketName?: boolean;
+  resolveConnectorName?: boolean;
 }
 
 interface DeviceCreateInfoBasic {
