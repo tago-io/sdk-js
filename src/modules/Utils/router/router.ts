@@ -1,4 +1,4 @@
-import Account from "../../Account/Account";
+import Account from "../../Resources/AccountDeprecated";
 import { RouterConstructor } from "./router.types";
 import RouterService from "./service";
 class AnalysisRouter {

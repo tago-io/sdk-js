@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old SEMIDONUT to new SEMIDONUT
 // ? ====================================================================================
-import { WidgetInfo } from "../Account/dashboards.types";
+import { WidgetInfo } from "../Resources/dashboards.types";
 import { chartColors } from "./common";
 
 export function convert(oldWidget: any): WidgetInfo {

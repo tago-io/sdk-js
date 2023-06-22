@@ -8,7 +8,7 @@ import {
   IApplyToStringOptions,
   IDictionaryModuleParamsAnonymous,
 } from "./dictionary.types";
-import { LanguageData } from "../Account/dictionaries.types";
+import { LanguageData } from "../Resources/dictionaries.types";
 
 // Regular expressions that are used for parsing the strings:
 // - SPLIT is used to split the string into normal words/phrases and expressions

@@ -6,6 +6,10 @@ import { QRCodeFormat } from "./utils.types";
  * @param qr_code QR Code string, example: LW:D0:1122334455667788:AABBCCDDEEFF0011:AABB1122:OAABBCCDDEEFF:SYYWWNNNNNN:PFOOBAR:CAF2C
  */
 function parseQRCode(qr_code: string): QRCodeFormat {
+  if (typeof qr_code !== "string") {
+    throw "QR Code must be a string";
+  }
+
   const parsed = qr_code.split(":");
 
   if (parsed.length < 4) {

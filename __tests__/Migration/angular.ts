@@ -165,7 +165,6 @@ describe("angular widget - migration suite", () => {
 
     newDisplay.vars_formula = customFormula;
     newStructure = convert({ ...oldWidget, display: newDisplay });
-    console.log(newDisplay, newStructure.display.formula);
     expect(newStructure.display.formula.enable).toBeTruthy();
     expect(newStructure.display.formula.formula_type).toBe("variable");
     expect(newStructure.display.formula.variable.variable).toBe("variable");

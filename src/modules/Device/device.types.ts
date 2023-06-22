@@ -1,7 +1,7 @@
 import { Data, DataCreate, DataEdit, GenericID, GenericToken, TagsObj } from "../../common/common.types";
 import { Regions } from "../../regions";
 
-interface DeviceInfo {
+interface DeviceItem {
   id: GenericID;
   profile: string;
   bucket: {
@@ -152,11 +152,11 @@ interface OptionsStreaming {
   neverStop?: boolean;
 }
 
-type ListResponse = DeviceInfo[];
+type ListResponse = DeviceItem[];
 
 export {
   DeviceConstructorParams,
-  DeviceInfo,
+  DeviceItem,
   DataToSend,
   DataToEdit,
   DataQuery,

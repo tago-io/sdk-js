@@ -1,18 +1,22 @@
-import Account from "../Account/Account";
-import { UploadFileOptions } from "./utils.types";
 import path from "path";
+
+import Account from "../Resources/AccountDeprecated";
+import Resources from "../Resources/Resources";
+import { UploadFileOptions } from "./utils.types";
 
 type FileURL = string;
 
 /**
  * Upload a file and return it's URL.
+ * @requires Profile Access for the Analysis
+ * @requires Files Access for the Analysis
  */
-async function uploadFile(account: Account, options: UploadFileOptions): Promise<FileURL> {
-  if (!(account instanceof Account)) {
-    throw "The parameter 'account' must be an instance of a TagoIO Account.";
+async function uploadFile(resource: Account | Resources, options: UploadFileOptions): Promise<FileURL> {
+  if (!(resource instanceof Account) && !(resource instanceof Resources)) {
+    throw "The parameter 'resource' must be an instance of a TagoIO Resource.";
   }
 
-  const { info: profileInfo } = await account.profiles.info("current");
+  const { info: profileInfo } = await resource.profiles.info("current");
 
   if (options.path) {
     if (!options.path.includes("/")) {
@@ -27,7 +31,7 @@ async function uploadFile(account: Account, options: UploadFileOptions): Promise
   const fixed_path = path.join(options.path || "", options.filename);
 
   const body = { file: options.file_base64, filename: fixed_path };
-  await account.files.uploadBase64([{ ...body, public: options.public || true }]);
+  await resource.files.uploadBase64([{ ...body, public: options.public || true }]);
 
   return `https://api.tago.io/file/${profileInfo.id}/${fixed_path}`;
 }

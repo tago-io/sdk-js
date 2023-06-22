@@ -1,11 +1,8 @@
-import { GenericID, GenericToken, Query, TagsObj, PermissionOption, ExpireTimeOption } from "../../common/common.types";
+import { ExpireTimeOption, GenericID, GenericToken, PermissionOption, Query, TagsObj } from "../../common/common.types";
 import { DataStorageType } from "./buckets.types";
 
 interface DeviceQuery
-  extends Query<
-    DeviceInfo,
-    "name" | "visible" | "active" | "last_input" | "last_output" | "created_at" | "updated_at"
-  > {
+  extends Query<DeviceInfo, "name" | "visible" | "active" | "last_input" | "created_at" | "updated_at"> {
   resolveBucketName?: boolean;
 }
 
