@@ -173,6 +173,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * @deprecated Use device.copyChunk or device.getData to build reports
    * Export Data from Bucket
    * @param buckets Array of JSON with get details
    * @param output Type of output
