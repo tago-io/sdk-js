@@ -79,7 +79,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * }
    * ```
    */
-  public async *listStreaming(queryObj?: DeviceQuery["filter"], options?: OptionsStreaming) {
+  public async *listStreaming(queryObj?: Omit<DeviceQuery, "page" | "amount">, options?: OptionsStreaming) {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
     const poolingTime = options?.poolingTime || 500; // 500 ms
 
