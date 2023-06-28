@@ -118,8 +118,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * Generate a new token for the analysis
    * @param analysisID Analyze identification
    */
-  public async tokenGenerate(analysisID: GenericID): Promise<string> {
-    const result = await this.doRequest<string>({
+  public async tokenGenerate(analysisID: GenericID): Promise<{ analysis_token: string }> {
+    const result = await this.doRequest<{ analysis_token: string }>({
       path: `/analysis/${analysisID}/token`,
       method: "GET",
     });

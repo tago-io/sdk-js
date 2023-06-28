@@ -1,10 +1,7 @@
-import { Data } from "../../../common/common.types";
-import Account from "../../Account/Account";
-import { MQTTResourceAction } from "../../Account/actions.types";
-import { DeviceCreateInfo } from "../../Account/devices.types";
-import { UserCreateInfo } from "../../Account/run.types";
 import { TagoContext } from "../../Analysis/analysis.types";
 import Device from "../../Device/Device";
+import Account from "../../Resources/AccountDeprecated";
+import { UserCreateInfo } from "../../Resources/run.types";
 
 /**
  * User List scope to be used in your analysis

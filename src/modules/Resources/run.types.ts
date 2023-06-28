@@ -105,7 +105,7 @@ interface UserInfo extends Omit<UserCreateInfo, "password"> {
   tags: TagsObj[];
 }
 
-interface LoginResponse {
+interface LoginResponseRun {
   token: GenericToken;
   expire_date: ExpireTimeOption;
 }
@@ -420,7 +420,7 @@ export {
   UserCreateInfo,
   UserCreateResponse,
   UserInfo,
-  LoginResponse,
+  LoginResponseRun,
   UserQuery,
   UserListItem,
   LoginAsUserOptions,

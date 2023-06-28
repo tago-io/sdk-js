@@ -1,8 +1,8 @@
 import { GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { doRequestParams, GenericModuleParams } from "../../common/TagoIOModule";
 import { Regions } from "../../regions";
-import { NotificationInfo, NotificationQuery } from "../Account/notifications.types";
-import { OTPType } from "../Account/account.types";
+import { NotificationInfo, NotificationQuery } from "../Resources/notifications.types";
+import { OTPType } from "../Resources/account.types";
 import dateParser from "../Utils/dateParser";
 import {
   RunNotificationInfo,

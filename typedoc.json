@@ -1,17 +1,18 @@
 {
   "name": "TagoIO SDK for JavaScript and TypeScript",
   "readme": "./DOCS.md",
-  "entryPoints": "./src/modules.ts",
+  "entryPoints": ["./src/modules.ts"],
   "entryPointStrategy": "resolve",
   "out": "docs",
   "gaID": "UA-57075518-5",
-  "exclude": ["./src/common/Cache.ts"],
+  "exclude": ["./src/common/Cache.ts", "./src/modules/Migration/Migration.ts"],
   "excludePrivate": true,
   "excludeProtected": true,
   "excludeInternal": true,
+  "excludeExternals": true,
   "githubPages": true,
   "hideGenerator": true,
   "cleanOutputDir": true,
-  "internalNamespace": "<internal>",
+  "plugin": ["typedoc-plugin-missing-exports", "typedoc-plugin-extras"],
   "favicon": "assets/favicon.png"
 }

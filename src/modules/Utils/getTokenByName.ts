@@ -1,10 +1,11 @@
-import Account from "../Account/Account";
+import Account from "../Resources/AccountDeprecated";
 
 /**
  *
  * @param account Account instance
  * @param deviceID Id of device
  * @param names Array of names of the token, if null will return the first token found
+ * @deprecated Use the Resources.devices.tokenList method instead
  */
 async function getTokenByName(account: Account, deviceID: string, names?: string[] | string): Promise<string> {
   if (!(account instanceof Account)) {

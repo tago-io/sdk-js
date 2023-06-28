@@ -4,9 +4,9 @@ import { handleDownlinkError } from "./sendDownlink";
 describe("Error Handling", () => {
   test("Default Axios Error", async () => {
     const error: AxiosError = {
-      response: { data: null, status: 400, config: {}, headers: {}, statusText: "" },
+      response: { data: null, status: 400, config: {} as any, headers: {}, statusText: "" },
       message: "",
-      config: {},
+      config: {} as any,
       name: "",
       toJSON: () => null,
       isAxiosError: false,
@@ -19,9 +19,9 @@ describe("Error Handling", () => {
 
   test("Undefined Axios Error", async () => {
     const error: AxiosError = {
-      response: { data: undefined, status: 400, config: {}, headers: {}, statusText: "" },
+      response: { data: undefined, status: 400, config: {} as any, headers: {}, statusText: "" },
       message: "",
-      config: {},
+      config: {} as any,
       name: "",
       toJSON: () => null,
       isAxiosError: false,
@@ -34,9 +34,9 @@ describe("Error Handling", () => {
 
   test("Authorization error", async () => {
     const error: AxiosError = {
-      response: { data: "Authorization is missing", status: 400, config: {}, headers: {}, statusText: "" },
+      response: { data: "Authorization is missing", status: 400, config: {} as any, headers: {}, statusText: "" },
       message: "",
-      config: {},
+      config: {} as any,
       name: "",
       toJSON: () => null,
       isAxiosError: false,
@@ -49,9 +49,9 @@ describe("Error Handling", () => {
 
   test("String error", async () => {
     const error: AxiosError = {
-      response: { data: "test", status: 400, config: {}, headers: {}, statusText: "" },
+      response: { data: "test", status: 400, config: {} as any, headers: {}, statusText: "" },
       message: "",
-      config: {},
+      config: {} as any,
       name: "",
       toJSON: () => null,
       isAxiosError: false,
@@ -64,9 +64,9 @@ describe("Error Handling", () => {
 
   test("JSON Error", async () => {
     const error: AxiosError = {
-      response: { data: { param: "value" }, status: 400, config: {}, headers: {}, statusText: "" },
+      response: { data: { param: "value" }, status: 400, config: {} as any, headers: {}, statusText: "" },
       message: "",
-      config: {},
+      config: {} as any,
       name: "",
       toJSON: () => null,
       isAxiosError: false,
@@ -79,9 +79,9 @@ describe("Error Handling", () => {
 
   test("Number Error", async () => {
     const error: AxiosError = {
-      response: { data: 20, status: 400, config: {}, headers: {}, statusText: "" },
+      response: { data: 20, status: 400, config: {} as any, headers: {}, statusText: "" },
       message: "",
-      config: {},
+      config: {} as any,
       name: "",
       toJSON: () => null,
       isAxiosError: false,

@@ -13,3 +13,6 @@ docs/
 jest.config.js
 typedoc.json
 assets/
+.vscode/
+DOCS.md
+updateEnv.js

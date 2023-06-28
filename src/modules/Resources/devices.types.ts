@@ -2,11 +2,9 @@ import { ExpireTimeOption, GenericID, GenericToken, PermissionOption, Query, Tag
 import { DataStorageType } from "./buckets.types";
 
 interface DeviceQuery
-  extends Query<
-    DeviceInfo,
-    "name" | "visible" | "active" | "last_input" | "last_output" | "created_at" | "updated_at"
-  > {
+  extends Query<DeviceInfo, "name" | "visible" | "active" | "last_input" | "created_at" | "updated_at"> {
   resolveBucketName?: boolean;
+  resolveConnectorName?: boolean;
 }
 
 interface DeviceCreateInfoBasic {

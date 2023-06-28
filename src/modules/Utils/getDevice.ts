@@ -1,9 +1,10 @@
-import Account from "../Account/Account";
 import Device from "../Device/Device";
+import Account from "../Resources/AccountDeprecated";
 import getTokenByName from "./getTokenByName";
 
 /**
  * Get the TagoIO Device instanced class from a device id
+ * @deprecated Use the Resources.devices methods instead
  */
 async function getDevice(account: Account, device_id: string): Promise<Device> {
   if (!(account instanceof Account)) {

@@ -1,6 +1,7 @@
 import { GenericToken } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams, doRequestParams } from "../../common/TagoIOModule";
-import Access from "./Access";
+import TagoIOModule, { doRequestParams, GenericModuleParams } from "../../common/TagoIOModule";
+import { Regions } from "../../regions";
+import dateParser from "../Utils/dateParser";
 import {
   AccountCreateInfo,
   AccountInfo,
@@ -9,37 +10,7 @@ import {
   OTPType,
   TokenCreateInfo,
 } from "./account.types";
-import Actions from "./Actions";
-import Analyses from "./Analyses";
-import Billing from "./Billing";
-import Buckets from "./Buckets";
-import Dashboards from "./Dashboards";
-import Devices from "./Devices";
-import Dictionaries from "./Dictionaries";
-import Explore from "./Explore";
-import Files from "./Files";
-import Notifications from "./Notifications";
-import PaymentHistory from "./PaymentHistory";
-import PaymentMethods from "./PaymentMethods";
-import Plan from "./Plan";
-import Profile from "./Profile";
-import Run from "./Run";
-import ServiceAuthorization from "./ServiceAuthorization";
-import Tags from "./Tags";
-import Template from "./Template";
-import { Regions } from "../../regions";
-import Integration from "./Integration";
-import dateParser from "../Utils/dateParser";
-import TagoCores from "./TagoCores";
 
-/**
- * To set up an account object, you need a token that you need to get from our
- * admin website and the region. Make sure to use tokens with the correct
- * write/read privileges for the current function that you want to use.
- *
- * @class Account
- * @extends {TagoIOModule<GenericModuleParams>}
- */
 class Account extends TagoIOModule<GenericModuleParams> {
   /**
    * Gets all account information
@@ -294,153 +265,6 @@ class Account extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
-
-  /**
-   * Manage actions in account.
-   * Be sure to use an account token with “write” permissions when
-   * using functions like create, edit and delete.
-   */
-  public actions = new Actions(this.params);
-
-  /**
-   * Manage analysis in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public analysis = new Analyses(this.params);
-
-  /**
-   * Manage buckets in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public buckets = new Buckets(this.params);
-
-  /**
-   * Manage files in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public files = new Files(this.params);
-
-  /**
-   * Manage dashboards in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public dashboards = new Dashboards(this.params);
-
-  /**
-   * Manage devices in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public devices = new Devices(this.params);
-
-  /**
-   * Manage dictionaries in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public dictionaries = new Dictionaries(this.params);
-
-  /**
-   * Manage Billing for the account.
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public billing = new Billing(this.params);
-
-  /**
-   * Manage notifications in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public notifications = new Notifications(this.params);
-
-  /**
-   * Manage tags in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public tags = new Tags(this.params);
-
-  /**
-   * Manage payment methods in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public paymentMethods = new PaymentMethods(this.params);
-
-  /**
-   * Manage account plans
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public plan = new Plan(this.params);
-  /**
-   * Manage payment history in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public paymentHistory = new PaymentHistory(this.params);
-
-  /**
-   * Manage explore in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public explore = new Explore(this.params);
-
-  /**
-   * Manage connectors in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public integration = new Integration(this.params);
-
-  /**
-   * Manage templates in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public template = new Template(this.params);
-
-  /**
-   * Manage access in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public accessManagement = new Access(this.params);
-
-  /**
-   * Manage run apps in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   *
-   */
-  public run = new Run(this.params);
-
-  /**
-   * Manage services in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public ServiceAuthorization = new ServiceAuthorization(this.params);
-
-  /**
-   * Manage profiles in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public profiles = new Profile(this.params);
-
-  /**
-   * Manage tagocores in account
-   * Be sure to use an account token with “write” permissions when using
-   * functions like create, edit and delete.
-   */
-  public tagocores = new TagoCores(this.params);
 }
 
 export default Account;

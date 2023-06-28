@@ -1,5 +1,5 @@
 import { ExpireTimeOption, GenericID, GenericToken } from "../../common/common.types";
-import { OTPType } from "../Account/account.types";
+import { OTPType } from "../Resources/account.types";
 
 interface UserOptions {
   decimal_separator?: string;

@@ -1,14 +1,18 @@
 import type {
   Data,
+  DataCreate,
   DataEdit,
   GenericID,
   GenericToken,
   TokenCreateResponse,
   TokenData,
 } from "../../common/common.types";
+import { chunk } from "../../common/chunk";
+import sleep from "../../common/sleep";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import type { DataQuery } from "../Device/device.types";
 import dateParser from "../Utils/dateParser";
+
+import type { DataQuery, DataQueryStreaming, OptionsStreaming } from "../Device/device.types";
 import type {
   ConfigurationParams,
   DeviceChunkCopyResponse,
@@ -23,7 +27,6 @@ import type {
   DeviceTokenDataList,
   ListDeviceTokenQuery,
 } from "./devices.types";
-
 class Devices extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list with all devices from the account
@@ -35,6 +38,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *   amount: 20,
    *   orderBy: "name,asc",
    *   resolveBucketName: false
+   *   resolveConnectorName: false
    * }
    * @param queryObj Search query params
    */
@@ -51,6 +55,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
         amount: queryObj?.amount || 20,
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
         resolveBucketName: queryObj?.resolveBucketName || false,
+        resolveConnectorName: queryObj?.resolveConnectorName || false,
       },
     });
 
@@ -59,6 +64,50 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     );
 
     return result;
+  }
+
+  /**
+   * Get a Streaming list of Devices from the account
+   *
+   * @experimental
+   * @param queryObj Search query params
+   * @param options Stream options
+   * @example
+   * ```js
+   * for await (const items of Resources.devices.listStreaming({ name: "*sensor*" })) {
+   *  console.log(items);
+   * }
+   * ```
+   */
+  public async *listStreaming(queryObj?: DeviceQuery["filter"], options?: OptionsStreaming) {
+    const poolingRecordQty = options?.poolingRecordQty || 1000;
+    const poolingTime = options?.poolingTime || 500; // 500 ms
+
+    if (poolingRecordQty > 1000) {
+      throw new Error("The maximum of poolingRecordQty is 1000");
+    }
+
+    // API will divide the poolingRecordQty by the number of variables
+    const amount: number = Math.ceil(poolingRecordQty);
+    let page: number = 0;
+    let stop: boolean = false;
+
+    while (!stop) {
+      await sleep(poolingTime);
+
+      yield (async () => {
+        const foundDevices = await this.list({
+          ...queryObj,
+          amount,
+          page,
+        });
+        page += 1;
+
+        stop = foundDevices.length < amount;
+
+        return foundDevices;
+      })();
+    }
   }
 
   /**
@@ -258,9 +307,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @example
    * ```ts
-   * const myDevice = new Device({ token: "my_device_token" });
-   *
-   * const lastTenValues = await myDevice.getVariablesData("myDeviceId", { qty: 10 });
+   * const lastTenValues = await Resources.devices.getDeviceData("myDeviceId", { qty: 10 });
    * ```
    */
   public async getDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<Data[]> {
@@ -286,6 +333,57 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * Get Data Streaming
+   *
+   * @experimental
+   * @param deviceId Device ID
+   * @param params Data Query
+   * @param options Stream options
+   * @example
+   * ```js
+   * for await (const items of Resources.devices.getDeviceDataStreaming("myDeviceId")) {
+   *  console.log(items);
+   * }
+   * ```
+   */
+  public async *getDeviceDataStreaming(deviceId: GenericID, params?: DataQueryStreaming, options?: OptionsStreaming) {
+    const poolingRecordQty = options?.poolingRecordQty || 1000;
+    const poolingTime = options?.poolingTime || 1000; // 1 seg
+    const neverStop = options?.neverStop || false;
+
+    if (poolingRecordQty > 10000) {
+      throw new Error("The maximum of poolingRecordQty is 10000");
+    }
+
+    // API will divide the poolingRecordQty by the number of variables
+    const variableQty = Array.isArray(params?.variables) ? params.variables.length : 1;
+    const qty: number = Math.ceil(poolingRecordQty / variableQty);
+    let skip: number = 0;
+    let stop: boolean = false;
+
+    while (!stop) {
+      await sleep(poolingTime);
+
+      yield (async () => {
+        const data = await this.getDeviceData(deviceId, {
+          ...params,
+          qty,
+          skip,
+          query: "default",
+          ordination: "ascending",
+        });
+        skip += data.length;
+
+        if (!neverStop) {
+          stop = data.length === 0 || data.length < poolingRecordQty;
+        }
+
+        return data;
+      })();
+    }
+  }
+
+  /**
    * Empty all data in a device.
    *
    * @param deviceId Device ID.
@@ -302,7 +400,6 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * ! Waiting for back-end to implement this endpoint
    * Send data to device
    *
    * @param deviceId Device ID.
@@ -310,9 +407,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @return amount of data added
    * @example
    * ```js
-   * const myAccount = new Account({ token: "my_device_token" });
-   *
-   * const result = await myAccount.sendDeviceData("myDeviceId", {
+   * const result = await Resources.devices.sendDeviceData("myDeviceId", {
    *   variable: "temperature",
    *   unit: "F",
    *   value: 55,
@@ -321,15 +416,70 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * });
    * ```
    */
-  // public async sendDeviceData(deviceId: GenericID, data: DataCreate | DataCreate[]): Promise<string> {
-  //   const result = await this.doRequest<string>({
-  //     path: `/device/${deviceId}/data`,
-  //     method: "POST",
-  //     body: data,
-  //   });
+  public async sendDeviceData(deviceId: GenericID, data: DataCreate | DataCreate[]): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/device/${deviceId}/data`,
+      method: "POST",
+      body: data,
+    });
 
-  //   return result;
-  // }
+    return result;
+  }
+
+  /**
+   * Stream data to device
+   *
+   * @experimental
+   * @param deviceId Device ID.
+   * @param data An array or one object with data to be send to TagoIO using device token
+   * @param options Stream options
+   * @example
+   * ```js
+   * const data = [
+   *     {
+   *       variable: "temperature",
+   *       unit: "F",
+   *       value: 55,
+   *       time: "2015-11-03 13:44:33",
+   *       location: { lat: 42.2974279, lng: -85.628292 },
+   *     },
+   *     {
+   *       variable: "temperature",
+   *       unit: "F",
+   *       value: 53,
+   *       time: "2015-11-03 13:44:33",
+   *       location: { lat: 43.2974279, lng: -86.628292 },
+   *     },
+   *     // ...
+   *   ];
+   *
+   *   const result = await Resources.devices.sendDeviceDataStreaming("myDeviceId", data, {
+   *     poolingRecordQty: 1000,
+   *     poolingTime: 1000,
+   *   });
+   * ```
+   */
+  public async sendDeviceDataStreaming(
+    deviceId: GenericID,
+    data: DataCreate[],
+    options?: Omit<OptionsStreaming, "neverStop">
+  ) {
+    const poolingRecordQty = options?.poolingRecordQty || 1000;
+    const poolingTime = options?.poolingTime || 1000; // 1 seg
+
+    if (!Array.isArray(data)) {
+      return Promise.reject("Only data array is allowed");
+    }
+
+    const dataChunk = chunk(data, poolingRecordQty);
+    for (const items of dataChunk) {
+      await this.sendDeviceData(deviceId, items);
+
+      await sleep(poolingTime);
+    }
+
+    return `${data.length} Data added.`;
+  }
 
   /**
    * Edit data records in a device using the profile token and device ID.
@@ -344,9 +494,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @example
    * ```ts
-   * const myAccount = new Account({ token: "my_account_token" });
-   *
-   * await myAccount.editDeviceData("myDeviceId", { id: "idOfTheRecord", value: "new value", unit: "new unit" });
+   * await Resources.devices.editDeviceData("myDeviceId", { id: "idOfTheRecord", value: "new value", unit: "new unit" });
    * ```
    */
   public async editDeviceData(deviceId: GenericID, updatedData: DataEdit | DataEdit[]): Promise<string> {
@@ -373,9 +521,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @example
    * ```ts
-   * const myAccount = new Account({ token: "my_account_token" });
-   *
-   * await myAccount.deleteDeviceData("myDeviceId", { ids: ["recordIdToDelete", "anotherRecordIdToDelete" ] });
+   * await Resources.devices.deleteDeviceData("myDeviceId", { ids: ["recordIdToDelete", "anotherRecordIdToDelete" ] });
    * ```
    */
   public async deleteDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<string> {

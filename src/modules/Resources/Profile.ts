@@ -9,6 +9,7 @@ import {
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
 import { BillingAddOn } from "./billing.types";
+
 import type {
   AddonInfo,
   AuditLog,
@@ -38,8 +39,8 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * Get Profile info
    * @param profileID Profile identification or "current" for current profile
    * example:
-   * - account.profiles.info("6126850f58ef8600184dd486");
-   * - account.profiles.info("current");
+   * - Resources.profiles.info("6126850f58ef8600184dd486");
+   * - Resources.profiles.info("current");
    */
   public async info(profileID: GenericID | "current"): Promise<ProfileInfo> {
     const result = await this.doRequest<ProfileInfo>({
@@ -55,10 +56,13 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   /**
    * Gets profile summary
    */
-  public async summary(profileID: GenericID): Promise<ProfileSummary> {
+  public async summary(profileID: GenericID, options?: { onlyAmount?: boolean }): Promise<ProfileSummary> {
     const result = await this.doRequest<ProfileSummary>({
       path: `/profile/${profileID}/summary`,
       method: "GET",
+      params: {
+        ...(options?.onlyAmount && { onlyAmount: options.onlyAmount }),
+      },
     });
 
     return result;
@@ -287,11 +291,12 @@ class Profile extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Deletes a token
+   * @profileId Profile ID
    * @param token Token
    */
-  public async tokenDelete(token: GenericToken): Promise<string> {
+  public async tokenDelete(profileId: string, token: GenericToken): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/profile/token/${token}`,
+      path: `/profile/${profileId}/token/${token}`,
       method: "DELETE",
     });
 

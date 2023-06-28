@@ -1,5 +1,5 @@
 import { Query } from "../../common/common.types";
-import { DeviceInfo } from "../Account/devices.types";
+import { DeviceItem } from "../Device/device.types";
 
 interface IDeviceParameters {
   name?: string;
@@ -36,11 +36,11 @@ interface INetworkInfo {
 
 interface NetworkDeviceListQuery
   extends Omit<
-    Query<DeviceInfo, "name" | "visible" | "last_input" | "last_output" | "created_at" | "updated_at">,
+    Query<DeviceItem, "name" | "visible" | "last_input" | "last_output" | "created_at" | "updated_at">,
     "fields"
   > {}
 
-interface NetworkDeviceListQueryInfo extends DeviceInfo {
+interface NetworkDeviceListQueryInfo extends DeviceItem {
   token: string;
 }
 

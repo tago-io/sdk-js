@@ -87,6 +87,19 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
+  /**
+   * Delete the connector
+   * @param connectorID Connector identification
+   */
+  public async delete(connectorID: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/integration/connector/${connectorID}`,
+      method: "DELETE",
+    });
+
+    return result;
+  }
 }
 
 export default Connectors;

@@ -3,7 +3,7 @@ import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
 import { NotificationCreate, NotificationInfo } from "./notifications.types";
 import {
-  LoginResponse,
+  LoginResponseRun,
   RunInfo,
   UserCreateInfo,
   UserInfo,
@@ -98,8 +98,8 @@ class Run extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async loginAsUser(userID: GenericID, options?: LoginAsUserOptions): Promise<LoginResponse> {
-    let result = await this.doRequest<LoginResponse>({
+  public async loginAsUser(userID: GenericID, options?: LoginAsUserOptions): Promise<LoginResponseRun> {
+    let result = await this.doRequest<LoginResponseRun>({
       path: `/run/users/${userID}/login`,
       params: options,
       method: "GET",
