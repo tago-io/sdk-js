@@ -232,13 +232,14 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
     const poolingTime = options?.poolingTime || 1000; // 1 seg
     const neverStop = options?.neverStop || false;
+    const initialSkip = options?.initialSkip || 0;
 
     if (poolingRecordQty > 10000) {
       throw new Error("The maximum of poolingRecordQty is 10000");
     }
 
     const qty: number = Math.ceil(poolingRecordQty);
-    let skip: number = 0;
+    let skip: number = initialSkip;
     let stop: boolean = false;
 
     while (!stop) {
