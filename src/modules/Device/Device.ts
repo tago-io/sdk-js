@@ -244,16 +244,14 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     while (!stop) {
       await sleep(poolingTime);
 
-      yield (async () => {
-        const data = await this.getData({ ...params, qty, skip, query: "default", ordination: "ascending" });
-        skip += data.length;
+      const data = await this.getData({ ...params, qty, skip, query: "default", ordination: "ascending" });
+      skip += data.length;
 
-        if (!neverStop) {
-          stop = data.length === 0 || data.length < poolingRecordQty;
-        }
+      if (!neverStop) {
+        stop = data.length === 0 || data.length < poolingRecordQty;
+      }
 
-        return data;
-      })();
+      yield data;
     }
   }
 

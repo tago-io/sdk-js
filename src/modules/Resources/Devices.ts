@@ -93,18 +93,16 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     while (!stop) {
       await sleep(poolingTime);
 
-      yield (async () => {
-        const foundDevices = await this.list({
-          ...queryObj,
-          amount,
-          page,
-        });
-        page += 1;
+      const foundDevices = await this.list({
+        ...queryObj,
+        amount,
+        page,
+      });
+      page += 1;
 
-        stop = foundDevices.length < amount;
+      stop = foundDevices.length < amount;
 
-        return foundDevices;
-      })();
+      yield foundDevices;
     }
   }
 
@@ -345,7 +343,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    */
   public async *getDeviceDataStreaming(deviceId: GenericID, params?: DataQueryStreaming, options?: OptionsStreaming) {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
-    const poolingTime = options?.poolingTime || 1000; // 1 seg
+    const poolingTime = options?.poolingTime || 1000; // 1 sec
     const neverStop = options?.neverStop || false;
 
     if (poolingRecordQty > 10000) {
@@ -361,22 +359,20 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     while (!stop) {
       await sleep(poolingTime);
 
-      yield (async () => {
-        const data = await this.getDeviceData(deviceId, {
-          ...params,
-          qty,
-          skip,
-          query: "default",
-          ordination: "ascending",
-        });
-        skip += data.length;
+      const data = await this.getDeviceData(deviceId, {
+        ...params,
+        qty,
+        skip,
+        query: "default",
+        ordination: "ascending",
+      });
+      skip += data.length;
 
-        if (!neverStop) {
-          stop = data.length === 0 || data.length < poolingRecordQty;
-        }
+      if (!neverStop) {
+        stop = data.length === 0 || data.length < poolingRecordQty;
+      }
 
-        return data;
-      })();
+      yield data;
     }
   }
 
