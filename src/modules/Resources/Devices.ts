@@ -306,6 +306,10 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * ```
    */
   public async getDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<Data[]> {
+    if (queryParams?.query === "default") {
+      delete queryParams.query;
+    }
+
     let result = await this.doRequest<Data[] | number>({
       path: `/device/${deviceId}/data`,
       method: "GET",
@@ -345,6 +349,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
     const poolingTime = options?.poolingTime || 1000; // 1 sec
     const neverStop = options?.neverStop || false;
+    const initialSkip = options?.initialSkip || 0;
 
     if (poolingRecordQty > 10000) {
       throw new Error("The maximum of poolingRecordQty is 10000");
@@ -353,7 +358,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     // API will divide the poolingRecordQty by the number of variables
     const variableQty = Array.isArray(params?.variables) ? params.variables.length : 1;
     const qty: number = Math.ceil(poolingRecordQty / variableQty);
-    let skip: number = 0;
+    let skip: number = initialSkip;
     let stop: boolean = false;
 
     while (!stop) {
