@@ -16,6 +16,10 @@ export * from "./modules/Resources/run.types";
 export * from "./modules/Resources/_share.types";
 export * from "./modules/Resources/template.types";
 export * from "./modules/Resources/paymentHistory.types";
+export * from "./modules/Resources/billing.types";
+export * from "./modules/Resources/integration.networks.types";
+export * from "./modules/Resources/integration.connectors.types";
+export * from "./modules/Resources/tagocore.types";
 
 export * from "./modules/Analysis/analysis.types";
 export * from "./modules/Device/device.types";
