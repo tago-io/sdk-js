@@ -191,7 +191,7 @@ export {
   DataQuery,
   DataQuerySummary,
   DataQueryStreaming,
-  DataQueryAggregation,
+  DataQueryAggregate,
   DataQueryFirstLast,
   DataQueryDefault,
   DataQueryNumberResponse,
