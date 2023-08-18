@@ -4,7 +4,7 @@ type ActionType = "condition" | "resource" | "interval" | "schedule" | "mqtt_top
 
 type ActionTypeParams =
   | {
-      script: string | string[];
+      script: GenericID | GenericID[];
       type: "script";
     }
   | {
@@ -34,12 +34,12 @@ type ActionTypeParams =
       payload: string;
       topic: string;
       type: "mqtt";
-      qos?: number;
+      qos?: 1 | 2 | 3;
       retain?: boolean;
     }
   | {
-      headers: {};
-      fallback_token?: string | null | undefined;
+      headers: Record<string, string>;
+      fallback_token?: string;
       type: "post";
       url: string;
     }
@@ -48,7 +48,7 @@ type ActionTypeParams =
     }
   | {
       type: "tcore";
-      tcore_id: string;
+      tcore_id: GenericID;
       device_token: string;
     }
   | {
@@ -128,7 +128,7 @@ interface ActionCreateInfo {
   /**
    * Description of the action.
    */
-  description?: string | null | undefined;
+  description?: string;
   lock?: boolean;
   /**
    * Type of action
