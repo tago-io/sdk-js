@@ -135,7 +135,7 @@ type DataQuerySummary = DataQueryBase & {
 type DataQueryAggregate = DataQueryBase & {
   query: "aggregate";
   interval: "minute" | "hour" | "day" | "month" | "quarter" | "year";
-  function: "avg" | "sum" | "min" | "max",
+  function: "avg" | "sum" | "min" | "max";
 };
 
 type DataQueryConditional = Omit<DataQueryBase, "start_date"> & {
@@ -145,7 +145,13 @@ type DataQueryConditional = Omit<DataQueryBase, "start_date"> & {
   function: "gt" | "gte" | "lt" | "lte" | "eq" | "ne";
 };
 
-type DataQuery = DataQueryDefault | DataQueryFirstLast | DataQuerySummary | DataQueryAvgSum | DataQueryAggregate | DataQueryConditional;
+type DataQuery =
+  | DataQueryDefault
+  | DataQueryFirstLast
+  | DataQuerySummary
+  | DataQueryAvgSum
+  | DataQueryAggregate
+  | DataQueryConditional;
 
 type DataQueryStreaming = Omit<DataQueryDefault, "qty" | "skip" | "query" | "ordination">;
 
