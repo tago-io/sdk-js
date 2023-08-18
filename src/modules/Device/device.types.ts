@@ -151,6 +151,11 @@ interface OptionsStreaming {
    * @default false
    */
   neverStop?: boolean;
+  /**
+   * start skip from a specific record
+   * @default 0
+   */
+  initialSkip?: number;
 }
 
 type ListResponse = DeviceItem[];
