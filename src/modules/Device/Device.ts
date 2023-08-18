@@ -6,7 +6,7 @@ import { ConfigurationParams } from "../Resources/devices.types";
 import dateParser from "../Utils/dateParser";
 import {
   DataQuery,
-  DataQueryAggregation,
+  DataQueryAggregate,
   DataQueryDefault,
   DataQueryFirstLast,
   DataQueryNumberResponse,
@@ -81,7 +81,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * ```
    */
   public async getData(queryParams?: DataQuerySummary): Promise<DataQueryNumberResponse[]>;
-  public async getData(queryParams?: DataQueryAggregation): Promise<DataQueryNumberResponse[]>;
+  public async getData(queryParams?: DataQueryAggregate): Promise<DataQueryNumberResponse[]>;
   public async getData(queryParams?: DataQueryDefault): Promise<Data[]>;
   public async getData(queryParams?: DataQueryFirstLast): Promise<Data[]>;
   public async getData(queryParams?: DataQuery): Promise<Data[] | DataQueryNumberResponse[]> {
