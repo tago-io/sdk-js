@@ -42,13 +42,15 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * }
    * @param queryObj Search query params
    */
-  public async list(queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
-    let result = await this.doRequest<DeviceListItem[]>({
+  public async list<T extends DeviceQuery>(queryObj?: T) {
+    let result = await this.doRequest<
+      DeviceListItem<T["fields"] extends DeviceQuery["fields"] ? T["fields"][number] : "id" | "name">[]
+    >({
       path: "/device",
       method: "GET",
       params: {
         page: queryObj?.page || 1,
-        fields: queryObj?.fields || ["id", "name"],
+        fields: queryObj?.fields || ["id", "name", "tags"],
         filter: queryObj?.filter || {},
         amount: queryObj?.amount || 20,
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
@@ -205,8 +207,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    * @param sentStatus True return only sent=true, False return only sent=false
    */
-  public async paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<ConfigurationParams[]> {
-    const result = await this.doRequest<ConfigurationParams[]>({
+  public async paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<Required<ConfigurationParams>[]> {
+    const result = await this.doRequest<Required<ConfigurationParams>[]>({
       path: `/device/${deviceID}/params`,
       method: "GET",
       params: { sent_status: sentStatus },
@@ -243,11 +245,12 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
 
-  public async tokenList(
-    deviceID: GenericID,
-    queryObj?: ListDeviceTokenQuery
-  ): Promise<Partial<DeviceTokenDataList>[]> {
-    let result = await this.doRequest<Partial<DeviceTokenDataList>[]>({
+  public async tokenList<T extends ListDeviceTokenQuery>(deviceID: GenericID, queryObj?: T) {
+    let result = await this.doRequest<
+      DeviceTokenDataList<
+        T["fields"] extends ListDeviceTokenQuery["fields"] ? T["fields"][number] : "token" | "name" | "permission"
+      >[]
+    >({
       path: `/device/token/${deviceID}`,
       method: "GET",
       params: {

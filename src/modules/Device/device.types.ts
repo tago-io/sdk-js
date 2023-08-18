@@ -155,13 +155,20 @@ interface OptionsStreaming {
 
 type ListResponse = DeviceItem[];
 
+type DataQueryNumberResponse = Pick<Data, "time"> & { value: number };
+
 export {
   DeviceConstructorParams,
   DeviceItem,
   DataToSend,
   DataToEdit,
   DataQuery,
+  DataQuerySummary,
   DataQueryStreaming,
+  DataQueryAggregation,
+  DataQueryFirstLast,
+  DataQueryDefault,
+  DataQueryNumberResponse,
   OptionsStreaming,
   ListResponse,
   valuesTypes,

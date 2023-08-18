@@ -1,8 +1,15 @@
 import { GenericToken } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams, doRequestParams } from "../../common/TagoIOModule";
-import { AccountCreateInfo, AccountInfo, LoginResponse, OTPType, TokenCreateInfo } from "./account.types";
+import TagoIOModule, { doRequestParams, GenericModuleParams } from "../../common/TagoIOModule";
 import { Regions } from "../../regions";
 import dateParser from "../Utils/dateParser";
+import {
+  AccountCreateInfo,
+  AccountInfo,
+  LoginCredentials,
+  LoginResponse,
+  OTPType,
+  TokenCreateInfo,
+} from "./account.types";
 
 class Account extends TagoIOModule<GenericModuleParams> {
   /**
@@ -69,10 +76,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @param credentials Credentials
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static async login(
-    credentials: { email: string; password: string },
-    region?: Regions
-  ): Promise<LoginResponse> {
+  public static async login(credentials: LoginCredentials, region?: Regions): Promise<LoginResponse> {
     const params: doRequestParams = {
       path: "/account/login",
       method: "POST",

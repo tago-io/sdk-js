@@ -1,4 +1,5 @@
 import { GenericID } from "../../common/common.types";
+import { ProfileListInfo } from "./profile.types";
 
 interface AccountCreateInfo {
   /**
@@ -68,12 +69,14 @@ interface LoginResponse {
   email: string;
   company: string;
   name: string;
-  profiles: {
-    account: GenericID;
-    id: GenericID;
-    name: GenericID;
-    logo_url: string | null;
-  }[];
+  profiles: Required<ProfileListInfo>[];
+}
+
+interface LoginCredentials {
+  email: string;
+  password: string;
+  otp_type: OTPType;
+  pin_code: string;
 }
 
 type OTPType = "sms" | "email" | "authenticator";
@@ -99,6 +102,10 @@ interface TokenCreateInfo {
    * OTP Type
    */
   otp_type: OTPType;
+  /**
+   * Name of the token
+   */
+  name: string;
 }
 
-export { AccountInfo, AccountCreateInfo, LoginResponse, TokenCreateInfo, OTPType };
+export { AccountInfo, AccountCreateInfo, LoginResponse, TokenCreateInfo, OTPType, LoginCredentials };
