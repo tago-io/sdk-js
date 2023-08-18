@@ -4,7 +4,18 @@ import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
 import { ConfigurationParams } from "../Resources/devices.types";
 import dateParser from "../Utils/dateParser";
-import { DataQuery, DataQueryStreaming, DeviceConstructorParams, DeviceItem, OptionsStreaming } from "./device.types";
+import {
+  DataQuery,
+  DataQueryAggregation,
+  DataQueryDefault,
+  DataQueryFirstLast,
+  DataQueryNumberResponse,
+  DataQueryStreaming,
+  DataQuerySummary,
+  DeviceConstructorParams,
+  DeviceItem,
+  OptionsStreaming,
+} from "./device.types";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
@@ -69,7 +80,11 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * });
    * ```
    */
-  public async getData(queryParams?: DataQuery): Promise<Data[]> {
+  public async getData(queryParams?: DataQuerySummary): Promise<DataQueryNumberResponse[]>;
+  public async getData(queryParams?: DataQueryAggregation): Promise<DataQueryNumberResponse[]>;
+  public async getData(queryParams?: DataQueryDefault): Promise<Data[]>;
+  public async getData(queryParams?: DataQueryFirstLast): Promise<Data[]>;
+  public async getData(queryParams?: DataQuery): Promise<Data[] | DataQueryNumberResponse[]> {
     if (queryParams?.query === "default") {
       delete queryParams.query;
     }
@@ -83,11 +98,8 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     if (typeof result === "number") {
       result = [
         {
-          id: "none",
-          origin: "?",
           time: new Date(),
           value: result,
-          variable: "?",
         },
       ] as Data[];
     }
@@ -168,7 +180,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * const result = await myDevice.getParameters();
    * ```
    */
-  public async getParameters(status: "all" | "onlyUnRead" | "onlyRead"): Promise<ConfigurationParams[]> {
+  public async getParameters(status: "all" | "onlyUnRead" | "onlyRead"): Promise<Required<ConfigurationParams>[]> {
     const params: { sent_status?: boolean } = {};
 
     if (status === "onlyRead") {
@@ -183,7 +195,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
       params.sent_status = false;
     }
 
-    const result = await this.doRequest<ConfigurationParams[]>({
+    const result = await this.doRequest<Required<ConfigurationParams>[]>({
       path: "/device/params",
       method: "GET",
       params: params,
@@ -244,16 +256,14 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     while (!stop) {
       await sleep(poolingTime);
 
-      yield (async () => {
-        const data = await this.getData({ ...params, qty, skip, query: "default", ordination: "ascending" });
-        skip += data.length;
+      const data = await this.getData({ ...params, qty, skip, query: "default", ordination: "ascending" });
+      skip += data.length;
 
-        if (!neverStop) {
-          stop = data.length === 0 || data.length < poolingRecordQty;
-        }
+      if (!neverStop) {
+        stop = data.length === 0 || data.length < poolingRecordQty;
+      }
 
-        return data;
-      })();
+      yield data;
     }
   }
 

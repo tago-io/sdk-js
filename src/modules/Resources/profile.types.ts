@@ -5,6 +5,8 @@ interface ProfileListInfo {
   id: GenericID;
   name: string;
   logo_url: string | null;
+  from_share?: boolean;
+  account?: GenericID;
 }
 
 interface ProfileLimit {

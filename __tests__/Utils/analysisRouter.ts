@@ -34,17 +34,14 @@ describe("Analysis Router conditions", () => {
     router.register(func).whenSeries("123");
     router.register(func).whenSeries(["123"]);
     router.register(func).whenActionType("resource");
-    router.register(func).whenActionWhen("create");
     router.register(func).whenWidgetExec("insert");
     router.register(func).whenEnv("_widget_exec", "insert");
     router.register(func).whenInputFormID("122");
-    router.register(func).whenUserListIdentifier("123");
-    router.register(func).whenDeviceListIdentifier("125");
     const execution = await router.exec();
 
     // @ts-ignore
     expect(execution.status).toBeTruthy();
-    expect(execution.services).toEqual(Array(15).fill("func", 0));
+    expect(execution.services).toEqual(Array(12).fill("func", 0));
   });
 
   test("All tests with when invalid conditions", async () => {
@@ -65,7 +62,6 @@ describe("Analysis Router conditions", () => {
     router.register(func).whenSeries("333");
     router.register(func).whenSeries(["333"]);
     router.register(func).whenActionType("condition");
-    router.register(func).whenActionWhen("delete");
     router.register(func).whenWidgetExec("delete");
     router.register(func).whenEnv("_widget_exec", "delete");
     router.register(func).whenInputFormID("444");
@@ -97,13 +93,14 @@ describe("Analysis Router conditions", () => {
   });
 
   test("Receive device scope in the function", async () => {
-    const scope = [{ name: "test", "tags.user": "xxx", device: "1234", old: {} }, { device_list_button_id: "122" }];
+    const scope = [{ name: "test", "tags.user": "xxx", device: "1234", old: {} }];
+    const environment = { _widget_exec: "122" };
 
     const func2 = ({ scope: testScope }: RouterConstructor & { scope: DeviceListScope[] }) => {
       expect(testScope).toStrictEqual(scope);
     };
 
-    const router = new AnalysisRouter({ ...params, scope });
+    const router = new AnalysisRouter({ ...params, scope, environment });
     router.register(func2).whenDeviceListIdentifier("122");
     const execution = await router.exec();
     expect(execution.status).toBeTruthy();

@@ -251,8 +251,8 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * @param tagoCoreID Standalone TagoCore ID
    * @param queryObj Search query params
    */
-  public async standaloneDeviceList(tagoCoreID: GenericID, queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
-    let result = await this.doRequest<DeviceListItem[]>({
+  public async standaloneDeviceList<T extends DeviceQuery>(tagoCoreID: GenericID, queryObj?: T) {
+    let result = await this.doRequest<DeviceListItem<"id" | "name" | T["fields"][number]>[]>({
       path: "/device",
       method: "GET",
       params: {
@@ -287,8 +287,8 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * @param clusterID TagoCore Cluster ID
    * @param queryObj Search query params
    */
-  public async clusterDeviceList(clusterID: GenericID, queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
-    let result = await this.doRequest<DeviceListItem[]>({
+  public async clusterDeviceList<T extends DeviceQuery>(clusterID: GenericID, queryObj?: T) {
+    let result = await this.doRequest<DeviceListItem<"id" | "name" | T["fields"][number]>[]>({
       path: "/device",
       method: "GET",
       params: {

@@ -413,6 +413,7 @@ type ThemeOption =
   | "auth_form_opacity";
 
 type UserQuery = Query<UserInfo, "name" | "active" | "last_login" | "created_at" | "updated_at">;
+type UserListItem<T extends UserQuery["fields"][number] = null> = Pick<UserInfo, T> & Partial<UserInfo>;
 
 export {
   RunInfo,
@@ -421,6 +422,7 @@ export {
   UserInfo,
   LoginResponseRun,
   UserQuery,
+  UserListItem,
   LoginAsUserOptions,
   RunSAMLInfo,
   RunSAMLEditInfo,

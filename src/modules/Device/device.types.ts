@@ -118,10 +118,12 @@ type DataQueryFirstLast = DataQueryBase & {
     | "first_item"
     | "first_value"
     | "first_location"
-    | "first_insert";
+    | "first_insert"
+    | "aggregate"
+    | "conditional";
 };
 
-type DataQueryAggregation = Omit<DataQueryBase, "start_date"> & {
+type DataQueryAvgSum = Omit<DataQueryBase, "start_date"> & {
   query: "avg" | "sum";
   start_date: Date | string;
 };
@@ -130,7 +132,26 @@ type DataQuerySummary = DataQueryBase & {
   query: "min" | "max" | "count";
 };
 
-type DataQuery = DataQueryDefault | DataQueryFirstLast | DataQuerySummary | DataQueryAggregation;
+type DataQueryAggregate = DataQueryBase & {
+  query: "aggregate";
+  interval: "minute" | "hour" | "day" | "month" | "quarter" | "year";
+  function: "avg" | "sum" | "min" | "max";
+};
+
+type DataQueryConditional = Omit<DataQueryBase, "start_date"> & {
+  query: "conditional";
+  start_date: Date | string;
+  value: number;
+  function: "gt" | "gte" | "lt" | "lte" | "eq" | "ne";
+};
+
+type DataQuery =
+  | DataQueryDefault
+  | DataQueryFirstLast
+  | DataQuerySummary
+  | DataQueryAvgSum
+  | DataQueryAggregate
+  | DataQueryConditional;
 
 type DataQueryStreaming = Omit<DataQueryDefault, "qty" | "skip" | "query" | "ordination">;
 
@@ -151,9 +172,16 @@ interface OptionsStreaming {
    * @default false
    */
   neverStop?: boolean;
+  /**
+   * start skip from a specific record
+   * @default 0
+   */
+  initialSkip?: number;
 }
 
 type ListResponse = DeviceItem[];
+
+type DataQueryNumberResponse = Pick<Data, "time"> & { value: number };
 
 export {
   DeviceConstructorParams,
@@ -161,7 +189,12 @@ export {
   DataToSend,
   DataToEdit,
   DataQuery,
+  DataQuerySummary,
   DataQueryStreaming,
+  DataQueryAggregation,
+  DataQueryFirstLast,
+  DataQueryDefault,
+  DataQueryNumberResponse,
   OptionsStreaming,
   ListResponse,
   valuesTypes,

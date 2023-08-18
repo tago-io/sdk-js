@@ -33,5 +33,6 @@ interface AnalysisInfo extends AnalysisCreateInfo {
 }
 
 type AnalysisQuery = Query<AnalysisInfo, "name" | "active" | "run_on" | "last_run" | "created_at" | "updated_at">;
+type AnalysisListItem<T extends AnalysisQuery["fields"][number] = null> = Pick<AnalysisInfo, T> & Partial<AnalysisInfo>;
 
-export { AnalysisInfo, AnalysisCreateInfo, ScriptFile, AnalysisQuery };
+export { AnalysisInfo, AnalysisCreateInfo, ScriptFile, AnalysisQuery, AnalysisListItem };

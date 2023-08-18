@@ -16,7 +16,7 @@ class RouterService {
    */
   public whenVariables(variable: string | string[]) {
     const variable_list = Array.isArray(variable) ? variable : [variable];
-    this.addFunc((scope: any, environment: any) => !!scope.find((x: any) => variable_list.includes(x?.variable)));
+    this.addFunc((scope: any, _environment: any) => !!scope.find((x: any) => variable_list.includes(x?.variable)));
     return this;
   }
 
@@ -25,7 +25,7 @@ class RouterService {
    * Information is available if Analysis is triggered by an widget or action.
    */
   public whenVariableLike(variable: string) {
-    this.addFunc((scope: any, environment: any) => !!scope.find((x: any) => x?.variable?.includes(variable)));
+    this.addFunc((scope: any, _environment: any) => !!scope.find((x: any) => x?.variable?.includes(variable)));
     return this;
   }
 
@@ -35,7 +35,7 @@ class RouterService {
    */
   public whenValues(values: string | boolean | number | (string | boolean | number)[]) {
     const values_list = Array.isArray(values) ? values : [values];
-    this.addFunc((scope: any, environment: any) => !!scope.find((x: any) => values_list.includes(x?.value)));
+    this.addFunc((scope: any, _environment: any) => !!scope.find((x: any) => values_list.includes(x?.value)));
     return this;
   }
 
@@ -45,7 +45,7 @@ class RouterService {
    */
   public whenSeries(series: string | string[]) {
     const series_list = Array.isArray(series) ? series : [series];
-    this.addFunc((scope: any, environment: any) => !!scope.find((x: any) => series_list.includes(x?.serie)));
+    this.addFunc((scope: any, _environment: any) => !!scope.find((x: any) => series_list.includes(x?.serie)));
     return this;
   }
 
@@ -54,7 +54,7 @@ class RouterService {
    * Information is available if Analysis is triggered by an input widget.
    */
   public whenInputFormID(id: string) {
-    this.addFunc((scope: any, environment: any) => !!scope.find((x: any) => x.input_form_button_id === id));
+    this.addFunc((scope: any, _environment: any) => !!scope.find((x: any) => x.input_form_button_id === id));
     return this;
   }
 
@@ -62,8 +62,8 @@ class RouterService {
    * Return true if device list identifier ID is the same as sent by widget
    * Information is available if Analysis is triggered by an input widget.
    */
-  public whenDeviceListIdentifier(id: string) {
-    this.addFunc((scope: any, environment: any) => !!scope.find((x: any) => x.device_list_button_id === id));
+  public whenDeviceListIdentifier(btn_id: string) {
+    this.addFunc((_scope: any, environment: any) => environment._widget_exec === btn_id);
     return this;
   }
 
@@ -71,8 +71,8 @@ class RouterService {
    * Return true if user list identifier ID is the same as sent by widget
    * Information is available if Analysis is triggered by an input widget.
    */
-  public whenUserListIdentifier(id: string) {
-    this.addFunc((scope: any, environment: any) => !!scope.find((x: any) => x.user_list_button_id === id));
+  public whenUserListIdentifier(btn_id: string) {
+    this.addFunc((_scope: any, environment: any) => environment._widget_exec === btn_id);
     return this;
   }
 
@@ -81,7 +81,11 @@ class RouterService {
    * Information is available if Analysis is triggered by an input widget.
    */
   public whenCustomBtnID(btn_id: string) {
-    this.addFunc((scope: any, environment: any) => environment._widget_exec === btn_id);
+    this.addFunc(
+      (scope: any, environment: any) =>
+        !!scope.find((x: any) => x.device_list_button_id == btn_id || x.user_list_button_id === btn_id) ||
+        environment._widget_exec === btn_id // keep for legacy support
+    );
     return this;
   }
 
@@ -90,7 +94,7 @@ class RouterService {
    * Useful to be used with Device List widget.
    */
   public whenParameterExists(parameter: string) {
-    this.addFunc((scope: any, environment: any) => !!scope.find((x: any) => parameter in x));
+    this.addFunc((scope: any, _environment: any) => !!scope.find((x: any) => parameter in x));
     return this;
   }
 
@@ -99,7 +103,7 @@ class RouterService {
    * Information is available if Analysis is triggered by an widget.
    */
   public whenWidgetExec(widget_exec: "insert" | "delete" | "edit") {
-    this.addFunc((scope: any, environment: any) => environment._widget_exec === widget_exec);
+    this.addFunc((_scope: any, environment: any) => environment._widget_exec === widget_exec);
     return this;
   }
 
@@ -108,7 +112,7 @@ class RouterService {
    * Information is available if Analysis is triggered by an action.
    */
   public whenActionWhen(action_when: "create" | "update" | "delete" | "mqtt_connect" | "mqtt_disconnect") {
-    this.addFunc((scope: any, environment: any) => environment._action_when === action_when);
+    this.addFunc((_scope: any, environment: any) => environment._action_when === action_when);
     return this;
   }
 
@@ -117,7 +121,7 @@ class RouterService {
    * Information is available if Analysis is triggered by an action.
    */
   public whenActionType(action_type: "resource" | "condition" | "delete") {
-    this.addFunc((scope: any, environment: any) => environment._action_type === action_type);
+    this.addFunc((_scope: any, environment: any) => environment._action_type === action_type);
     return this;
   }
 
@@ -126,7 +130,7 @@ class RouterService {
    * Information is always available.
    */
   public whenEnv(key: string, value: string) {
-    this.addFunc((scope: any, environment: any) => environment[key] === value);
+    this.addFunc((_scope: any, environment: any) => environment[key] === value);
     return this;
   }
 

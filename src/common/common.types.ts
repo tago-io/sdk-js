@@ -23,9 +23,11 @@ interface Metadata {
   [key: string]: any;
 }
 
+type Latitude = number;
+type Longitude = number;
 type LocationGeoJSON = {
   type: "Point";
-  coordinates: number[];
+  coordinates: [Longitude, Latitude];
 };
 
 type LocationLatLng = { lat: number; lng: number };

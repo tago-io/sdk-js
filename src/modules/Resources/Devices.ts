@@ -42,13 +42,15 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * }
    * @param queryObj Search query params
    */
-  public async list(queryObj?: DeviceQuery): Promise<DeviceListItem[]> {
-    let result = await this.doRequest<DeviceListItem[]>({
+  public async list<T extends DeviceQuery>(queryObj?: T) {
+    let result = await this.doRequest<
+      DeviceListItem<T["fields"] extends DeviceQuery["fields"] ? T["fields"][number] : "id" | "name">[]
+    >({
       path: "/device",
       method: "GET",
       params: {
         page: queryObj?.page || 1,
-        fields: queryObj?.fields || ["id", "name"],
+        fields: queryObj?.fields || ["id", "name", "tags"],
         filter: queryObj?.filter || {},
         amount: queryObj?.amount || 20,
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
@@ -93,18 +95,16 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     while (!stop) {
       await sleep(poolingTime);
 
-      yield (async () => {
-        const foundDevices = await this.list({
-          ...queryObj,
-          amount,
-          page,
-        });
-        page += 1;
+      const foundDevices = await this.list({
+        ...queryObj,
+        amount,
+        page,
+      });
+      page += 1;
 
-        stop = foundDevices.length < amount;
+      stop = foundDevices.length < amount;
 
-        return foundDevices;
-      })();
+      yield foundDevices;
     }
   }
 
@@ -205,8 +205,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param deviceID Device ID
    * @param sentStatus True return only sent=true, False return only sent=false
    */
-  public async paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<ConfigurationParams[]> {
-    const result = await this.doRequest<ConfigurationParams[]>({
+  public async paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<Required<ConfigurationParams>[]> {
+    const result = await this.doRequest<Required<ConfigurationParams>[]>({
       path: `/device/${deviceID}/params`,
       method: "GET",
       params: { sent_status: sentStatus },
@@ -243,11 +243,12 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @param queryObj Search query params
    */
 
-  public async tokenList(
-    deviceID: GenericID,
-    queryObj?: ListDeviceTokenQuery
-  ): Promise<Partial<DeviceTokenDataList>[]> {
-    let result = await this.doRequest<Partial<DeviceTokenDataList>[]>({
+  public async tokenList<T extends ListDeviceTokenQuery>(deviceID: GenericID, queryObj?: T) {
+    let result = await this.doRequest<
+      DeviceTokenDataList<
+        T["fields"] extends ListDeviceTokenQuery["fields"] ? T["fields"][number] : "token" | "name" | "permission"
+      >[]
+    >({
       path: `/device/token/${deviceID}`,
       method: "GET",
       params: {
@@ -308,6 +309,10 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * ```
    */
   public async getDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<Data[]> {
+    if (queryParams?.query === "default") {
+      delete queryParams.query;
+    }
+
     let result = await this.doRequest<Data[] | number>({
       path: `/device/${deviceId}/data`,
       method: "GET",
@@ -345,8 +350,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    */
   public async *getDeviceDataStreaming(deviceId: GenericID, params?: DataQueryStreaming, options?: OptionsStreaming) {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
-    const poolingTime = options?.poolingTime || 1000; // 1 seg
+    const poolingTime = options?.poolingTime || 1000; // 1 sec
     const neverStop = options?.neverStop || false;
+    const initialSkip = options?.initialSkip || 0;
 
     if (poolingRecordQty > 10000) {
       throw new Error("The maximum of poolingRecordQty is 10000");
@@ -355,28 +361,26 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     // API will divide the poolingRecordQty by the number of variables
     const variableQty = Array.isArray(params?.variables) ? params.variables.length : 1;
     const qty: number = Math.ceil(poolingRecordQty / variableQty);
-    let skip: number = 0;
+    let skip: number = initialSkip;
     let stop: boolean = false;
 
     while (!stop) {
       await sleep(poolingTime);
 
-      yield (async () => {
-        const data = await this.getDeviceData(deviceId, {
-          ...params,
-          qty,
-          skip,
-          query: "default",
-          ordination: "ascending",
-        });
-        skip += data.length;
+      const data = await this.getDeviceData(deviceId, {
+        ...params,
+        qty,
+        skip,
+        query: "default",
+        ordination: "ascending",
+      });
+      skip += data.length;
 
-        if (!neverStop) {
-          stop = data.length === 0 || data.length < poolingRecordQty;
-        }
+      if (!neverStop) {
+        stop = data.length === 0 || data.length < poolingRecordQty;
+      }
 
-        return data;
-      })();
+      yield data;
     }
   }
 
