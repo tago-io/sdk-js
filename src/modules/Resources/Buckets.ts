@@ -116,6 +116,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
 
   /**
    * List variables inside the bucket
+   * @deprecated
    * @default
    * ```json
    * optionsObj: {
