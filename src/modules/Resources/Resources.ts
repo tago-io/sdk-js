@@ -20,6 +20,7 @@ import Template from "./Template";
 import Integration from "./Integration";
 import TagoCores from "./TagoCores";
 import Account from "./Account";
+import Secrets from "./Secrets";
 
 class Resources extends TagoIOModule<GenericModuleParams> {
   constructor(params?: GenericModuleParams) {
@@ -129,6 +130,11 @@ class Resources extends TagoIOModule<GenericModuleParams> {
   public tagocores = new TagoCores(this.params);
   static get tagocores() {
     return new this().tagocores;
+  }
+
+  public secrets = new Secrets(this.params);
+  static get secrets() {
+    return new this().secrets;
   }
 }
 
