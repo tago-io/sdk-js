@@ -1,5 +1,6 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { GenericID } from "../../types";
+import dateParser from "../Utils/dateParser";
 import { SecretsInfo, SecretsQuery } from "./secrets.type";
 
 class Secrets extends TagoIOModule<GenericModuleParams> {
@@ -23,10 +24,10 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
       method: "GET",
       params: {
         page: queryObj?.page || 1,
-        fields: queryObj?.fields || ["id", "name"],
+        fields: queryObj?.fields || ["id", "key"],
         filter: queryObj?.filter || {},
         amount: queryObj?.amount || 20,
-        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
+        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "key,asc",
       },
     });
 
@@ -38,10 +39,12 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
    * @param secretID Secret ID
    */
   public async info(secretID: GenericID): Promise<SecretsInfo> {
-    const result = await this.doRequest<SecretsInfo>({
+    let result = await this.doRequest<SecretsInfo>({
       path: `/secrets/${secretID}`,
       method: "GET",
     });
+
+    result = dateParser(result, ["created_at", "updated_at"]);
 
     return result;
   }

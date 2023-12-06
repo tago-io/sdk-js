@@ -6,6 +6,8 @@ interface SecretsInfo {
   value?: string;
   tags?: TagsObj[];
   value_length?: number;
+  created_at?: Date;
+  updated_at?: Date;
 }
 
 type SecretsQuery = Query<SecretsInfo, "key">;
