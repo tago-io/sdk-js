@@ -1,7 +1,7 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { GenericID } from "../../types";
 import dateParser from "../Utils/dateParser";
-import { SecretsInfo, SecretsQuery } from "./secrets.type";
+import { SecretsCreate, SecretsEdit, SecretsInfo, SecretsQuery } from "./secrets.type";
 
 class Secrets extends TagoIOModule<GenericModuleParams> {
   /**
@@ -53,7 +53,7 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
    * Create a new secret
    * @param secretObj data object to create new TagoIO Secret
    */
-  public async create(secretObj: SecretsInfo): Promise<{ id: GenericID }> {
+  public async create(secretObj: SecretsCreate): Promise<{ id: GenericID }> {
     const result = await this.doRequest<{ id: GenericID }>({
       path: `/secrets`,
       method: "POST",
@@ -70,7 +70,7 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
    * @param secretID Secret identification
    * @param secretObj Secret Object with data to replace
    */
-  public async edit(secretID: GenericID, secretObj: Partial<SecretsInfo>): Promise<string> {
+  public async edit(secretID: GenericID, secretObj: SecretsEdit): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/secrets/${secretID}`,
       method: "PUT",
