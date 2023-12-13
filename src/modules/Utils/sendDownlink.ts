@@ -69,7 +69,16 @@ async function sendDownlink(resource: Account | Resources, device_id: string, dn
     value: String(dn_options.payload),
     sent: false,
   };
-  await resource.devices.paramSet(device_id, downlink_param);
+
+  let port_param = params.find((x) => x.key === "port");
+  port_param = {
+    id: port_param ? port_param.id : null,
+    key: "port",
+    value: String(dn_options.port),
+    sent: false,
+  };
+
+  await resource.devices.paramSet(device_id, [downlink_param, port_param]);
 
   const data = {
     device: token.serie_number,
