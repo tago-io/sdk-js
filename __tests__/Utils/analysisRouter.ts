@@ -37,11 +37,13 @@ describe("Analysis Router conditions", () => {
     router.register(func).whenWidgetExec("insert");
     router.register(func).whenEnv("_widget_exec", "insert");
     router.register(func).whenInputFormID("122");
+    router.register(func).whenUserListIdentifier("123");
+    router.register(func).whenDeviceListIdentifier("125");
     const execution = await router.exec();
 
     // @ts-ignore
     expect(execution.status).toBeTruthy();
-    expect(execution.services).toEqual(Array(12).fill("func", 0));
+    expect(execution.services).toEqual(Array(14).fill("func", 0));
   });
 
   test("All tests with when invalid conditions", async () => {
