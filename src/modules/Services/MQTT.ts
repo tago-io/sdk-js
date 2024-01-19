@@ -44,7 +44,7 @@ class MQTT extends TagoIOModule<GenericModuleParams> {
    */
   public async publish(mqtt: MQTTData | MQTTDataDeprecated): Promise<string> {
     let device: GenericID;
-    if ('device' in mqtt) {
+    if ("device" in mqtt) {
       device = mqtt.device;
     } else {
       device = mqtt.bucket;
