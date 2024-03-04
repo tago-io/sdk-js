@@ -20,7 +20,8 @@ async function loadEventSourceLib(): Promise<typeof EventSource> {
 
 async function openSSEListening(params: openSSEConfig): Promise<EventSource> {
   const { region, token, channel } = params;
-  const url = new URL(regions(region).sse);
+  const url = new URL(regions(region).realtime);
+  url.pathname = "/events";
   url.searchParams.set("channel", channels[channel]);
   url.searchParams.set("token", token);
 

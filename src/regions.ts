@@ -16,8 +16,8 @@ interface RegionsObj {
 const regionsDefinition = {
   "usa-1": {
     api: "https://api.tago.io",
-    realtime: "wss://realtime.tago.io",
-    sse: "http://localhost:8080/events",
+    realtime: "https://realtime.tago.io",
+    sse: "https://sse.tago.io/events",
   },
   env: undefined as void, // ? process object should be on trycatch.
 };
