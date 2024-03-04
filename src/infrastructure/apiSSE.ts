@@ -7,6 +7,7 @@ const channels = {
 
 type openSSEConfig = GenericModuleParams & {
   channel: keyof typeof channels;
+  resource_id: string;
 };
 
 async function loadEventSourceLib(): Promise<typeof EventSource> {
@@ -19,10 +20,10 @@ async function loadEventSourceLib(): Promise<typeof EventSource> {
 }
 
 async function openSSEListening(params: openSSEConfig): Promise<EventSource> {
-  const { region, token, channel } = params;
+  const { region, token, channel, resource_id } = params;
   const url = new URL(regions(region).realtime);
   url.pathname = "/events";
-  url.searchParams.set("channel", channels[channel]);
+  url.searchParams.set("channel", `${channels[channel]}::${resource_id}`);
   url.searchParams.set("token", token);
 
   const EventSource = await loadEventSourceLib();
