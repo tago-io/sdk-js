@@ -21,7 +21,7 @@ async function loadEventSourceLib(): Promise<typeof EventSource> {
 
 async function openSSEListening(params: openSSEConfig): Promise<EventSource> {
   const { region, token, channel, resource_id } = params;
-  const url = new URL(regions(region).realtime);
+  const url = new URL(regions(region).sse);
   url.pathname = "/events";
   url.searchParams.set("channel", `${channels[channel]}::${resource_id}`);
   url.searchParams.set("token", token);
