@@ -6,6 +6,7 @@ let noRegionWarning = false;
 interface RegionsObj {
   api: string;
   realtime: string;
+  sse: string;
 }
 
 /**
@@ -16,6 +17,7 @@ const regionsDefinition = {
   "usa-1": {
     api: "https://api.tago.io",
     realtime: "wss://realtime.tago.io",
+    sse: "http://localhost:8080/events",
   },
   env: undefined as void, // ? process object should be on trycatch.
 };
@@ -39,12 +41,13 @@ function getConnectionURI(region?: Regions): RegionsObj {
   try {
     const api = process.env.TAGOIO_API;
     const realtime = process.env.TAGOIO_REALTIME;
+    const sse = process.env.TAGOIO_SSE;
 
     if (!api && region !== "env") {
       throw "Invalid Env";
     }
 
-    return { api, realtime };
+    return { api, realtime, sse };
   } catch (error) {
     if (!noRegionWarning) {
       console.info("> TagoIO-SDK: No region or env defined, using fallback as usa-1.");
