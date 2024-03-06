@@ -77,6 +77,13 @@ interface RunInfo {
   dictionary: GenericID;
 }
 
+interface UserOptions {
+  decimal_separator?: string;
+  thousand_separator?: string;
+  date_format?: string;
+  time_format?: string;
+}
+
 interface UserCreateInfo {
   name: string;
   email: string;
@@ -87,6 +94,7 @@ interface UserCreateInfo {
   language?: string;
   tags?: TagsObj[];
   active?: boolean;
+  options?: UserOptions;
 }
 
 interface UserCreateResponse {
