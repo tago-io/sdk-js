@@ -61,5 +61,8 @@
     "papaparse": "5.4.1",
     "qs": "6.11.2",
     "socket.io-client": "4.6.2"
+  },
+  "optionalDependencies": {
+    "eventsource": "2.0.2"
   }
 }
