@@ -3,6 +3,8 @@ import regions from "../regions";
 
 const channels = {
   deviceInspector: "device_inspector",
+  analysisTrigger: "analysis_trigger",
+  analysisConsole: "analysis_console",
 } as const;
 
 type openSSEConfig = GenericModuleParams & {
