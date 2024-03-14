@@ -126,7 +126,7 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     const sse = await openSSEListening({
       token: this.params.token,
       region: this.params.region,
-      channel: "analysisTrigger",
+      channel: "analysis_trigger",
     });
 
     const tokenEnd = this.params.token.slice(-5);
