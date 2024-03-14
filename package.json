@@ -2,7 +2,7 @@
   "name": "@tago-io/sdk",
   "version": "11.1.0",
   "description": "TagoIO SDK for JavaScript in the browser and Node.js",
-  "author": "Tago LLC",
+  "author": "TagoIO Inc.",
   "homepage": "https://tago.io",
   "license": "Apache-2.0",
   "repository": "tago-io/sdk-js.git",
