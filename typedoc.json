@@ -5,7 +5,7 @@
   "entryPointStrategy": "resolve",
   "out": "docs",
   "gaID": "UA-57075518-5",
-  "exclude": ["./src/common/Cache.ts", "./src/modules/Migration/Migration.ts"],
+  "exclude": ["./src/common/Cache.ts", "./src/modules/Migration/Migration.ts", "./src/infrastructure/apiSSE.ts"],
   "excludePrivate": true,
   "excludeProtected": true,
   "excludeInternal": true,

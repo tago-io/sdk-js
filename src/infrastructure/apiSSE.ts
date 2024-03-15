@@ -7,7 +7,6 @@ const channels = [...channelsWithID, ...channelsWithoutID] as const;
 
 type ChannelWithID = (typeof channelsWithID)[number];
 type ChannelWithoutID = (typeof channelsWithoutID)[number];
-type Channel = ChannelWithID | ChannelWithoutID;
 
 type OpenSSEWithID = GenericModuleParams & {
   channel: ChannelWithID;
@@ -40,7 +39,7 @@ async function openSSEListening(params: OpenSSEConfig): Promise<EventSource> {
   url.pathname = "/events";
 
   if (isChannelWithID(params)) {
-    url.searchParams.set("channel", `${params.channel}::${params.resource_id}`);
+    url.searchParams.set("channel", `${params.channel}.${params.resource_id}`);
   } else {
     url.searchParams.set("channel", `${params.channel}`);
   }
