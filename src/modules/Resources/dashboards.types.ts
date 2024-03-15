@@ -43,9 +43,9 @@ interface DashboardInfo extends DashboardCreateInfo {
           blueprint_device: string;
           tag_key: string;
           type: string;
-        }
+        },
       ];
-    }
+    },
   ];
   theme: any;
   setup: any;

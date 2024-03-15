@@ -33,7 +33,6 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    *
    * @param language Language.
    * @param dictionary ID or Slug.
-   * @param runURL URL for the Run to make anonymous request.
    */
   public async getLanguagesData(dictionary: string, language = this.language): Promise<LanguageData> {
     if (!language || !dictionary) {

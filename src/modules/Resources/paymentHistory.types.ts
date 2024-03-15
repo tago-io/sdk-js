@@ -30,7 +30,7 @@ interface PaymentInfo {
         qty: number;
         value: number;
       }[];
-    }
+    },
   ];
 }
 
