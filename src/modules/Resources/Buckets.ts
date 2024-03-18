@@ -12,6 +12,10 @@ import {
   VariablesInfo,
 } from "./buckets.types";
 
+/**
+ * @deprecated Use `Resources.devices` instead.
+ */
+
 class Buckets extends TagoIOModule<GenericModuleParams> {
   /**
    * Retrieves a list with all buckets from account
@@ -26,6 +30,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * }
    * ```
    * @param queryObj Search query params
+   *
+   * @deprecated Use the method from `Resources.devices` instead.
    */
   public async list(queryObj?: BucketQuery): Promise<BucketInfo[]> {
     let result = await this.doRequest<BucketInfo[]>({
@@ -48,6 +54,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   /**
    * Generates and retrieves a new bucket for the account
    * @param bucketObj Object with data to create new bucket
+   *
+   * @deprecated Use the method from `Resources.devices` instead.
    */
   public async create(bucketObj: BucketCreateInfo): Promise<{ bucket: string }> {
     const result = await this.doRequest<{ bucket: string }>({
@@ -63,6 +71,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * Modifies any property of the bucket.
    * @param bucketID Bucket ID
    * @param bucketObj Bucket Object data to be replaced
+   *
+   * @deprecated Use the method from `Resources.devices` instead.
    */
   public async edit(bucketID: GenericID, bucketObj: Partial<BucketCreateInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -77,6 +87,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   /**
    * Deletes a bucket from the account
    * @param bucketID Bucket ID
+   *
+   * @deprecated Use the method from `Resources.devices` instead.
    */
   public async delete(bucketID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -90,6 +102,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   /**
    * Gets information about the bucket
    * @param bucketID Bucket ID
+   *
+   * @deprecated Use the method from `Resources.devices` instead.
    */
   public async info(bucketID: GenericID): Promise<BucketInfo> {
     let result = await this.doRequest<BucketInfo>({
@@ -104,6 +118,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   /**
    * Get Amount of data on the Bucket
    * @param bucketID Bucket ID
+   *
+   * @deprecated Use the method from `Resources.devices` instead.
    */
   public async amount(bucketID: GenericID): Promise<number> {
     const result = await this.doRequest<number>({
@@ -127,6 +143,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * ```
    * @param bucketID Bucket ID
    * @param optionsObj Request options
+   *
+   * @deprecated
    */
   public async listVariables(bucketID: GenericID, optionsObj?: ListVariablesOptions): Promise<VariablesInfo[]> {
     const result = await this.doRequest<VariablesInfo[]>({
@@ -146,6 +164,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * Delete a bucket variable
    * @param bucketID Bucket ID
    * @param deleteParams Variable Details
+   *
+   * @deprecated
    */
   public async deleteVariable(
     bucketID: GenericID,
@@ -163,6 +183,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   /**
    * Get all device associated with bucket
    * @param bucketID Bucket ID
+   *
+   * @deprecated
    */
   public async getDevicesAssociated(bucketID: GenericID): Promise<BucketDeviceInfo[]> {
     const result = await this.doRequest<BucketDeviceInfo[]>({
@@ -179,6 +201,8 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * @param buckets Array of JSON with get details
    * @param output Type of output
    * @param optionsObj Options of request
+   *
+   * @deprecated
    */
   public async exportData(
     buckets: ExportBucket,

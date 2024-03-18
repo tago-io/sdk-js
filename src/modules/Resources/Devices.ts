@@ -59,9 +59,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    result = result.map((data) =>
-      dateParser(data, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"])
-    );
+    result = result.map((data) => dateParser(data, ["last_input", "updated_at", "created_at"]));
 
     return result;
   }
@@ -160,14 +158,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
       method: "GET",
     });
 
-    result = dateParser(result, [
-      "last_input",
-      "last_output",
-      "updated_at",
-      "created_at",
-      "inspected_at",
-      "last_retention",
-    ]);
+    result = dateParser(result, ["last_input", "updated_at", "created_at"]);
 
     return result;
   }
@@ -290,6 +281,20 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     const result = await this.doRequest<string>({
       path: `/device/token/${token}`,
       method: "DELETE",
+    });
+
+    return result;
+  }
+
+  /**
+   * Get amount of data stored in the Device.
+   *
+   * @param deviceID Device ID
+   */
+  public async amount(deviceID: GenericID): Promise<number> {
+    const result = await this.doRequest<number>({
+      path: `/device/${deviceID}/data_amount`,
+      method: "GET",
     });
 
     return result;

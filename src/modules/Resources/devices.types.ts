@@ -29,7 +29,7 @@ interface DeviceCreateInfoBasic {
   /**
    * Description of the device.
    */
-  description?: string | void;
+  description?: string | null;
   /**
    * Set if the device will be active.
    */
@@ -91,51 +91,64 @@ interface DeviceCreateInfoLegacy extends Omit<DeviceCreateInfoBasic, "type"> {
 type DeviceCreateInfo = DeviceCreateInfoLegacy | DeviceCreateInfoMutable | DeviceCreateInfoImmutable;
 type DeviceEditInfo = Partial<Omit<DeviceCreateInfo, "chunk_period" | "type"> & { chunk_retention: number }>;
 
-interface DeviceInfo extends Required<Omit<DeviceCreateInfoBasic, "configuration_params">> {
+interface DeviceInfoBase {
   /**
    * Device ID.
    */
   id: GenericID;
-  /**
-   * Device's data storage (bucket) type.
-   */
-  type: DataStorageType;
   /**
    * ID of the profile that owns the device.
    */
   profile: GenericID;
   /**
    * Bucket storing the device's data.
+   *
+   * @deprecated
    */
   bucket: {
     id: GenericID;
     name: string;
   };
   /**
-   * Date for the device's last output.
+   * Payload parser.
+   *
+   * Encoded string when enabled, `null` when not enabled.
    */
-  last_output: Date | null;
-  /**
-   * Date for the device's last input.
-   */
-  last_input: Date | null;
-  /**
-   * Date for the device's last update.
-   */
-  updated_at: Date;
+  payload_decoder: string | null;
   /**
    * Date for the device's creation.
    */
   created_at: Date;
   /**
-   * Date for the device's last inspection.
+   * Date for the device's last update.
    */
-  inspected_at: Date | null;
+  updated_at: Date;
   /**
-   * Date for the device's last data retention.
+   * Date for the device's last input.
    */
-  last_retention: Date | null;
+  last_input: Date | null;
+  /**
+   * Device-specific soft limits on RPM.
+   *
+   * `rpm` is `null` when not set or when the profile doesn't have the add-on.
+   */
+  rpm: {
+    data_input?: number;
+    data_output?: number;
+  } | null;
 }
+
+type DeviceInfoImmutable = Required<
+  DeviceInfoBase &
+    Omit<DeviceCreateInfoImmutable, "configuration_params" | "serie_number" | "connector_parse" | "parse_function">
+>;
+
+type DeviceInfoMutable = Required<
+  DeviceInfoBase &
+    Omit<DeviceCreateInfoMutable, "configuration_params" | "serie_number" | "connector_parse" | "parse_function">
+>;
+
+type DeviceInfo = DeviceInfoImmutable | DeviceInfoMutable;
 
 interface ConfigurationParams {
   sent: boolean;
@@ -193,7 +206,7 @@ interface DeviceChunkParams {
    * the chunk's file path on TagoIO Files.
    *
    * You can use the keys $DEVICE$, $CHUNK$, $FROM$ and $TO$ that
-   * will be automically replaced when building the path.
+   * will be automatically replaced when building the path.
    *
    * $DEVICE$ - Device ID
    *
