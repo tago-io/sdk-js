@@ -2,7 +2,7 @@ import type { ExportOption, GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import Devices from "./Devices";
 import type { ExportBucket, ExportBucketOption } from "./buckets.types";
-import type { DeviceCreateInfo, DeviceEditInfo, DeviceQuery } from "./devices.types";
+import type { DeviceQuery } from "./devices.types";
 
 /**
  * @deprecated Use `Resources.devices` instead.
@@ -29,37 +29,6 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    */
   public async list<T extends DeviceQuery>(queryObj?: T) {
     return await this.devices.list(queryObj);
-  }
-
-  /**
-   * Create a new Device in the profile.
-   * @param deviceObj Object with the fields and values for a new Device.
-   *
-   * @deprecated Use the method from `Resources.devices` instead.
-   */
-  public async create(deviceObj: DeviceCreateInfo) {
-    return await this.devices.create(deviceObj);
-  }
-
-  /**
-   * Modify any property of the Device.
-   * @param deviceID Device ID
-   * @param deviceObj Object with the fields and values to modify.
-   *
-   * @deprecated Use the method from `Resources.devices` instead.
-   */
-  public async edit(deviceID: GenericID, deviceObj: DeviceEditInfo) {
-    return await this.devices.edit(deviceID, deviceObj);
-  }
-
-  /**
-   * Delete a device from the profile.
-   * @param deviceID Device ID
-   *
-   * @deprecated Use the method from `Resources.devices` instead.
-   */
-  public async delete(deviceID: GenericID) {
-    return await this.devices.delete(deviceID);
   }
 
   /**
