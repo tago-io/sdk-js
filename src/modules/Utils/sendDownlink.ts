@@ -19,7 +19,7 @@ async function handleDownlinkError(error: AxiosError): Promise<AxiosResponse<any
  * Perform downlink to a device using official TagoIO support.
  * Example
  * - sendDownlink(account, "736acc665bd2460018df8c52", { payload: "01", port: 05, confirmed: false })
- * @param {Class} account TagoIO SDK Account instanced class
+ * @param {Class} resource TagoIO SDK Account instanced class
  * @param {String} device_id id of your device
  * @param {Object} dn_options downlink parameter options.
  * @param {String} dn_options.payload hexadecimal payload to be sent to the device.

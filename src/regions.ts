@@ -1,7 +1,7 @@
 /**
  * @internal
  */
-let noRegionWarning = false;
+// let noRegionWarning = false;
 
 interface RegionsObj {
   api: string;
@@ -49,10 +49,10 @@ function getConnectionURI(region?: Regions): RegionsObj {
 
     return { api, realtime, sse };
   } catch (error) {
-    if (!noRegionWarning) {
-      console.info("> TagoIO-SDK: No region or env defined, using fallback as usa-1.");
-      noRegionWarning = true;
-    }
+    // if (!noRegionWarning) {
+    //   console.info("> TagoIO-SDK: No region or env defined, using fallback as usa-1.");
+    //   noRegionWarning = true;
+    // }
 
     return regionsDefinition["usa-1"];
   }

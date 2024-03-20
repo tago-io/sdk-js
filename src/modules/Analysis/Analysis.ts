@@ -1,6 +1,6 @@
 import TagoIOModule from "../../common/TagoIOModule";
 import ConsoleService from "../Services/Console";
-import apiSocket, { channels } from "../../infrastructure/apiSocket";
+import { openSSEListening } from "../../infrastructure/apiSSE";
 import { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment } from "./analysis.types";
 import { JSONParseSafe } from "../../common/JSONParseSafe";
 
@@ -104,24 +104,53 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     }
   }
 
-  private localRuntime() {
+  private async localRuntime() {
     if (this.params.token === "unknown") {
       throw "To run analysis locally, you needs a token";
     }
 
-    const socket = apiSocket(this.params);
+    const analysis = await this.doRequest<{ name: string; active: boolean; run_on: "external" | "tago" }>({
+      path: "/info",
+      method: "GET",
+    }).catch((_) => undefined);
 
-    socket.on("connect", () => console.info("Connected to TagoIO, Getting analysis information..."));
+    if (!analysis) {
+      console.error("¬ Error :: Analysis not found or not active.");
+      return;
+    }
 
-    socket.on("disconnect", () => console.info("Disconnected from TagoIO.\n\n"));
+    if (analysis.run_on !== "external") {
+      console.info("¬ Warning :: Analysis is not set to run on external");
+    }
 
-    socket.on("error", (e: Error) => console.error("Connection error", e));
-
-    socket.on("ready", (analysis: any) => console.info(`Analysis [${analysis.name}] Started.`));
-
-    socket.on(channels.analysisTrigger, (scope: any) => {
-      this.runLocal(scope.environment, scope.data, scope.analysis_id, scope.token);
+    const sse = await openSSEListening({
+      token: this.params.token,
+      region: this.params.region,
+      channel: "analysis_trigger",
     });
+
+    const tokenEnd = this.params.token.slice(-5);
+
+    sse.onmessage = (event) => {
+      const data = JSONParseSafe(event?.data, {})?.payload;
+
+      if (!data) {
+        // console.log("Invalid data", event.data);
+        return;
+      }
+
+      this.runLocal(data.environment, data.data, data.analysis_id, data.token);
+    };
+
+    sse.onerror = (_error) => {
+      // console.debug(_error);
+      console.error("¬ Connection was closed, trying to reconnect...");
+    };
+
+    sse.onopen = () => {
+      console.info(`\n¬ Connected to TagoIO :: Analysis [${analysis.name}](${tokenEnd}) is ready.`);
+      console.info("¬ Waiting for analysis trigger...\n");
+    };
   }
 
   public static use(analysis: analysisFunction, params?: AnalysisConstructorParams) {
