@@ -19,11 +19,6 @@ interface MQTTData {
    */
   options?: {
     /**
-     * @deprecated
-     * Default false
-     */
-    retain?: boolean;
-    /**
      * Default 0
      */
     qos?: number;
