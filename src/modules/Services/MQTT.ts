@@ -19,7 +19,8 @@ interface MQTTData {
    */
   options?: {
     /**
-     * Default true
+     * @deprecated
+     * Default false
      */
     retain?: boolean;
     /**
