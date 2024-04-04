@@ -50,31 +50,6 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   public async amount(deviceID: GenericID) {
     return await this.devices.amount(deviceID);
   }
-
-  /**
-   * Export Data from Bucket
-   * @param buckets Array of JSON with get details
-   * @param output Type of output
-   * @param optionsObj Options of request
-   *
-   * @deprecated Use device.copyChunk or device.getData to build reports
-   */
-  public async exportData(
-    buckets: ExportBucket,
-    output: ExportOption,
-    optionsObj?: ExportBucketOption
-  ): Promise<string> {
-    const result = await this.doRequest<string>({
-      path: `/data/export?output=${output}`,
-      method: "POST",
-      body: {
-        buckets,
-        ...optionsObj,
-      },
-    });
-
-    return result;
-  }
 }
 
 export default Buckets;
