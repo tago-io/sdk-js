@@ -1,3 +1,5 @@
+import { GenericID } from "../../types";
+
 interface FileQuery {
   path?: string;
   paginationToken?: string;
@@ -91,6 +93,10 @@ type UploadOptions = {
    * will provide the upload percentage for this file
    */
   onProgress?: (percentage: number) => any;
+  /**
+   * map blueprint devices to real devices, so BP Device ID path is replaced by the real device ID
+   */
+  blueprint_devices?: { origin: GenericID; id: GenericID; bucket?: GenericID }[];
 };
 
 export { FileQuery, FileListInfo, Base64File, MoveFiles, FilesPermission, UploadOptions, CopyFiles };

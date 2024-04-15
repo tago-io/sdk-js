@@ -203,11 +203,14 @@ class Files extends TagoIOModule<GenericModuleParams> {
   private async createMultipartUpload(filename: string, options?: UploadOptions) {
     const { dashboard, widget, fieldId, isPublic, contentType } = options || {};
 
-    const path = dashboard && widget && fieldId ? `/data/files/${dashboard}/${widget}` : `/files`;
+    const path = dashboard && widget ? `/data/files/${dashboard}/${widget}` : `/files`;
 
     const result = await this.doRequest<any>({
       path,
       method: "POST",
+      params: {
+        ...(options?.blueprint_devices?.length > 0 && { blueprint_devices: options.blueprint_devices }),
+      },
       body: {
         multipart_action: "start",
         filename,
