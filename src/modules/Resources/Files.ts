@@ -261,6 +261,9 @@ class Files extends TagoIOModule<GenericModuleParams> {
     const result = await this.doRequest<{ ETag: string }>({
       path,
       method: "POST",
+      params: {
+        ...(options?.blueprint_devices?.length > 0 && { blueprint_devices: options.blueprint_devices }),
+      },
       body: form,
       maxContentLength: Infinity,
       headers,
@@ -337,6 +340,9 @@ class Files extends TagoIOModule<GenericModuleParams> {
     const result = await this.doRequest<{ file: string }>({
       path,
       method: "POST",
+      params: {
+        ...(options?.blueprint_devices?.length > 0 && { blueprint_devices: options.blueprint_devices }),
+      },
       body: {
         multipart_action: "end",
         upload_id: uploadID,
