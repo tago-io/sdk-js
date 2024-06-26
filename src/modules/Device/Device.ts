@@ -171,8 +171,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
   }
 
   /**
-   * Get parameters from device
-   * @param onlyUnRead set true to get only unread parameters
+   * Get paronlyUnReameters from device
    * @example
    * ```js
    * const myDevice = new Device({ token: "my_device_token" });

@@ -308,7 +308,6 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Confirm OTP enabling process for a given OTP Type
-   * @param credentials Credentials
    * @param typeOTP authenticator, sms or email
    */
   public async confirmOTP(tagoIORunURL: string, pinCode: string, typeOTP: OTPType): Promise<string> {

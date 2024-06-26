@@ -103,6 +103,10 @@ interface ActionCreateInfo {
    * Action action.
    */
   id?: GenericID;
+  /**
+   * Trigger the action when unlock condition is met.
+   */
+  trigger_when_unlock?: boolean;
 }
 
 interface ActionInfo extends ActionCreateInfo {

@@ -16,10 +16,6 @@ function resultHandler(result: AxiosResponse) {
     throw result.statusText;
   }
 
-  if (result.status === 200 && result.config.url.includes("/data/export")) {
-    return { data: result.data };
-  }
-
   if (result.data.status !== true) {
     return result.data.message || result.data.result || result.data;
   }

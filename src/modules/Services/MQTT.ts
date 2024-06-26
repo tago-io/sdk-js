@@ -11,17 +11,13 @@ interface MQTTData {
    */
   message: string;
   /**
-   * Bucket to receive message
+   * Device to receive message
    */
-  bucket: GenericID;
+  device: GenericID;
   /**
    * Options of the publishing message
    */
   options?: {
-    /**
-     * Default true
-     */
-    retain?: boolean;
     /**
      * Default 0
      */
@@ -29,19 +25,34 @@ interface MQTTData {
   };
 }
 
+interface MQTTDataDeprecated extends Omit<MQTTData, "device"> {
+  /**
+   * Bucket to receive message
+   * @deprecated use "device" instead
+   */
+  bucket: GenericID;
+}
+
 class MQTT extends TagoIOModule<GenericModuleParams> {
   /**
    * Publish MQTT
    * @param mqtt MQTT Object
    */
-  public async publish(mqtt: MQTTData): Promise<string> {
+  public async publish(mqtt: MQTTData | MQTTDataDeprecated): Promise<string> {
+    let device: GenericID;
+    if ("device" in mqtt) {
+      device = mqtt.device;
+    } else {
+      device = mqtt.bucket;
+    }
+
     const result = await this.doRequest<string>({
       path: "/analysis/services/mqtt/publish",
       method: "POST",
       body: {
         topic: mqtt.topic,
         message: mqtt.message,
-        bucket: mqtt.bucket,
+        device: device,
         ...mqtt.options,
       },
     });

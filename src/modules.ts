@@ -12,3 +12,5 @@ export { default as Migration } from "./modules/Migration/Migration";
 export * as Utils from "./modules/Utils/Utils";
 export * as Cache from "./common/Cache";
 export * as Types from "./types";
+
+export * as SSE from "./infrastructure/apiSSE";

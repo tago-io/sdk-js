@@ -63,7 +63,10 @@ class RouterService {
    * Information is available if Analysis is triggered by an input widget.
    */
   public whenDeviceListIdentifier(btn_id: string) {
-    this.addFunc((_scope: any, environment: any) => environment._widget_exec === btn_id);
+    this.addFunc(
+      (scope: any, environment: any) =>
+        environment._widget_exec === btn_id || !!scope.find((x: any) => x.device_list_button_id == btn_id)
+    );
     return this;
   }
 
@@ -72,7 +75,10 @@ class RouterService {
    * Information is available if Analysis is triggered by an input widget.
    */
   public whenUserListIdentifier(btn_id: string) {
-    this.addFunc((_scope: any, environment: any) => environment._widget_exec === btn_id);
+    this.addFunc(
+      (scope: any, environment: any) =>
+        environment._widget_exec === btn_id || !!scope.find((x: any) => x.user_list_button_id == btn_id)
+    );
     return this;
   }
 

@@ -215,7 +215,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
       params: { tcore: tagoCoreID },
     });
 
-    result = dateParser(result, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"]);
+    result = dateParser(result, ["last_input", "updated_at", "created_at"]);
 
     return result;
   }
@@ -232,7 +232,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
       params: { tcore_cluster: clusterID },
     });
 
-    result = dateParser(result, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"]);
+    result = dateParser(result, ["last_input", "updated_at", "created_at"]);
 
     return result;
   }
@@ -266,9 +266,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    result = result.map((data) =>
-      dateParser(data, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"])
-    );
+    result = result.map((data) => dateParser(data, ["last_input", "updated_at", "created_at"]));
 
     return result;
   }
@@ -302,9 +300,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
       },
     });
 
-    result = result.map((data) =>
-      dateParser(data, ["last_input", "last_output", "updated_at", "created_at", "inspected_at"])
-    );
+    result = result.map((data) => dateParser(data, ["last_input", "updated_at", "created_at"]));
 
     return result;
   }
