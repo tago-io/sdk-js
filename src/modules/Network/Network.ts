@@ -129,11 +129,11 @@ class Network extends TagoIOModule<ConnectorModuleParams> {
       path: `/integration/network/${deviceID}/params`,
       method: "POST",
       body: paramID
-      ? {
-        id: paramID,
-        ...configObj,
-      }
-    : configObj,
+        ? {
+          id: paramID,
+          ...configObj,
+        }
+        : configObj,
     });
 
     return result;
