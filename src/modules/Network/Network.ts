@@ -133,7 +133,7 @@ class Network extends TagoIOModule<ConnectorModuleParams> {
         id: paramID,
         ...configObj,
       }
-        : configObj,
+    : configObj,
     });
 
     return result;
