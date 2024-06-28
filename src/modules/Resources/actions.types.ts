@@ -1,10 +1,10 @@
-import { GenericID, Conditionals, TagsObj, Query, ExpireTimeOption } from "../../common/common.types";
+import { Conditionals, ExpireTimeOption, GenericID, Query, TagsObj } from "../../common/common.types";
 
 type ActionType = "condition" | "resource" | "interval" | "schedule" | "mqtt_topic";
 
 type ActionTypeParams =
   | {
-      script: GenericID[];
+      script: GenericID | GenericID[];
       type: "script";
     }
   | {
@@ -34,17 +34,41 @@ type ActionTypeParams =
       payload: string;
       topic: string;
       type: "mqtt";
+      qos?: 1 | 2 | 3;
+      retain?: boolean;
     }
   | {
-      headers: {};
+      headers: Record<string, string>;
+      fallback_token?: string;
       type: "post";
       url: string;
+    }
+  | {
+      type: "insert_bucket";
+    }
+  | {
+      type: "tcore";
+      tcore_id: GenericID;
+      device_token: string;
+    }
+  | {
+      type: "tcore";
+      device_token: string;
+      tcore_cluster_id: string;
     };
 
 type ActionTriggerType =
   | {
       resource: "device" | "bucket" | "file" | "analysis" | "action" | "am" | "user" | "financial" | "profile";
-      when: "create" | "update" | "delete";
+      when:
+        | "create"
+        | "update"
+        | "delete"
+        | "mqtt_connect"
+        | "mqtt_disconnect"
+        | "login_success"
+        | "login_fail"
+        | "chunk_copied";
       tag_key: string;
       tag_value: string;
     }
@@ -63,6 +87,25 @@ type ActionTriggerType =
       second_value?: string;
       value_type: "string" | "number" | "boolean" | "*";
       unlock?: boolean;
+    }
+  | {
+      variable: string;
+      is: Conditionals;
+      value: string;
+      second_value?: string;
+      value_type: "string" | "number" | "boolean" | "*";
+      unlock?: boolean;
+      tag_key: string;
+      tag_value: string;
+    }
+  | {
+      device: string;
+      topic: string;
+    }
+  | {
+      tag_key: string;
+      tag_value: string;
+      topic: string;
     };
 
 interface ActionCreateInfo {
@@ -85,7 +128,7 @@ interface ActionCreateInfo {
   /**
    * Description of the action.
    */
-  description?: string | null;
+  description?: string;
   lock?: boolean;
   /**
    * Type of action
