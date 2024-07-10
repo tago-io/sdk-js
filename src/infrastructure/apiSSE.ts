@@ -32,11 +32,6 @@ async function loadEventSourceLib(): Promise<typeof EventSource> {
   }
 }
 
-async function createEventSource(url: URL) {
-  const EventSource = await loadEventSourceLib();
-  return new EventSource(url.toString());
-}
-
 function formatChannel(configuration: OpenSSEConfig) {
   const { channel } = configuration;
 
@@ -47,27 +42,24 @@ function formatChannel(configuration: OpenSSEConfig) {
   return channel;
 }
 
-async function openSSEListening(params: OpenSSEConfig & GenericModuleParams): Promise<EventSource> {
-  const { region, token } = params;
-
-  const url = new URL(regions(region).sse);
-  url.pathname = "/events";
-  url.searchParams.set("channel", formatChannel(params));
-  url.searchParams.set("token", token);
-
-  return createEventSource(url);
-}
-
-async function openMultiSSEListening(configuration: OpenSSEConfig[], options: GenericModuleParams) {
-  const channels = configuration.map((channel) => formatChannel(channel)).join(",");
+async function openSSEListening(channels: OpenSSEConfig | OpenSSEConfig[], options: GenericModuleParams) {
+  let channelsParam: string = "";
+  if (Array.isArray(channels)) {
+    channelsParam = channels.map((channel) => formatChannel(channel)).join(",");
+  } else {
+    channelsParam = formatChannel(channels);
+  }
 
   const url = new URL(regions(options.region).sse);
   url.pathname = "/events";
-  url.searchParams.set("channels", channels);
+  url.searchParams.set("channels", channelsParam);
   url.searchParams.set("token", options.token);
 
-  return createEventSource(url);
+  const EventSource = await loadEventSourceLib();
+  const connection = new EventSource(url.toString());
+
+  return connection;
 }
 
-export { openSSEListening, openMultiSSEListening, channels };
+export { openSSEListening, channels };
 export type { OpenSSEConfig };
