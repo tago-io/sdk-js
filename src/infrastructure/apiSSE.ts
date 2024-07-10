@@ -1,19 +1,19 @@
 import { GenericModuleParams } from "../common/TagoIOModule";
 import regions from "../regions";
 
-const channelsWithID = ["device_inspector", "analysis_console", "ui_dashboard"] as const;
-const channelsWithoutID = ["notification", "analysis_trigger", "ui"] as const;
+const channelsWithID = ["analysis_console", "device_inspector", "device_data", "ui_dashboard"] as const;
+const channelsWithoutID = ["analysis_trigger", "notification", "ui"] as const;
 const channels = [...channelsWithID, ...channelsWithoutID] as const;
 
 type ChannelWithID = (typeof channelsWithID)[number];
 type ChannelWithoutID = (typeof channelsWithoutID)[number];
 
-type OpenSSEWithID = GenericModuleParams & {
+type OpenSSEWithID = {
   channel: ChannelWithID;
   resource_id: string;
 };
 
-type OpenSSEWithoutID = GenericModuleParams & {
+type OpenSSEWithoutID = {
   channel: ChannelWithoutID;
 };
 
@@ -32,25 +32,42 @@ async function loadEventSourceLib(): Promise<typeof EventSource> {
   }
 }
 
-async function openSSEListening(params: OpenSSEConfig): Promise<EventSource> {
+async function createEventSource(url: URL) {
+  const EventSource = await loadEventSourceLib();
+  return new EventSource(url.toString());
+}
+
+function formatChannel(configuration: OpenSSEConfig) {
+  const { channel } = configuration;
+
+  if (isChannelWithID(configuration)) {
+    return `${channel}.${configuration.resource_id}`;
+  }
+
+  return channel;
+}
+
+async function openSSEListening(params: OpenSSEConfig & GenericModuleParams): Promise<EventSource> {
   const { region, token } = params;
 
   const url = new URL(regions(region).sse);
   url.pathname = "/events";
-
-  if (isChannelWithID(params)) {
-    url.searchParams.set("channel", `${params.channel}.${params.resource_id}`);
-  } else {
-    url.searchParams.set("channel", `${params.channel}`);
-  }
-
+  url.searchParams.set("channel", formatChannel(params));
   url.searchParams.set("token", token);
 
-  const EventSource = await loadEventSourceLib();
-  const connection = new EventSource(url.toString());
-
-  return connection;
+  return createEventSource(url);
 }
 
-export { openSSEListening, channels };
+async function openMultiSSEListening(configuration: OpenSSEConfig[], options: GenericModuleParams) {
+  const channels = configuration.map((channel) => formatChannel(channel)).join(",");
+
+  const url = new URL(regions(options.region).sse);
+  url.pathname = "/events";
+  url.searchParams.set("channels", channels);
+  url.searchParams.set("token", options.token);
+
+  return createEventSource(url);
+}
+
+export { openSSEListening, openMultiSSEListening, channels };
 export type { OpenSSEConfig };
