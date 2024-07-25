@@ -140,6 +140,21 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * Renew the token of the Run User based on the time of the Run Token TTL Configuration
+   * @param tagoIORunURL TagoIO Run url without http
+   */
+  public async renewToken(tagoIORunURL: string): Promise<RunUserLoginResponse> {
+    let result = await this.doRequest<RunUserLoginResponse>({
+      path: `/run/${tagoIORunURL}/token/renew`,
+      method: "POST",
+    });
+
+    result = dateParser(result, ["expire_date"]);
+
+    return result;
+  }
+
+  /**
    * Change password using token of the password recover.
    * @param tagoIORunURL TagoIO Run url without http
    * @param password New password
