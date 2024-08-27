@@ -1,6 +1,11 @@
 import { GenericID, Conditionals, TagsObj, Query, ExpireTimeOption } from "../../common/common.types";
 
-type ActionType = "condition" | "resource" | "interval" | "schedule" | "mqtt_topic";
+type ActionType = "condition" | "resource" | "interval" | "schedule" | "mqtt_topic" | "condition_geofence";
+type TriggerGeofenceValueType = {
+  center?: number[];
+  radius?: number;
+  coordinates?: Array<number[]>;
+};
 
 type ActionTypeParams =
   | {
@@ -62,6 +67,13 @@ type ActionTriggerType =
       value: string;
       second_value?: string;
       value_type: "string" | "number" | "boolean" | "*";
+      unlock?: boolean;
+    }
+  | {
+      device: string;
+      variable: string;
+      is: "IN" | "OUT";
+      value: TriggerGeofenceValueType;
       unlock?: boolean;
     };
 
