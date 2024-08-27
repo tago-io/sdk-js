@@ -2,9 +2,9 @@ import { GenericID, Conditionals, TagsObj, Query, ExpireTimeOption } from "../..
 
 type ActionType = "condition" | "resource" | "interval" | "schedule" | "mqtt_topic" | "condition_geofence";
 type TriggerGeofenceValueType = {
-  center?: number[];
+  center?: number[]; // [longitude, latitude]
   radius?: number;
-  coordinates?: Array<number[]>;
+  coordinates?: Array<number[]>; // [[longitude, latitude], [longitude, latitude], ...]
 };
 
 type ActionTypeParams =
