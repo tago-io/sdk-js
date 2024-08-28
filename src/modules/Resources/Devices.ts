@@ -56,6 +56,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
         resolveBucketName: queryObj?.resolveBucketName || false,
         resolveConnectorName: queryObj?.resolveConnectorName || false,
+        serial: queryObj?.serial,
       },
     });
 
@@ -296,38 +297,6 @@ class Devices extends TagoIOModule<GenericModuleParams> {
       path: `/device/${deviceID}/data_amount`,
       method: "GET",
     });
-
-    return result;
-  }
-
-  /**
-   * Retrieves a list with all devices from profile filtered by serial and network.
-   *
-   * @param serial Device Token Serial.
-   * @param queryParams Query parameters to select fields and order the results.
-   * @param networkId Device network ID.
-   *
-   */
-  public async getDeviceBySerial<T extends DeviceQuery>(serial: string, networkId?: string, queryObj?: T) {
-    let result = await this.doRequest<
-      DeviceListItem<
-        T["fields"] extends DeviceQuery["fields"]
-          ? T["fields"][number]
-          : "id" | "name" | "network" | "connector" | "type" | "tags"
-      >[]
-    >({
-      path: `/device/find/${serial}`,
-      method: "GET",
-      params: {
-        page: queryObj?.page || 1,
-        fields: queryObj?.fields || ["id", "name", "network", "connector", "type", "tags"],
-        filter: networkId ? { network: networkId } : {},
-        amount: queryObj?.amount || 20,
-        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
-      },
-    });
-
-    result = result.map((data) => dateParser(data, ["last_input", "updated_at", "created_at"]));
 
     return result;
   }
