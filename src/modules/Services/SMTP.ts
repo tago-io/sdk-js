@@ -25,7 +25,7 @@ class Email extends TagoIOModule<GenericModuleParams> {
    *
    * @example
    * ```typescript
-   * const emailService = new Services({ token: context.token }).email;
+   * const emailService = new Services({ token: context.token }).smtp;
    * const result = await emailService.send({
    *   to: "client@company.com",
    *   subject: "Reports",
