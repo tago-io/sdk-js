@@ -47,12 +47,10 @@ class AWSSQS extends TagoIOModule<GenericModuleParams> {
    *
    * @example
    * ```typescript
+   * const environment = Utils.envToJson(context.environment);
    * const sqsService = new Services({ token: context.token }).aws_sqs;
    * const result = await sqsService.sendMessage({
-   *   aws_region: "us-east-1",
-   *   queue_url: "https://sqs.us-east-1.amazonaws.com/123456789012/MyQueue",
-   *   access_key_id: "YOUR_AWS_ACCESS_KEY_ID",
-   *   secret_access_key: "YOUR_AWS_SECRET_ACCESS_KEY",
+   *   sqs_secret: environment.AWS_SQS_TAGOIO_SECRET,
    *   message: "Hello from TagoIO!"
    * });
    * console.log(result);

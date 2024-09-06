@@ -40,13 +40,14 @@ class Twilio extends TagoIOModule<GenericModuleParams> {
    *
    * @example
    * ```typescript
+   * const environment = Utils.envToJson(context.environment);
    * const twilioService = new Services({ token: context.token }).twilio;
    * const result = await twilioService.send({
    *   to: "+1234567890",
    *   message: "Hello from TagoIO!",
    *   from: "+0987654321",
-   *   twilio_sid: "YOUR_TWILIO_SID",
-   *   twilio_token: "YOUR_TWILIO_TOKEN"
+   *   twilio_sid: environment.TWILIO_SID,
+   *   twilio_token: environment.TWILIO_TOKEN,
    * });
    * console.log(result);
    * ```
