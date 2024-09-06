@@ -25,12 +25,13 @@ class Email extends TagoIOModule<GenericModuleParams> {
    *
    * @example
    * ```typescript
+   * const environment = Utils.envToJson(context.environment);
    * const emailService = new Services({ token: context.token }).smtp;
    * const result = await emailService.send({
    *   to: "client@company.com",
    *   subject: "Reports",
    *   message: "Hello client, it's your report",
-   *   smtp_secret: "YOUR_TAGOIO_SMTP_SECRET"
+   *   smtp_secret: environment.SMTP_TAGOIO_SECRET
    * });
    * console.log(result);
    * ```
@@ -41,7 +42,7 @@ class Email extends TagoIOModule<GenericModuleParams> {
    *   to: ["client1@company.com", "client2@company.com"],
    *   subject: "Reports",
    *   message: "Hello clients, it's your report",
-   *   smtp_secret: "YOUR_TAGOIO_SMTP_SECRET"
+   *   smtp_secret: environment.SMTP_TAGOIO_SECRET
    * });
    *
    * @example
@@ -50,7 +51,7 @@ class Email extends TagoIOModule<GenericModuleParams> {
    *   to: "client@company.com",
    *   subject: "Reports",
    *   html: "<p>Hello client, it's your <strong>report</strong></p>",
-   *   smtp_secret: "YOUR_TAGOIO_SMTP_SECRET"
+   *   smtp_secret: environment.SMTP_TAGOIO_SECRET
    * });
    *
    * @example
@@ -58,7 +59,7 @@ class Email extends TagoIOModule<GenericModuleParams> {
    * const result = await emailService.send({
    *   to: "client@company.com",
    *   template: { name: "my_template" },
-   *   smtp_secret: "YOUR_TAGOIO_SMTP_SECRET"
+   *   smtp_secret: environment.SMTP_TAGOIO_SECRET
    * });
    */
   public async send(email: SMTPEmailWithRawText): Promise<string>;
