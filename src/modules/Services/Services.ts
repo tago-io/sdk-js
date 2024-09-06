@@ -1,11 +1,14 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import Attachment from "./Attachment";
+import AWSSQS from "./AWS-SQS";
 import ConsoleService from "./Console";
-import SMS from "./SMS";
 import Email from "./Email";
 import MQTT from "./MQTT";
 import Notification from "./Notification";
-import Attachment from "./Attachment";
 import PDFService from "./PDF";
+import SMS from "./SMS";
+import SMTP from "./SMTP";
+import Twilio from "./Twillio";
 
 class Services extends TagoIOModule<GenericModuleParams> {
   constructor(params?: GenericModuleParams) {
@@ -25,6 +28,21 @@ class Services extends TagoIOModule<GenericModuleParams> {
   public email = new Email(this.params);
   static get email() {
     return new this().email;
+  }
+
+  public twilio = new Twilio(this.params);
+  static get twilio() {
+    return new this().twilio;
+  }
+
+  public smtp = new SMTP(this.params);
+  static get smtp() {
+    return new this().smtp;
+  }
+
+  public aws_sqs = new AWSSQS(this.params);
+  static get aws_sqs() {
+    return new this().aws_sqs;
   }
 
   /** @internal @deprecated renamed to .mqtt (lowercase) */

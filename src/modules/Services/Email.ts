@@ -133,3 +133,4 @@ class Email extends TagoIOModule<GenericModuleParams> {
 }
 
 export default Email;
+export type { EmailWithTemplate, EmailBase, AttachmentOptions, TemplateOptions, EmailHTML, EmailRawText };
