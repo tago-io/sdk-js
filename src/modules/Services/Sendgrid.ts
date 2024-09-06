@@ -1,35 +1,13 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { EmailBase, EmailHTML, EmailRawText, EmailWithTemplate } from "./Email";
 
-interface SendgridData {
-  /**
-   * From number registered in Sendgrid
-   */
-  from: string;
-  /**
-   * Email to send the email
-   */
-  to: string;
-  /**
-   * Subject to the email
-   */
-  subject: string;
-  /**
-   * Email to be sent, in plain text
-   */
-  message?: string;
-  /**
-   * Email to be sent, in html format
-   */
-  html?: string;
-  /**
-   * Template of the email to be sent
-   */
-  template?: string;
-  /**
-   * Sendgrid API key
-   */
+interface SendgridCredentials {
   sendgrid_api_key: string;
 }
+type SendgridEmailBase = EmailBase & SendgridCredentials;
+type SendgridEmailWithTemplate = EmailWithTemplate & SendgridCredentials;
+type SendgridEmailWithHTML = SendgridEmailBase & EmailHTML;
+type SendgridEmailWithRawText = SendgridEmailBase & EmailRawText;
 
 class Sendgrid extends TagoIOModule<GenericModuleParams> {
   /**
@@ -87,11 +65,10 @@ class Sendgrid extends TagoIOModule<GenericModuleParams> {
    *   sendgrid_api_key: "YOUR_SENDGRID_API_KEY"
    * });
    */
-  public async send(email: SendgridData): Promise<string> {
-    if (!email.html && !email.message && !email.template) {
-      Promise.reject(new Error("You must provide a message, html or template"));
-    }
-
+  public async send(email: SendgridEmailWithRawText): Promise<string>;
+  public async send(email: SendgridEmailWithHTML): Promise<string>;
+  public async send(email: SendgridEmailWithTemplate): Promise<string>;
+  public async send(email: any): Promise<string> {
     if (email.html && email.message) {
       console.warn(new Error("HTML field will overwrite message field"));
     }
