@@ -6,6 +6,7 @@ import Email from "./Email";
 import MQTT from "./MQTT";
 import Notification from "./Notification";
 import PDFService from "./PDF";
+import Sendgrid from "./Sendgrid";
 import SMS from "./SMS";
 import SMTP from "./SMTP";
 import Twilio from "./Twillio";
@@ -43,6 +44,11 @@ class Services extends TagoIOModule<GenericModuleParams> {
   public aws_sqs = new AWSSQS(this.params);
   static get aws_sqs() {
     return new this().aws_sqs;
+  }
+
+  public sendgrid = new Sendgrid(this.params);
+  static get sendgrid() {
+    return new this().sendgrid;
   }
 
   /** @internal @deprecated renamed to .mqtt (lowercase) */
