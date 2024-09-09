@@ -35,15 +35,16 @@ interface TemplateOptions {
 
 interface EmailBase {
   /**
-   * E-mail address to be sent
-   *
-   * example: "myclien@tago.io"
+   * Recipient email address(es)
+   * @example
+   * "client@example.com"
+   * ["client1@example.com", "client2@example.com"]
    */
   to: string | string[];
   /**
-   * Name of origin
-   *
-   * example: "My Run"
+   * Sender name (optional)
+   * If not provided, the default sender name configured in TagoRUN will be used
+   * @example "My Application"
    */
   from?: string;
   /**
@@ -53,7 +54,8 @@ interface EmailBase {
    */
   subject: string;
   /**
-   * Attachment for the e-mail
+   * File attachment for the email (optional)
+   * @see AttachmentOptions
    */
   attachment?: AttachmentOptions;
 }
@@ -74,26 +76,31 @@ interface EmailHTML {
 
 interface EmailWithTemplate {
   /**
-   * E-mail address to be sent
-   *
-   * example: "myclien@tago.io"
+   * Recipient email address(es)
+   * @example
+   * "client@example.com"
+   * ["client1@example.com", "client2@example.com"]
    */
   to: string | string[];
   /**
-   * Name of origin
-   *
-   * example: "My Run"
+   * Sender name (optional)
+   * If not provided, the default sender name configured in TagoRUN will be used
+   * @example "My Application"
    */
   from?: string;
   /**
-   * Attachment for the e-mail
+   * File attachment for the email (optional)
+   * @see AttachmentOptions
    */
   attachment?: AttachmentOptions;
   /**
-   * Use TagoRUN E-Mail Template
+   * TagoRUN Email Template configuration
    *
-   * Tip: If you use template together with attachment the
-   * back-end will generate a parameter called 'URL';
+   * Use this to send emails based on pre-defined templates in TagoRUN
+   *
+   * @see TemplateOptions
+   * @note When using a template with an attachment, a $URL$ variable is automatically
+   *       generated and can be used in the template to reference the attachment
    */
   template?: TemplateOptions;
 }

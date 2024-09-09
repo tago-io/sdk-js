@@ -73,6 +73,10 @@ class Sendgrid extends TagoIOModule<GenericModuleParams> {
       console.warn(new Error("HTML field will overwrite message field"));
     }
 
+    if (Array.isArray(email.to)) {
+      email.to = email.to.join(",");
+    }
+
     const result = await this.doRequest<string>({
       path: "/analysis/services/email-sendgrid/send",
       method: "POST",
