@@ -68,10 +68,12 @@ class AWSSQS extends TagoIOModule<GenericModuleParams> {
       }
     }
 
+    const dataList = Array.isArray(sqsData.data) ? sqsData.data : [sqsData.data];
+
     const result = await this.doRequest<string>({
       path: "/analysis/services/queue-sqs/send",
       method: "POST",
-      body: { ...sqsData, dataList: sqsData.data, batch_enabled: true, data: undefined },
+      body: { ...sqsData, dataList, batch_enabled: true, data: undefined },
     });
 
     return result;
