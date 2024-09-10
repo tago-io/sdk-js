@@ -28,7 +28,7 @@ interface AWSSQSData {
   /**
    * Message to be sent to SQS
    */
-  data: Data | Data[];
+  data?: Partial<Data> | Partial<Data>[];
 }
 
 class AWSSQS extends TagoIOModule<GenericModuleParams> {
@@ -58,14 +58,20 @@ class AWSSQS extends TagoIOModule<GenericModuleParams> {
    * ```
    */
   public async sendMessage(sqsData: AWSSQSData): Promise<string> {
-    const requestBody: AWSSQSData & { dataList?: Data[]; batch_enabled?: boolean } = Array.isArray(sqsData.data)
-      ? { ...sqsData, data: null, dataList: sqsData.data, batch_enabled: true }
-      : sqsData;
+    try {
+      if (typeof sqsData.sqs_secret === "string") {
+        JSON.parse(sqsData.sqs_secret);
+      }
+    } catch (error) {
+      if (error instanceof SyntaxError) {
+        throw new Error("SQS Secret is not a valid JSON");
+      }
+    }
 
     const result = await this.doRequest<string>({
       path: "/analysis/services/queue-sqs/send",
       method: "POST",
-      body: requestBody,
+      body: { ...sqsData, dataList: sqsData.data, batch_enabled: true, data: undefined },
     });
 
     return result;

@@ -9,7 +9,7 @@ type SMTPEmailWithTemplate = EmailWithTemplate & SMTPCredentials;
 type SMTPEmailWithHTML = SMTPEmailBase & EmailHTML;
 type SMTPEmailWithRawText = SMTPEmailBase & EmailRawText;
 
-class Email extends TagoIOModule<GenericModuleParams> {
+class SMTP extends TagoIOModule<GenericModuleParams> {
   /**
    * Send email using SMTP Integration
    *
@@ -71,7 +71,9 @@ class Email extends TagoIOModule<GenericModuleParams> {
     }
 
     try {
-      JSON.parse(email.smtp_secret);
+      if (typeof email.smtp_secret === "string") {
+        JSON.parse(email.smtp_secret);
+      }
     } catch (error) {
       if (error instanceof SyntaxError) {
         throw new Error("SMTP Secret is not a valid JSON");
@@ -92,4 +94,4 @@ class Email extends TagoIOModule<GenericModuleParams> {
   }
 }
 
-export default Email;
+export default SMTP;
