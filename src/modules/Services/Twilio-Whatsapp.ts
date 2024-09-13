@@ -72,6 +72,10 @@ class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
    * ```
    */
   public async send(whatsapp: TwilioWhatsappData): Promise<string> {
+    if (whatsapp.media_url && !whatsapp.content_type) {
+      throw new Error("Content type is required when sending a file");
+    }
+
     const result = await this.doRequest<string>({
       path: "/analysis/services/whatsapp-twilio/send",
       method: "POST",
