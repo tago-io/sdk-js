@@ -1,4 +1,5 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import { AttachmentOptions } from "./Email";
 
 interface TwilioWhatsappData {
   /**
@@ -26,9 +27,10 @@ interface TwilioWhatsappData {
    */
   content_type?: string;
   /**
-   * Public URL of the file to be sent
+   * File attachment for the whatsapp (optional)
+   * @see AttachmentOptions
    */
-  media_url?: string;
+  attachment?: AttachmentOptions;
 }
 
 class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
@@ -66,13 +68,16 @@ class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
    *   twilio_sid: environment.TWILIO_SID,
    *   twilio_token: environment.TWILIO_TOKEN,
    *   content_type: "image/jpeg",
-   *   media_url: "https://example.com/image.jpg",
+   *   attachment: {
+   *    filename: "image.jpg",
+   *    archive: "base64_encoded_image",
+   *   },
    * });
    * console.log(result);
    * ```
    */
   public async send(whatsapp: TwilioWhatsappData): Promise<string> {
-    if (whatsapp.media_url && !whatsapp.content_type) {
+    if (whatsapp.attachment && !whatsapp.content_type) {
       throw new Error("Content type is required when sending a file");
     }
 
