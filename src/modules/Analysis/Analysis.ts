@@ -123,11 +123,10 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
       console.info("¬ Warning :: Analysis is not set to run on external");
     }
 
-    const sse = await openSSEListening({
-      token: this.params.token,
-      region: this.params.region,
-      channel: "analysis_trigger",
-    });
+    const sse = await openSSEListening(
+      { channel: "analysis_trigger" },
+      { token: this.params.token, region: this.params.region }
+    );
 
     const tokenEnd = this.params.token.slice(-5);
 
