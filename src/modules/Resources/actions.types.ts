@@ -1,6 +1,6 @@
 import { GenericID, Conditionals, TagsObj, Query, ExpireTimeOption } from "../../common/common.types";
 
-type ActionType = "condition" | "resource" | "interval" | "schedule" | "mqtt_topic";
+type ActionType = "condition" | "resource" | "interval" | "schedule" | "mqtt_topic" | "usage_alert";
 
 type ActionTypeParams =
   | {
@@ -63,6 +63,26 @@ type ActionTriggerType =
       second_value?: string;
       value_type: "string" | "number" | "boolean" | "*";
       unlock?: boolean;
+    }
+  | {
+      service_or_resource:
+        | "input"
+        | "output"
+        | "analysis"
+        | "data_records"
+        | "sms"
+        | "email"
+        | "run_users"
+        | "push_notification"
+        | "file_storage"
+        | "device"
+        | "dashboard"
+        | "action"
+        | "tcore"
+        | "team_members"
+        | "am";
+      condition: "=" | ">";
+      condition_value: number;
     };
 
 interface ActionCreateInfo {
