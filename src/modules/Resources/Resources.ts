@@ -6,6 +6,7 @@ import Billing from "./Billing";
 import Buckets from "./Buckets";
 import Dashboards from "./Dashboards";
 import Devices from "./Devices";
+import Entities from "./Entities";
 import Dictionaries from "./Dictionaries";
 import Files from "./Files";
 import Notifications from "./Notifications";
@@ -135,6 +136,11 @@ class Resources extends TagoIOModule<GenericModuleParams> {
   public secrets = new Secrets(this.params);
   static get secrets() {
     return new this().secrets;
+  }
+
+  public entities = new Entities(this.params);
+  static get entities() {
+    return new this().entities;
   }
 }
 
