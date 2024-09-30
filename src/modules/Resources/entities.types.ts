@@ -1,7 +1,5 @@
 import { GenericID, Query, TagsObj } from "../../common/common.types";
 
-
-
 type EntityFieldType = "uuid" | "string" | "int" | "float" | "json" | "timestamp" | "text" | "boolean";
 
 type EntityFieldInfo = {
@@ -11,9 +9,12 @@ type EntityFieldInfo = {
 
 type EntitySchema = Record<string, EntityFieldInfo>;
 
-type EntityIndex = Record<string, {
-  fields: string[];
-}>;
+type EntityIndex = Record<
+  string,
+  {
+    fields: string[];
+  }
+>;
 
 type EntityCreateInfo = {
   name: string;
@@ -30,48 +31,42 @@ type EntityInfo = Required<EntityCreateInfo> & {
   updated_at: string;
 };
 
-
 interface EntityQuery
   extends Query<EntityInfo, "name" | "visible" | "active" | "last_input" | "created_at" | "updated_at"> {
   resolveBucketName?: boolean;
   resolveConnectorName?: boolean;
 }
 
-
-type EntityListItem<T extends EntityQuery["fields"][number] = "id"> = Pick<
-  EntityInfo,
-  "id" | "name" | "tags" | T
-> &
+type EntityListItem<T extends EntityQuery["fields"][number] = "id"> = Pick<EntityInfo, "id" | "name" | "tags" | T> &
   Partial<EntityInfo>;
 
-
-type EntityDataQuery =  {
-    /**
-     * Filters to narrow down the requests from the API.
-     */
-    filters?:  Record<string, string | { start: string | null; end: string | null }>;
-    /**
-     * Amount of items to be fetched.
-     */
-    amount?: number;
-    page?: number;
-    /**
-     * Amount of items to be skipped.
-     */
-    skip?: number;
-    /**
-     * Ordering for the requested data.
-     */
-    order?: any;
-    /**
-     * Timestamp to pin the requested data to a specific start date.
-     */
-    startDate?: string;
-    /**
-     * Timestamp to pin the requested data up to a specific end date.
-     */
-    endDate?: string;
-  };
+type EntityDataQuery = {
+  /**
+   * Filters to narrow down the requests from the API.
+   */
+  filters?: Record<string, string | { start: string | null; end: string | null }>;
+  /**
+   * Amount of items to be fetched.
+   */
+  amount?: number;
+  page?: number;
+  /**
+   * Amount of items to be skipped.
+   */
+  skip?: number;
+  /**
+   * Ordering for the requested data.
+   */
+  order?: any;
+  /**
+   * Timestamp to pin the requested data to a specific start date.
+   */
+  startDate?: string;
+  /**
+   * Timestamp to pin the requested data up to a specific end date.
+   */
+  endDate?: string;
+};
 
 type EntityData = { id: GenericID } & Record<string, any>;
 
@@ -90,5 +85,5 @@ export {
   EntityListItem,
   EntityDataQuery,
   EntityData,
-  EntityUnknownData
+  EntityUnknownData,
 };

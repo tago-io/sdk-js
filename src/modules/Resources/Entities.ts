@@ -27,8 +27,16 @@ import type {
   DeviceTokenDataList,
   ListDeviceTokenQuery,
 } from "./devices.types";
-import { EntityCreateInfo, EntityData, EntityDataQuery, EntityInfo, EntityListItem, EntityQuery, EntitySchema, EntityUnknownData } from "./entities.types";
-
+import {
+  EntityCreateInfo,
+  EntityData,
+  EntityDataQuery,
+  EntityInfo,
+  EntityListItem,
+  EntityQuery,
+  EntitySchema,
+  EntityUnknownData,
+} from "./entities.types";
 
 class Entities extends TagoIOModule<GenericModuleParams> {
   /**
@@ -60,7 +68,6 @@ class Entities extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
-
 
   /**
    * Generate a new entity for the account.
@@ -140,7 +147,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
    *
    * @returns Array with the data values stored in the entity.
    *
-*    * @example
+   *    * @example
    * ```ts
    * const lastTenValues = await Resources.entities.getEntityData("myEntityID", { amount: 10 });
    * ```
@@ -155,7 +162,6 @@ class Entities extends TagoIOModule<GenericModuleParams> {
 
     return result.map((item) => dateParser(item, ["updated_at", "created_at"]));
   }
-
 
   /**
    * Edit data records in a entity using the profile token and entity ID.
@@ -173,7 +179,10 @@ class Entities extends TagoIOModule<GenericModuleParams> {
    * await Resources.devices.editEntityData("myEntityID", { id: "idOfTheRecord", field1: "new value", field2: "new unit" });
    * ```
    */
-  public async editEntityData(entityID: GenericID, updatedData: Partial<EntityData> | Partial<EntityData>[]): Promise<string> {
+  public async editEntityData(
+    entityID: GenericID,
+    updatedData: Partial<EntityData> | Partial<EntityData>[]
+  ): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/entity/${entityID}/data`,
       method: "PUT",
@@ -192,7 +201,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
    * @param data A single or an array of updated data records.
    * @returns Success message indicating amount of records sent (can be 0).
    */
- public async sendEntityData(entityID: GenericID, data: EntityUnknownData | EntityUnknownData[]): Promise<string> {
+  public async sendEntityData(entityID: GenericID, data: EntityUnknownData | EntityUnknownData[]): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/entity/${entityID}/data`,
       method: "POST",
@@ -200,7 +209,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
     });
 
     return result;
- }
+  }
 
   /**
    * Delete data records in a entity using the profile token and entity ID.
@@ -228,7 +237,6 @@ class Entities extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-
   /**
    * Add a field to the entity schema
    *
@@ -237,9 +245,16 @@ class Entities extends TagoIOModule<GenericModuleParams> {
    * @param index indexes to be added
    * @returns Success message
    */
-  public async editSchema(entityID: GenericID, schema?: EntitySchema, index?: Record<string, {
-    action: "create" | "delete";
-  }>): Promise<string> {
+  public async editSchema(
+    entityID: GenericID,
+    schema?: EntitySchema,
+    index?: Record<
+      string,
+      {
+        action: "create" | "delete";
+      }
+    >
+  ): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/entity/${entityID}/schema`,
       method: "PUT",
@@ -274,13 +289,13 @@ class Entities extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-   /**
+  /**
    * Delete a index from the entity schema
    * @param entityID entity ID
    * @param index index name to be deleted
    * @returns Success message
    */
-   public async deleteIndex(entityID: GenericID, index: string): Promise<string> {
+  public async deleteIndex(entityID: GenericID, index: string): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/entity/${entityID}/schema`,
       method: "PUT",
