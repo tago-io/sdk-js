@@ -27,7 +27,7 @@ import type {
   DeviceTokenDataList,
   ListDeviceTokenQuery,
 } from "./devices.types";
-import { EntityCreateInfo, EntityData, EntityDataQuery, EntityInfo, EntityListItem, EntityQuery, EntityUnknownData } from "./entities.types";
+import { EntityCreateInfo, EntityData, EntityDataQuery, EntityInfo, EntityListItem, EntityQuery, EntitySchema, EntityUnknownData } from "./entities.types";
 
 
 class Entities extends TagoIOModule<GenericModuleParams> {
@@ -118,100 +118,6 @@ class Entities extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
-
-  /**
-   * Create or edit param for the Device
-   * @param deviceID Device ID
-   * @param configObj Configuration Data
-   * @param paramID Parameter ID
-   */
-  public async paramSet(
-    deviceID: GenericID,
-    configObj: Partial<ConfigurationParams> | Partial<ConfigurationParams>[],
-    paramID?: GenericID
-  ): Promise<string> {
-    let body = configObj;
-    if (paramID && !Array.isArray(configObj)) {
-      body = {
-        id: paramID,
-        ...configObj,
-      };
-    }
-
-    const result = await this.doRequest<string>({
-      path: `/device/${deviceID}/params`,
-      method: "POST",
-      body,
-    });
-
-    return result;
-  }
-
-  /**
-   * List Params for the Device
-   * @param deviceID Device ID
-   * @param sentStatus True return only sent=true, False return only sent=false
-   */
-  public async paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<Required<ConfigurationParams>[]> {
-    const result = await this.doRequest<Required<ConfigurationParams>[]>({
-      path: `/device/${deviceID}/params`,
-      method: "GET",
-      params: { sent_status: sentStatus },
-    });
-
-    return result;
-  }
-
-  /**
-   * Remove param for the Device
-   * @param deviceID Device ID
-   * @param paramID Parameter ID
-   */
-  public async paramRemove(deviceID: GenericID, paramID: GenericID): Promise<string> {
-    const result = await this.doRequest<string>({
-      path: `/device/${deviceID}/params/${paramID}`,
-      method: "DELETE",
-    });
-
-    return result;
-  }
-
-  /**
-   * Retrieves a list of all tokens
-   * @default
-   * queryObj: {
-   *   page: 1,
-   *   fields: ["name", "token", "permission"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "created_at,desc",
-   * }
-   * @param deviceID Device ID
-   * @param queryObj Search query params
-   */
-
-  public async tokenList<T extends ListDeviceTokenQuery>(deviceID: GenericID, queryObj?: T) {
-    let result = await this.doRequest<
-      DeviceTokenDataList<
-        T["fields"] extends ListDeviceTokenQuery["fields"] ? T["fields"][number] : "token" | "name" | "permission"
-      >[]
-    >({
-      path: `/device/token/${deviceID}`,
-      method: "GET",
-      params: {
-        page: queryObj?.page || 1,
-        fields: queryObj?.fields || ["name", "token", "permission"],
-        filter: queryObj?.filter || {},
-        amount: queryObj?.amount || 20,
-        orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "created_at,desc",
-      },
-    });
-
-    result = result.map((data) => dateParser(data, ["created_at", "last_authorization", "expire_time"]));
-
-    return result;
-  }
-
 
   /**
    * Get amount of data stored in the Device.
@@ -323,108 +229,68 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
 
-
-
-
-
-
   /**
-   * Edit data records in a device using the profile token and device ID.
+   * Add a field to the entity schema
    *
-   * The `updatedData` can be a single data record or an array of records to be updated,
-   * each of the records must have the `id` of the record and the fields to be updated.
-   *
-   * @param deviceId Device ID.
-   * @param updatedData A single or an array of updated data records.
-   *
-   * @returns Success message indicating amount of records updated (can be 0).
-   *
-   * @example
-   * ```ts
-   * await Resources.devices.editDeviceData("myDeviceId", { id: "idOfTheRecord", value: "new value", unit: "new unit" });
-   * ```
+   * @param entityID entity ID
+   * @param schema schema to be added
+   * @param index indexes to be added
+   * @returns Success message
    */
-  public async editDeviceData(deviceId: GenericID, updatedData: DataEdit | DataEdit[]): Promise<string> {
+  public async editSchema(entityID: GenericID, schema?: EntitySchema, index?: Record<string, {
+    action: "create" | "delete";
+  }>): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/device/${deviceId}/data`,
+      path: `/entity/${entityID}/schema`,
       method: "PUT",
-      body: updatedData,
+      body: {
+        schema,
+        index,
+      },
     });
 
     return result;
   }
 
   /**
-   * Delete data records in a device using the profile token and device ID.
-   *
-   * See the example to understand how to use this method properly to have full control on what to delete.
-   *
-   * ! If query parameters are empty, last 15 data for the device will be deleted.
-   *
-   * @param deviceId Device ID.
-   * @param queryParams Parameters to specify what should be deleted on the device's data.
-   *
-   * @returns Success message indicating amount of records deleted (can be 0).
-   *
-   * @example
-   * ```ts
-   * await Resources.devices.deleteDeviceData("myDeviceId", { ids: ["recordIdToDelete", "anotherRecordIdToDelete" ] });
-   * ```
+   * Delete a field from the entity schema
+   * @param entityID entity ID
+   * @param field field name to be deleted
+   * @returns Success message
    */
-  public async deleteDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<string> {
+  public async deleteField(entityID: GenericID, field: string): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/device/${deviceId}/data`,
-      method: "DELETE",
-      params: queryParams,
+      path: `/entity/${entityID}/schema`,
+      method: "PUT",
+      body: {
+        schema: {
+          [field]: {
+            action: "delete",
+          },
+        },
+      },
     });
 
     return result;
   }
 
-  /**
-   * Get Info of the Device Chunks.
-   * @experimental
-   * @param deviceID Device ID
+   /**
+   * Delete a index from the entity schema
+   * @param entityID entity ID
+   * @param index index name to be deleted
+   * @returns Success message
    */
-  public async getChunk(deviceID: GenericID): Promise<DeviceChunkData[]> {
-    const result = await this.doRequest<DeviceChunkData[]>({
-      path: `/device/${deviceID}/chunk`,
-      method: "GET",
-    });
-
-    return result;
-  }
-
-  /**
-   * Delete the chunk data.
-   * @experimental
-   * @param deviceID Device ID
-   * @param chunkID Chunk ID
-   */
-  public async deleteChunk(deviceID: GenericID, chunkID: GenericID): Promise<string> {
+   public async deleteIndex(entityID: GenericID, index: string): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/device/${deviceID}/chunk/${chunkID}`,
-      method: "DELETE",
-    });
-
-    return result;
-  }
-
-  /**
-   * Schedule to export the Device Chunk's data to the TagoIO's files.
-   * @experimental
-   */
-  public async copyChunk(params: DeviceChunkParams): Promise<DeviceChunkCopyResponse> {
-    const body = {
-      chunk_id: params?.chunkID,
-      headers: params?.headers,
-      file_address: params?.file_address,
-    };
-
-    const result = await this.doRequest<DeviceChunkCopyResponse>({
-      path: `/device/${params?.deviceID}/chunk/copy`,
-      method: "POST",
-      body,
+      path: `/entity/${entityID}/schema`,
+      method: "PUT",
+      body: {
+        index: {
+          [index]: {
+            action: "delete",
+          },
+        },
+      },
     });
 
     return result;

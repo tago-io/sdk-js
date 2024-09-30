@@ -1,10 +1,5 @@
-import { ExpireTimeOption, GenericID, GenericToken, PermissionOption, Query, TagsObj } from "../../common/common.types";
-import { DataStorageType } from "./buckets.types";
+import { GenericID, Query, TagsObj } from "../../common/common.types";
 
-
-type EntityIndex = {
-  fields: string[];
-};
 
 
 type EntityFieldType = "uuid" | "string" | "int" | "float" | "json" | "timestamp" | "text" | "boolean";
@@ -14,11 +9,16 @@ type EntityFieldInfo = {
   required?: boolean;
 };
 
+type EntitySchema = Record<string, EntityFieldInfo>;
+
+type EntityIndex = Record<string, {
+  fields: string[];
+}>;
 
 type EntityCreateInfo = {
   name: string;
-  schema: Record<string, EntityFieldInfo>;
-  index?: Record<string, EntityIndex>;
+  schema: EntitySchema;
+  index?: EntityIndex;
   tags?: TagsObj[];
   payload_decoder?: string | null;
 };
@@ -80,7 +80,8 @@ type EntityUnknownData = {
 };
 
 export {
- EntityIndex,
+  EntityIndex,
+  EntitySchema,
   EntityFieldType,
   EntityFieldInfo,
   EntityCreateInfo,
