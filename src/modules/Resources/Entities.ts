@@ -252,26 +252,30 @@ class Entities extends TagoIOModule<GenericModuleParams> {
    * Add a field to the entity schema
    *
    * @param entityID entity ID
-   * @param schema schema to be added
-   * @param index indexes to be added
+   * @param data schema or index to be added
    * @returns Success message
    */
   public async editSchemaIndex(
     entityID: GenericID,
-    schema?: EntitySchema,
-    index?: Record<
-      string,
-      {
-        action: "create" | "delete";
-      }
-    >
+    data: {
+      schema?: EntitySchema;
+      index?: Record<
+        string,
+        | {
+            action?: "create";
+            fields?: string[];
+          }
+        | {
+            action?: "delete";
+          }
+      >;
+    }
   ): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/entity/${entityID}/schema`,
       method: "PUT",
       body: {
-        schema,
-        index,
+        ...data,
       },
     });
 
