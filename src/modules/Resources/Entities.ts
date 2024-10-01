@@ -51,7 +51,12 @@ class Entities extends TagoIOModule<GenericModuleParams> {
    * }
    * @param queryObj Search query params
    */
-  public async list(queryObj?: EntityQuery): Promise<EntityListItem[]> {
+  public async list(
+    queryObj?: EntityQuery,
+    options?: {
+      paramsSerializer?: any;
+    }
+  ): Promise<EntityListItem[]> {
     let result = await this.doRequest<EntityListItem[]>({
       path: "/entity",
       method: "GET",
@@ -62,6 +67,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
         amount: queryObj?.amount || 20,
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
       },
+      ...options,
     });
 
     result = result.map((data) => dateParser(data, ["created_at", "updated_at"]));
@@ -153,11 +159,16 @@ class Entities extends TagoIOModule<GenericModuleParams> {
    * ```
    */
 
-  public async getEntityData(entityID: GenericID, queryParams?: EntityDataQuery): Promise<EntityData[]> {
+  public async getEntityData(
+    entityID: GenericID,
+    queryParams?: EntityDataQuery,
+    options?: { paramsSerializer?: any }
+  ): Promise<EntityData[]> {
     const result = await this.doRequest<EntityData[]>({
       path: `/entity/${entityID}/data`,
       method: "GET",
       params: queryParams,
+      ...options,
     });
 
     return result.map((item) => dateParser(item, ["updated_at", "created_at"]));
@@ -181,7 +192,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
    */
   public async editEntityData(
     entityID: GenericID,
-    updatedData: Partial<EntityData> | Partial<EntityData>[]
+    updatedData: ({ id: GenericID } & Partial<EntityData>) | Array<{ id: GenericID } & Partial<EntityData>>
   ): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/entity/${entityID}/data`,
@@ -217,21 +228,21 @@ class Entities extends TagoIOModule<GenericModuleParams> {
    * See the example to understand how to use this method properly to have full control on what to delete.
    *
    * @param entityID Entity ID.
-   * @param queryParams Parameters to specify what should be deleted on the entity's data.
+   * @param itemsToDelete Items to be deleted.
    *
    * @returns Success message indicating amount of records deleted (can be 0).
    *
    * @example
    * ```ts
-   * await Resources.entities.deleteEntityData("myEntityID", { ids: ["myRecordId", "anotherRecordId"] });
+   * await Resources.entities.deleteEntityData("myEntityID", { ids: ["idOfTheRecord1", "idOfTheRecord2"] });
    * ```
    *
    */
-  public async deleteEntityData(entityID: GenericID, queryParams?: EntityDataQuery): Promise<string> {
+  public async deleteEntityData(entityID: GenericID, itemsToDelete: { ids: GenericID[] }): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/entity/${entityID}/data`,
       method: "DELETE",
-      params: queryParams,
+      body: itemsToDelete,
     });
 
     return result;
@@ -245,7 +256,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
    * @param index indexes to be added
    * @returns Success message
    */
-  public async editSchema(
+  public async editSchemaIndex(
     entityID: GenericID,
     schema?: EntitySchema,
     index?: Record<

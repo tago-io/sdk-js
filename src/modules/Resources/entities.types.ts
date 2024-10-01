@@ -2,23 +2,33 @@ import { GenericID, Query, TagsObj } from "../../common/common.types";
 
 type EntityFieldType = "uuid" | "string" | "int" | "float" | "json" | "timestamp" | "text" | "boolean";
 
-type EntityFieldInfo = {
-  type: EntityFieldType;
+type EntityFieldCreate = {
+  action: "create";
+  type?: EntityFieldType;
   required?: boolean;
 };
 
-type EntitySchema = Record<string, EntityFieldInfo>;
+type EntityFieldRename = {
+  action: "rename";
+  new_name: string;
+};
+
+type EntityFieldDelete = {
+  action: "delete";
+};
+
+type EntitySchema = Record<string, EntityFieldCreate | EntityFieldRename | EntityFieldDelete | {}>;
 
 type EntityIndex = Record<
   string,
   {
-    fields: string[];
+    fields?: string[];
   }
 >;
 
 type EntityCreateInfo = {
-  name: string;
-  schema: EntitySchema;
+  name?: string;
+  schema?: EntitySchema;
   index?: EntityIndex;
   tags?: TagsObj[];
   payload_decoder?: string | null;
@@ -78,7 +88,6 @@ export {
   EntityIndex,
   EntitySchema,
   EntityFieldType,
-  EntityFieldInfo,
   EntityCreateInfo,
   EntityInfo,
   EntityQuery,
