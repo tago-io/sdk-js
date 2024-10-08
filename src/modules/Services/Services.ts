@@ -9,6 +9,7 @@ import PDFService from "./PDF";
 import Sendgrid from "./Sendgrid";
 import SMS from "./SMS";
 import SMTP from "./SMTP";
+import TwilioWhatsapp from "./Twilio-Whatsapp";
 import Twilio from "./Twillio";
 
 class Services extends TagoIOModule<GenericModuleParams> {
@@ -49,6 +50,11 @@ class Services extends TagoIOModule<GenericModuleParams> {
   public sendgrid = new Sendgrid(this.params);
   static get sendgrid() {
     return new this().sendgrid;
+  }
+
+  public twilio_whatsapp = new TwilioWhatsapp(this.params);
+  static get twilio_whatsapp() {
+    return new this().twilio_whatsapp;
   }
 
   /** @internal @deprecated renamed to .mqtt (lowercase) */
