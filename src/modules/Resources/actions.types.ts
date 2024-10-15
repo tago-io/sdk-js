@@ -1,10 +1,10 @@
 import { GenericID, Conditionals, TagsObj, Query, ExpireTimeOption } from "../../common/common.types";
 
-type ActionType = "condition" | "resource" | "interval" | "schedule" | "mqtt_topic" | "condition_geofence";
+type ActionType = "condition" | "resource" | "interval" | "schedule" | "mqtt_topic" | "usage_alert" | "condition_geofence";
 type TriggerGeofenceValueType = {
   center?: number[]; // [longitude, latitude]
   radius?: number;
-  coordinates?: Array<number[]>; // [[longitude, latitude], [longitude, latitude], ...]
+  coordinates?: number[][]; // [[longitude, latitude], [longitude, latitude], ...]
 };
 
 type ActionTypeParams =
@@ -70,11 +70,32 @@ type ActionTriggerType =
       unlock?: boolean;
     }
   | {
+<<<<<<< HEAD
       device: string;
       variable: string;
       is: "IN" | "OUT";
       value: TriggerGeofenceValueType;
       unlock?: boolean;
+=======
+      service_or_resource:
+        | "input"
+        | "output"
+        | "analysis"
+        | "data_records"
+        | "sms"
+        | "email"
+        | "run_users"
+        | "push_notification"
+        | "file_storage"
+        | "device"
+        | "dashboard"
+        | "action"
+        | "tcore"
+        | "team_members"
+        | "am";
+      condition: "=" | ">";
+      condition_value: number;
+>>>>>>> master
     };
 
 interface ActionCreateInfo {

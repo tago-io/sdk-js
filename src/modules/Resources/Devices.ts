@@ -56,6 +56,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "name,asc",
         resolveBucketName: queryObj?.resolveBucketName || false,
         resolveConnectorName: queryObj?.resolveConnectorName || false,
+        serial: queryObj?.serial,
       },
     });
 
