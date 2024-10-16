@@ -1,16 +1,16 @@
 import { GenericModuleParams } from "../../common/TagoIOModule";
-import { Regions } from "../../regions";
+import { Regions, RegionsObj } from "../../regions";
 
 interface IDictionaryModuleParams extends GenericModuleParams {
   token: string;
-  region?: Regions;
+  region?: Regions | RegionsObj;
   language?: string;
   options?: object;
 }
 
 interface IDictionaryModuleParamsAnonymous extends GenericModuleParams {
   runURL: string;
-  region?: Regions;
+  region?: Regions | RegionsObj;
   language?: string;
   options?: object;
 }

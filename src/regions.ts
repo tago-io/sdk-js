@@ -27,8 +27,9 @@ const regionsDefinition = {
  * @internal
  * @param region Region
  */
-function getConnectionURI(region?: Regions): RegionsObj {
-  const value = regionsDefinition[region];
+function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
+  const value =
+    typeof region === "string" ? regionsDefinition[region] : typeof region === "object" ? region : undefined;
 
   if (value) {
     return value;
@@ -37,6 +38,8 @@ function getConnectionURI(region?: Regions): RegionsObj {
   if (region !== undefined && !region !== null && region !== "env") {
     throw new ReferenceError(`> TagoIO-SDK: Invalid region ${region}.`);
   }
+
+  console.log("Process env", process.env.TAGOIO_API);
 
   try {
     const api = process.env.TAGOIO_API;
@@ -61,4 +64,4 @@ function getConnectionURI(region?: Regions): RegionsObj {
 type Regions = "usa-1" | "env";
 
 export default getConnectionURI;
-export { Regions };
+export { Regions, RegionsObj };
