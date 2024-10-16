@@ -1,6 +1,6 @@
 {
   "name": "@tago-io/sdk",
-  "version": "11.3.0",
+  "version": "11.3.1",
   "description": "TagoIO SDK for JavaScript in the browser and Node.js",
   "author": "TagoIO Inc.",
   "homepage": "https://tago.io",
