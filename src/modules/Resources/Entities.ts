@@ -283,6 +283,51 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * Rename a field from the entity schema
+   * @param entityID entity ID
+   * @param field field name to be renamed
+   * @param newName new field name
+   */
+  public async renameField(entityID: GenericID, field: string, newName: string): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/entity/${entityID}/schema`,
+      method: "PUT",
+      body: {
+        schema: {
+          [field]: {
+            action: "rename",
+            new_name: newName,
+          },
+        },
+      },
+    });
+
+    return result;
+  }
+
+  /**
+   * Update a field from the entity schema
+   * @param entityID entity ID
+   * @param field field name to be updated
+   * @param data data to be updated
+   */
+  public async updateField(entityID: GenericID, field: string, data: Partial<EntitySchema>): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/entity/${entityID}/schema`,
+      method: "PUT",
+      body: {
+        schema: {
+          [field]: {
+            action: "update",
+            ...data,
+          },
+        },
+      },
+    });
+    return result;
+  }
+
+  /**
    * Delete a field from the entity schema
    * @param entityID entity ID
    * @param field field name to be deleted
