@@ -370,6 +370,20 @@ class Entities extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
+  /**
+   * Empty all data in a entity.
+   * @param entityID Entity ID
+   * @returns Success message
+   */
+  public async emptyDeviceData(entityId: GenericID): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/entity/${entityId}/empty`,
+      method: "POST",
+    });
+
+    return result;
+  }
 }
 
 export default Entities;
