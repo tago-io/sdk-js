@@ -376,7 +376,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
    * @param entityID Entity ID
    * @returns Success message
    */
-  public async emptyDeviceData(entityId: GenericID): Promise<string> {
+  public async emptyEntityData(entityId: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/entity/${entityId}/empty`,
       method: "POST",
