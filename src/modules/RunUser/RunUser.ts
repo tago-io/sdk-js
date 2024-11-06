@@ -1,6 +1,6 @@
 import { GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { doRequestParams, GenericModuleParams } from "../../common/TagoIOModule";
-import { Regions } from "../../regions";
+import { Regions, RegionsObj } from "../../regions";
 import { NotificationInfo, NotificationQuery } from "../Resources/notifications.types";
 import { OTPType } from "../Resources/account.types";
 import dateParser from "../Utils/dateParser";
@@ -40,7 +40,7 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
   public static async create(
     tagoIORunURL: string,
     newUserObj: RunUserCreateInfo,
-    region?: Regions
+    region?: Regions | RegionsObj
   ): Promise<RunUserCreate> {
     const params: doRequestParams = {
       path: `/run/${tagoIORunURL}/signup`,
@@ -90,7 +90,7 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
   public static async login(
     tagoIORunURL: string,
     credentialsObj: RunUserLogin,
-    region?: Regions
+    region?: Regions | RegionsObj
   ): Promise<RunUserLoginResponse> {
     const params: doRequestParams = {
       path: `/run/${tagoIORunURL}/login`,
@@ -128,7 +128,11 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
    * @param email Run user email to recover the password
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static async passwordRecover(tagoIORunURL: string, email: string, region?: Regions): Promise<string> {
+  public static async passwordRecover(
+    tagoIORunURL: string,
+    email: string,
+    region?: Regions | RegionsObj
+  ): Promise<string> {
     const params: doRequestParams = {
       path: `/run/${tagoIORunURL}/passwordreset/${email}`,
       method: "GET",
@@ -264,13 +268,17 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
   public static async requestLoginPINCode(
     tagoIORunURL: string,
     credentials: RunUserCredentials,
-    typeOTP: OTPType
+    typeOTP: OTPType,
+    region?: Regions | RegionsObj
   ): Promise<string> {
-    const result = await this.doRequestAnonymous<string>({
-      path: `/run/${tagoIORunURL}/login/otp`,
-      method: "POST",
-      body: { ...credentials, otp_type: typeOTP },
-    });
+    const result = await this.doRequestAnonymous<string>(
+      {
+        path: `/run/${tagoIORunURL}/login/otp`,
+        method: "POST",
+        body: { ...credentials, otp_type: typeOTP },
+      },
+      region
+    );
 
     return result;
   }

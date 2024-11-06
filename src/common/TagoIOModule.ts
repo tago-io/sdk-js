@@ -1,12 +1,12 @@
 import { AxiosRequestConfig, Method } from "axios";
 import qs from "qs";
 import apiRequest from "../infrastructure/apiRequest";
-import regions, { Regions } from "../regions";
+import regions, { Regions, RegionsObj } from "../regions";
 import { RefType, GenericID } from "./common.types";
 
 interface GenericModuleParams {
   token?: string;
-  region?: Regions;
+  region?: Regions | RegionsObj;
   // options?: Object;
 }
 
@@ -113,7 +113,10 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
     return result as Promise<TR>;
   }
 
-  protected static async doRequestAnonymous<TR>(requestObj: doRequestParams, region?: Regions): Promise<TR> {
+  protected static async doRequestAnonymous<TR>(
+    requestObj: doRequestParams,
+    region?: Regions | RegionsObj
+  ): Promise<TR> {
     const apiURI = regions(region)?.api;
     if (!apiURI) {
       throw new Error("Invalid region");
