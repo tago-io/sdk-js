@@ -130,16 +130,18 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
 
     const tokenEnd = this.params.token.slice(-5);
 
-    sse.onmessage = () => {
-      // const data = JSONParseSafe(event?.data, {})?.payload;
-      // if (!data) {
-      //   // console.log("Invalid data", event.data);
-      //   return;
-      // }
-      // this.runLocal(data.environment, data.data, data.analysis_id, data.token);
+    sse.onmessage = (event) => {
+      const data = JSONParseSafe(event?.data, {})?.payload;
+
+      if (!data) {
+        // console.log("Invalid data", event.data);
+        return;
+      }
+
+      this.runLocal(data.environment, data.data, data.analysis_id, data.token);
     };
 
-    sse.onerror = () => {
+    sse.onerror = (_error) => {
       // console.debug(_error);
       console.error("¬ Connection was closed, trying to reconnect...");
     };

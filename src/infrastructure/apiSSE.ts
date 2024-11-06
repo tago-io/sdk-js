@@ -25,7 +25,6 @@ function isChannelWithID(params: OpenSSEConfig): params is OpenSSEWithID {
 
 async function loadEventSourceLib(): Promise<typeof EventSource> {
   if (globalThis.EventSource) {
-    console.log("Inside loading event source");
     return globalThis.EventSource;
   } else {
     // @ts-expect-error EventSource types from DOMLib

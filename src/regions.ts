@@ -39,8 +39,6 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
     throw new ReferenceError(`> TagoIO-SDK: Invalid region ${region}.`);
   }
 
-  console.log("Process env", process.env.TAGOIO_API);
-
   try {
     const api = process.env.TAGOIO_API;
     const realtime = process.env.TAGOIO_REALTIME;
