@@ -31,6 +31,10 @@ interface TwilioWhatsappData {
    * @see AttachmentOptions
    */
   attachment?: AttachmentOptions;
+  /**
+   * Template SID for the message
+   */
+  content_sid?: string;
 }
 
 class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
@@ -72,6 +76,20 @@ class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
    *    filename: "image.jpg",
    *    archive: "base64_encoded_image",
    *   },
+   * });
+   * console.log(result);
+   * ```
+   * @example
+   * ```typescript
+   * const environment = Utils.envToJson(context.environment);
+   * const twilioWhatsappService = new Services({ token: context.token }).twilio_whatsapp;
+   * const result = await twilioWhatsappService.send({
+   *   to: "+1234567890",
+   *   message: "{\"1\":\"Hello\",\"2\":\"World\"}",
+   *   from: "+0987654321",
+   *   twilio_sid: environment.TWILIO_SID,
+   *   twilio_token: environment.TWILIO_TOKEN,
+   *   content_sid: environment.CONTENT_SID,
    * });
    * console.log(result);
    * ```
