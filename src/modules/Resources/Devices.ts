@@ -20,6 +20,9 @@ import type {
   DeviceChunkParams,
   DeviceCreateInfo,
   DeviceCreateResponse,
+  DeviceDataBackup,
+  DeviceDataBackupResponse,
+  DeviceDataRestore,
   DeviceEditInfo,
   DeviceInfo,
   DeviceListItem,
@@ -570,10 +573,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  /**
-   * Schedule to export the Device Chunk's data to the TagoIO's files.
-   * @experimental
-   */
+  /** @deprecated Use `dataBackup` instead. */
   public async copyChunk(params: DeviceChunkParams): Promise<DeviceChunkCopyResponse> {
     const body = {
       chunk_id: params?.chunkID,
@@ -583,6 +583,60 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
     const result = await this.doRequest<DeviceChunkCopyResponse>({
       path: `/device/${params?.deviceID}/chunk/copy`,
+      method: "POST",
+      body,
+    });
+
+    return result;
+  }
+
+  /**
+   * Schedule to export the Device's data to TagoIO Files.
+   *
+   * Pass the `chunkID` as parameter to backup data from Immutable devices.
+   *
+   * @example
+   *
+   * ```ts
+   * await Resources.devices.dataBackup({
+   *   deviceID: "my-device-ID",
+   *   file_address: "/backups/$DEVICE$/$TIMESTAMP$",
+   *   headers: true,
+   * });
+   * ```
+   */
+  public async dataBackup(params: DeviceDataBackup, chunkID?: GenericID): Promise<DeviceDataBackupResponse> {
+    const body = {
+      chunk_id: chunkID,
+      headers: params.headers,
+      file_address: params.file_address,
+    };
+
+    const result = await this.doRequest<DeviceDataBackupResponse>({
+      path: chunkID ? `/device/${params.deviceID}/chunk/backup` : `/device/${params.deviceID}/data/backup`,
+      method: "POST",
+      body,
+    });
+
+    return result;
+  }
+
+  /**
+   * Restore data to a device from a `.csv` hosted in TagoIO Files.
+   *
+   * @example
+   *
+   * ```ts
+   * await Resources.devices.dataRestore({ deviceID: "my-device-ID", file_address: "/backups/old-device-id/backup.csv" });
+   * ```
+   */
+  public async dataRestore(params: DeviceDataRestore): Promise<string> {
+    const body = {
+      file_address: params.file_address,
+    };
+
+    const result = await this.doRequest<string>({
+      path: `/device/${params.deviceID}/data/restore`,
       method: "POST",
       body,
     });
