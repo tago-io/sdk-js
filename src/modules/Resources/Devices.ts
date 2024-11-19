@@ -573,11 +573,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  /**
-   * Schedule to export the Device Chunk's data to the TagoIO's files.
-   *
-   * @deprecated Use `dataBackup` instead.
-   */
+  /** @deprecated Use `dataBackup` instead. */
   public async copyChunk(params: DeviceChunkParams): Promise<DeviceChunkCopyResponse> {
     const body = {
       chunk_id: params?.chunkID,
@@ -594,6 +590,21 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Schedule to export the Device's data to TagoIO Files.
+   *
+   * Pass the `chunkID` as parameter to backup data from Immutable devices.
+   *
+   * @example
+   *
+   * ```ts
+   * await Resources.devices.dataBackup({
+   *   deviceID: "my-device-ID",
+   *   file_address: "/backups/$DEVICE$/$TIMESTAMP$",
+   *   headers: true,
+   * });
+   * ```
+   */
   public async dataBackup(params: DeviceDataBackup, chunkID?: GenericID): Promise<DeviceDataBackupResponse> {
     const body = {
       chunk_id: chunkID,
@@ -610,6 +621,15 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * Restore data to a device from a `.csv` hosted in TagoIO Files.
+   *
+   * @example
+   *
+   * ```ts
+   * await Resources.devices.dataRestore({ deviceID: "my-device-ID", file_address: "/backups/old-device-id/backup.csv" });
+   * ```
+   */
   public async dataRestore(params: DeviceDataRestore): Promise<string> {
     const body = {
       file_address: params.file_address,
