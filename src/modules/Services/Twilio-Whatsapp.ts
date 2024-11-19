@@ -35,6 +35,12 @@ interface TwilioWhatsappData {
    * Template SID for the message
    */
   content_sid?: string;
+  /**
+   * Template SID for the message
+   */
+  content_variables?: {
+    [key: string]: string;
+  };
 }
 
 class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
@@ -85,7 +91,7 @@ class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
    * const twilioWhatsappService = new Services({ token: context.token }).twilio_whatsapp;
    * const result = await twilioWhatsappService.send({
    *   to: "+1234567890",
-   *   message: "{\"1\":\"Hello\",\"2\":\"World\"}",
+   *   content_variables: {"1":"Hello","2":"World"},
    *   from: "+0987654321",
    *   twilio_sid: environment.TWILIO_SID,
    *   twilio_token: environment.TWILIO_TOKEN,
