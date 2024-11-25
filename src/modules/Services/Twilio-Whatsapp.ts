@@ -137,4 +137,3 @@ class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
 }
 
 export default TwilioWhatsapp;
-export type { TwilioWhatsappDataMessage, TwilioWhatsappDataTemplate, TwilioWhatsappDataAttachment };
