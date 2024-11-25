@@ -1,6 +1,6 @@
 {
   "name": "@tago-io/sdk",
-  "version": "11.3.2",
+  "version": "11.3.4",
   "description": "TagoIO SDK for JavaScript in the browser and Node.js",
   "author": "TagoIO Inc.",
   "homepage": "https://tago.io",
@@ -30,7 +30,8 @@
     "linter": "eslint .",
     "test": "jest",
     "monacoTypes": "dts-bundle-generator -o docs/tago-io.sdk.d.ts src/modules.ts",
-    "docs": "typedoc"
+    "docs": "typedoc",
+    "link": "yalc publish"
   },
   "devDependencies": {
     "@swc/jest": "0.2.36",
