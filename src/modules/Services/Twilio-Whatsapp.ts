@@ -9,7 +9,7 @@ interface TwilioWhatsappData {
   /**
    * Message to be send
    */
-  message: string;
+  message?: string;
   /**
    * From number registered with Twilio, Example: +5599999999999
    */
@@ -103,6 +103,10 @@ class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
   public async send(whatsapp: TwilioWhatsappData): Promise<string> {
     if (whatsapp.attachment && !whatsapp.content_type) {
       throw new Error("Content type is required when sending a file");
+    }
+
+    if (!whatsapp.message && !whatsapp.content_sid) {
+      throw new Error("Message or content_sid is required");
     }
 
     const result = await this.doRequest<string>({
