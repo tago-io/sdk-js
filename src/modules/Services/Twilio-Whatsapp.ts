@@ -1,15 +1,11 @@
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { AttachmentOptions } from "./Email";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { AttachmentOptions } from "./Email";
 
 interface TwilioWhatsappData {
   /**
    * Number to send Whatsapp message, Example: +5599999999999
    */
   to: string;
-  /**
-   * Message to be send
-   */
-  message?: string;
   /**
    * From number registered with Twilio, Example: +5599999999999
    */
@@ -22,23 +18,36 @@ interface TwilioWhatsappData {
    * Twilio auth token
    */
   twilio_token: string;
+}
+
+interface TwilioWhatsappDataMessage extends TwilioWhatsappData {
+  /**
+   * Message to be send
+   */
+  message: string;
+}
+
+interface TwilioWhatsappDataAttachment extends TwilioWhatsappDataMessage {
   /**
    * Content/Type of the request when sending a file, must be the same content type of the file
    */
-  content_type?: string;
+  content_type: string;
   /**
    * File attachment for the whatsapp (optional)
    * @see AttachmentOptions
    */
-  attachment?: AttachmentOptions;
+  attachment: AttachmentOptions;
+}
+
+interface TwilioWhatsappDataTemplate extends TwilioWhatsappData {
   /**
    * Template SID for the message
    */
-  content_sid?: string;
+  content_sid: string;
   /**
    * Template SID for the message
    */
-  content_variables?: {
+  content_variables: {
     [key: string]: string;
   };
 }
@@ -77,6 +86,19 @@ class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
    *   from: "+0987654321",
    *   twilio_sid: environment.TWILIO_SID,
    *   twilio_token: environment.TWILIO_TOKEN,
+   * });
+   * console.log(result);
+   * ```
+   * @example
+   * ```typescript
+   * const environment = Utils.envToJson(context.environment);
+   * const twilioWhatsappService = new Services({ token: context.token }).twilio_whatsapp;
+   * const result = await twilioWhatsappService.send({
+   *   to: "+1234567890",
+   *   message: "Hello from TagoIO!",
+   *   from: "+0987654321",
+   *   twilio_sid: environment.TWILIO_SID,
+   *   twilio_token: environment.TWILIO_TOKEN,
    *   content_type: "image/jpeg",
    *   attachment: {
    *    filename: "image.jpg",
@@ -100,15 +122,10 @@ class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
    * console.log(result);
    * ```
    */
-  public async send(whatsapp: TwilioWhatsappData): Promise<string> {
-    if (whatsapp.attachment && !whatsapp.content_type) {
-      throw new Error("Content type is required when sending a file");
-    }
-
-    if (!whatsapp.message && !whatsapp.content_sid) {
-      throw new Error("Message or content_sid is required");
-    }
-
+  public async send(whatsapp: TwilioWhatsappDataMessage): Promise<string>;
+  public async send(whatsapp: TwilioWhatsappDataTemplate): Promise<string>;
+  public async send(whatsapp: TwilioWhatsappDataAttachment): Promise<string>;
+  public async send(whatsapp: any): Promise<string> {
     const result = await this.doRequest<string>({
       path: "/analysis/services/whatsapp-twilio/send",
       method: "POST",
@@ -120,3 +137,4 @@ class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
 }
 
 export default TwilioWhatsapp;
+export type { TwilioWhatsappDataMessage, TwilioWhatsappDataTemplate, TwilioWhatsappDataAttachment };
