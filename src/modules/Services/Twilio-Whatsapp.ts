@@ -36,7 +36,7 @@ interface TwilioWhatsappData {
    */
   content_sid?: string;
   /**
-   * Template SID for the message
+   * Template Variables for the message
    */
   content_variables?: {
     [key: string]: string;
