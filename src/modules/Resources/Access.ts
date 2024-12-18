@@ -18,7 +18,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
-   * @example
+   * @example If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const list = await Resources.accessManagement.list({
    *   page: 1,
@@ -55,7 +55,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
-   * @example
+   * @example If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const newAccess = await Resources.accessManagement.create({
    *   name: "My Access Policy",
@@ -86,7 +86,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
-   * @example
+   * @example If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.accessManagement.edit("access-id-123", {
    *   name: "Updated Access Policy",
@@ -115,7 +115,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
-   * @example
+   * @example If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.accessManagement.delete("access-id-123");
    * console.log(result);
@@ -138,7 +138,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
-   * @example
+   * @example If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const accessInfo = await Resources.accessManagement.info("access-id-123");
    * console.log(accessInfo);
