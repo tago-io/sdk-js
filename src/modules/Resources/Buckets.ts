@@ -12,40 +12,66 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   public devices = new Devices(this.params);
 
   /**
-   * List Devices in the profile according to filters and pagination.
-   * @default
-   * ```json
-   * queryObj: {
+   * Lists all devices from your application with pagination.
+   *
+   * @param {DeviceQuery} queryObj - Query parameters for filtering and pagination
+   * @param {number} queryObj.page - Page number
+   * @param {string[]} queryObj.fields - Fields to be returned
+   * @param {object} queryObj.filter - Filter conditions
+   * @param {number} queryObj.amount - Number of items per page
+   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
+   * @returns {Promise<DeviceInfo[]>} List of devices
+   *
+   * @deprecated Use `Resources.devices.list()` instead
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * // Use this instead of Buckets
+   * const list = await Resources.devices.list({
    *   page: 1,
    *   fields: ["id", "name"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "name,asc",
-   * }
+   *   amount: 10,
+   *   orderBy: ["name", "asc"]
+   * });
+   * console.log(list);
    * ```
-   * @param queryObj Search query params
-   *
-   * @deprecated Use the method from `Resources.devices` instead.
    */
   public async list<T extends DeviceQuery>(queryObj?: T) {
     return await this.devices.list(queryObj);
   }
 
   /**
-   * Get information about the Device.
-   * @param deviceID Device ID
+   * Retrieves detailed information about a specific device.
    *
-   * @deprecated Use the method from `Resources.devices` instead.
+   * @param {GenericID} deviceID - ID of the device
+   * @returns {Promise<DeviceInfo>} Device details
+   *
+   * @deprecated Use `Resources.devices.info()` instead
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * // Use this instead of Buckets
+   * const deviceInfo = await Resources.devices.info("device-id-123");
+   * console.log(deviceInfo);
+   * ```
    */
   public async info(deviceID: GenericID) {
     return await this.devices.info(deviceID);
   }
 
   /**
-   * Get amount of data on the Device.
-   * @param deviceID Device ID
+   * Gets the amount of data stored for a device.
    *
-   * @deprecated Use the method from `Resources.devices` instead.
+   * @param {GenericID} deviceID - ID of the device
+   * @returns {Promise<number>} Amount of data stored
+   * @deprecated Use `Resources.devices.amount()` instead
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * // Use this instead of Buckets
+   * const amount = await Resources.devices.amount("device-id-123");
+   * console.log(amount);
+   * ```
    */
   public async amount(deviceID: GenericID) {
     return await this.devices.amount(deviceID);
