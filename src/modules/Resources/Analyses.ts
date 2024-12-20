@@ -24,7 +24,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *   page: 1,
    *   fields: ["id", "name"],
    *   amount: 10,
-   *   orderBy: "asc"
+   *   orderBy: ["name", "asc"]
    * });
    * console.log(list);
    * ```
