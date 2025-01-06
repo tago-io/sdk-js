@@ -15,18 +15,26 @@ import dateParser from "../Utils/dateParser";
 
 class Dashboards extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieves a list with all dashboards from the account
-   * @default
-   * ```json
-   * queryObj: {
+   * Lists all dashboards from your application with pagination support.
+   *
+   * @param {DashboardQuery} queryObj - Query parameters for filtering and pagination
+   * @param {number} queryObj.page - Page number
+   * @param {string[]} queryObj.fields - Fields to be returned
+   * @param {object} queryObj.filter - Filter conditions
+   * @param {number} queryObj.amount - Number of items per page
+   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
+   * @returns {Promise<DashboardInfo[]>} List of dashboards
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const list = await Resources.dashboards.list({
    *   page: 1,
    *   fields: ["id", "name"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "label,asc",
-   * }
+   *   amount: 10,
+   *   orderBy: ["name", "asc"]
+   * });
+   * console.log(list);
    * ```
-   * @param queryObj Search query params
    */
   public async list(queryObj?: DashboardQuery): Promise<DashboardInfo[]> {
     let result = await this.doRequest<DashboardInfo[]>({
@@ -45,9 +53,21 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
+
   /**
-   * Generates and retrieves a new dashboard from the account
-   * @param dashboardObj Object data to create new Dashboard
+   * Creates a new dashboard in your application.
+   *
+   * @param {DashboardCreateInfo} dashboardObj - Dashboard configuration data
+   * @returns {Promise<{dashboard: GenericID}>} Object containing the ID of created dashboard
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const newDashboard = await Resources.dashboards.create({
+   *   label: "My Dashboard",
+   *   tags: [{ key: "type", value: "monitoring" }]
+   * });
+   * console.log(newDashboard.dashboard);
+   * ```
    */
   public async create(dashboardObj: DashboardCreateInfo): Promise<{ dashboard: GenericID }> {
     const result = await this.doRequest<{ dashboard: GenericID }>({
@@ -62,9 +82,20 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modify any property of the action
-   * @param dashboardID Dashboard identification
-   * @param dashboardObj Dashboard Object with data to be replaced
+   * Modifies an existing dashboard's properties.
+   *
+   * @param {GenericID} dashboardID - ID of the dashboard to be edited
+   * @param {Partial<DashboardInfo>} dashboardObj - New dashboard configuration
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.dashboards.edit("dashboard-id-123", {
+   *   label: "Updated Dashboard",
+   *   active: false
+   * });
+   * console.log(result);
+   * ```
    */
   public async edit(dashboardID: GenericID, dashboardObj: Partial<DashboardInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -79,8 +110,16 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes an dashboard from the account
-   * @param dashboardID Dashboard identification
+   * Deletes a dashboard from the application.
+   *
+   * @param {GenericID} dashboardID - ID of the dashboard to be deleted
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.dashboards.delete("dashboard-id-123");
+   * console.log(result);
+   * ```
    */
   public async delete(dashboardID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -92,8 +131,16 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets information about the dashboard
-   * @param dashboardID Dashboard identification
+   * Retrieves detailed information about a specific dashboard.
+   *
+   * @param {GenericID} dashboardID - ID of the dashboard
+   * @returns {Promise<DashboardInfo>} Dashboard details
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const dashboardInfo = await Resources.dashboards.info("dashboard-id-123");
+   * console.log(dashboardInfo);
+   * ```
    */
   public async info(dashboardID: GenericID): Promise<DashboardInfo> {
     let result = await this.doRequest<DashboardInfo>({
@@ -106,9 +153,21 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Duplicate the dashboard to your own account
-   * @param dashboardID Dashboard identification
-   * @param dashboardObj Object with data of the duplicate dashboard
+   * Creates a copy of an existing dashboard.
+   *
+   * @param {GenericID} dashboardID - ID of the dashboard to duplicate
+   * @param {Object} [dashboardObj] - Optional configuration for the duplicated dashboard
+   * @param {Object} [dashboardObj.setup] - Custom setup for the new dashboard
+   * @param {string} [dashboardObj.new_label] - New label for the duplicated dashboard
+   * @returns {Promise<{dashboard_id: string, message: string}>} New dashboard ID and success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.dashboards.duplicate("dashboard-id-123", {
+   *   new_label: "Copy of My Dashboard"
+   * });
+   * console.log(result);
+   * ```
    */
   public async duplicate(
     dashboardID: GenericID,
@@ -124,8 +183,16 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get share list of the dashboard
-   * @param dashboardID Dashboard identification
+   * Lists all users with access to the dashboard.
+   *
+   * @param {GenericID} dashboardID - ID of the dashboard
+   * @returns {Promise<InviteInfo[]>} List of users with access
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const shareList = await Resources.dashboards.shareList("dashboard-id-123");
+   * console.log(shareList);
+   * ```
    */
   public async shareList(dashboardID: GenericID): Promise<InviteInfo[]> {
     return this.share.list(dashboardID);
@@ -158,9 +225,17 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generate a new public token for the dashboard
-   * @param dashboardID Dashboard identification
-   * @param expireTime Time when token will expire
+   * Generates a new public access token for the dashboard.
+   *
+   * @param {GenericID} dashboardID - ID of the dashboard
+   * @param {ExpireTimeOption} expireTime - Token expiration time, defaults to "never"
+   * @returns {Promise<PublicKeyResponse>} Public access token information
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const publicKey = await Resources.dashboards.getPublicKey("dashboard-id-123", "1day");
+   * console.log(publicKey);
+   * ```
    */
   public async getPublicKey(
     dashboardID: GenericID,
@@ -180,8 +255,16 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get list of devices related with dashboard
-   * @param dashboardID Dashboard identification
+   * Lists all devices associated with the dashboard.
+   *
+   * @param {GenericID} dashboardID - ID of the dashboard
+   * @returns {Promise<DevicesRelated[]>} List of related devices
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const devices = await Resources.dashboards.listDevicesRelated("dashboard-id-123");
+   * console.log(devices);
+   * ```
    */
   public async listDevicesRelated(dashboardID: GenericID): Promise<DevicesRelated[]> {
     const result = await this.doRequest<DevicesRelated[]>({
@@ -193,8 +276,16 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get list of analysis related with a dashboard
-   * @param dashboardID Dashboard identification
+   * Lists all analyses associated with a dashboard.
+   *
+   * @param {GenericID} dashboardID - ID of the dashboard to get related analyses
+   * @returns {Promise<AnalysisRelated[]>} List of analyses related to the dashboard
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const analyses = await Resources.dashboards.listAnalysisRelated("dashboard-id-123");
+   * console.log(analyses);
+   * ```
    */
   public async listAnalysisRelated(dashboardID: GenericID): Promise<AnalysisRelated[]> {
     const result = await this.doRequest<AnalysisRelated[]>({
@@ -206,11 +297,23 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Runs an analysis located in a widget's header button
-   * @param analysisID The id of the analysis to run
-   * @param dashboardID The id of the dashboard that contains the widget
-   * @param widgetID The id of the widget that contains the header button
-   * @param scope Data to send to the analysis
+   * Executes an analysis from a widget's header button.
+   *
+   * @param {GenericID} analysisID - ID of the analysis to run
+   * @param {GenericID} dashboardID - ID of the dashboard containing the widget
+   * @param {GenericID} widgetID - ID of the widget containing the header button
+   * @param {object} [scope] - Optional data to send to the analysis
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.dashboards.runWidgetHeaderButtonAnalysis(
+   *   "analysis-id-123",
+   *   "dashboard-id-123",
+   *   "widget-id-123",
+   * );
+   * console.log(result);
+   * ```
    */
   public async runWidgetHeaderButtonAnalysis(
     analysisID: GenericID,
