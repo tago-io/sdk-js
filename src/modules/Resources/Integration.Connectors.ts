@@ -5,18 +5,26 @@ import { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery } from "./integratio
 
 class Connectors extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieves a list with all connectors from account
-   * @default
-   * ```json
-   * queryObj: {
+   * Lists all connectors from the application with pagination support.
+   *
+   * @param {ConnectorQuery} queryObj - Query parameters for filtering and pagination
+   * @param {number} queryObj.page - Page number
+   * @param {string[]} queryObj.fields - Fields to be returned
+   * @param {object} queryObj.filter - Filter conditions
+   * @param {number} queryObj.amount - Number of items per page
+   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
+   * @returns {Promise<ConnectorInfo[]>} List of connectors
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const list = await Resources.integration.connectors.list({
    *   page: 1,
    *   fields: ["id", "name"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "name,asc",
-   * }
+   *   amount: 10,
+   *   orderBy: ["name", "asc"]
+   * });
+   * console.log(list);
    * ```
-   * @param queryObj Search query params
    */
   public async list(queryObj?: ConnectorQuery): Promise<ConnectorInfo[]> {
     let result = await this.doRequest<ConnectorInfo[]>({
@@ -37,9 +45,17 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get Info of the Connector
-   * @param connectorID Connector identification
-   * @param fields Fields to fetch.
+   * Retrieves detailed information about a specific connector.
+   *
+   * @param {GenericID} connectorID - ID of the connector
+   * @param {string[]} [fields] - Optional fields to be returned
+   * @returns {Promise<ConnectorInfo>} Connector information
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const info = await Resources.integration.connectors.info("connector-id-123", ["id", "name"]);
+   * console.log(info);
+   * ```
    */
   public async info(connectorID: GenericID, fields?: string[]): Promise<ConnectorInfo> {
     let result = await this.doRequest<ConnectorInfo>({
@@ -56,8 +72,20 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates and retrieves a new connector from the account
-   * @param connectorObj Object data to create new Connector
+   * Creates a new connector in the application.
+   *
+   * @param {ConnectorCreateInfo} connectorObj - Connector configuration data
+   * @returns {Promise<{connector: GenericID}>} Created connector ID
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.integration.connectors.create({
+   *   name: "My Connector",
+   *   type: "custom",
+   *   enabled: true
+   * });
+   * console.log(result.connector);
+   * ```
    */
   public async create(connectorObj: ConnectorCreateInfo): Promise<{ connector: GenericID }> {
     const result = await this.doRequest<{ connector: GenericID }>({
@@ -72,9 +100,17 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modify any property of the connector
-   * @param connectorID Connector identification
-   * @param connectorObj Object data to create new Connector
+   * Modifies an existing connector's properties.
+   *
+   * @param {GenericID} connectorID - ID of the connector to modify
+   * @param {Partial<ConnectorCreateInfo>} connectorObj - Object containing the properties to be updated
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.integration.connectors.edit("connector-id-123", { name: "Updated Connector" });
+   * console.log(result);
+   * ```
    */
   public async edit(connectorID: GenericID, connectorObj: Partial<ConnectorCreateInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -89,8 +125,16 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete the connector
-   * @param connectorID Connector identification
+   * Deletes a connector from the application.
+   *
+   * @param {GenericID} connectorID - ID of the connector to delete
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.integration.connectors.delete("connector-id-123");
+   * console.log(result);
+   * ```
    */
   public async delete(connectorID: string): Promise<string> {
     const result = await this.doRequest<string>({
