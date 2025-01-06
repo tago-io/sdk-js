@@ -5,18 +5,26 @@ import { NetworkCreateInfo, NetworkInfo, NetworkQuery, NetworkTokenInfo } from "
 
 class Networks extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieves a list with all Networks from account
-   * @default
-   * ```json
-   * queryObj: {
+   * Lists all networks from the application with pagination support.
+   *
+   * @param {NetworkQuery} queryObj - Query parameters for filtering and pagination
+   * @param {number} queryObj.page - Page number
+   * @param {string[]} queryObj.fields - Fields to be returned
+   * @param {object} queryObj.filter - Filter conditions
+   * @param {number} queryObj.amount - Number of items per page
+   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
+   * @returns {Promise<NetworkInfo[]>} List of networks
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const list = await Resources.integration.networks.list({
    *   page: 1,
    *   fields: ["id", "name"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "name,asc",
-   * }
+   *   amount: 10,
+   *   orderBy: ["name", "asc"]
+   * });
+   * console.log(list);
    * ```
-   * @param queryObj Search query params
    */
   public async list(queryObj?: NetworkQuery): Promise<NetworkInfo[]> {
     const result = await this.doRequest<NetworkInfo[]>({
@@ -35,9 +43,17 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get Info of the Network
-   * @param networkID Network identification
-   * @param fields Fields to fetch.
+   * Retrieves detailed information about a specific network.
+   *
+   * @param {GenericID} networkID - ID of the network
+   * @param {string[]} [fields] - Optional fields to be returned
+   * @returns {Promise<NetworkInfo>} Network information
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const info = await Resources.integration.networks.info("network-id-123", ["id", "name"]);
+   * console.log(info);
+   * ```
    */
   public async info(networkID: GenericID, fields = ["id", "name"]): Promise<NetworkInfo> {
     const result = await this.doRequest<NetworkInfo>({
@@ -52,8 +68,19 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates and retrieves a new network from the account
-   * @param connectorObj Object data to create new Network
+   * Creates a new network in the application.
+   *
+   * @param {NetworkCreateInfo} networkObj - Network configuration data
+   * @returns {Promise<{network: GenericID}>} Created network ID
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.integration.networks.create({
+   *   name: "My Network",
+   *   description: "Network description"
+   * });
+   * console.log(result.network);
+   * ```
    */
   public async create(connectorObj: NetworkCreateInfo): Promise<{ network: GenericID }> {
     const result = await this.doRequest<{ network: GenericID }>({
@@ -68,9 +95,19 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modify any property of the network
-   * @param networkID Network identification
-   * @param connectorObj Object data to create new Network
+   * Modifies an existing network's properties.
+   *
+   * @param {GenericID} networkID - ID of the network to modify
+   * @param {Partial<NetworkCreateInfo>} networkObj - Object containing the properties to be updated
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.integration.networks.edit("network-id-123", {
+   *   name: "Updated Network"
+   * });
+   * console.log(result);
+   * ```
    */
   public async edit(networkID: GenericID, connectorObj: Partial<NetworkCreateInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -85,19 +122,24 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves a list of all tokens
-   * @default
-   * ```json
-   * queryObj: {
+   * Lists all tokens for a network with pagination support.
+   *
+   * @param {GenericID} networkID - ID of the network
+   * @param {ListTokenQuery} queryObj - Query parameters
+   * @param {number} queryObj.page - Page number
+   * @param {string[]} queryObj.fields - Fields to return
+   * @param {object} queryObj.filter - Filter conditions
+   * @param {number} queryObj.amount - Items per page
+   * @returns {Promise<Partial<NetworkTokenInfo>[]>} List of network tokens
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const tokens = await Resources.integration.networks.tokenList("network-id-123", {
    *   page: 1,
-   *   fields: ["name", "token", "permission"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "created_at,desc",
-   * }
+   *   fields: ["name", "token"]
+   * });
+   * console.log(tokens);
    * ```
-   * @param networkID Network ID
-   * @param queryObj Search query params
    */
   public async tokenList(networkID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<NetworkTokenInfo>[]> {
     let result = await this.doRequest<Partial<NetworkTokenInfo>[]>({
@@ -118,9 +160,20 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates and retrieves a new token
-   * @param networkID Network ID
-   * @param tokenParams Details of new token
+   * Creates a new token for a network.
+   *
+   * @param {GenericID} networkID - ID of the network
+   * @param {TokenData} tokenParams - Token configuration
+   * @returns {Promise<TokenCreateResponse>} Created token information
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const token = await Resources.integration.networks.tokenCreate("network-id-123", {
+   *   name: "My Token",
+   *   permission: "full"
+   * });
+   * console.log(token);
+   * ```
    */
   public async tokenCreate(networkID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
     const result = await this.doRequest<TokenCreateResponse>({
@@ -133,8 +186,16 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a token
-   * @param token Token ID
+   * Deletes a network token.
+   *
+   * @param {GenericToken} token - Token to delete
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.integration.networks.tokenDelete("token-123");
+   * console.log(result);
+   * ```
    */
   public async tokenDelete(token: GenericToken): Promise<string> {
     const result = await this.doRequest<string>({
@@ -146,8 +207,16 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete the network
-   * @param networkID network identification
+   * Deletes a network from the application.
+   *
+   * @param {string} networkID - ID of the network to delete
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.integration.networks.delete("network-id-123");
+   * console.log(result);
+   * ```
    */
   public async delete(networkID: string): Promise<string> {
     const result = await this.doRequest<string>({
