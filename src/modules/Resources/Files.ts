@@ -15,8 +15,22 @@ import {
 
 class Files extends TagoIOModule<GenericModuleParams> {
   /**
-   * list of files in account
-   * @param queryObj Object with path, pagination and quantity
+   * Lists all files in the application with pagination support.
+   *
+   * @param {FileQuery} queryObj - Query parameters for filtering and pagination
+   * @param {string} queryObj.path - Path to list files from
+   * @param {string} queryObj.paginationToken - Token for pagination
+   * @param {number} queryObj.quantity - Number of items per page
+   * @returns {Promise<FileListInfo>} List of files and pagination info
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const files = await Resources.files.list({
+   *   path: "/my/folder",
+   *   quantity: 100
+   * });
+   * console.log(files);
+   * ```
    */
   public async list(queryObj?: FileQuery): Promise<FileListInfo> {
     const result = await this.doRequest<FileListInfo>({
@@ -35,17 +49,21 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Upload an array of files(Base64) to TagoIO
-   * The filename parameter is also full path
-   * @param fileList Array of files data to be uploaded
-   * @example
-   * ```json
-   * fileList: [
-   *   {
-   *     filename: "/myfiles/myfile.ext",
-   *     file: "StringWithBase64"
-   *   }
-   * ]
+   * Uploads base64 encoded files to TagoIO storage.
+   *
+   * @param {Base64File[]} fileList - Array of files to upload
+   * @param {string} fileList[].filename - Full path including filename
+   * @param {string} fileList[].file - Base64 encoded file content
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.files.uploadBase64([{
+   *   filename: "/myfiles/document.pdf",
+   *   file: "base64EncodedContent",
+   *   public: true,
+   * }]);
+   * console.log(result);
    * ```
    */
   public async uploadBase64(fileList: Base64File[]): Promise<string> {
@@ -59,16 +77,20 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Move/Rename Files
-   * @param fileList Array move actions to be made
-   * @example
-   * ```json
-   * fileList: [
-   *   {
-   *     from: "/myfiles/myOldName.ext",
-   *     to: "/myfiles/newFolder/andNewName.ext"
-   *   }
-   * ]
+   * Moves or renames files in TagoIO storage.
+   *
+   * @param {MoveFiles[]} fileList - Array of move operations
+   * @param {string} fileList[].from - Source path
+   * @param {string} fileList[].to - Destination path
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.files.move([{
+   *   from: "/old/path/file.txt",
+   *   to: "/new/path/renamed.txt"
+   * }]);
+   * console.log(result);
    * ```
    */
   public async move(fileList: MoveFiles[]): Promise<string> {
@@ -82,16 +104,20 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Copy Files
-   * @param fileList Array of copy actions to be made
-   * @example
-   * ```json
-   * fileList: [
-   *   {
-   *     from: "/myfiles/myOldName.ext",
-   *     to: "/myfiles/newFolder/andNewName.ext"
-   *   }
-   * ]
+   * Copies files in TagoIO files.
+   *
+   * @param {CopyFiles[]} fileList - Array of copy operations
+   * @param {string} fileList[].from - Source path
+   * @param {string} fileList[].to - Destination path
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.files.copy([{
+   *   from: "/source/file.txt",
+   *   to: "/destination/copy.txt"
+   * }]);
+   * console.log(result);
    * ```
    */
   public async copy(fileList: CopyFiles[]): Promise<string> {
@@ -105,8 +131,19 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete Folder or Files
-   * @param files An array of files or folders to be deleted
+   * Deletes files or folders from TagoIO storage.
+   *
+   * @param {string[]} files - Array of file/folder paths to delete
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.files.delete([
+   *   "/path/to/file.txt",
+   *   "/folder/to/delete"
+   * ]);
+   * console.log(result);
+   * ```
    */
   public async delete(files: string[]): Promise<string> {
     const result = await this.doRequest<string>({
@@ -119,8 +156,16 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Check if file is private or public
-   * @param file Path of file
+   * Checks if a file is public or private.
+   *
+   * @param {string} file - Path to the file
+   * @returns {Promise<{public: boolean}>} File permission status
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const permission = await Resources.files.checkPermission("/path/to/file.txt");
+   * console.log(permission.public); // true or false
+   * ```
    */
   public async checkPermission(file: string): Promise<{ public: boolean }> {
     const result = await this.doRequest<{ public: boolean }>({
@@ -135,8 +180,21 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Change visibility from files
-   * @param filesVisibility An Array with files and their visibility to be setted
+   * Changes visibility settings for multiple files.
+   *
+   * @param {FilesPermission[]} filesVisibility - Array of file permission configurations
+   * @param {string} filesVisibility[].file - Path to the file
+   * @param {boolean} filesVisibility[].public - Whether file should be public
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.files.changePermission([{
+   *   file: "/path/to/file.txt",
+   *   public: true
+   * }]);
+   * console.log(result);
+   * ```
    */
   public async changePermission(filesVisibility: FilesPermission[]): Promise<string> {
     const result = await this.doRequest<string>({
@@ -159,8 +217,16 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get a file url with authenticate token valid for 120 seconds
-   * @param url Full TagoIO File url
+   * Gets a signed URL with temporary authentication token.
+   *
+   * @param {string} url - Full TagoIO file URL
+   * @returns {Promise<string>} Signed URL valid for 120 seconds
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const signedUrl = await Resources.files.getFileURLSigned("https://storage.tago.io/file/...");
+   * console.log(signedUrl);
+   * ```
    */
   public async getFileURLSigned(url: string): Promise<string> {
     const path = await this.getPathFromUrl(url);
@@ -177,8 +243,17 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get file md5 with authenticate token for privates files
-   * @param url Full TagoIO File url
+   * Gets the MD5 hash of a file with authentication for private files.
+   * This hash can be used to verify file integrity.
+   *
+   * @param {string} url - Full TagoIO file URL to get MD5 hash
+   * @returns {Promise<string>} MD5 hash of the file
+   *
+   * @example  If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const md5Hash = await Resources.files.getFileMD5("https://storage.tago.io/file/path/document.pdf");
+   * console.log(md5Hash); // e.g. "d41d8cd98f00b204e9800998ecf8427e"
+   * ```
    */
   public async getFileMD5(url: string): Promise<string> {
     const path = await this.getPathFromUrl(url);
@@ -347,12 +422,32 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Uploads a single file to TagoIO.
-   * The upload is multipart, meaning that the file will be divided and sent in chunks, resulting in multiple requests being made.
+   * Uploads a single file to TagoIO using multipart upload.
+   * The file is divided into chunks and uploaded in parallel for better performance.
    *
-   * @param file the file to be uploaded
-   * @param filename the path + filename for the file
-   * @param options the upload options for this file
+   * @param {Buffer | Blob} file - The file content to be uploaded
+   * @param {string} filename - The path and filename for the file in TagoIO storage
+   * @param {UploadOptions} [options] - Upload configuration options
+   * @param {number} [options.chunkSize] - Size of each chunk in bytes (min 5MB for multipart)
+   * @param {number} [options.maxTriesForEachChunk] - Max retries for failed chunks
+   * @param {number} [options.timeoutForEachFailedChunk] - Delay between retries in ms
+   * @param {(progress: number) => void} [options.onProgress] - Callback for upload progress (0-100)
+   * @param {(cancelFn: () => void) => void} [options.onCancelToken] - Callback to enable upload cancellation
+   * @returns {Promise<{file: string}>} Object containing the uploaded file path
+   * @throws {Error} When chunk size is invalid or upload fails
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const file = Buffer.from("file content");
+   * const result = await Resources.files.uploadFile(file, "/uploads/myfile.txt", {
+   *   chunkSize: 5 * 1024 * 1024, // 5MB chunks
+   *   onProgress: (progress) => console.log(`Upload progress: ${progress}%`),
+   *   onCancelToken: (cancel) => {
+   *     // Call cancel() to abort upload
+   *   }
+   * });
+   * console.log(result.file);
+   * ```
    */
   public async uploadFile(file: Buffer | Blob, filename: string, options?: UploadOptions) {
     const MB = Math.pow(2, 20);
