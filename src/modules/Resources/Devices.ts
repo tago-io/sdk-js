@@ -32,18 +32,27 @@ import type {
 } from "./devices.types";
 class Devices extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieves a list with all devices from the account
-   * @default
-   * queryObj: {
+   * Lists all devices from your application with pagination support.
+   *
+   * @param {number} queryObj.page - Page number
+   * @param {string[]} queryObj.fields - Fields to be returned
+   * @param {object} queryObj.filter - Filter conditions
+   * @param {number} queryObj.amount - Number of items per page
+   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
+   * @param {boolean} queryObj.resolveBucketName - Resolve bucket names
+   * @param {boolean} queryObj.resolveConnectorName - Resolve connector names
+   * @returns {Promise<DeviceListItem[]>} List of devices
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const list = await Resources.devices.list({
    *   page: 1,
    *   fields: ["id", "name"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "name,asc",
-   *   resolveBucketName: false
-   *   resolveConnectorName: false
-   * }
-   * @param queryObj Search query params
+   *   amount: 10,
+   *   orderBy: ["name", "asc"]
+   * });
+   * console.log(list);
+   * ```
    */
   public async list<T extends DeviceQuery>(queryObj?: T) {
     let result = await this.doRequest<
@@ -69,15 +78,16 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get a Streaming list of Devices from the account
+   * Gets a streaming list of devices from the application.
    *
-   * @experimental
-   * @param queryObj Search query params
-   * @param options Stream options
-   * @example
-   * ```js
-   * for await (const items of Resources.devices.listStreaming({ name: "*sensor*" })) {
-   *  console.log(items);
+   * @param {Omit<DeviceQuery, "page" | "amount">} queryObj - Query parameters for filtering
+   * @param {OptionsStreaming} options - Streaming configuration options
+   * @returns {AsyncGenerator<DeviceListItem[]>} Generator yielding device lists
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * for await (const items of await Resources.devices.listStreaming({ name: "*sensor*" })) {
+   *   console.log(items);
    * }
    * ```
    */
@@ -111,8 +121,20 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates and retrieves a new action from the Device
-   * @param deviceObj Object data to create new device
+   * Creates a new device in your application.
+   *
+   * @param {DeviceCreateInfo} deviceObj - Device configuration data
+   * @returns {Promise<DeviceCreateResponse>} Created device information
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const newDevice = await Resources.devices.create({
+   *   name: "My Device",
+   *   connector: "custom-mqtt",
+   *   type: "mutable"
+   * });
+   * console.log(newDevice);
+   * ```
    */
   public async create(deviceObj: DeviceCreateInfo): Promise<DeviceCreateResponse> {
     const result = await this.doRequest<DeviceCreateResponse>({
@@ -125,9 +147,20 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modify any property of the device
-   * @param deviceID Device ID
-   * @param deviceObj Device object with fields to replace
+   * Modifies properties of an existing device.
+   *
+   * @param {GenericID} deviceID - ID of the device to modify
+   * @param {DeviceEditInfo} deviceObj - Object containing the properties to be updated
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.devices.edit("device-id-123", {
+   *   name: "Updated Device Name",
+   *   active: true
+   * });
+   * console.log(result);
+   * ```
    */
   public async edit(deviceID: GenericID, deviceObj: DeviceEditInfo): Promise<string> {
     const result = await this.doRequest<string>({
@@ -140,8 +173,16 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes an device from the account
-   * @param deviceID Device ID
+   * Deletes a device from your application.
+   *
+   * @param {GenericID} deviceID - ID of the device to delete
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.devices.delete("device-id-123");
+   * console.log(result);
+   * ```
    */
   public async delete(deviceID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -153,8 +194,16 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get Info of the Device
-   * @param deviceID Device ID
+   * Retrieves detailed information about a specific device.
+   *
+   * @param {GenericID} deviceID - ID of the device
+   * @returns {Promise<DeviceInfo>} Device information
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const deviceInfo = await Resources.devices.info("device-id-123");
+   * console.log(deviceInfo);
+   * ```
    */
   public async info(deviceID: GenericID): Promise<DeviceInfo> {
     let result = await this.doRequest<DeviceInfo>({
@@ -168,10 +217,21 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Create or edit param for the Device
-   * @param deviceID Device ID
-   * @param configObj Configuration Data
-   * @param paramID Parameter ID
+   * Creates or updates device parameters.
+   *
+   * @param {GenericID} deviceID - ID of the device
+   * @param {ConfigurationParams | ConfigurationParams[]} configObj - Parameter configuration
+   * @param {GenericID} [paramID] - Optional parameter ID for updating specific parameter
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.devices.paramSet("device-id-123", {
+   *   key: "config-key",
+   *   value: "config-value"
+   * });
+   * console.log(result);
+   * ```
    */
   public async paramSet(
     deviceID: GenericID,
@@ -196,9 +256,17 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * List Params for the Device
-   * @param deviceID Device ID
-   * @param sentStatus True return only sent=true, False return only sent=false
+   * Lists all parameters for a device.
+   *
+   * @param {GenericID} deviceID - ID of the device
+   * @param {Boolean} sentStatus - Filter by sent status
+   * @returns {Promise<Required<ConfigurationParams>[]>} List of device parameters
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const params = await Resources.devices.paramList("device-id-123");
+   * console.log(params);
+   * ```
    */
   public async paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<Required<ConfigurationParams>[]> {
     const result = await this.doRequest<Required<ConfigurationParams>[]>({
@@ -211,9 +279,17 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Remove param for the Device
-   * @param deviceID Device ID
-   * @param paramID Parameter ID
+   * Removes a parameter from a device.
+   *
+   * @param {GenericID} deviceID - ID of the device
+   * @param {GenericID} paramID - ID of the parameter to remove
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.devices.paramRemove("device-id-123", "param-id-123");
+   * console.log(result);
+   * ```
    */
   public async paramRemove(deviceID: GenericID, paramID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -225,19 +301,26 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves a list of all tokens
-   * @default
-   * queryObj: {
+   * Lists all tokens for a device with pagination support.
+   *
+   * @param {GenericID} deviceID - ID of the device
+   * @param {ListDeviceTokenQuery} queryObj - Query parameters
+   * @param {number} queryObj.page - Page number
+   * @param {string[]} queryObj.fields - Fields to return
+   * @param {object} queryObj.filter - Filter conditions
+   * @param {number} queryObj.amount - Items per page
+   * @returns {Promise<DeviceTokenDataList[]>} List of device tokens
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const tokens = await Resources.devices.tokenList("device-id-123", {
    *   page: 1,
-   *   fields: ["name", "token", "permission"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "created_at,desc",
-   * }
-   * @param deviceID Device ID
-   * @param queryObj Search query params
+   *   fields: ["name", "token"],
+   *   amount: 10
+   * });
+   * console.log(tokens);
+   * ```
    */
-
   public async tokenList<T extends ListDeviceTokenQuery>(deviceID: GenericID, queryObj?: T) {
     let result = await this.doRequest<
       DeviceTokenDataList<
@@ -261,9 +344,20 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates and retrieves a new token
-   * @param deviceID Device ID
-   * @param tokenParams Params for new token
+   * Creates a new token for a device.
+   *
+   * @param {GenericID} deviceID - ID of the device
+   * @param {TokenData} tokenParams - Token configuration
+   * @returns {Promise<TokenCreateResponse>} Created token information
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const token = await Resources.devices.tokenCreate("device-id-123", {
+   *   name: "My Token",
+   *   permission: "full"
+   * });
+   * console.log(token);
+   * ```
    */
   public async tokenCreate(deviceID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
     let result = await this.doRequest<TokenCreateResponse>({
@@ -278,8 +372,16 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete a token
-   * @param token Token
+   * Deletes a device token.
+   *
+   * @param {GenericToken} token - Token to delete
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.devices.tokenDelete("token-123");
+   * console.log(result);
+   * ```
    */
   public async tokenDelete(token: GenericToken): Promise<string> {
     const result = await this.doRequest<string>({
@@ -291,9 +393,16 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get amount of data stored in the Device.
+   * Gets the amount of data stored in a device.
    *
-   * @param deviceID Device ID
+   * @param {GenericID} deviceID - ID of the device
+   * @returns {Promise<number>} Number of records stored in the device
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const amount = await Resources.devices.amount("device-id-123");
+   * console.log(amount);
+   * ```
    */
   public async amount(deviceID: GenericID): Promise<number> {
     const result = await this.doRequest<number>({
@@ -305,16 +414,19 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get data from all variables in the device.
+   * Retrieves data from all variables in the device.
    *
-   * @param deviceId Device ID.
-   * @param queryParams Query parameters to filter the results.
+   * @param {GenericID} deviceId - ID of the device
+   * @param {DataQuery} queryParams - Query parameters to filter the results
+   * @returns {Promise<Data[]>} Array with the data values stored in the device
    *
-   * @returns Array with the data values stored in the device.
-   *
-   * @example
-   * ```ts
-   * const lastTenValues = await Resources.devices.getDeviceData("myDeviceId", { qty: 10 });
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const data = await Resources.devices.getDeviceData("device-id-123", {
+   *   qty: 10,
+   *   variables: ["temperature"]
+   * });
+   * console.log(data);
    * ```
    */
   public async getDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<Data[]> {
@@ -344,16 +456,18 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get Data Streaming
+   * Retrieves data from device using streaming approach.
    *
    * @experimental
-   * @param deviceId Device ID
-   * @param params Data Query
-   * @param options Stream options
-   * @example
-   * ```js
-   * for await (const items of Resources.devices.getDeviceDataStreaming("myDeviceId")) {
-   *  console.log(items);
+   * @param {GenericID} deviceId - ID of the device
+   * @param {DataQueryStreaming} params - Query parameters
+   * @param {OptionsStreaming} options - Streaming configuration options
+   * @returns {AsyncGenerator<Data[]>} Generator yielding arrays of data
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * for await (const data of await Resources.devices.getDeviceDataStreaming("device-id-123")) {
+   *   console.log(data);
    * }
    * ```
    */
@@ -394,11 +508,16 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Empty all data in a device.
+   * Removes all data from a device.
    *
-   * @param deviceId Device ID.
+   * @param {GenericID} deviceId - ID of the device
+   * @returns {Promise<string>} Success message
    *
-   * @returns Success message.
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.devices.emptyDeviceData("device-id-123");
+   * console.log(result);
+   * ```
    */
   public async emptyDeviceData(deviceId: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -410,20 +529,22 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Send data to device
+   * Sends data to a device.
    *
-   * @param deviceId Device ID.
-   * @param data An array or one object with data to be send to TagoIO
-   * @return amount of data added
-   * @example
-   * ```js
-   * const result = await Resources.devices.sendDeviceData("myDeviceId", {
+   * @param {GenericID} deviceId - ID of the device
+   * @param {DataCreate | DataCreate[]} data - Single data record or array of records
+   * @returns {Promise<string>} Success message with amount of records added
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.devices.sendDeviceData("device-id-123", {
    *   variable: "temperature",
    *   unit: "F",
    *   value: 55,
    *   time: "2015-11-03 13:44:33",
-   *   location: { lat: 42.2974279, lng: -85.628292 },
+   *   location: { lat: 42.2974279, lng: -85.628292 }
    * });
+   * console.log(result);
    * ```
    */
   public async sendDeviceData(deviceId: GenericID, data: DataCreate | DataCreate[]): Promise<string> {
@@ -437,36 +558,25 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Stream data to device
+   * Streams data to a device in chunks.
    *
    * @experimental
-   * @param deviceId Device ID.
-   * @param data An array or one object with data to be send to TagoIO using device token
-   * @param options Stream options
-   * @example
-   * ```js
-   * const data = [
-   *     {
-   *       variable: "temperature",
-   *       unit: "F",
-   *       value: 55,
-   *       time: "2015-11-03 13:44:33",
-   *       location: { lat: 42.2974279, lng: -85.628292 },
-   *     },
-   *     {
-   *       variable: "temperature",
-   *       unit: "F",
-   *       value: 53,
-   *       time: "2015-11-03 13:44:33",
-   *       location: { lat: 43.2974279, lng: -86.628292 },
-   *     },
-   *     // ...
-   *   ];
+   * @param {GenericID} deviceId - ID of the device
+   * @param {DataCreate[]} data - Array of data records
+   * @param {Omit<OptionsStreaming, "neverStop">} options - Streaming options
+   * @returns {Promise<string>} Success message with amount of records added
    *
-   *   const result = await Resources.devices.sendDeviceDataStreaming("myDeviceId", data, {
-   *     poolingRecordQty: 1000,
-   *     poolingTime: 1000,
-   *   });
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.devices.sendDeviceDataStreaming("device-id-123",
+   *   [{
+   *     variable: "temperature",
+   *     value: 55,
+   *     unit: "F",
+   *   }],
+   *   { poolingRecordQty: 1000 }
+   * );
+   * console.log(result);
    * ```
    */
   public async sendDeviceDataStreaming(
@@ -497,14 +607,18 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * The `updatedData` can be a single data record or an array of records to be updated,
    * each of the records must have the `id` of the record and the fields to be updated.
    *
-   * @param deviceId Device ID.
-   * @param updatedData A single or an array of updated data records.
+   * @param {GenericID} deviceId - ID of the device
+   * @param {DataEdit | DataEdit[]} updatedData - Data records to update
+   * @returns {Promise<string>} Success message with amount of records updated
    *
-   * @returns Success message indicating amount of records updated (can be 0).
-   *
-   * @example
+   * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```ts
-   * await Resources.devices.editDeviceData("myDeviceId", { id: "idOfTheRecord", value: "new value", unit: "new unit" });
+   * const result = await Resources.devices.editDeviceData("myDeviceId", {
+   *  id: "idOfTheRecord",
+   *  value: "new value",
+   *  unit: "new unit"
+   * });
+   * console.log(result);
    * ```
    */
   public async editDeviceData(deviceId: GenericID, updatedData: DataEdit | DataEdit[]): Promise<string> {
@@ -524,14 +638,16 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * ! If query parameters are empty, last 15 data for the device will be deleted.
    *
-   * @param deviceId Device ID.
-   * @param queryParams Parameters to specify what should be deleted on the device's data.
+   * @param {GenericID} deviceId - ID of the device
+   * @param {DataQuery} queryParams - Parameters to specify what should be deleted
+   * @returns {Promise<string>} Success message with amount of records deleted
    *
-   * @returns Success message indicating amount of records deleted (can be 0).
-   *
-   * @example
+   * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```ts
-   * await Resources.devices.deleteDeviceData("myDeviceId", { ids: ["recordIdToDelete", "anotherRecordIdToDelete" ] });
+   * const result = await Resources.devices.deleteDeviceData("device-id-123", {
+   *   ids: ["record-id-1", "record-id-2"]
+   * });
+   * console.log(result);
    * ```
    */
   public async deleteDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<string> {
@@ -545,9 +661,17 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get Info of the Device Chunks.
+   * Retrieves chunk information from a device.
+   *
    * @experimental
-   * @param deviceID Device ID
+   * @param {GenericID} deviceID - ID of the device
+   * @returns {Promise<DeviceChunkData[]>} Array of chunk information
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const chunks = await Resources.devices.getChunk("device-id-123");
+   * console.log(chunks);
+   * ```
    */
   public async getChunk(deviceID: GenericID): Promise<DeviceChunkData[]> {
     const result = await this.doRequest<DeviceChunkData[]>({
@@ -559,10 +683,18 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete the chunk data.
+   * Deletes a chunk from a device.
+   *
    * @experimental
-   * @param deviceID Device ID
-   * @param chunkID Chunk ID
+   * @param {GenericID} deviceID - ID of the device
+   * @param {GenericID} chunkID - ID of the chunk
+   * @returns {Promise<string>} Success message
+   *
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.devices.deleteChunk("device-id-123", "chunk-id-123");
+   * console.log(result);
+   * ```
    */
   public async deleteChunk(deviceID: GenericID, chunkID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -593,16 +725,21 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   /**
    * Schedule to export the Device's data to TagoIO Files.
    *
-   * Pass the `chunkID` as parameter to backup data from Immutable devices.
+   * @param {DeviceDataBackup} params - Backup configuration
+   * @param {GenericID} params.deviceID - ID of the device
+   * @param {string} params.file_address - Destination file address (use $DEVICE$ and $TIMESTAMP$ as variables)
+   * @param {boolean} params.headers - Include headers in backup
+   * @param {GenericID} [chunkID] - Optional chunk ID for immutable device data
+   * @returns {Promise<DeviceDataBackupResponse>} Backup operation result
    *
-   * @example
-   *
-   * ```ts
-   * await Resources.devices.dataBackup({
-   *   deviceID: "my-device-ID",
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.devices.dataBackup({
+   *   deviceID: "device-id-123",
    *   file_address: "/backups/$DEVICE$/$TIMESTAMP$",
-   *   headers: true,
+   *   headers: true
    * });
+   * console.log(result);
    * ```
    */
   public async dataBackup(params: DeviceDataBackup, chunkID?: GenericID): Promise<DeviceDataBackupResponse> {
@@ -622,12 +759,20 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Restore data to a device from a `.csv` hosted in TagoIO Files.
+   * Restores data to a device from a CSV file in TagoIO Files.
    *
-   * @example
+   * @param {DeviceDataRestore} params - Restore configuration parameters
+   * @param {string} params.deviceID - Target device ID
+   * @param {string} params.file_address - Path to CSV file in TagoIO Files
+   * @returns {Promise<string>} Success message
    *
-   * ```ts
-   * await Resources.devices.dataRestore({ deviceID: "my-device-ID", file_address: "/backups/old-device-id/backup.csv" });
+   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * ```typescript
+   * const result = await Resources.devices.dataRestore({
+   *   deviceID: "device-id-123",
+   *   file_address: "/backups/backup.csv"
+   * });
+   * console.log(result);
    * ```
    */
   public async dataRestore(params: DeviceDataRestore): Promise<string> {
