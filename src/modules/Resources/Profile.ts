@@ -31,7 +31,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const profiles = await Resources.profile.list();
+   * const profiles = await Resources.profiles.list();
    * console.log(profiles);
    * ```
    */
@@ -52,9 +52,9 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const profileInfo = await Resources.profile.info("profile-id-123");
+   * const profileInfo = await Resources.profiles.info("profile-id-123");
    * // Or get current profile
-   * const currentProfile = await Resources.profile.info("current");
+   * const currentProfile = await Resources.profiles.info("current");
    * console.log(profileInfo);
    * ```
    */
@@ -77,7 +77,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const summary = await Resources.profile.summary("profile-id-123");
+   * const summary = await Resources.profiles.summary("profile-id-123");
    * console.log(summary);
    * ```
    */
@@ -103,7 +103,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * ```typescript
    * const profileData = { name: "New Profile" };
    * const options = { allocate_free_resources: true };
-   * const result = await Resources.profile.create(profileData, options);
+   * const result = await Resources.profiles.create(profileData, options);
    * console.log(result);
    * ```
    */
@@ -135,7 +135,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const profileData = { name: "Updated Profile Name" };
-   * const result = await Resources.profile.edit("profile-id-123", profileData);
+   * const result = await Resources.profiles.edit("profile-id-123", profileData);
    * console.log(result);
    * ```
    */
@@ -155,7 +155,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.profile.delete("profile-id-123");
+   * const result = await Resources.profiles.delete("profile-id-123");
    * console.log(result);
    * ```
    */
@@ -178,7 +178,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const dateFilter: StatisticsDate = { start_date: "2023-01-01", end_date: "2023-12-31", periodicity: "day" };
-   * const result = await Resources.profile.usageStatisticList("profile-id-123", dateFilter);
+   * const result = await Resources.profiles.usageStatisticList("profile-id-123", dateFilter);
    * console.log(result);
    * ```
    */
@@ -205,7 +205,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const filter = { start_date: new Date("2023-01-01"), end_date: new Date("2023-12-31") };
-   * const logs = await Resources.profile.auditLog("profile-id-123", filter);
+   * const logs = await Resources.profiles.auditLog("profile-id-123", filter);
    * console.log(logs);
    * ```
    */
@@ -228,7 +228,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const logs = await Resources.profile.auditLogQuery("profile-id-123", "query-id-456");
+   * const logs = await Resources.profiles.auditLogQuery("profile-id-123", "query-id-456");
    * console.log(logs);
    * ```
    */
@@ -248,7 +248,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const addons = await Resources.profile.addonList("profile-id-123");
+   * const addons = await Resources.profiles.addonList("profile-id-123");
    * console.log(addons);
    * ```
    */
@@ -268,7 +268,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const addonData = { name: "editing-name" };
-   * const result = await Resources.profile.addonEdit("profile-id-123", addonData);
+   * const result = await Resources.profiles.addonEdit("profile-id-123", addonData);
    * console.log(result);
    * ```
    */
@@ -289,7 +289,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const services = { data_input: 1000, data_output: 5000 };
-   * const result = await Resources.profile.serviceEdit("profile-id-123", services);
+   * const result = await Resources.profiles.serviceEdit("profile-id-123", services);
    * console.log(result);
    * ```
    */
@@ -309,7 +309,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.profile.transferTokenToAnotherProfile("target-profile-123");
+   * const result = await Resources.profiles.transferTokenToAnotherProfile("target-profile-123");
    * console.log(result);
    * ```
    */
@@ -335,7 +335,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    *   amount: 20,
    *   fields: ["name", "token", "permission"]
    * };
-   * const result = await Resources.profile.tokenList("profile-id-123", query);
+   * const result = await Resources.profiles.tokenList("profile-id-123", query);
    * console.log(result);
    * ```
    */
@@ -366,7 +366,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const tokenData: TokenData = { name: "API Access", permission: "full" };
-   * const result = await Resources.profile.tokenCreate("profile-id-123", tokenData);
+   * const result = await Resources.profiles.tokenCreate("profile-id-123", tokenData);
    * console.log(result);
    * ```
    */
@@ -390,7 +390,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.profile.tokenDelete("profile-id-123", "token-xyz");
+   * const result = await Resources.profiles.tokenDelete("profile-id-123", "token-xyz");
    * console.log(result);
    * ```
    */
@@ -409,7 +409,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.profile.removeAddOn("profile-id-123", "addon-name");
+   * const result = await Resources.profiles.removeAddOn("profile-id-123", "addon-name");
    * console.log(result);
    * ```
    */
@@ -430,7 +430,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.profile.addTeamMember("profile-id-123", "user@example.com");
+   * const result = await Resources.profiles.addTeamMember("profile-id-123", "user@example.com");
    * console.log(result);
    * ```
    */
@@ -454,7 +454,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const team = await Resources.profile.teamList("profile-id-123");
+   * const team = await Resources.profiles.teamList("profile-id-123");
    * console.log(team);
    * ```
    */
@@ -475,7 +475,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.profile.deleteTeamMember("profile-id-123", "account-id-456");
+   * const result = await Resources.profiles.deleteTeamMember("profile-id-123", "account-id-456");
    * console.log(result);
    * ```
    */
