@@ -12,15 +12,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   public devices = new Devices(this.params);
 
   /**
-   * Lists all devices from your application with pagination.
-   *
-   * @param {DeviceQuery} queryObj - Query parameters for filtering and pagination
-   * @param {number} queryObj.page - Page number
-   * @param {string[]} queryObj.fields - Fields to be returned
-   * @param {object} queryObj.filter - Filter conditions
-   * @param {number} queryObj.amount - Number of items per page
-   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
-   * @returns {Promise<DeviceInfo[]>} List of devices
+   * @description Lists all devices from your application with pagination.
    *
    * @deprecated Use `Resources.devices.list()` instead
    *
@@ -41,10 +33,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves detailed information about a specific device.
-   *
-   * @param {GenericID} deviceID - ID of the device
-   * @returns {Promise<DeviceInfo>} Device details
+   * @description Retrieves detailed information about a specific device.
    *
    * @deprecated Use `Resources.devices.info()` instead
    *
@@ -60,11 +49,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets the amount of data stored for a device.
-   *
-   * @param {GenericID} deviceID - ID of the device
-   * @returns {Promise<number>} Amount of data stored
-   * @deprecated Use `Resources.devices.amount()` instead
+   * @description Gets the amount of data stored for a device.
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript

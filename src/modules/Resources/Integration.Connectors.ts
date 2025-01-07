@@ -5,15 +5,9 @@ import { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery } from "./integratio
 
 class Connectors extends TagoIOModule<GenericModuleParams> {
   /**
-   * Lists all connectors from the application with pagination support.
+   * @description Lists all connectors from the application with pagination support.
    *
-   * @param {ConnectorQuery} queryObj - Query parameters for filtering and pagination
-   * @param {number} queryObj.page - Page number
-   * @param {string[]} queryObj.fields - Fields to be returned
-   * @param {object} queryObj.filter - Filter conditions
-   * @param {number} queryObj.amount - Number of items per page
-   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
-   * @returns {Promise<ConnectorInfo[]>} List of connectors
+   * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -45,11 +39,9 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves detailed information about a specific connector.
+   * @description Retrieves detailed information about a specific connector.
    *
-   * @param {GenericID} connectorID - ID of the connector
-   * @param {string[]} [fields] - Optional fields to be returned
-   * @returns {Promise<ConnectorInfo>} Connector information
+   * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -72,10 +64,9 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates a new connector in the application.
+   * @description Creates a new connector in the application.
    *
-   * @param {ConnectorCreateInfo} connectorObj - Connector configuration data
-   * @returns {Promise<{connector: GenericID}>} Created connector ID
+   * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview#Creating_a_connector} Creating a connector
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -100,11 +91,9 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modifies an existing connector's properties.
+   * @description Modifies an existing connector's properties.
    *
-   * @param {GenericID} connectorID - ID of the connector to modify
-   * @param {Partial<ConnectorCreateInfo>} connectorObj - Object containing the properties to be updated
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -125,10 +114,9 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a connector from the application.
+   * @description Deletes a connector from the application.
    *
-   * @param {GenericID} connectorID - ID of the connector to delete
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript

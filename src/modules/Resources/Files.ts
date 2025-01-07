@@ -15,13 +15,9 @@ import {
 
 class Files extends TagoIOModule<GenericModuleParams> {
   /**
-   * Lists all files in the application with pagination support.
+   * @description Lists all files in the application with pagination support.
    *
-   * @param {FileQuery} queryObj - Query parameters for filtering and pagination
-   * @param {string} queryObj.path - Path to list files from
-   * @param {string} queryObj.paginationToken - Token for pagination
-   * @param {number} queryObj.quantity - Number of items per page
-   * @returns {Promise<FileListInfo>} List of files and pagination info
+   * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -49,12 +45,9 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Uploads base64 encoded files to TagoIO storage.
+   * @description Uploads base64 encoded files to TagoIO storage.
    *
-   * @param {Base64File[]} fileList - Array of files to upload
-   * @param {string} fileList[].filename - Full path including filename
-   * @param {string} fileList[].file - Base64 encoded file content
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -77,12 +70,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Moves or renames files in TagoIO storage.
+   * @description Moves or renames files in TagoIO storage.
    *
-   * @param {MoveFiles[]} fileList - Array of move operations
-   * @param {string} fileList[].from - Source path
-   * @param {string} fileList[].to - Destination path
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
+   * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -104,12 +95,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Copies files in TagoIO files.
+   * @description Copies files in TagoIO files.
    *
-   * @param {CopyFiles[]} fileList - Array of copy operations
-   * @param {string} fileList[].from - Source path
-   * @param {string} fileList[].to - Destination path
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
+   * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -131,10 +120,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes files or folders from TagoIO storage.
+   * @description Deletes files or folders from TagoIO storage.
    *
-   * @param {string[]} files - Array of file/folder paths to delete
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
+   * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -156,10 +145,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Checks if a file is public or private.
+   * @description Checks if a file is public or private.
    *
-   * @param {string} file - Path to the file
-   * @returns {Promise<{public: boolean}>} File permission status
+   * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
+   * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -180,12 +169,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Changes visibility settings for multiple files.
+   * @description Changes visibility settings for multiple files.
    *
-   * @param {FilesPermission[]} filesVisibility - Array of file permission configurations
-   * @param {string} filesVisibility[].file - Path to the file
-   * @param {boolean} filesVisibility[].public - Whether file should be public
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
+   * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -217,10 +204,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets a signed URL with temporary authentication token.
+   * @description Gets a signed URL with temporary authentication token.
    *
-   * @param {string} url - Full TagoIO file URL
-   * @returns {Promise<string>} Signed URL valid for 120 seconds
+   * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
+   * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -243,11 +230,11 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets the MD5 hash of a file with authentication for private files.
+   * @description Gets the MD5 hash of a file with authentication for private files.
    * This hash can be used to verify file integrity.
    *
-   * @param {string} url - Full TagoIO file URL to get MD5 hash
-   * @returns {Promise<string>} MD5 hash of the file
+   * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
+   * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example  If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -271,9 +258,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates a multipart upload instance
-   * @param filename the path + filename for the file
-   * @param options the upload options for this file
+   * @description Creates a multipart upload instance
    */
   private async createMultipartUpload(filename: string, options?: UploadOptions) {
     const { dashboard, widget, fieldId, isPublic, contentType } = options || {};
@@ -296,12 +281,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Uploads a single part to TagoIO
-   * @param filename the path + filename for the file
-   * @param uploadID the upload ID acquired by the 'createMultipartUpload' function call
-   * @param partNumber the sequential part number for the upload. This should be 1 in the first call, then 2 in the second call, so on and so forth
-   * @param blob the portion of the file to be uploaded
-   * @param options the upload options for this file
+   * @description Uploads a single part to TagoIO
    */
   async _uploadPart(
     filename: string,
@@ -345,14 +325,9 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Adds an upload to the queue.
+   * @description Adds an upload to the queue.
    * It will try to upload for 'opts.maxTriesForEachChunk' and fail
    * if it couldn't upload after those many tries.
-   * @param filename the path + filename for the file
-   * @param uploadID the upload ID acquired by the 'createMultipartUpload' function call
-   * @param partNumberthe sequential part number for the upload. This should be 1 in the first call, then 2 in the second call, so on and so forth
-   * @param blob the portion of the file to be uploaded
-   * @param options see the uploadFile function
    */
   async _addToQueue(
     filename: string,
@@ -386,11 +361,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Finishes a multipart upload instance
-   * @param filename the path + filename for the file
-   * @param uploadID the upload ID acquired by the 'createMultipartUpload' function call
-   * @param parts all the parts uploaded to the file
-   * @param options the upload options for this file
+   * @description Finishes a multipart upload instance
    */
   async _completeMultipartUpload(
     filename: string,
@@ -422,19 +393,11 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Uploads a single file to TagoIO using multipart upload.
+   * @description Uploads a single file to TagoIO using multipart upload.
    * The file is divided into chunks and uploaded in parallel for better performance.
    *
-   * @param {Buffer | Blob} file - The file content to be uploaded
-   * @param {string} filename - The path and filename for the file in TagoIO storage
-   * @param {UploadOptions} [options] - Upload configuration options
-   * @param {number} [options.chunkSize] - Size of each chunk in bytes (min 5MB for multipart)
-   * @param {number} [options.maxTriesForEachChunk] - Max retries for failed chunks
-   * @param {number} [options.timeoutForEachFailedChunk] - Delay between retries in ms
-   * @param {(progress: number) => void} [options.onProgress] - Callback for upload progress (0-100)
-   * @param {(cancelFn: () => void) => void} [options.onCancelToken] - Callback to enable upload cancellation
-   * @returns {Promise<{file: string}>} Object containing the uploaded file path
-   * @throws {Error} When chunk size is invalid or upload fails
+   * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
+   * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -553,8 +516,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Throw a error if is cancelled
-   * @param cancelled
+   * @description Throw a error if is cancelled
    */
   private isCanceled(cancelled: boolean) {
     if (cancelled) {
@@ -565,8 +527,6 @@ class Files extends TagoIOModule<GenericModuleParams> {
 
 /**
  * Check if the error returned from the API is a usage limit exceeded error.
- *
- * @param error Error to check.
  */
 function isLimitError(error: any): boolean {
   if (typeof error?.message !== "string") {

@@ -15,15 +15,9 @@ import dateParser from "../Utils/dateParser";
 
 class Dashboards extends TagoIOModule<GenericModuleParams> {
   /**
-   * Lists all dashboards from your application with pagination support.
+   * @description Lists all dashboards from your application with pagination support.
    *
-   * @param {DashboardQuery} queryObj - Query parameters for filtering and pagination
-   * @param {number} queryObj.page - Page number
-   * @param {string[]} queryObj.fields - Fields to be returned
-   * @param {object} queryObj.filter - Filter conditions
-   * @param {number} queryObj.amount - Number of items per page
-   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
-   * @returns {Promise<DashboardInfo[]>} List of dashboards
+   * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -55,10 +49,9 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates a new dashboard in your application.
+   * @description Creates a new dashboard in your application.
    *
-   * @param {DashboardCreateInfo} dashboardObj - Dashboard configuration data
-   * @returns {Promise<{dashboard: GenericID}>} Object containing the ID of created dashboard
+   * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -82,11 +75,9 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modifies an existing dashboard's properties.
+   * @description Modifies an existing dashboard's properties.
    *
-   * @param {GenericID} dashboardID - ID of the dashboard to be edited
-   * @param {Partial<DashboardInfo>} dashboardObj - New dashboard configuration
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -110,10 +101,9 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a dashboard from the application.
+   * @description Deletes a dashboard from the application.
    *
-   * @param {GenericID} dashboardID - ID of the dashboard to be deleted
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -131,10 +121,9 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves detailed information about a specific dashboard.
+   * @description Retrieves detailed information about a specific dashboard.
    *
-   * @param {GenericID} dashboardID - ID of the dashboard
-   * @returns {Promise<DashboardInfo>} Dashboard details
+   * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -153,13 +142,9 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates a copy of an existing dashboard.
+   * @description Creates a copy of an existing dashboard.
    *
-   * @param {GenericID} dashboardID - ID of the dashboard to duplicate
-   * @param {Object} [dashboardObj] - Optional configuration for the duplicated dashboard
-   * @param {Object} [dashboardObj.setup] - Custom setup for the new dashboard
-   * @param {string} [dashboardObj.new_label] - New label for the duplicated dashboard
-   * @returns {Promise<{dashboard_id: string, message: string}>} New dashboard ID and success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -183,10 +168,9 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Lists all users with access to the dashboard.
+   * @description Lists all users with access to the dashboard.
    *
-   * @param {GenericID} dashboardID - ID of the dashboard
-   * @returns {Promise<InviteInfo[]>} List of users with access
+   * @see {@link https://help.tago.io/portal/en/kb/articles/17-sharing-dashboards} Sharing Dashboards
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -199,37 +183,63 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Share the dashboard with another person
-   * @param dashboardID Dashboard identification
-   * @param inviteObj Object with target and message
+   * @description Sends an invitation to share a dashboard with another user.
+   * This allows collaborative access to dashboard resources.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/17-sharing-dashboards} Sharing Dashboards
+   *
+   * @example
+   * ```typescript
+   * const inviteInfo = {
+   *   target: "user@example.com",
+   *   message: "Please review this dashboard"
+   * };
+   * const result = await Resources.dashboards.shareSendInvite("dashboard-123", inviteInfo);
+   * console.log(result);
+   * ```
    */
   public async shareSendInvite(dashboardID: GenericID, inviteObj: InviteInfo): Promise<InviteResponse> {
     return this.share.invite(dashboardID, inviteObj);
   }
 
   /**
-   * Change permissions of the bucket
-   * @param shareID Share identification
-   * @param targetObj Object with target email and new permission
+   * @description Modifies the access permissions for a shared dashboard. Use this to update user privileges.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/17-sharing-dashboards} Sharing Dashboards
+   *
+   * @example
+   * ```typescript
+   * const updateInfo = {
+   *   target: "user@example.com",
+   *   permission: "write"
+   * };
+   * const result = await Resources.dashboards.shareEdit("share-123", updateInfo);
+   * console.log(result);
+   * ```
    */
   public async shareEdit(shareID: GenericID, targetObj: Partial<InviteInfo>): Promise<string> {
     return this.share.edit(shareID, targetObj);
   }
 
   /**
-   * Remove share of the bucket
-   * @param shareID Share identification
+   * @description Removes sharing access for a specific dashboard. This permanently revokes user access.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/17-sharing-dashboards} Sharing Dashboards
+   *
+   * @example
+   * ```typescript
+   * const result = await Resources.dashboards.shareDelete("share-123");
+   * console.log(result);
+   * ```
    */
   public async shareDelete(shareID: GenericID): Promise<string> {
     return this.share.remove(shareID);
   }
 
   /**
-   * Generates a new public access token for the dashboard.
+   * @description Generates a new public access token for the dashboard.
    *
-   * @param {GenericID} dashboardID - ID of the dashboard
-   * @param {ExpireTimeOption} expireTime - Token expiration time, defaults to "never"
-   * @returns {Promise<PublicKeyResponse>} Public access token information
+   * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -255,10 +265,9 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Lists all devices associated with the dashboard.
+   * @description Lists all devices associated with the dashboard.
    *
-   * @param {GenericID} dashboardID - ID of the dashboard
-   * @returns {Promise<DevicesRelated[]>} List of related devices
+   * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -276,10 +285,9 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Lists all analyses associated with a dashboard.
+   * @description Lists all analyses associated with a dashboard.
    *
-   * @param {GenericID} dashboardID - ID of the dashboard to get related analyses
-   * @returns {Promise<AnalysisRelated[]>} List of analyses related to the dashboard
+   * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -297,13 +305,9 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Executes an analysis from a widget's header button.
+   * @description Executes an analysis from a widget's header button.
    *
-   * @param {GenericID} analysisID - ID of the analysis to run
-   * @param {GenericID} dashboardID - ID of the dashboard containing the widget
-   * @param {GenericID} widgetID - ID of the widget containing the header button
-   * @param {object} [scope] - Optional data to send to the analysis
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript

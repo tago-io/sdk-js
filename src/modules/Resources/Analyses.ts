@@ -5,16 +5,8 @@ import { AnalysisCreateInfo, AnalysisInfo, AnalysisListItem, AnalysisQuery, Scri
 
 class Analyses extends TagoIOModule<GenericModuleParams> {
   /**
-   * Lists all analyses from the application with pagination support.
+   * @description Lists all analyses from the application with pagination support.
    * Use this to retrieve and manage analyses in your application.
-   *
-   * @param {AnalysisQuery} queryObj - Query parameters for filtering and pagination
-   * @param {number} queryObj.page - Page number
-   * @param {string[]} queryObj.fields - Fields to be returned
-   * @param {object} queryObj.filter - Filter conditions
-   * @param {number} queryObj.amount - Number of items per page
-   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
-   * @returns {Promise<AnalysisListItem[]>} List of analyses
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -50,10 +42,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates a new analysis in your application.
-   *
-   * @param {AnalysisCreateInfo} analysisObj - Analysis configuration data
-   * @returns {Promise<{id: GenericID, token: GenericToken}>} Object containing the ID and token of created analysis
+   * @description Creates a new analysis in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/120-creating-analysis} Creating Analysis
    *
@@ -80,11 +69,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modifies an existing analysis.
-   *
-   * @param {GenericID} analysisID - ID of the analysis to be edited
-   * @param {Partial<AnalysisInfo>} analysisObj - New analysis configuration
-   * @returns {Promise<string>} Success message
+   * @description Modifies an existing analysis.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -110,10 +95,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes an analysis from your application.
-   *
-   * @param {GenericID} analysisID - ID of the analysis to be deleted
-   * @returns {Promise<string>} Success message
+   * @description Deletes an analysis from your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -133,10 +115,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves detailed information about a specific analysis.
-   *
-   * @param {GenericID} analysisID - ID of the analysis
-   * @returns {Promise<AnalysisInfo>} Analysis details
+   * @description Retrieves detailed information about a specific analysis.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -158,11 +137,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Executes an analysis with optional scope parameters.
-   *
-   * @param {GenericID} analysisID - ID of the analysis to run
-   * @param {Object} [scopeObj] - Optional scope parameters for the analysis
-   * @returns {Promise<{analysis_token: GenericToken}>} Analysis execution token
+   * @description Executes an analysis with optional scope parameters.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -187,10 +162,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates a new token for the analysis.
-   *
-   * @param {GenericID} analysisID - ID of the analysis
-   * @returns {Promise<{analysis_token: string}>} New analysis token
+   * @description Generates a new token for the analysis.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -210,11 +182,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Uploads a script file to an analysis.
-   *
-   * @param {GenericID} analysisID - ID of the analysis
-   * @param {ScriptFile} fileObj - Script file information
-   * @returns {Promise<string>} Success message
+   * @description Uploads a script file to an analysis.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -243,12 +211,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets a download URL for the analysis script.
-   *
-   * @param {GenericID} analysisID - ID of the analysis
-   * @param {Object} [options] - Download options
-   * @param {number} [options.version] - Specific version to download
-   * @returns {Promise<{url: string, size_unit: string, size: number, expire_at: Date}>} Download information
+   * @description Gets a download URL for the analysis script.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *

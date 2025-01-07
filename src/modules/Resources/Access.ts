@@ -5,16 +5,8 @@ import { AccessCreateInfo, AccessInfo, AccessQuery } from "./access.types";
 
 class Access extends TagoIOModule<GenericModuleParams> {
   /**
-   * Lists all access rules from the application with pagination support.
+   * @description Lists all access rules from the application with pagination support.
    * Use this to retrieve and manage access policies for your application.
-   *
-   * @param {AccessQuery} queryObj - Query parameters for filtering and pagination
-   * @param {number} queryObj.page - Page number
-   * @param {string[]} queryObj.fields - Fields to be returned
-   * @param {object} queryObj.filter - Filter conditions
-   * @param {number} queryObj.amount - Number of items per page
-   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
-   * @returns {Promise<AccessInfo[]>} List of access policies
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
@@ -48,10 +40,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates a new access policy in your application.
-   *
-   * @param {AccessCreateInfo} accessObj - Access policy information
-   * @returns {Promise<{am_id: GenericID}>} Object containing the ID of created access policy
+   * @description Creates a new access policy in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
@@ -78,11 +67,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modifies an existing access policy.
-   *
-   * @param {GenericID} accessID - ID of the access policy to be edited
-   * @param {Partial<AccessInfo>} accessObj - New access policy information
-   * @returns {Promise<string>} Success message
+   * @description Modifies an existing access policy.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
@@ -108,10 +93,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Removes an access policy from your application.
-   *
-   * @param {GenericID} accessID - ID of the access policy to be deleted
-   * @returns {Promise<string>} Success message
+   * @description Removes an access policy from your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
@@ -131,10 +113,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves detailed information about a specific access policy.
-   *
-   * @param {GenericID} accessID - ID of the access policy
-   * @returns {Promise<AccessInfo>} Access policy details
+   * @description Retrieves detailed information about a specific access policy.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *

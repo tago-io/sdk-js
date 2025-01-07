@@ -5,15 +5,9 @@ import { NetworkCreateInfo, NetworkInfo, NetworkQuery, NetworkTokenInfo } from "
 
 class Networks extends TagoIOModule<GenericModuleParams> {
   /**
-   * Lists all networks from the application with pagination support.
+   * @description Lists all networks from the application with pagination support.
    *
-   * @param {NetworkQuery} queryObj - Query parameters for filtering and pagination
-   * @param {number} queryObj.page - Page number
-   * @param {string[]} queryObj.fields - Fields to be returned
-   * @param {object} queryObj.filter - Filter conditions
-   * @param {number} queryObj.amount - Number of items per page
-   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
-   * @returns {Promise<NetworkInfo[]>} List of networks
+   * @see {@link https://help.tago.io/portal/en/kb/articles/125-network-integration} Network Integration
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -43,11 +37,9 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves detailed information about a specific network.
+   * @description Retrieves detailed information about a specific network.
    *
-   * @param {GenericID} networkID - ID of the network
-   * @param {string[]} [fields] - Optional fields to be returned
-   * @returns {Promise<NetworkInfo>} Network information
+   * @see {@link https://help.tago.io/portal/en/kb/articles/125-network-integration} Network Integration
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -68,10 +60,9 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates a new network in the application.
+   * @description Creates a new network in the application.
    *
-   * @param {NetworkCreateInfo} networkObj - Network configuration data
-   * @returns {Promise<{network: GenericID}>} Created network ID
+   * @see {@link https://help.tago.io/portal/en/kb/articles/468-creating-a-network-integration} Creating a Network Integration
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -95,11 +86,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modifies an existing network's properties.
+   * @description Modifies an existing network's properties.
    *
-   * @param {GenericID} networkID - ID of the network to modify
-   * @param {Partial<NetworkCreateInfo>} networkObj - Object containing the properties to be updated
-   * @returns {Promise<string>} Success message
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -122,15 +110,9 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Lists all tokens for a network with pagination support.
+   * @description Lists all tokens for a network with pagination support.
    *
-   * @param {GenericID} networkID - ID of the network
-   * @param {ListTokenQuery} queryObj - Query parameters
-   * @param {number} queryObj.page - Page number
-   * @param {string[]} queryObj.fields - Fields to return
-   * @param {object} queryObj.filter - Filter conditions
-   * @param {number} queryObj.amount - Items per page
-   * @returns {Promise<Partial<NetworkTokenInfo>[]>} List of network tokens
+   * @see {@link https://help.tago.io/portal/en/kb/articles/468-creating-a-network-integration#Tokens_and_getting_the_devices} Tokens and Getting the Devices
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -160,11 +142,9 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates a new token for a network.
+   * @description Creates a new token for a network.
    *
-   * @param {GenericID} networkID - ID of the network
-   * @param {TokenData} tokenParams - Token configuration
-   * @returns {Promise<TokenCreateResponse>} Created token information
+   * @see {@link https://help.tago.io/portal/en/kb/articles/468-creating-a-network-integration#Tokens_and_getting_the_devices} Tokens and Getting the Devices
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -186,10 +166,9 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a network token.
+   * @description Deletes a network token.
    *
-   * @param {GenericToken} token - Token to delete
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/468-creating-a-network-integration#Tokens_and_getting_the_devices} Tokens and Getting the Devices
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -207,10 +186,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a network from the application.
-   *
-   * @param {string} networkID - ID of the network to delete
-   * @returns {Promise<string>} Success message
+   * @description Deletes a network from the application.
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript

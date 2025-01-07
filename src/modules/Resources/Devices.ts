@@ -32,16 +32,9 @@ import type {
 } from "./devices.types";
 class Devices extends TagoIOModule<GenericModuleParams> {
   /**
-   * Lists all devices from your application with pagination support.
+   * @description Lists all devices from your application with pagination support.
    *
-   * @param {number} queryObj.page - Page number
-   * @param {string[]} queryObj.fields - Fields to be returned
-   * @param {object} queryObj.filter - Filter conditions
-   * @param {number} queryObj.amount - Number of items per page
-   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
-   * @param {boolean} queryObj.resolveBucketName - Resolve bucket names
-   * @param {boolean} queryObj.resolveConnectorName - Resolve connector names
-   * @returns {Promise<DeviceListItem[]>} List of devices
+   * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices} Devices
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -78,11 +71,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets a streaming list of devices from the application.
+   * @description Gets a streaming list of devices from the application.
    *
-   * @param {Omit<DeviceQuery, "page" | "amount">} queryObj - Query parameters for filtering
-   * @param {OptionsStreaming} options - Streaming configuration options
-   * @returns {AsyncGenerator<DeviceListItem[]>} Generator yielding device lists
+   * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices} Devices
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -121,10 +112,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates a new device in your application.
+   * @description Creates a new device in your application.
    *
-   * @param {DeviceCreateInfo} deviceObj - Device configuration data
-   * @returns {Promise<DeviceCreateResponse>} Created device information
+   * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices#Adding_devices} Adding Devices
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -147,11 +137,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modifies properties of an existing device.
+   * @description Modifies properties of an existing device.
    *
-   * @param {GenericID} deviceID - ID of the device to modify
-   * @param {DeviceEditInfo} deviceObj - Object containing the properties to be updated
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices#Managing_and_customizing_your_device} Managing and Customizing Your Device
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -173,10 +161,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a device from your application.
+   * @description Deletes a device from your application.
    *
-   * @param {GenericID} deviceID - ID of the device to delete
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices} Devices
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -194,10 +181,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves detailed information about a specific device.
+   * @description Retrieves detailed information about a specific device.
    *
-   * @param {GenericID} deviceID - ID of the device
-   * @returns {Promise<DeviceInfo>} Device information
+   * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices} Devices
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -217,12 +203,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates or updates device parameters.
+   * @description Creates or updates device parameters.
    *
-   * @param {GenericID} deviceID - ID of the device
-   * @param {ConfigurationParams | ConfigurationParams[]} configObj - Parameter configuration
-   * @param {GenericID} [paramID] - Optional parameter ID for updating specific parameter
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/configuration-parameters-for-devices} Configuration Parameters for Devices
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -256,11 +239,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Lists all parameters for a device.
+   * @description Lists all parameters for a device.
    *
-   * @param {GenericID} deviceID - ID of the device
-   * @param {Boolean} sentStatus - Filter by sent status
-   * @returns {Promise<Required<ConfigurationParams>[]>} List of device parameters
+   * @see {@link https://help.tago.io/portal/en/kb/articles/configuration-parameters-for-devices} Configuration Parameters for Devices
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -279,11 +260,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Removes a parameter from a device.
+   * @description Removes a parameter from a device.
    *
-   * @param {GenericID} deviceID - ID of the device
-   * @param {GenericID} paramID - ID of the parameter to remove
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/configuration-parameters-for-devices} Configuration Parameters for Devices
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -301,15 +280,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Lists all tokens for a device with pagination support.
+   * @description Lists all tokens for a device with pagination support.
    *
-   * @param {GenericID} deviceID - ID of the device
-   * @param {ListDeviceTokenQuery} queryObj - Query parameters
-   * @param {number} queryObj.page - Page number
-   * @param {string[]} queryObj.fields - Fields to return
-   * @param {object} queryObj.filter - Filter conditions
-   * @param {number} queryObj.amount - Items per page
-   * @returns {Promise<DeviceTokenDataList[]>} List of device tokens
+   * @see {@link https://help.tago.io/portal/en/kb/articles/4-device-token} Device Token
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -344,11 +317,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates a new token for a device.
+   * @description Creates a new token for a device.
    *
-   * @param {GenericID} deviceID - ID of the device
-   * @param {TokenData} tokenParams - Token configuration
-   * @returns {Promise<TokenCreateResponse>} Created token information
+   * @see {@link https://help.tago.io/portal/en/kb/articles/4-device-token} Device Token
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -372,10 +343,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a device token.
+   * @description Deletes a device token.
    *
-   * @param {GenericToken} token - Token to delete
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/4-device-token} Device Token
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -393,10 +363,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets the amount of data stored in a device.
+   * @description Gets the amount of data stored in a device.
    *
-   * @param {GenericID} deviceID - ID of the device
-   * @returns {Promise<number>} Number of records stored in the device
+   * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Amount_of_data_records} Amount of data records
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -414,11 +383,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves data from all variables in the device.
+   * @description Retrieves data from all variables in the device.
    *
-   * @param {GenericID} deviceId - ID of the device
-   * @param {DataQuery} queryParams - Query parameters to filter the results
-   * @returns {Promise<Data[]>} Array with the data values stored in the device
+   * @see {@link https://help.tago.io/portal/en/kb/articles/device-data} Device data management
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -456,13 +423,10 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves data from device using streaming approach.
+   * @description Retrieves data from device using streaming approach.
    *
    * @experimental
-   * @param {GenericID} deviceId - ID of the device
-   * @param {DataQueryStreaming} params - Query parameters
-   * @param {OptionsStreaming} options - Streaming configuration options
-   * @returns {AsyncGenerator<Data[]>} Generator yielding arrays of data
+   * @see {@link https://help.tago.io/portal/en/kb/articles/device-data} Device data management
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -508,10 +472,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Removes all data from a device.
+   * @description Removes all data from a device.
    *
-   * @param {GenericID} deviceId - ID of the device
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Emptying_your_Device_Data} Emptying your Device Data
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -529,11 +492,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Sends data to a device.
+   * @description Sends data to a device.
    *
-   * @param {GenericID} deviceId - ID of the device
-   * @param {DataCreate | DataCreate[]} data - Single data record or array of records
-   * @returns {Promise<string>} Success message with amount of records added
+   * @see {@link https://help.tago.io/portal/en/kb/articles/95-device-emulator} Device Emulator
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -558,13 +519,10 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Streams data to a device in chunks.
+   * @description Streams data to a device in chunks.
    *
    * @experimental
-   * @param {GenericID} deviceId - ID of the device
-   * @param {DataCreate[]} data - Array of data records
-   * @param {Omit<OptionsStreaming, "neverStop">} options - Streaming options
-   * @returns {Promise<string>} Success message with amount of records added
+   * @see {@link https://help.tago.io/portal/en/kb/articles/95-device-emulator} Device Emulator
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -602,14 +560,12 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Edit data records in a device using the profile token and device ID.
+   * @description Edit data records in a device using the profile token and device ID.
    *
    * The `updatedData` can be a single data record or an array of records to be updated,
    * each of the records must have the `id` of the record and the fields to be updated.
    *
-   * @param {GenericID} deviceId - ID of the device
-   * @param {DataEdit | DataEdit[]} updatedData - Data records to update
-   * @returns {Promise<string>} Success message with amount of records updated
+   * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Editing_and_deleting_variables_individually} Editing and deleting variables individually
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```ts
@@ -632,15 +588,13 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete data records in a device using the profile token and device ID.
+   * @description Delete data records in a device using the profile token and device ID.
    *
    * See the example to understand how to use this method properly to have full control on what to delete.
    *
    * ! If query parameters are empty, last 15 data for the device will be deleted.
    *
-   * @param {GenericID} deviceId - ID of the device
-   * @param {DataQuery} queryParams - Parameters to specify what should be deleted
-   * @returns {Promise<string>} Success message with amount of records deleted
+   * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Editing_and_deleting_variables_individually} Editing and deleting variables individually
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```ts
@@ -661,11 +615,10 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves chunk information from a device.
+   * @description Retrieves chunk information from a device.
    *
    * @experimental
-   * @param {GenericID} deviceID - ID of the device
-   * @returns {Promise<DeviceChunkData[]>} Array of chunk information
+   * @see {@link https://help.tago.io/portal/en/kb/articles/chunk-management} Chunk Management
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -683,12 +636,10 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a chunk from a device.
+   * @description Deletes a chunk from a device.
    *
    * @experimental
-   * @param {GenericID} deviceID - ID of the device
-   * @param {GenericID} chunkID - ID of the chunk
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/chunk-management#Delete_chunks} Delete chunks
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -723,14 +674,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Schedule to export the Device's data to TagoIO Files.
+   * @description Schedule to export the Device's data to TagoIO Files.
    *
-   * @param {DeviceDataBackup} params - Backup configuration
-   * @param {GenericID} params.deviceID - ID of the device
-   * @param {string} params.file_address - Destination file address (use $DEVICE$ and $TIMESTAMP$ as variables)
-   * @param {boolean} params.headers - Include headers in backup
-   * @param {GenericID} [chunkID] - Optional chunk ID for immutable device data
-   * @returns {Promise<DeviceDataBackupResponse>} Backup operation result
+   * @see {@link https://help.tago.io/portal/en/kb/articles/55-data-export} Data Export
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -759,12 +705,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Restores data to a device from a CSV file in TagoIO Files.
+   * @description Restores data to a device from a CSV file in TagoIO Files.
    *
-   * @param {DeviceDataRestore} params - Restore configuration parameters
-   * @param {string} params.deviceID - Target device ID
-   * @param {string} params.file_address - Path to CSV file in TagoIO Files
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Importing} Importing
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript

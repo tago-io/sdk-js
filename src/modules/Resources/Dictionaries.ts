@@ -15,15 +15,9 @@ import { Cache } from "../../modules";
 
 class Dictionaries extends TagoIOModule<GenericModuleParams> {
   /**
-   * Lists all dictionaries from your application with pagination support.
+   * @description Lists all dictionaries from your application with pagination support.
    *
-   * @param {DictionaryQuery} queryObj - Query parameters for filtering and pagination
-   * @param {number} queryObj.page - Page number
-   * @param {string[]} queryObj.fields - Fields to be returned
-   * @param {object} queryObj.filter - Filter conditions
-   * @param {number} queryObj.amount - Number of items per page
-   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
-   * @returns {Promise<DictionaryInfo[]>} List of dictionaries
+   * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -55,10 +49,9 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates a new dictionary in your application.
+   * @description Creates a new dictionary in your application.
    *
-   * @param {DictionaryCreateInfo} dictionaryObj - Dictionary configuration data
-   * @returns {Promise<{dictionary: string}>} Created dictionary ID
+   * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -80,11 +73,9 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modifies an existing dictionary's properties.
+   * @description Modifies an existing dictionary's properties.
    *
-   * @param {GenericID} dictionaryID - ID of the dictionary to modify
-   * @param {Partial<DictionaryCreateInfo>} dictionaryObj - Object containing the properties to be updated
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -105,10 +96,9 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a dictionary from your application.
+   * @description Deletes a dictionary from your application.
    *
-   * @param {GenericID} dictionaryID - ID of the dictionary to delete
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -128,10 +118,9 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves detailed information about a specific dictionary.
+   * @description Retrieves detailed information about a specific dictionary.
    *
-   * @param {GenericID} dictionaryID - ID of the dictionary
-   * @returns {Promise<DictionaryInfo>} Dictionary information
+   * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -150,12 +139,9 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Edits a language's content in a dictionary.
+   * @description Edits a language's content in a dictionary.
    *
-   * @param {GenericID} dictionaryID - ID of the dictionary to modify
-   * @param {string} locale - Language locale code (e.g. 'en-US', 'pt-BR')
-   * @param {LanguageEditData} languageObj - Language content and settings to update
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
    * @example  If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -179,11 +165,9 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Removes a language from a dictionary.
+   * @description Removes a language from a dictionary.
    *
-   * @param {GenericID} dictionaryID - ID of the dictionary
-   * @param {string} locale - Language locale code to be removed (e.g. 'en-US')
-   * @returns {Promise<string>} Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -203,13 +187,9 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves language-specific content from a dictionary by ID.
+   * @description Retrieves language-specific content from a dictionary by ID.
    *
-   * @param {GenericID} dictionaryID - ID of the dictionary
-   * @param {string} locale - Language locale code (e.g. 'en-US')
-   * @param {LanguageInfoQuery} [queryObj] - Optional query parameters
-   * @param {boolean} [queryObj.fallback] - Whether to return fallback language if requested one isn't found
-   * @returns {Promise<LanguageData>} Dictionary content for the specified language
+   * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript
@@ -238,13 +218,9 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves language-specific content from a dictionary by its slug.
+   * @description Retrieves language-specific content from a dictionary by its slug.
    *
-   * @param {string} slug - Unique slug identifier of the dictionary
-   * @param {string} locale - Language locale code (e.g. 'en-US')
-   * @param {LanguageInfoQuery} [queryObj] - Optional query parameters
-   * @param {boolean} [queryObj.fallback] - Whether to return fallback language if requested one isn't found
-   * @returns {Promise<LanguageData>} Dictionary content for the specified language
+   * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management
    * ```typescript

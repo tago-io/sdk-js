@@ -5,16 +5,8 @@ import { ActionCreateInfo, ActionInfo, ActionQuery } from "./actions.types";
 
 class Actions extends TagoIOModule<GenericModuleParams> {
   /**
-   * Lists all actions from the application with pagination support.
+   * @description Lists all actions from the application with pagination support.
    * Use this to retrieve and manage actions in your application.
-   *
-   * @param {ActionQuery} queryObj - Query parameters for filtering and pagination
-   * @param {number} queryObj.page - Page number
-   * @param {string[]} queryObj.fields - Fields to be returned
-   * @param {object} queryObj.filter - Filter conditions
-   * @param {number} queryObj.amount - Number of items per page
-   * @param {[string, 'asc' | 'desc']} queryObj.orderBy - Field and direction to sort by
-   * @returns {Promise<ActionInfo[]>} List of actions
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
@@ -48,10 +40,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Creates a new action in your application.
-   *
-   * @param {ActionCreateInfo} actionObj - Action configuration data
-   * @returns {Promise<{action: string}>} Object containing the ID of created action
+   * @description Creates a new action in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
@@ -76,11 +65,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modifies an existing action.
-   *
-   * @param {GenericID} actionID - ID of the action to be edited
-   * @param {Partial<ActionCreateInfo>} actionObj - New action configuration
-   * @returns {Promise<string>} Success message
+   * @description Modifies an existing action.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
@@ -104,10 +89,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes an action from your application.
-   *
-   * @param {GenericID} actionID - ID of the action to be deleted
-   * @returns {Promise<string>} Success message
+   * @description Deletes an action from your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
@@ -127,10 +109,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves detailed information about a specific action.
-   *
-   * @param {GenericID} actionID - ID of the action
-   * @returns {Promise<ActionInfo>} Action details
+   * @description Retrieves detailed information about a specific action.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *

@@ -13,9 +13,7 @@ import {
 
 class Account extends TagoIOModule<GenericModuleParams> {
   /**
-   * Gets all account information.
-   *
-   * @returns {Promise<AccountInfo>} The account information.
+   * @description Gets all account information.
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
@@ -37,10 +35,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Edit account.
-   *
-   * @param {Partial<AccountInfo>} accountObj - Account data to edit.
-   * @returns {Promise<string>} Success message.
+   * @description Edit account.
    *
    * @example If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
@@ -59,9 +54,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete account.
-   *
-   * @returns {Promise<string>} Success message.
+   * @description Delete account.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/210-deleting-your-account} Deleting Your Account
    *
@@ -81,11 +74,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates and retrieves a new token for the account.
-   *
-   * @param {TokenCreateInfo} tokenParams - Token data.
-   * @param {Regions} [region] - TagoIO Region Server [default usa-1].
-   * @returns {Promise<{ token: GenericToken }>} The generated token.
+   * @description Generates and retrieves a new token for the account.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/495-account-token} Account Token
    *
@@ -109,11 +98,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieve list of profiles for login and do Login.
-   *
-   * @param {LoginCredentials} credentials - Credentials.
-   * @param {Regions} [region] - TagoIO Region Server [default usa-1].
-   * @returns {Promise<LoginResponse>} The login response.
+   * @description Retrieve list of profiles for login and do Login.
    *
    * @example
    * ```typescript
@@ -135,11 +120,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Send password recover email.
-   *
-   * @param {string} email - E-mail to recovery.
-   * @param {Regions} [region] - TagoIO Region Server [default usa-1].
-   * @returns {Promise<string>} Success message.
+   * @description Send password recover email.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/209-resetting-my-password} Resetting My Password
    *
@@ -162,10 +143,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Change account password.
-   *
-   * @param {string} password - New Password.
-   * @returns {Promise<string>} Success message.
+   * @description Change account password.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/209-resetting-my-password} Resetting My Password
    *
@@ -188,11 +166,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Create new TagoIO account.
-   *
-   * @param {AccountCreateInfo} createParams - New account details.
-   * @param {Regions} [region] - TagoIO Region Server [default usa-1].
-   * @returns {Promise<string>} Success message.
+   * @description Create new TagoIO account.
    *
    * @example
    * ```typescript
@@ -214,11 +188,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Re-send confirmation account email.
-   *
-   * @param {string} email - E-mail address.
-   * @param {Regions} [region] - TagoIO Region Server [default usa-1].
-   * @returns {Promise<string>} Success message.
+   * @description Re-send confirmation account email.
    *
    * @example
    * ```typescript
@@ -239,11 +209,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Confirm account creation.
-   *
-   * @param {GenericToken} token - Confirmation token.
-   * @param {Regions} [region] - TagoIO Region Server [default usa-1].
-   * @returns {Promise<string>} Success message.
+   * @description Confirm account creation.
    *
    * @example
    * ```typescript
@@ -264,14 +230,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Request the PIN Code for a given OTP Type.
-   *
-   * @param {Object} credentials - Credentials.
-   * @param {string} credentials.email - Email.
-   * @param {string} credentials.password - Password.
-   * @param {OTPType} typeOTP - OTP type (authenticator, sms, or email).
-   * @param {Regions} [region] - TagoIO Region Server [default usa-1].
-   * @returns {Promise<string>} Success message.
+   * @description Request the PIN Code for a given OTP Type.
    *
    * @example
    * ```typescript
@@ -297,14 +256,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Enable OTP for a given OTP Type.
+   * @description Enable OTP for a given OTP Type.
    * You will be requested to confirm the operation with a pin code.
-   *
-   * @param {Object} credentials - Credentials.
-   * @param {string} credentials.email - Email.
-   * @param {string} credentials.password - Password.
-   * @param {OTPType} typeOTP - OTP type (authenticator, sms, or email).
-   * @returns {Promise<string>} Success message.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-factor Authentication (2FA)
    *
@@ -325,13 +278,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Disable OTP for a given OTP Type.
-   *
-   * @param {Object} credentials - Credentials.
-   * @param {string} credentials.email - Email.
-   * @param {string} credentials.password - Password.
-   * @param {OTPType} typeOTP - OTP type (authenticator, sms, or email).
-   * @returns {Promise<string>} Success message.
+   * @description Disable OTP for a given OTP Type.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-factor Authentication (2FA)
    *
@@ -352,11 +299,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Confirm OTP enabling process for a given OTP Type.
-   *
-   * @param {string} pinCode - PIN code.
-   * @param {OTPType} typeOTP - OTP type (authenticator, sms, or email).
-   * @returns {Promise<string>} Success message.
+   * @description Confirm OTP enabling process for a given OTP Type.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-factor Authentication (2FA)
    *
@@ -379,10 +322,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Accept a team member invitation to become a profile's team member.
-   *
-   * @param {string} token - Invitation token.
-   * @returns {Promise<string>} Success message.
+   * @description Accept a team member invitation to become a profile's team member.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/106-sharing-your-profile} for Team Management - Sharing your profile
    *
@@ -403,10 +343,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Decline a team member invitation to become a profile's team member.
-   *
-   * @param {string} token - Invitation token.
-   * @returns {Promise<string>} Success message.
+   * @description Decline a team member invitation to become a profile's team member.
    *
    * @example
    * ```typescript
