@@ -19,7 +19,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const list = await Resources.dashboards.list({
    *   page: 1,
@@ -53,7 +54,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const newDashboard = await Resources.dashboards.create({
    *   label: "My Dashboard",
@@ -79,7 +81,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.dashboards.edit("dashboard-id-123", {
    *   label: "Updated Dashboard",
@@ -105,7 +108,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.dashboards.delete("dashboard-id-123");
    * console.log(result);
@@ -125,7 +129,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const dashboardInfo = await Resources.dashboards.info("dashboard-id-123");
    * console.log(dashboardInfo);
@@ -146,7 +151,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.dashboards.duplicate("dashboard-id-123", {
    *   new_label: "Copy of My Dashboard"
@@ -172,7 +178,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/17-sharing-dashboards} Sharing Dashboards
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const shareList = await Resources.dashboards.shareList("dashboard-id-123");
    * console.log(shareList);
@@ -189,9 +196,10 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/17-sharing-dashboards} Sharing Dashboards
    *
    * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const inviteInfo = {
-   *   target: "user@example.com",
+   *   email: "user@example.com",
    *   message: "Please review this dashboard"
    * };
    * const result = await Resources.dashboards.shareSendInvite("dashboard-123", inviteInfo);
@@ -208,9 +216,10 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/17-sharing-dashboards} Sharing Dashboards
    *
    * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const updateInfo = {
-   *   target: "user@example.com",
+   *   email: "user@example.com",
    *   permission: "write"
    * };
    * const result = await Resources.dashboards.shareEdit("share-123", updateInfo);
@@ -227,6 +236,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/17-sharing-dashboards} Sharing Dashboards
    *
    * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.dashboards.shareDelete("share-123");
    * console.log(result);
@@ -241,7 +251,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const publicKey = await Resources.dashboards.getPublicKey("dashboard-id-123", "1day");
    * console.log(publicKey);
@@ -269,7 +280,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const devices = await Resources.dashboards.listDevicesRelated("dashboard-id-123");
    * console.log(devices);
@@ -289,7 +301,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const analyses = await Resources.dashboards.listAnalysisRelated("dashboard-id-123");
    * console.log(analyses);
@@ -309,7 +322,8 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.dashboards.runWidgetHeaderButtonAnalysis(
    *   "analysis-id-123",

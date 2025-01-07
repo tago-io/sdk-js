@@ -36,7 +36,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices} Devices
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const list = await Resources.devices.list({
    *   page: 1,
@@ -75,7 +76,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices} Devices
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * for await (const items of await Resources.devices.listStreaming({ name: "*sensor*" })) {
    *   console.log(items);
@@ -116,7 +118,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices#Adding_devices} Adding Devices
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const newDevice = await Resources.devices.create({
    *   name: "My Device",
@@ -141,7 +144,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices#Managing_and_customizing_your_device} Managing and Customizing Your Device
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.devices.edit("device-id-123", {
    *   name: "Updated Device Name",
@@ -165,7 +169,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices} Devices
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.devices.delete("device-id-123");
    * console.log(result);
@@ -185,7 +190,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices} Devices
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const deviceInfo = await Resources.devices.info("device-id-123");
    * console.log(deviceInfo);
@@ -207,7 +213,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/configuration-parameters-for-devices} Configuration Parameters for Devices
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.devices.paramSet("device-id-123", {
    *   key: "config-key",
@@ -243,7 +250,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/configuration-parameters-for-devices} Configuration Parameters for Devices
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const params = await Resources.devices.paramList("device-id-123");
    * console.log(params);
@@ -264,7 +272,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/configuration-parameters-for-devices} Configuration Parameters for Devices
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.devices.paramRemove("device-id-123", "param-id-123");
    * console.log(result);
@@ -284,7 +293,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/4-device-token} Device Token
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const tokens = await Resources.devices.tokenList("device-id-123", {
    *   page: 1,
@@ -321,7 +331,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/4-device-token} Device Token
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const token = await Resources.devices.tokenCreate("device-id-123", {
    *   name: "My Token",
@@ -347,7 +358,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/4-device-token} Device Token
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.devices.tokenDelete("token-123");
    * console.log(result);
@@ -367,7 +379,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Amount_of_data_records} Amount of data records
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const amount = await Resources.devices.amount("device-id-123");
    * console.log(amount);
@@ -387,7 +400,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/device-data} Device data management
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const data = await Resources.devices.getDeviceData("device-id-123", {
    *   qty: 10,
@@ -428,7 +442,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @experimental
    * @see {@link https://help.tago.io/portal/en/kb/articles/device-data} Device data management
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * for await (const data of await Resources.devices.getDeviceDataStreaming("device-id-123")) {
    *   console.log(data);
@@ -476,7 +491,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Emptying_your_Device_Data} Emptying your Device Data
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.devices.emptyDeviceData("device-id-123");
    * console.log(result);
@@ -496,7 +512,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/95-device-emulator} Device Emulator
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.devices.sendDeviceData("device-id-123", {
    *   variable: "temperature",
@@ -524,7 +541,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @experimental
    * @see {@link https://help.tago.io/portal/en/kb/articles/95-device-emulator} Device Emulator
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.devices.sendDeviceDataStreaming("device-id-123",
    *   [{
@@ -567,7 +585,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Editing_and_deleting_variables_individually} Editing and deleting variables individually
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```ts
    * const result = await Resources.devices.editDeviceData("myDeviceId", {
    *  id: "idOfTheRecord",
@@ -596,7 +615,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Editing_and_deleting_variables_individually} Editing and deleting variables individually
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```ts
    * const result = await Resources.devices.deleteDeviceData("device-id-123", {
    *   ids: ["record-id-1", "record-id-2"]
@@ -620,7 +640,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @experimental
    * @see {@link https://help.tago.io/portal/en/kb/articles/chunk-management} Chunk Management
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const chunks = await Resources.devices.getChunk("device-id-123");
    * console.log(chunks);
@@ -641,7 +662,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * @experimental
    * @see {@link https://help.tago.io/portal/en/kb/articles/chunk-management#Delete_chunks} Delete chunks
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.devices.deleteChunk("device-id-123", "chunk-id-123");
    * console.log(result);
@@ -678,7 +700,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/55-data-export} Data Export
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.devices.dataBackup({
    *   deviceID: "device-id-123",
@@ -709,7 +732,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Importing} Importing
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.devices.dataRestore({
    *   deviceID: "device-id-123",

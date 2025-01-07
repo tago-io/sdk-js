@@ -9,7 +9,8 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const list = await Resources.integration.connectors.list({
    *   page: 1,
@@ -43,7 +44,8 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const info = await Resources.integration.connectors.info("connector-id-123", ["id", "name"]);
    * console.log(info);
@@ -68,7 +70,8 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview#Creating_a_connector} Creating a connector
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.integration.connectors.create({
    *   name: "My Connector",
@@ -95,7 +98,8 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.integration.connectors.edit("connector-id-123", { name: "Updated Connector" });
    * console.log(result);
@@ -118,7 +122,8 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.integration.connectors.delete("connector-id-123");
    * console.log(result);

@@ -10,7 +10,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const list = await Resources.analysis.list({
    *   page: 1,
@@ -46,7 +47,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/120-creating-analysis} Creating Analysis
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const newAnalysis = await Resources.analysis.create({
    *   name: "My Analysis",
@@ -73,7 +75,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.analysis.edit("analysis-id-123", {
    *   name: "Updated Analysis",
@@ -99,7 +102,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.analysis.delete("analysis-id-123");
    * console.log(result);
@@ -119,7 +123,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const analysisInfo = await Resources.analysis.info("analysis-id-123");
    * console.log(analysisInfo);
@@ -141,7 +146,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.analysis.run("analysis-id-123", {
    *   environment: "production"
@@ -166,7 +172,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const token = await Resources.analysis.tokenGenerate("analysis-id-123");
    * console.log(token.analysis_token);
@@ -186,7 +193,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.analysis.uploadScript("analysis-id-123", {
    *   name: "script.js",
@@ -215,7 +223,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const download = await Resources.analysis.downloadScript("analysis-id-123", {
    *   version: 1

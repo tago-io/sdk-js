@@ -15,7 +15,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
   /**
    * @description Gets all account information.
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const accountInfo = await Resources.account.info();
    * console.log(accountInfo);
@@ -37,7 +38,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
   /**
    * @description Edit account.
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.account.edit({ name: "New Name" });
    * console.log(result);
@@ -58,7 +60,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/210-deleting-your-account} Deleting Your Account
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.account.delete();
    * console.log(result);
@@ -147,7 +150,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/209-resetting-my-password} Resetting My Password
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.account.passwordChange("newPassword");
    * console.log(result);
@@ -261,7 +265,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-factor Authentication (2FA)
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.account.enableOTP({ email: "user@example.com", password: "password" }, "sms");
    * console.log(result);
@@ -282,7 +287,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-factor Authentication (2FA)
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.account.disableOTP({ email: "user@example.com", password: "password" }, "sms");
    * console.log(result);
@@ -303,7 +309,8 @@ class Account extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-factor Authentication (2FA)
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.account.confirmOTP("123456", "sms");
    * console.log(result);

@@ -19,7 +19,8 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const list = await Resources.dictionaries.list({
    *   page: 1,
@@ -53,7 +54,8 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.dictionaries.create({
    *   name: "My Dictionary",
@@ -77,7 +79,8 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.dictionaries.edit("dictionary-id-123", {
    *   name: "Updated Dictionary",
@@ -100,7 +103,8 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.dictionaries.delete("dictionary-id-123");
    * console.log(result);
@@ -122,7 +126,8 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const info = await Resources.dictionaries.info("dictionary-id-123");
    * console.log(info);
@@ -143,7 +148,8 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
-   * @example  If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   *  If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.dictionaries.languageEdit("dictionary-id-123", "en-US", {
    *   content: { greeting: "Hello" },
@@ -169,7 +175,8 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.dictionaries.languageDelete("dictionary-id-123", "en-US");
    * console.log(result);
@@ -191,7 +198,8 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const content = await Resources.dictionaries.languageInfo("dictionary-id-123", "en-US", {
    *   fallback: true
@@ -222,7 +230,8 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const content = await Resources.dictionaries.languageInfoBySlug("SLUG", "en-US", {
    *   fallback: true

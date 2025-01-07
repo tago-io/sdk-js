@@ -9,7 +9,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/125-network-integration} Network Integration
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const list = await Resources.integration.networks.list({
    *   page: 1,
@@ -41,7 +42,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/125-network-integration} Network Integration
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const info = await Resources.integration.networks.info("network-id-123", ["id", "name"]);
    * console.log(info);
@@ -64,7 +66,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/468-creating-a-network-integration} Creating a Network Integration
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.integration.networks.create({
    *   name: "My Network",
@@ -89,7 +92,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    * @description Modifies an existing network's properties.
    *
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.integration.networks.edit("network-id-123", {
    *   name: "Updated Network"
@@ -114,7 +118,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/468-creating-a-network-integration#Tokens_and_getting_the_devices} Tokens and Getting the Devices
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const tokens = await Resources.integration.networks.tokenList("network-id-123", {
    *   page: 1,
@@ -146,7 +151,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/468-creating-a-network-integration#Tokens_and_getting_the_devices} Tokens and Getting the Devices
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const token = await Resources.integration.networks.tokenCreate("network-id-123", {
    *   name: "My Token",
@@ -170,7 +176,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/468-creating-a-network-integration#Tokens_and_getting_the_devices} Tokens and Getting the Devices
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.integration.networks.tokenDelete("token-123");
    * console.log(result);
@@ -188,7 +195,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   /**
    * @description Deletes a network from the application.
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.integration.networks.delete("network-id-123");
    * console.log(result);

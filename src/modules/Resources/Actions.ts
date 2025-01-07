@@ -10,7 +10,8 @@ class Actions extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const list = await Resources.actions.list({
    *   page: 1,
@@ -44,7 +45,8 @@ class Actions extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const newAction = await Resources.actions.create({
    *   name: "My Action",
@@ -69,7 +71,8 @@ class Actions extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.actions.edit("action-id", {
    *   name: "Updated Action",
@@ -93,7 +96,8 @@ class Actions extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const result = await Resources.actions.delete("action-id");
    * console.log(result);
@@ -113,7 +117,8 @@ class Actions extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
-   * @example If receive an error "Authorization Denied", check polices in Access Management.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
    * const actionInfo = await Resources.actions.info("action-id");
    * console.log(actionInfo);
