@@ -24,7 +24,16 @@ import type {
 
 class Profile extends TagoIOModule<GenericModuleParams> {
   /**
-   * Lists all the profiles in your account
+   * @description Retrieves a list of all profiles associated with the current account.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/198-profiles} Profiles
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const profiles = await Resources.profile.list();
+   * console.log(profiles);
+   * ```
    */
   public async list(): Promise<ProfileListInfo[]> {
     const result = await this.doRequest<ProfileListInfo[]>({
@@ -36,11 +45,18 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get Profile info
-   * @param profileID Profile identification or "current" for current profile
-   * example:
-   * - Resources.profiles.info("6126850f58ef8600184dd486");
-   * - Resources.profiles.info("current");
+   * @description Retrieves detailed information about a specific profile using its ID or 'current' for the active profile.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/198-profiles} Profiles
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const profileInfo = await Resources.profile.info("profile-id-123");
+   * // Or get current profile
+   * const currentProfile = await Resources.profile.info("current");
+   * console.log(profileInfo);
+   * ```
    */
   public async info(profileID: GenericID | "current"): Promise<ProfileInfo> {
     const result = await this.doRequest<ProfileInfo>({
@@ -54,7 +70,16 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets profile summary
+   * @description Retrieves a summary of the profile's usage and statistics.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/198-profiles} Profiles
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const summary = await Resources.profile.summary("profile-id-123");
+   * console.log(summary);
+   * ```
    */
   public async summary(profileID: GenericID, options?: { onlyAmount?: boolean }): Promise<ProfileSummary> {
     const result = await this.doRequest<ProfileSummary>({
@@ -69,13 +94,18 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Create a profile.
+   * @description Creates a new profile with the specified name and optional resource allocation settings.
    *
-   * If `allocate_free_resources` is passed as an option, all the free resources available
-   * in allocation will be allocated to the new profile.
+   * @see {@link https://help.tago.io/portal/en/kb/articles/198-profiles#Adding_Profiles} Adding Profiles
    *
-   * @param profileObj Profile object with data to be created
-   * @param options Options for the created profile.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const profileData = { name: "New Profile" };
+   * const options = { allocate_free_resources: true };
+   * const result = await Resources.profile.create(profileData, options);
+   * console.log(result);
+   * ```
    */
   public async create(
     profileObj: { name: string },
@@ -97,8 +127,17 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Edits a profile
-   * @param profileObj Profile object with data to be changed
+   * @description Updates profile information with the provided data.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/198-profiles#Renaming_your_Profiles} Renaming your Profiles
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const profileData = { name: "Updated Profile Name" };
+   * const result = await Resources.profile.edit("profile-id-123", profileData);
+   * console.log(result);
+   * ```
    */
   public async edit(profileID: GenericID, profileObj: Partial<ProfileInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -111,8 +150,14 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete profile
-   * @param profileID Profile identification
+   * @description Permanently removes a profile from the account.
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const result = await Resources.profile.delete("profile-id-123");
+   * console.log(result);
+   * ```
    */
   public async delete(profileID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -124,24 +169,17 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * List all the usage statistics of a profile.
+   * @description Retrieves usage statistics for a profile within a specified time period.
    *
    * Usage statistics are cumulative: if a service was not used in a time period,
    * the statistics for that time period will not be in the object.
    *
-   * @param profileID Profile identification
-   * @param dateObj Object with date and their timezone
-   *
-   * @returns Array of cumulative usage statistics.
-   *
    * @example
-   *
-   * ```json
-   * [
-   *   { "time": "2022-01-01T00:00:00.000Z", "input": 5 },
-   *   { "time": "2022-01-02T00:00:00.000Z", "input": 5, "output": 10 },
-   *   { "time": "2022-01-03T00:00:00.000Z", "input": 10, "output": 15 },
-   * ]
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const dateFilter: StatisticsDate = { start_date: "2023-01-01", end_date: "2023-12-31", periodicity: "day" };
+   * const result = await Resources.profile.usageStatisticList("profile-id-123", dateFilter);
+   * console.log(result);
    * ```
    */
   public async usageStatisticList(profileID: GenericID, dateObj?: StatisticsDate): Promise<UsageStatistic[]> {
@@ -159,9 +197,17 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Create a query for auditlog
-   * @param profileID Profile identification
-   * @param filterObj auditlog filter object
+   * @description Creates a new audit log query for tracking profile activities.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/audit-log} Audit Log
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const filter = { start_date: new Date("2023-01-01"), end_date: new Date("2023-12-31") };
+   * const logs = await Resources.profile.auditLog("profile-id-123", filter);
+   * console.log(logs);
+   * ```
    */
   public async auditLog(profileID: GenericID, filterObj?: AuditLogFilter): Promise<AuditLog> {
     const result = await this.doRequest<AuditLog>({
@@ -175,9 +221,16 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Fetches the information from an auditlog query
-   * @param profileID Profile identification
-   * @param queryId auditlog queryId from auditLogCreate
+   * @description Retrieves audit log entries using a previously created query.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/audit-log} Audit Log
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const logs = await Resources.profile.auditLogQuery("profile-id-123", "query-id-456");
+   * console.log(logs);
+   * ```
    */
   public async auditLogQuery(profileID: GenericID, queryId?: string): Promise<AuditLog> {
     const result = await this.doRequest<AuditLog>({
@@ -190,8 +243,14 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets the information of addons for the profile
-   * @param profileID Profile identification
+   * @description Retrieves a list of all add-ons associated with the profile.
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const addons = await Resources.profile.addonList("profile-id-123");
+   * console.log(addons);
+   * ```
    */
   public async addonList(profileID: GenericID): Promise<AddonInfo> {
     const result = await this.doRequest<AddonInfo>({
@@ -203,9 +262,15 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Sets the information of addons for the profile
-   * @param profileID Profile identification
-   * @param addonObj
+   * @description Updates the add-on configuration for a profile.
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const addonData = { name: "editing-name" };
+   * const result = await Resources.profile.addonEdit("profile-id-123", addonData);
+   * console.log(result);
+   * ```
    */
   public async addonEdit(profileID: GenericID, addonObj: Partial<AddonInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -218,10 +283,15 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Sets the information of services for the profile. Services are the main resources
-   * in your profile, for example data input, data output, etc...
-   * @param profileID Profile identification
-   * @param serviceObj
+   * @description Updates service configuration and resource limits for a profile.
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const services = { data_input: 1000, data_output: 5000 };
+   * const result = await Resources.profile.serviceEdit("profile-id-123", services);
+   * console.log(result);
+   * ```
    */
   public async serviceEdit(profileID: GenericID, serviceObj: object): Promise<string> {
     const result = await this.doRequest<string>({
@@ -234,11 +304,14 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Transforms the current token to another profile. The current profile will
-   * no longer have the current token, as the current token will be acquired by the profile informed.
-   * After this call is done, other requests using this token will work solely for the new profile, and
-   * no longer for the current profile.
-   * @param targetProfileID Profile identification
+   * @description Transfers the current authentication token to another profile.
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const result = await Resources.profile.transferTokenToAnotherProfile("target-profile-123");
+   * console.log(result);
+   * ```
    */
   public async transferTokenToAnotherProfile(targetProfileID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -250,9 +323,21 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves a list of all tokens
-   * @param profileID Profile ID
-   * @param queryObj Search query params
+   * @description Retrieves a list of all tokens associated with a specific profile.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/495-account-token} Account Token
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const query = {
+   *   page: 1,
+   *   amount: 20,
+   *   fields: ["name", "token", "permission"]
+   * };
+   * const result = await Resources.profile.tokenList("profile-id-123", query);
+   * console.log(result);
+   * ```
    */
   public async tokenList(profileID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
     let result = await this.doRequest<Partial<TokenDataList>[]>({
@@ -273,9 +358,17 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates and retrieves a new token
-   * @param profileID Profile ID
-   * @param tokenParams Token params for new token
+   * @description Creates a new authentication token for the specified profile.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/495-account-token} Account Token
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const tokenData: TokenData = { name: "API Access", permission: "full" };
+   * const result = await Resources.profile.tokenCreate("profile-id-123", tokenData);
+   * console.log(result);
+   * ```
    */
   public async tokenCreate(profileID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
     let result = await this.doRequest<TokenCreateResponse>({
@@ -290,9 +383,16 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a token
-   * @profileId Profile ID
-   * @param token Token
+   * @description Revokes and removes an authentication token from the profile.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/495-account-token} Account Token
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const result = await Resources.profile.tokenDelete("profile-id-123", "token-xyz");
+   * console.log(result);
+   * ```
    */
   public async tokenDelete(profileId: string, token: GenericToken): Promise<string> {
     const result = await this.doRequest<string>({
@@ -304,12 +404,14 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Remove an add-on from a profile at the end of the billing cycle.
+   * @description Removes an add-on from the profile at the end of the current billing cycle.
    *
-   * @throws If profile ID is invalid.
-   * @throws If profile doesn't have the add-on.
-   *
-   * @returns Success message.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const result = await Resources.profile.removeAddOn("profile-id-123", "addon-name");
+   * console.log(result);
+   * ```
    */
   public async removeAddOn(profileId: GenericID, addon: BillingAddOn): Promise<string> {
     const result = await this.doRequest<string>({
@@ -321,12 +423,16 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Add a team member to a profile in a specific account
+   * @description Adds a new team member to the profile using their email address.
    *
-   * @throws If the email is not a valid TagoIO's account.
-   * @throws If the profile does not exists.
+   * @see {@link https://help.tago.io/portal/en/kb/articles/106-sharing-your-profile} Team Management - Sharing your Profile
    *
-   * @returns Success message.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const result = await Resources.profile.addTeamMember("profile-id-123", "user@example.com");
+   * console.log(result);
+   * ```
    */
   public async addTeamMember(id: string, email: string): Promise<string> {
     const result = await this.doRequest<string>({
@@ -341,7 +447,16 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Fetch the list of accounts that a profile is shared with.
+   * @description Retrieves a list of all team members that have access to the specified profile.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/106-sharing-your-profile} Team Management - Sharing your Profile
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const team = await Resources.profile.teamList("profile-id-123");
+   * console.log(team);
+   * ```
    */
   public async teamList(id: string): Promise<ProfileTeam[]> {
     const result = await this.doRequest<ProfileTeam[]>({
@@ -353,12 +468,16 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Remove an account from a profile shared team.
+   * @description Removes a team member from the profile.
    *
-   * @throws If the accountId is not a valid TagoIO's account.
-   * @throws If the profile does not exists.
+   * @see {@link https://help.tago.io/portal/en/kb/articles/106-sharing-your-profile} Team Management - Sharing your Profile
    *
-   * @returns Success message.
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const result = await Resources.profile.deleteTeamMember("profile-id-123", "account-id-456");
+   * console.log(result);
+   * ```
    */
   public async deleteTeamMember(id: string, accountId: string): Promise<string> {
     const result = await this.doRequest<string>({
