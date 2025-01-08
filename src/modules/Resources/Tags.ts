@@ -4,9 +4,19 @@ type TagTypes = "bucket" | "device" | "dashboard" | "action" | "analysis" | "tco
 
 class Tags extends TagoIOModule<GenericModuleParams> {
   /**
-   * Get all Keys from certain type of section
-   * @param type List to get the array of tags keys.
-   * It can be: bucket, device, dashboard, action, analysis
+   * @description Retrieves all available tag keys for a specific resource type in the account.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/tags} Tags System
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const deviceTags = await Resources.tags.getTagKeys("device");
+   * console.log(deviceTags);
+   *
+   * const dashboardTags = await Resources.tags.getTagKeys("dashboard");
+   * console.log(dashboardTags);
+   * ```
    */
   public async getTagKeys(type: TagTypes): Promise<string[]> {
     const result = await this.doRequest<string[]>({
