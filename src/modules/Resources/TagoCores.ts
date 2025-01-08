@@ -6,18 +6,20 @@ import { DeviceInfo, DeviceListItem, DeviceQuery } from "./devices.types";
 
 class TagoCores extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieves a list with all TagoCores from the account
-   * @default
-   * ```json
-   * queryObj: {
+   * @description Retrieves a paginated list of all TagoCores from the application with filtering and sorting options.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const cores = await Resources.tagocores.list({
    *   page: 1,
    *   fields: ["id", "name"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "name,asc",
-   * }
-   * ```json
-   * @param queryObj Search query params
+   *   amount: 20
+   * });
+   * console.log(cores);
+   * ```
    */
   public async list(queryObj?: TagoCoreQuery): Promise<TagoCoreListInfo[]> {
     let result = await this.doRequest<TagoCoreListInfo[]>({
@@ -40,9 +42,16 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets information about the TagoCore
-   * @param tagoCoreID TagoCore ID
-   * @param summary Fetch summary from the instance if it is connected
+   * @description Retrieves detailed information about a specific TagoCore instance.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const coreInfo = await Resources.tagocores.info("core-id-123", true);
+   * console.log(coreInfo);
+   * ```
    */
   public async info(tagoCoreID: GenericID, summary?: boolean): Promise<TagoCoreInfo> {
     const result = await this.doRequest<TagoCoreInfo>({
@@ -55,9 +64,16 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modify any property of the TagoCore.
-   * @param tagoCoreID TagoCore ID
-   * @param tagoCoreObj TagoCore Object with data to replace
+   * @description Updates configuration and settings for a TagoCore instance.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const result = await Resources.tagocores.edit("core-id-123", { name: "Production Core" });
+   * console.log(result);
+   * ```
    */
   public async edit(tagoCoreID: GenericID, tagoCoreObj: Partial<TagoCoreInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -70,8 +86,16 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generate a new token for the TagoCore
-   * @param tagoCoreID TagoCore ID
+   * @description Generates a new authentication token for a TagoCore instance.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const token = await Resources.tagocores.tokenGenerate("core-id-123");
+   * console.log(token);
+   * ```
    */
   public async tokenGenerate(tagoCoreID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -83,8 +107,16 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a TagoCore
-   * @param tagoCoreID TagoCore ID
+   * @description Permanently removes a TagoCore instance and its configurations.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const result = await Resources.tagocores.delete("core-id-123");
+   * console.log(result);
+   * ```
    */
   public async delete(tagocoreID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -96,9 +128,16 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get Info of the Device from a Standalone TagoCore instance.
-   * @param tagoCoreID Standalone TagoCore ID
-   * @param deviceID Device ID
+   * @description Retrieves detailed information about a device connected to a Standalone TagoCore instance.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const deviceInfo = await Resources.tagocores.standaloneDeviceInfo("core-id-123", "device-id-456");
+   * console.log(deviceInfo);
+   * ```
    */
   public async standaloneDeviceInfo(tagoCoreID: GenericID, deviceID: GenericID): Promise<DeviceInfo> {
     let result = await this.doRequest<DeviceInfo>({
@@ -113,18 +152,20 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Retrieves a list with all devices from a Standalone TagoCore instance.
-   * @default
-   * queryObj: {
+   * @description Retrieves a list of all devices connected to a Standalone TagoCore instance.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const devices = await Resources.tagocores.standaloneDeviceList("core-id-123", {
    *   page: 1,
-   *   fields: ["id", "name"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "name,asc",
-   *   resolveBucketName: false,
-   * }
-   * @param tagoCoreID Standalone TagoCore ID
-   * @param queryObj Search query params
+   *   fields: ["id", "name", "last_input"],
+   *   amount: 20
+   * });
+   * console.log(devices);
+   * ```
    */
   public async standaloneDeviceList<T extends DeviceQuery>(tagoCoreID: GenericID, queryObj?: T) {
     let result = await this.doRequest<DeviceListItem<"id" | "name" | T["fields"][number]>[]>({
