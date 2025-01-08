@@ -4,16 +4,20 @@ import dateParser from "../Utils/dateParser";
 
 class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieves a list of all tokens
+   * @description Retrieves a paginated list of all service authorization tokens with filtering and sorting options.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
+   *
    * @example
-   * Default Query: {
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const tokens = await Resources.serviceAuthorization.tokenList({
    *   page: 1,
    *   fields: ["name", "token", "permission"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "created_at,desc",
-   * }
-   * @param query Search query params
+   *   amount: 20
+   * });
+   * console.log(tokens);
+   * ```
    */
   public async tokenList(query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
     let result = await this.doRequest<Partial<TokenDataList>[]>({
@@ -34,8 +38,19 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates and retrieves a new token
-   * @param tokenParams Token params to create new token
+   * @description Generates and retrieves a new service authorization token with specified permissions.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const result = await Resources.serviceAuthorization.tokenCreate({
+   *   name: "API Service Token",
+   *   permission: "full"
+   * });
+   * console.log(result);
+   * ```
    */
   public async tokenCreate(tokenParams: TokenData): Promise<TokenCreateResponse> {
     let result = await this.doRequest<TokenCreateResponse>({
@@ -50,8 +65,16 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a token
-   * @param token Token
+   * @description Permanently removes a service authorization token.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const result = await Resources.serviceAuthorization.tokenDelete("token-xyz-123");
+   * console.log(result);
+   * ```
    */
   public async tokenDelete(token: GenericToken): Promise<string> {
     const result = await this.doRequest<string>({
@@ -62,6 +85,18 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * @description Updates a service authorization token with an optional verification code.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
+   *
+   * @example
+   * If receive an error "Authorization Denied", check polices in Access Management.
+   * ```typescript
+   * const result = await Resources.serviceAuthorization.tokenEdit("token-xyz-123", "verification-code");
+   * console.log(result);
+   * ```
+   */
   public async tokenEdit(token: GenericToken, verificationCode?: string): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/serviceauth/${token}`,
