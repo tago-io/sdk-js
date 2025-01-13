@@ -11,9 +11,9 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const cores = await Resources.tagocores.list({
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const cores = await resources.tagocores.list({
    *   page: 1,
    *   fields: ["id", "name"],
    *   amount: 20
@@ -47,9 +47,9 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const coreInfo = await Resources.tagocores.info("core-id-123", true);
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const coreInfo = await resources.tagocores.info("core-id-123", true);
    * console.log(coreInfo);
    * ```
    */
@@ -69,9 +69,9 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.tagocores.edit("core-id-123", { name: "Production Core" });
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.tagocores.edit("core-id-123", { name: "Production Core" });
    * console.log(result);
    * ```
    */
@@ -91,9 +91,9 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const token = await Resources.tagocores.tokenGenerate("core-id-123");
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const token = await resources.tagocores.tokenGenerate("core-id-123");
    * console.log(token);
    * ```
    */
@@ -112,9 +112,9 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.tagocores.delete("core-id-123");
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.tagocores.delete("core-id-123");
    * console.log(result);
    * ```
    */
@@ -133,9 +133,9 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const deviceInfo = await Resources.tagocores.standaloneDeviceInfo("core-id-123", "device-id-456");
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const deviceInfo = await resources.tagocores.standaloneDeviceInfo("core-id-123", "device-id-456");
    * console.log(deviceInfo);
    * ```
    */
@@ -157,9 +157,9 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const devices = await Resources.tagocores.standaloneDeviceList("core-id-123", {
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const devices = await resources.tagocores.standaloneDeviceList("core-id-123", {
    *   page: 1,
    *   fields: ["id", "name", "last_input"],
    *   amount: 20

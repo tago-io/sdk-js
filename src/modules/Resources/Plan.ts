@@ -9,17 +9,16 @@ class Plan extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/207-upgrading-plans-services} Upgrading Plans & Services
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const planData = {
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.plan.setPlanParameters({
    *   plan: "plan_id",
    *   sms: 100,
    *   email: 1000,
    *   data_records: 200000,
    *   device_request: 250,
    *   analysis: 1000
-   * };
-   * const result = await Resources.plan.setPlanParameters(planData);
+   * });
    * console.log(result);
    * ```
    */
@@ -39,13 +38,13 @@ class Plan extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/114-account-plans} Account Plans
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const activePlan = await Resources.plan.getActivePlan();
-   * console.log(activePlan);
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.plan.getActivePlan();
+   * console.log(result); // { plan: 'scale' }
    * ```
    */
-  public async getActivePlan(): Promise<PlanInfo> {
+  public async getActivePlan(): Promise<Pick<PlanInfo, "plan">> {
     let result = await this.doRequest<PlanInfo>({
       path: "/account/plan",
       method: "GET",
@@ -57,36 +56,15 @@ class Plan extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves a detailed summary of account costs broken down by different sections.
-   *
-   * @see {@link https://help.tago.io/portal/en/kb/articles/billing} Billing Summary
-   *
-   * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
-   * ```typescript
-   * const billingSummary = await Resources.plan.summary();
-   * console.log(billingSummary);
-   * ```
-   */
-  public async summary(): Promise<Summary> {
-    const result = await this.doRequest<Summary>({
-      path: "/billing",
-      method: "GET",
-    });
-
-    return result;
-  }
-
-  /**
    * @description Retrieves the current pricing information for all available services.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/114-account-plans} Account Plans
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const prices = await Resources.plan.getCurrentPrices();
-   * console.log(prices);
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const prices = await resources.plan.getCurrentPrices();
+   * console.log(prices); // { analysis: [ { price: 0, amount: 3000 } ], data_records: [...], ... }
    * ```
    */
   public async getCurrentPrices(): Promise<CurrentPrices> {

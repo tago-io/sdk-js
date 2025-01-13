@@ -11,15 +11,15 @@ class Access extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Access Management** / **Access** in Access Management.
    * ```typescript
-   * const list = await Resources.accessManagement.list({
+   * const result = await Resources.accessManagement.list({
    *   page: 1,
    *   fields: ["id", "name"],
    *   amount: 10,
    *   orderBy: ["name", "asc"]
    * });
-   * console.log(list);
+   * console.log(result); // [ { id: 'access-id-123', name: '[Analysis] - Test', ...} ]
    * ```
    */
   public async list(queryObj?: AccessQuery): Promise<AccessInfo[]> {
@@ -46,14 +46,22 @@ class Access extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Access Management** / **Create** in Access Management.
    * ```typescript
    * const newAccess = await Resources.accessManagement.create({
+   *   active: true,
    *   name: "My Access Policy",
-   *   permission: "full",
-   *   tags: [{ key: "type", value: "admin" }]
+   *   permissions: [
+   *     {
+   *       effect: "allow",
+   *       action: ["access"],
+   *       resource: ["access_management"],
+   *     },
+   *   ],
+   *   targets: [["analysis", "id", "analysis-id-123"]],
+   *   tags: [{ key: "type", value: "admin" }],
    * });
-   * console.log(newAccess.am_id);
+   * console.log(newAccess.am_id); // access-id-123
    * ```
    */
   public async create(accessObj: AccessCreateInfo): Promise<{ am_id: GenericID }> {
@@ -74,13 +82,20 @@ class Access extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Access Management** / **Edit** in Access Management.
    * ```typescript
    * const result = await Resources.accessManagement.edit("access-id-123", {
    *   name: "Updated Access Policy",
+   *   permissions: [
+   *     {
+   *       effect: "allow",
+   *       action: ["edit"],
+   *       resource: ["access_management"],
+   *     },
+   *   ],
    *   tags: [{ key: "type", value: "user" }]
    * });
-   * console.log(result);
+   * console.log(result); // Access Management Successfully Updated
    * ```
    */
   public async edit(accessID: GenericID, accessObj: Partial<AccessInfo>): Promise<string> {
@@ -101,10 +116,10 @@ class Access extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Access Management** / **Delete** in Access Management.
    * ```typescript
    * const result = await Resources.accessManagement.delete("access-id-123");
-   * console.log(result);
+   * console.log(result); // Successfully Removed
    * ```
    */
   public async delete(accessID: GenericID): Promise<string> {
@@ -122,10 +137,10 @@ class Access extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Access Management** / **Access** in Access Management.
    * ```typescript
    * const accessInfo = await Resources.accessManagement.info("access-id-123");
-   * console.log(accessInfo);
+   * console.log(accessInfo); // { id: 'access-id-123', name: '[Analysis] - Test', ...}
    * ```
    */
   public async info(accessID: GenericID): Promise<AccessInfo> {

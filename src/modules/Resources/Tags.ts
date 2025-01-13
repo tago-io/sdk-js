@@ -9,13 +9,14 @@ class Tags extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/tags} Tags System
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const deviceTags = await Resources.tags.getTagKeys("device");
-   * console.log(deviceTags);
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
    *
-   * const dashboardTags = await Resources.tags.getTagKeys("dashboard");
-   * console.log(dashboardTags);
+   * const deviceTags = await resources.tags.getTagKeys("device");
+   * console.log(deviceTags); // [ 'tag-key1', 'tag-key2', 'tag-key3' ]
+   *
+   * const dashboardTags = await resources.tags.getTagKeys("dashboard");
+   * console.log(dashboardTags); // [ 'tag-key1', 'tag-key2', 'tag-key3' ]
    * ```
    */
   public async getTagKeys(type: TagTypes): Promise<string[]> {

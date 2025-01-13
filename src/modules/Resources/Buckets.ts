@@ -17,7 +17,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * @deprecated Use `Resources.devices.list()` instead
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Device** / **Access** in Access Management.
    * ```typescript
    * // Use this instead of Buckets
    * const list = await Resources.devices.list({
@@ -39,7 +39,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * @deprecated Use `Resources.devices.info()` instead
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Device** / **Access** in Access Management.
    * ```typescript
    * // Use this instead of Buckets
    * const deviceInfo = await Resources.devices.info("device-id-123");
@@ -54,7 +54,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * @description Gets the amount of data stored for a device.
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Device** / **Access** in Access Management.
    * ```typescript
    * // Use this instead of Buckets
    * const amount = await Resources.devices.amount("device-id-123");

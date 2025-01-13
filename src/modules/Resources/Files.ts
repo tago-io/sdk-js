@@ -20,13 +20,13 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **File** / **Access** in Access Management.
    * ```typescript
-   * const files = await Resources.files.list({
+   * const result = await Resources.files.list({
    *   path: "/my/folder",
    *   quantity: 100
    * });
-   * console.log(files);
+   * console.log(result); // { total: 200, usage: 0.05, files: [ { size: 7812, ...} ], folders: [ 'my-folder' ] }
    * ```
    */
   public async list(queryObj?: FileQuery): Promise<FileListInfo> {
@@ -51,10 +51,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **File** / **Upload** in Access Management.
    * ```typescript
    * const result = await Resources.files.uploadBase64([{
-   *   filename: "/myfiles/document.pdf",
+   *   filename: "/my-files/document.pdf",
    *   file: "base64EncodedContent",
    *   public: true,
    * }]);
@@ -78,13 +78,14 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **File** / **Edit** in Access Management.
    * ```typescript
    * const result = await Resources.files.move([{
    *   from: "/old/path/file.txt",
    *   to: "/new/path/renamed.txt"
    * }]);
-   * console.log(result);
+   * console.log(result); // Successfully Updated
+
    * ```
    */
   public async move(fileList: MoveFiles[]): Promise<string> {
@@ -104,9 +105,9 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.files.copy([{
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.files.copy([{
    *   from: "/source/file.txt",
    *   to: "/destination/copy.txt"
    * }]);
@@ -130,13 +131,13 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **File** / **Upload** in Access Management.
    * ```typescript
    * const result = await Resources.files.delete([
    *   "/path/to/file.txt",
    *   "/folder/to/delete"
    * ]);
-   * console.log(result);
+   * console.log(result); // Successfully Removed
    * ```
    */
   public async delete(files: string[]): Promise<string> {
@@ -156,7 +157,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **File** / **Access** in Access Management.
    * ```typescript
    * const permission = await Resources.files.checkPermission("/path/to/file.txt");
    * console.log(permission.public); // true or false
@@ -181,13 +182,13 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **File** / **Edit** in Access Management.
    * ```typescript
    * const result = await Resources.files.changePermission([{
    *   file: "/path/to/file.txt",
    *   public: true
    * }]);
-   * console.log(result);
+   * console.log(result); // Successfully Updated
    * ```
    */
   public async changePermission(filesVisibility: FilesPermission[]): Promise<string> {
@@ -217,9 +218,9 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **File** / **Access** in Access Management.
    * ```typescript
-   * const signedUrl = await Resources.files.getFileURLSigned("https://storage.tago.io/file/...");
+   * const signedUrl = await Resources.files.getFileURLSigned("https://api.tago.io/file/...");
    * console.log(signedUrl);
    * ```
    */
@@ -245,7 +246,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management
+   * If receive an error "Authorization Denied", check policy **File** / **Access** in Access Management
    * ```typescript
    * const md5Hash = await Resources.files.getFileMD5("https://storage.tago.io/file/path/document.pdf");
    * console.log(md5Hash); // e.g. "d41d8cd98f00b204e9800998ecf8427e"
@@ -409,17 +410,14 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **File** / **Upload** in Access Management.
    * ```typescript
    * const file = Buffer.from("file content");
    * const result = await Resources.files.uploadFile(file, "/uploads/myfile.txt", {
    *   chunkSize: 5 * 1024 * 1024, // 5MB chunks
-   *   onProgress: (progress) => console.log(`Upload progress: ${progress}%`),
-   *   onCancelToken: (cancel) => {
-   *     // Call cancel() to abort upload
-   *   }
+   *   onProgress: (progress) => console.log(`Upload progress: ${progress}%`)
    * });
-   * console.log(result.file);
+   * console.log(result.file); // https://api.tago.io/file/.../uploads/myfile.txt
    * ```
    */
   public async uploadFile(file: Buffer | Blob, filename: string, options?: UploadOptions) {

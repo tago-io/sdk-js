@@ -10,14 +10,14 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} Secrets
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Secrets** / **Access** in Access Management.
    * ```typescript
-   * const secrets = await Resources.secrets.list({
+   * const result = await Resources.secrets.list({
    *   page: 1,
    *   fields: ["id", "key"],
    *   amount: 20
    * });
-   * console.log(secrets);
+   * console.log(result); // [ { id: 'secret-id-123', key: 'API_KEY' } ]
    * ```
    */
   public async list(queryObj?: SecretsQuery): Promise<SecretsInfo[]> {
@@ -42,10 +42,10 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} Secrets
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Secrets** / **Access** in Access Management.
    * ```typescript
    * const secretInfo = await Resources.secrets.info("secret-id-123");
-   * console.log(secretInfo);
+   * console.log(secretInfo); // { id: 'secret-id-123', key: 'API_KEY' }
    * ```
    */
   public async info(secretID: GenericID): Promise<SecretsInfo> {
@@ -65,13 +65,13 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/secrets#Creating_a_Secret} Creating a Secret
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Secrets** / **Create** in Access Management.
    * ```typescript
    * const result = await Resources.secrets.create({
    *   key: "API_KEY",
    *   value: "my-secret-value"
    * });
-   * console.log(result);
+   * console.log(result); // { id: 'secret-id-132 }
    * ```
    */
   public async create(secretObj: SecretsCreate): Promise<{ id: GenericID }> {
@@ -92,13 +92,13 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} Secrets
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Secrets** / **Edit** in Access Management.
    * ```typescript
    * const result = await Resources.secrets.edit("secret-id-123", {
-   *   key: "UPDATED_API_KEY",
-   *   value: "new-secret-value"
+   *   value: "new-secret-value",
+   *   tags: [{ key: "type", value: "user" }]
    * });
-   * console.log(result);
+   * console.log(result); // Successfully Updated
    * ```
    */
   public async edit(secretID: GenericID, secretObj: SecretsEdit): Promise<string> {
@@ -119,10 +119,10 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} Secrets
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Secrets** / **delete** in Access Management.
    * ```typescript
    * const result = await Resources.secrets.delete("secret-id-123");
-   * console.log(result);
+   * console.log(result); // Successfully Removed
    * ```
    */
   public async delete(secretID: GenericID): Promise<string> {

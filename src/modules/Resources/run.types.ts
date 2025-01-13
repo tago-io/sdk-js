@@ -115,7 +115,11 @@ interface UserInfo extends Omit<UserCreateInfo, "password"> {
 
 interface LoginResponseRun {
   token: GenericToken;
+  name: string;
+  /** Run user ID */
+  run_user: string;
   expire_date: ExpireTimeOption;
+  created_at: string;
 }
 
 interface LoginAsUserOptions {

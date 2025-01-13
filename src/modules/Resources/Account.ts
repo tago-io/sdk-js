@@ -16,10 +16,10 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @description Gets all account information.
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Account** / **Access Account Information** in Access Management.
    * ```typescript
    * const accountInfo = await Resources.account.info();
-   * console.log(accountInfo);
+   * console.log(accountInfo); // { active: true, blocked: false, created_at: 2023-02-21T15:17:35.759Z, ... }
    * ```
    */
   public async info(): Promise<AccountInfo> {
@@ -39,10 +39,10 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @description Edit account.
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.account.edit({ name: "New Name" });
-   * console.log(result);
+   * const account = new Account({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await account.edit({ name: "New Name" });
+   * console.log(result); // Account Successfully Updated
    * ```
    */
   public async edit(accountObj: Partial<AccountInfo>): Promise<string> {
@@ -61,9 +61,9 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/210-deleting-your-account} Deleting Your Account
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.account.delete();
+   * const account = new Account({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await account.delete();
    * console.log(result);
    * ```typescript
    */
@@ -149,11 +149,12 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @description Change account password.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/209-resetting-my-password} Resetting My Password
+   * TODO: not working
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.account.passwordChange("newPassword");
+   * const account = new Account({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await account.passwordChange("newPassword");
    * console.log(result);
    * ```
    */
@@ -266,9 +267,10 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-factor Authentication (2FA)
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy in Access Management.
    * ```typescript
-   * const result = await Resources.account.enableOTP({ email: "user@example.com", password: "password" }, "sms");
+   * const account = new Account({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = account.enableOTP({ email: "user@example.com", password: "password" }, "sms");
    * console.log(result);
    * ```typescript
    */
@@ -288,9 +290,9 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-factor Authentication (2FA)
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.account.disableOTP({ email: "user@example.com", password: "password" }, "sms");
+   * const account = new Account({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await account.disableOTP({ email: "user@example.com", password: "password" }, "sms");
    * console.log(result);
    * ```
    */
@@ -310,9 +312,9 @@ class Account extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-factor Authentication (2FA)
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.account.confirmOTP("123456", "sms");
+   * const account = new Account({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await account.confirmOTP("123456", "sms");
    * console.log(result);
    * ```
    */

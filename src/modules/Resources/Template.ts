@@ -19,9 +19,9 @@ class Template extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/518-distributing-dashboards} Distributing Dashboards
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.template.generateTemplate({
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.template.generateTemplate({
    *   name: "My Dashboard Template",
    *   dashboard: "dashboard-id-123"
    * });
@@ -44,12 +44,10 @@ class Template extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/518-distributing-dashboards} Distributing Dashboards
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.template.installTemplate("template-id-123", {
-   *   device: { id: deviceId, bucket: "bucket-id-123" }
-   * });
-   * console.log(result);
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.template.installTemplate("template-id-123");
+   * console.log(result); // { dashboard: 'dashboard-id-123' }
    * ```
    */
   public async installTemplate(
@@ -71,10 +69,10 @@ class Template extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/518-distributing-dashboards} Distributing Dashboards
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const template = await Resources.template.getTemplate("template-id-123");
-   * console.log(template);
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const template = await resources.template.getTemplate("template-id-123");
+   * console.log(template); // { type: 'dashboard', name: 'My Dashboard Template', ... }
    * ```
    */
   public async getTemplate(templateID: GenericID): Promise<TemplateObj> {

@@ -1,6 +1,7 @@
-import { GenericToken, ListTokenQuery, TokenCreateResponse, TokenData, TokenDataList } from "../../common/common.types";
+import { ListTokenQuery, TokenData, TokenDataList } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
+import { TokenCreateResponse, GenericToken } from "./ServiceAuthorization.types";
 
 class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   /**
@@ -9,14 +10,14 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Service Authorization** / **Access** in Access Management.
    * ```typescript
-   * const tokens = await Resources.serviceAuthorization.tokenList({
+   * const result = await Resources.serviceAuthorization.tokenList({
    *   page: 1,
-   *   fields: ["name", "token", "permission"],
+   *   fields: ["name", "token"],
    *   amount: 20
    * });
-   * console.log(tokens);
+   * console.log(result); // [ { name: 'API Service Token', token: 'token-xyz-123' } ]
    * ```
    */
   public async tokenList(query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
@@ -43,23 +44,21 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Service Authorization** / **Create** in Access Management.
    * ```typescript
    * const result = await Resources.serviceAuthorization.tokenCreate({
-   *   name: "API Service Token",
-   *   permission: "full"
+   *   name: "Service Token",
+   *   verification_code: "additional parameter"
    * });
-   * console.log(result);
+   * console.log(result); // { token: 'token-xyz-123', name: 'Service Token', ... }
    * ```
    */
   public async tokenCreate(tokenParams: TokenData): Promise<TokenCreateResponse> {
-    let result = await this.doRequest<TokenCreateResponse>({
+    const result = await this.doRequest<TokenCreateResponse>({
       path: `/serviceauth`,
       method: "POST",
       body: tokenParams,
     });
-
-    result = dateParser(result, ["expire_date"]);
 
     return result;
   }
@@ -70,10 +69,10 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Service Authorization** / **Delete** in Access Management.
    * ```typescript
    * const result = await Resources.serviceAuthorization.tokenDelete("token-xyz-123");
-   * console.log(result);
+   * console.log(result); // Token Successfully Removed
    * ```
    */
   public async tokenDelete(token: GenericToken): Promise<string> {
@@ -91,10 +90,10 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Service Authorization** / **Edit** in Access Management.
    * ```typescript
    * const result = await Resources.serviceAuthorization.tokenEdit("token-xyz-123", "verification-code");
-   * console.log(result);
+   * console.log(result); // Authorization Code Successfully Updated
    * ```
    */
   public async tokenEdit(token: GenericToken, verificationCode?: string): Promise<string> {

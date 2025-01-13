@@ -10,15 +10,15 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Connector** / **Access** in Access Management.
    * ```typescript
-   * const list = await Resources.integration.connectors.list({
+   * const result = await Resources.integration.connectors.list({
    *   page: 1,
    *   fields: ["id", "name"],
    *   amount: 10,
    *   orderBy: ["name", "asc"]
    * });
-   * console.log(list);
+   * console.log(result); // [ { id: 'connector-id-123', name: 'My Connector' } ]
    * ```
    */
   public async list(queryObj?: ConnectorQuery): Promise<ConnectorInfo[]> {
@@ -45,10 +45,10 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Connector** / **Access** in Access Management.
    * ```typescript
-   * const info = await Resources.integration.connectors.info("connector-id-123", ["id", "name"]);
-   * console.log(info);
+   * const result = await Resources.integration.connectors.info("connector-id-123", ["id", "name"]);
+   * console.log(result); // { id: 'connector-id-123', name: 'My Connector', profile: 'profile-id-123' }
    * ```
    */
   public async info(connectorID: GenericID, fields?: string[]): Promise<ConnectorInfo> {
@@ -71,14 +71,15 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview#Creating_a_connector} Creating a connector
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.integration.connectors.create({
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.integration.connectors.create({
    *   name: "My Connector",
    *   type: "custom",
+   *   networks: ["network-id-123"],
    *   enabled: true
    * });
-   * console.log(result.connector);
+   * console.log(result.connector); // 'connector-id-123'
    * ```
    */
   public async create(connectorObj: ConnectorCreateInfo): Promise<{ connector: GenericID }> {
@@ -99,10 +100,10 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.integration.connectors.edit("connector-id-123", { name: "Updated Connector" });
-   * console.log(result);
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.integration.connectors.edit("connector-id-123", { name: "Updated Connector" });
+   * console.log(result); // Connector Successfully Updated
    * ```
    */
   public async edit(connectorID: GenericID, connectorObj: Partial<ConnectorCreateInfo>): Promise<string> {
@@ -123,10 +124,10 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.integration.connectors.delete("connector-id-123");
-   * console.log(result);
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.integration.connectors.delete("connector-id-123");
+   * console.log(result); // Connector Successfully Deleted
    * ```
    */
   public async delete(connectorID: string): Promise<string> {

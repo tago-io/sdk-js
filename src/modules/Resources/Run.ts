@@ -26,10 +26,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/run-themes} Run Themes
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Profile** / **Access TagoRun settings** in Access Management.
    * ```typescript
-   * const runInfo = await Resources.run.info();
-   * console.log(runInfo);
+   * const result = await Resources.run.info();
+   * console.log(result); // { name: 'My Run Environment', logo: 'https://example.com/logo.png', ... }
    * ```
    */
   public async info(): Promise<RunInfo> {
@@ -48,10 +48,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/run-themes} Run Themes
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Profile** / **Edit TagoRun settings** in Access Management.
    * ```typescript
    * const result = await Resources.run.edit({ name: "My Run Environment", logo: "https://example.com/logo.png" });
-   * console.log(result);
+   * console.log(result); // TagoIO Run Successfully Updated
    * ```
    */
   public async edit(data: RecursivePartial<RunInfo>): Promise<string> {
@@ -70,14 +70,15 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   *
+   * If receive an error "Authorization Denied", or return empty list check policy **Run User** / **Access** in Access Management.
    * ```typescript
-   * const users = await Resources.run.listUsers({
+   * const result = await Resources.run.listUsers({
    *   page: 1,
    *   fields: ["id", "name", "email"],
    *   amount: 20
    * });
-   * console.log(users);
+   * console.log(result); // [ { id: 'user-id-123', name: 'John Doe', email: 'example@email.com' } ]
    * ```
    */
   public async listUsers<T extends UserQuery>(query: T) {
@@ -106,10 +107,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Run User** / **Access** in Access Management.
    * ```typescript
-   * const userInfo = await Resources.run.userInfo("user-id-123");
-   * console.log(userInfo);
+   * const result = await Resources.run.userInfo("user-id-123");
+   * console.log(result); // { id: 'user-id-123', name: 'John Doe', email: 'example@email.com', ... }
    * ```
    */
   public async userInfo(userID: GenericID): Promise<UserInfo> {
@@ -129,7 +130,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Run User** / **Create** in Access Management.
    * ```typescript
    * const result = await Resources.run.userCreate({
    *   name: "John Doe",
@@ -137,7 +138,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    *   password: "secure123",
    *   timezone: "America/New_York",
    * });
-   * console.log(result);
+   * console.log(result); // { user: 'user-id-123' }
    * ```
    */
   public async userCreate(data: UserCreateInfo): Promise<UserCreateResponse> {
@@ -156,11 +157,11 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Run User** / **Edit** in Access Management.
    * ```typescript
    * const userData = ;
-   * const result = await Resources.run.userEdit("user-id-123", { name: "Updated Name", email: "new@example.com" });
-   * console.log(result);
+   * const result = await Resources.run.userEdit("user-id-123", { name: "Updated Name" });
+   * console.log(result); // TagoIO Run User Successfully Updated
    * ```
    */
   public async userEdit(userID: GenericID, data: Partial<UserInfo>): Promise<string> {
@@ -179,10 +180,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Run User** / **Delete** in Access Management.
    * ```typescript
    * const result = await Resources.run.userDelete("user-id-123");
-   * console.log(result);
+   * console.log(result); // Successfully Removed
    * ```
    */
   public async userDelete(userID: GenericID): Promise<string> {
@@ -198,10 +199,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @description Generates a login token to authenticate as a specific Run user.
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Run User** / **Login as user** in Access Management.
    * ```typescript
-   * const loginResponse = await Resources.run.loginAsUser("user-id-123");
-   * console.log(loginResponse.token);
+   * const result = await Resources.run.loginAsUser("user-id-123");
+   * console.log(result.token); // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ..."
    * ```
    */
   public async loginAsUser(userID: GenericID, options?: LoginAsUserOptions): Promise<LoginResponseRun> {
@@ -220,10 +221,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @description Tests the email configuration by sending a test message.
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.run.emailTest({ subject: "Test Email", body: "This is a test message" });
-   * console.log(result);
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.run.emailTest({ subject: "Test Email", body: "This is a test message" });
+   * console.log(result); // E-mail sent to example@email.com
    * ```
    */
   public async emailTest(data: { subject: string; body: string }): Promise<string> {
@@ -242,10 +243,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/223-notifications-for-users} Notifications for Users
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Run User** / **Access notification** in Access Management.
    * ```typescript
-   * const notifications = await Resources.run.notificationList("user-id-123");
-   * console.log(notifications);
+   * const result = await Resources.run.notificationList("user-id-123");
+   * console.log(result); // [ { id: 'notification-id-123', title: 'System Update', message: 'Features', ... } ]
    * ```
    */
   public async notificationList(userID: GenericID): Promise<NotificationInfo[]> {
@@ -263,10 +264,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/223-notifications-for-users} Notifications for Users
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Run User** / **Create notification** in Access Management.
    * ```typescript
    * const result = await Resources.run.notificationCreate("user-id-123", { title: "Update", message: "New feature available" });
-   * console.log(result);
+   * console.log(result); // { id: 'notification-id-123' }
    * ```
    */
   public async notificationCreate(userID: GenericID, data: NotificationCreate): Promise<{ id: GenericID }> {
@@ -288,10 +289,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/223-notifications-for-users} Notifications for Users
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Run User** / **Edit notification** in Access Management.
    * ```typescript
    * const result = await Resources.run.notificationEdit("notification-id-123", { title: "Updated Title" });
-   * console.log(result);
+   * console.log(result); // TagoIO Notification User Successfully Updated
    * ```
    */
   public async notificationEdit(notificationID: GenericID, data: Partial<NotificationCreate>): Promise<string> {
@@ -310,10 +311,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/223-notifications-for-users} Notifications for Users
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Run User** / **Delete notification** in Access Management.
    * ```typescript
    * const result = await Resources.run.notificationDelete("notification-id-123");
-   * console.log(result);
+   * console.log(result); // Successfully Removed
    * ```
    */
   public async notificationDelete(notificationID: GenericID): Promise<string> {
@@ -332,10 +333,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/491-single-sign-on-sso} Single Sign-On (SSO)
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const samlConfig = await Resources.run.ssoSAMLInfo();
-   * console.log(samlConfig);
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.run.ssoSAMLInfo();
+   * console.log(result); // { sp: { entity_id: 'https://example.com', ... }, ... }
    * ```
    */
   public async ssoSAMLInfo(): Promise<RunSAMLInfo> {
@@ -352,19 +353,6 @@ class Run extends TagoIOModule<GenericModuleParams> {
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/492-okta-sso} Okta SSO
    * @see {@link https://help.tago.io/portal/en/kb/articles/491-single-sign-on-sso} Single Sign-On (SSO)
-   *
-   * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
-   * ```typescript
-   * const result = await Resources.run.ssoSAMLEdit({
-   *   idp_metadata: "xml-content",
-   *   mapping: {
-   *     email: "email_field",
-   *     firstName: "name_field",
-   *   }
-   * });
-   * console.log(result);
-   * ```
    */
   public async ssoSAMLEdit(data: RunSAMLEditInfo): Promise<string> {
     const result = await this.doRequest<string>({
@@ -380,17 +368,6 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @description Creates a custom domain configuration for the Run environment.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/custom-domain-configuration} Custom Domain Configuration
-   *
-   * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
-   * ```typescript
-   * const result = await Resources.run.createCustomDomain("profile-123", {
-   *  domain: "app.example.com",
-   *  subdomain: "app.example.com",
-   *  email: "example@email.com",
-   * });
-   * console.log(result);
-   * ```
    */
   public async createCustomDomain(profile_id: string, customDomainData: CustomDomainCreate): Promise<string> {
     const result = await this.doRequest<string>({
@@ -408,10 +385,10 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/custom-domain-configuration} Custom Domain Configuration
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const domainInfo = await Resources.run.getCustomDomain("profile-id-123");
-   * console.log(domainInfo);
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.run.getCustomDomain("profile-id-123");
+   * console.log(result);
    * ```
    */
   public async getCustomDomain(profile_id: string): Promise<CustomDomainInfo> {
@@ -431,9 +408,9 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/custom-domain-configuration} Custom Domain Configuration
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.run.deleteCustomDomain("profile-id-123");
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.run.deleteCustomDomain("profile-id-123");
    * console.log(result);
    * ```
    */
@@ -452,9 +429,9 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/custom-domain-configuration} Custom Domain Configuration
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const result = await Resources.run.regenerateCustomDomain("profile-id-123");
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.run.regenerateCustomDomain("profile-id-123");
    * console.log(result);
    * ```
    */

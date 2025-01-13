@@ -11,7 +11,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Analysis** / **Access** in Access Management.
    * ```typescript
    * const list = await Resources.analysis.list({
    *   page: 1,
@@ -19,7 +19,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *   amount: 10,
    *   orderBy: ["name", "asc"]
    * });
-   * console.log(list);
+   * console.log(list); // [ { id: 'analysis-id-123', name: 'Analysis Test', ...} ]
    * ```
    */
   public async list<T extends AnalysisQuery>(queryObj?: T) {
@@ -48,14 +48,14 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/articles/120-creating-analysis} Creating Analysis
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Analysis** / **Create** in Access Management.
    * ```typescript
    * const newAnalysis = await Resources.analysis.create({
    *   name: "My Analysis",
    *   type: "node",
    *   tags: [{ key: "type", value: "data-processing" }]
    * });
-   * console.log(newAnalysis.id, newAnalysis.token);
+   * console.log(newAnalysis.id, newAnalysis.token); // analysis-id-123, analysis-token-123
    * ```
    */
   public async create(analysisObj: AnalysisCreateInfo): Promise<{ id: GenericID; token: GenericToken }> {
@@ -76,13 +76,13 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Analysis** / **Create** in Access Management.
    * ```typescript
    * const result = await Resources.analysis.edit("analysis-id-123", {
    *   name: "Updated Analysis",
    *   active: false
    * });
-   * console.log(result);
+   * console.log(result); // Successfully Updated
    * ```
    */
   public async edit(analysisID: GenericID, analysisObj: Partial<AnalysisInfo>): Promise<string> {
@@ -103,10 +103,10 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Analysis** / **Delete** in Access Management.
    * ```typescript
    * const result = await Resources.analysis.delete("analysis-id-123");
-   * console.log(result);
+   * console.log(result); // Successfully Removed
    * ```
    */
   public async delete(analysisID: GenericID): Promise<string> {
@@ -124,7 +124,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Analysis** / **Access** in Access Management.
    * ```typescript
    * const analysisInfo = await Resources.analysis.info("analysis-id-123");
    * console.log(analysisInfo);
@@ -147,11 +147,9 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Analysis** / **Run Analysis** in Access Management.
    * ```typescript
-   * const result = await Resources.analysis.run("analysis-id-123", {
-   *   environment: "production"
-   * });
+   * const result = await Resources.analysis.run("analysis-id-123", { environment: "production" });
    * console.log(result.analysis_token);
    * ```
    */
@@ -169,14 +167,15 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
 
   /**
    * @description Generates a new token for the analysis.
+   * @note **This is only allowed when the analysis is running in external mode.**
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
    * ```typescript
-   * const token = await Resources.analysis.tokenGenerate("analysis-id-123");
-   * console.log(token.analysis_token);
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const token = await resources.analysis.tokenGenerate("analysis-id-123");
+   * console.log(token.analysis_token); // analysis-token-123
    * ```
    */
   public async tokenGenerate(analysisID: GenericID): Promise<{ analysis_token: string }> {
@@ -194,7 +193,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Analysis** / **Upload Analysis Script** in Access Management.
    * ```typescript
    * const result = await Resources.analysis.uploadScript("analysis-id-123", {
    *   name: "script.js",
@@ -224,11 +223,9 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
    * @example
-   * If receive an error "Authorization Denied", check polices in Access Management.
+   * If receive an error "Authorization Denied", check policy **Analysis** / **Download Analysis Script** in Access Management.
    * ```typescript
-   * const download = await Resources.analysis.downloadScript("analysis-id-123", {
-   *   version: 1
-   * });
+   * const download = await Resources.analysis.downloadScript("analysis-id-123", { version: 1 });
    * console.log(download.url);
    * ```
    */
