@@ -1,5 +1,5 @@
 import { Data, DataCreate, DataEdit, GenericID, GenericToken, TagsObj } from "../../common/common.types";
-import { Regions } from "../../regions";
+import { Regions, RegionsObj } from "../../regions";
 
 interface DeviceItem {
   id: GenericID;
@@ -31,7 +31,7 @@ interface DeviceItem {
  */
 interface DeviceConstructorParams {
   token: GenericToken;
-  region?: Regions;
+  region?: Regions | RegionsObj;
   // options?: any;
 }
 

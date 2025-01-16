@@ -111,7 +111,11 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
    * @param token TagoIO Run user token
    * @param region TagoIO Region Server [default usa-1]
    */
-  public static async confirmUser(tagoIORunURL: string, token: GenericToken, region?: Regions): Promise<string> {
+  public static async confirmUser(
+    tagoIORunURL: string,
+    token: GenericToken,
+    region?: Regions | RegionsObj
+  ): Promise<string> {
     const params: doRequestParams = {
       path: `/run/${tagoIORunURL}/confirm/${token}`,
       method: "GET",
