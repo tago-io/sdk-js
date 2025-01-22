@@ -1,6 +1,5 @@
 import { ExpireTimeOption, GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { InviteInfo, InviteResponse } from "./_share.types";
 import Widgets from "./Dashboard.Widgets";
 import {
   DashboardCreateInfo,
@@ -10,7 +9,6 @@ import {
   AnalysisRelated,
   PublicKeyResponse,
 } from "./dashboards.types";
-import _Share from "./_Share";
 import dateParser from "../Utils/dateParser";
 
 class Dashboards extends TagoIOModule<GenericModuleParams> {
@@ -172,43 +170,6 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Lists all users with access to the dashboard.
-   *
-   * @see {@link https://help.tago.io/portal/en/kb/articles/17-sharing-dashboards} Sharing Dashboards
-   */
-  public async shareList(dashboardID: GenericID): Promise<InviteInfo[]> {
-    return this.share.list(dashboardID);
-  }
-
-  /**
-   * @description Sends an invitation to share a dashboard with another user.
-   * This allows collaborative access to dashboard resources.
-   *
-   * @see {@link https://help.tago.io/portal/en/kb/articles/17-sharing-dashboards} Sharing Dashboards
-   */
-  public async shareSendInvite(dashboardID: GenericID, inviteObj: InviteInfo): Promise<InviteResponse> {
-    return this.share.invite(dashboardID, inviteObj);
-  }
-
-  /**
-   * @description Modifies the access permissions for a shared dashboard. Use this to update user privileges.
-   *
-   * @see {@link https://help.tago.io/portal/en/kb/articles/17-sharing-dashboards} Sharing Dashboards
-   */
-  public async shareEdit(shareID: GenericID, targetObj: Partial<InviteInfo>): Promise<string> {
-    return this.share.edit(shareID, targetObj);
-  }
-
-  /**
-   * @description Removes sharing access for a specific dashboard. This permanently revokes user access.
-   *
-   * @see {@link https://help.tago.io/portal/en/kb/articles/17-sharing-dashboards} Sharing Dashboards
-   */
-  public async shareDelete(shareID: GenericID): Promise<string> {
-    return this.share.remove(shareID);
-  }
-
-  /**
    * @description Generates a new public access token for the dashboard.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
@@ -301,8 +262,6 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
 
     return result;
   }
-
-  private share = new _Share({ ...this.params, type: "dashboard" });
 
   public widgets = new Widgets(this.params);
 }
