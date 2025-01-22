@@ -1,62 +1,28 @@
-import type {
-  Data,
-  DataCreate,
-  DataEdit,
-  GenericID,
-  GenericToken,
-  TokenCreateResponse,
-  TokenData,
-} from "../../common/common.types";
-import { chunk } from "../../common/chunk";
-import sleep from "../../common/sleep";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
+import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
-import type { DataQuery, DataQueryStreaming, OptionsStreaming } from "../Device/device.types";
-import type {
-  ConfigurationParams,
-  DeviceChunkCopyResponse,
-  DeviceChunkData,
-  DeviceChunkParams,
-  DeviceCreateInfo,
-  DeviceCreateResponse,
-  DeviceEditInfo,
-  DeviceInfo,
-  DeviceListItem,
-  DeviceQuery,
-  DeviceTokenDataList,
-  ListDeviceTokenQuery,
-} from "./devices.types";
-import {
-  EntityCreateInfo,
-  EntityData,
-  EntityDataQuery,
-  EntityInfo,
-  EntityListItem,
-  EntityQuery,
-  EntitySchema,
-  EntityUnknownData,
-} from "./entities.types";
+import { GenericID } from "../../common/common.types";
+import { EntityCreateInfo, EntityData, EntityDataQuery, EntityInfo } from "./entities.types";
+import { EntityListItem, EntityQuery, EntitySchema, EntityUnknownData } from "./entities.types";
 
 class Entities extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieves a list with all entities from the account
-   * @default
-   * queryObj: {
+   * @description Retrieves a paginated list of all entities from the account with filtering and sorting options.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities} Entities
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Access** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.list({
    *   page: 1,
-   *   fields: ["id", "name"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "name,asc",
-   * }
-   * @param queryObj Search query params
+   *   fields: ["id", "name", "tags"],
+   *   amount: 20
+   * });
+   * console.log(result); // [ { id: 'entity-id-123', name: 'test', tags: [] }, ... ]
+   * ```
    */
-  public async list(
-    queryObj?: EntityQuery,
-    options?: {
-      paramsSerializer?: any;
-    }
-  ): Promise<EntityListItem[]> {
+  public async list(queryObj?: EntityQuery, options?: { paramsSerializer?: any }): Promise<EntityListItem[]> {
     let result = await this.doRequest<EntityListItem[]>({
       path: "/entity",
       method: "GET",
@@ -76,8 +42,20 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generate a new entity for the account.
-   * @param entityObj Object data to create new device
+   * @description Creates a new entity in the account.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Creating_an_Entity} Creating an Entity
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Create** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.create({
+   *  name: "Temperature Sensors",
+   *  schema: {
+   *    temperature: { action: "create", type: "float", required: true } }
+   * });
+   * console.log(result); // { id: 'entity-id-123' }
+   * ```
    */
   public async create(entityObj: EntityCreateInfo): Promise<{ id: string }> {
     const result = await this.doRequest<{ id: string }>({
@@ -90,12 +68,19 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modify any property of the entity
-   * @param entityID Entity ID
-   * @param entityObj Entity object with fields to replace
+   * @description Updates an existing entity's properties.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_fields} Managing Fields
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.edit("entity-id-123", { name: "Updated Entity Name" });
+   * console.log(result); // { message: 'Entity Successfully Updated' }
+   * ```
    */
-  public async edit(entityID: GenericID, entityObj: Partial<EntityCreateInfo>): Promise<string> {
-    const result = await this.doRequest<string>({
+  public async edit(entityID: GenericID, entityObj: Partial<EntityCreateInfo>): Promise<{ message: string }> {
+    const result = await this.doRequest<{ message: string }>({
       path: `/entity/${entityID}`,
       method: "PUT",
       body: entityObj,
@@ -105,8 +90,16 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes an entity from the account
-   * @param entityID Entity ID
+   * @description Permanently removes an entity from the account.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_fields} Managing Fields
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Delete** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.delete("entity-id-123");
+   * console.log(result); // Entity Successfully Removed
+   * ```
    */
   public async delete(entityID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -118,8 +111,16 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get Info of the Entity
-   * @param entityID Entity ID
+   * @description Retrieves detailed information about a specific entity.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities} Entities
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Access** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.info("entity-id-123");
+   * console.log(result); // { schema: { id: { type: 'uuid', required: true }, ... }, ... }
+   * ```
    */
   public async info(entityID: GenericID): Promise<EntityInfo> {
     let result = await this.doRequest<EntityInfo>({
@@ -133,9 +134,16 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get amount of data stored in the Device.
+   * @description Gets the total amount of data records stored in the entity.
    *
-   * @param entityID Entity ID
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities} Entities
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Delete** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.amount("entity-id-123");
+   * console.log(result);
+   * ```
    */
   public async amount(entityID: GenericID): Promise<number> {
     const result = await this.doRequest<number>({
@@ -147,18 +155,25 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get all the data from a entity.
-   * @param entityID Entity ID
-   * @param queryParams Query parameters to filter the results.
+   * @description Retrieves data records stored in a specific entity with optional filtering parameters.
    *
-   * @returns Array with the data values stored in the entity.
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_the_data_in_your_Entity} Managing the data in your Entity
    *
-   *    * @example
-   * ```ts
-   * const lastTenValues = await Resources.entities.getEntityData("myEntityID", { amount: 10 });
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Access** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.getEntityData("entity-id-123", { amount: 10, orderBy: "created_at,desc" });
+   * console.log(result); // [ { id: 'record-id-123', created_at: 2025-01-22T13:45:30.913Z, ... }, ... ]
+   *
+   * // Filtering by a specific field
+   * const result = await Resources.entities.getEntityData("entity-id-123", {
+   *   filter: { temperature: "30" },
+   *   index: "temp_idx",
+   *   amount: 9999,
+   * });
+   * console.log(result); // [ { id: 'record-id-123', created_at: 2025-01-22T13:45:30.913Z, ... }, ... ]
    * ```
    */
-
   public async getEntityData(
     entityID: GenericID,
     queryParams?: EntityDataQuery,
@@ -175,19 +190,21 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Edit data records in a entity using the profile token and entity ID.
+   * @description Updates existing data records in an entity.
    *
    * The `updatedData` can be a single data record or an array of records to be updated,
    * each of the records must have the `id` of the record and the fields to be updated.
    *
-   * @param entityID Entity ID.
-   * @param updatedData A single or an array of updated data records.
-   *
-   * @returns Success message indicating amount of records updated (can be 0).
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_the_data_in_your_Entity} Managing the data in your Entity
    *
    * @example
-   * ```ts
-   * await Resources.devices.editEntityData("myEntityID", { id: "idOfTheRecord", field1: "new value", field2: "new unit" });
+   * ```typescript
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.entities.editEntityData("entity-id-123", {
+   *   id: "record-id-123",
+   *   temperature: 30.1
+   * });
+   * console.log(result); // 1 item(s) updated
    * ```
    */
   public async editEntityData(
@@ -204,13 +221,18 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Send data records to a entity using the profile token and entity ID.
+   * @description Sends new data records to an entity.
    *
    * The `data` can be a single data record or an array of records to be sent.
    *
-   * @param entityID Entity ID.
-   * @param data A single or an array of updated data records.
-   * @returns Success message indicating amount of records sent (can be 0).
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_the_data_in_your_Entity} Managing the data in your Entity
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.sendEntityData("entity-id-123", { temperature: 25.5 });
+   * console.log(result); // 1 Data Added
+   * ```
    */
   public async sendEntityData(entityID: GenericID, data: EntityUnknownData | EntityUnknownData[]): Promise<string> {
     const result = await this.doRequest<string>({
@@ -223,18 +245,17 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete data records in a entity using the profile token and entity ID.
+   * @description Delete data records in a entity using the profile token and entity ID.
    *
    * See the example to understand how to use this method properly to have full control on what to delete.
    *
-   * @param entityID Entity ID.
-   * @param itemsToDelete Items to be deleted.
-   *
-   * @returns Success message indicating amount of records deleted (can be 0).
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_the_data_in_your_Entity} Managing the data in your Entity
    *
    * @example
    * ```ts
-   * await Resources.entities.deleteEntityData("myEntityID", { ids: ["idOfTheRecord1", "idOfTheRecord2"] });
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.entities.deleteEntityData("myEntityID", { ids: ["idOfTheRecord1"] });
+   * console.log(result); // 1 item(s) deleted
    * ```
    *
    */
@@ -249,11 +270,19 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Add a field to the entity schema
+   * @description Modifies the entity schema by adding new fields or managing indexes.
    *
-   * @param entityID entity ID
-   * @param data schema or index to be added
-   * @returns Success message
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Indexing_fields_to_improve_searching_and_sorting} Indexing fields to improve searching and sorting
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.editSchemaIndex("entity-id-123", {
+   *   schema: { unit: { action: "create", type: "float", required: false } },
+   *   index: { temp_idx: { action: "create", fields: ["temperature"] } }
+   * });
+   * console.log(result); // { message: 'Entity Successfully Updated' }
+   * ```
    */
   public async editSchemaIndex(
     entityID: GenericID,
@@ -270,8 +299,8 @@ class Entities extends TagoIOModule<GenericModuleParams> {
           }
       >;
     }
-  ): Promise<string> {
-    const result = await this.doRequest<string>({
+  ): Promise<{ message: string }> {
+    const result = await this.doRequest<{ message: string }>({
       path: `/entity/${entityID}/schema`,
       method: "PUT",
       body: {
@@ -283,13 +312,19 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Rename a field from the entity schema
-   * @param entityID entity ID
-   * @param field field name to be renamed
-   * @param newName new field name
+   * @description Renames a field in the entity schema.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_fields} Managing Fields
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.renameField("entity-id-123", "old_name", "new_name");
+   * console.log(result); // { message: 'Entity Successfully Updated' }
+   * ```
    */
-  public async renameField(entityID: GenericID, field: string, newName: string): Promise<string> {
-    const result = await this.doRequest<string>({
+  public async renameField(entityID: GenericID, field: string, newName: string): Promise<{ message: string }> {
+    const result = await this.doRequest<{ message: string }>({
       path: `/entity/${entityID}/schema`,
       method: "PUT",
       body: {
@@ -306,13 +341,23 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Update a field from the entity schema
-   * @param entityID entity ID
-   * @param field field name to be updated
-   * @param data data to be updated
+   * @description Updates a field's configuration in the entity schema.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_fields} Managing Fields
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.updateField("entity-id-123", "temperature", { required: false });
+   * console.log(result); // { message: 'Entity Successfully Updated' }
+   * ```
    */
-  public async updateField(entityID: GenericID, field: string, data: Partial<EntitySchema>): Promise<string> {
-    const result = await this.doRequest<string>({
+  public async updateField(
+    entityID: GenericID,
+    field: string,
+    data: Partial<EntitySchema>
+  ): Promise<{ message: string }> {
+    const result = await this.doRequest<{ message: string }>({
       path: `/entity/${entityID}/schema`,
       method: "PUT",
       body: {
@@ -328,13 +373,19 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete a field from the entity schema
-   * @param entityID entity ID
-   * @param field field name to be deleted
-   * @returns Success message
+   * @description Removes a field from the entity schema.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_fields} Managing Fields
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.deleteField("entity-id-123", "old_field");
+   * console.log(result); // { message: 'Entity Successfully Updated' }
+   * ```
    */
-  public async deleteField(entityID: GenericID, field: string): Promise<string> {
-    const result = await this.doRequest<string>({
+  public async deleteField(entityID: GenericID, field: string): Promise<{ message: string }> {
+    const result = await this.doRequest<{ message: string }>({
       path: `/entity/${entityID}/schema`,
       method: "PUT",
       body: {
@@ -350,13 +401,19 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete a index from the entity schema
-   * @param entityID entity ID
-   * @param index index name to be deleted
-   * @returns Success message
+   * @description Removes an index from the entity schema.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Indexing_fields_to_improve_searching_and_sorting} Indexing fields to improve searching and sorting
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.deleteIndex("entity-id-123", "temp_idx");
+   * console.log(result); // { message: 'Entity Successfully Updated' }
+   * ```
    */
-  public async deleteIndex(entityID: GenericID, index: string): Promise<string> {
-    const result = await this.doRequest<string>({
+  public async deleteIndex(entityID: GenericID, index: string): Promise<{ message: string }> {
+    const result = await this.doRequest<{ message: string }>({
       path: `/entity/${entityID}/schema`,
       method: "PUT",
       body: {
@@ -372,9 +429,16 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Empty all data in a entity.
-   * @param entityID Entity ID
-   * @returns Success message
+   * @description Removes all data records from an entity while preserving its structure and configuration.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_the_data_in_your_Entity} Managing the data in your Entity
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Entity** / **Delete** in Access Management.
+   * ```typescript
+   * const result = await Resources.entities.emptyEntityData("entity-id-123");
+   * console.log(result); // Data Successfully Removed
+   * ```
    */
   public async emptyEntityData(entityId: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
