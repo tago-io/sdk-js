@@ -27,7 +27,7 @@ class Sendgrid extends TagoIOModule<GenericModuleParams> {
    * ```typescript
    * const sendgridService = new Services({ token: context.token }).sendgrid;
    * const result = await sendgridService.send({
-   *   from: "sender@company.com"
+   *   from: "sender@company.com",
    *   to: "client@company.com",
    *   subject: "Reports",
    *   message: "Hello client, it's your report",
@@ -39,7 +39,7 @@ class Sendgrid extends TagoIOModule<GenericModuleParams> {
    * @example
    * // Using an array of recipients
    * const result = await sendgridService.send({
-   *   from: "sender@company.com"
+   *   from: "sender@company.com",
    *   to: ["client1@company.com", "client2@company.com"],
    *   subject: "Reports",
    *   message: "Hello clients, it's your report",
@@ -49,7 +49,7 @@ class Sendgrid extends TagoIOModule<GenericModuleParams> {
    * @example
    * // Sending HTML content
    * const result = await sendgridService.send({
-   *   from: "sender@company.com"
+   *   from: "sender@company.com",
    *   to: "client@company.com",
    *   subject: "Reports",
    *   html: "<p>Hello client, it's your <strong>report</strong></p>",
@@ -59,10 +59,30 @@ class Sendgrid extends TagoIOModule<GenericModuleParams> {
    * @example
    * // Using a template
    * const result = await sendgridService.send({
-   *   from: "sender@company.com"
+   *   from: "sender@company.com",
    *   to: "client@company.com",
    *   template: { name: "my_template" },
    *   sendgrid_api_key: "YOUR_SENDGRID_API_KEY"
+   * });
+   *
+   * @example
+   * // Using attachment
+   * const html = "<h1>Hello World</h1>";
+   * const base64 = Buffer.from(html).toString("base64");
+   * const pdfService = new Services({ token: context.token }).pdf;
+   * const pdfBase64 = await pdfService.generate({ base64 });
+   *
+   * const sendgridService = new Services({ token: context.token }).sendgrid;
+   * const result = await sendgridService.send({
+   *  from: "sender@company.com",
+   *  to: "client@company.com",
+   *  subject: "Reports",
+   *  message: "Hello clients, it's your report",
+   *  attachments: {
+   *    archive: pdfBase64.result,
+   *    filename: "report.pdf",
+   *  },
+   *  sendgrid_api_key: "YOUR_SENDGRID_API_KEY"
    * });
    */
   public async send(email: SendgridEmailWithRawText): Promise<string>;
