@@ -1,8 +1,7 @@
 import { GenericID, TagsObj, Query } from "../../common/common.types";
 
 interface Permissions {
-  // TODO: Add enumerator for effect
-  effect: string;
+  effect: "allow" | "deny";
   action: string[];
   resource: string[];
 }
