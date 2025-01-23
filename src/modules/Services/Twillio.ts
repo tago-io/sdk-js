@@ -1,25 +1,15 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
 interface TwilioData {
-  /**
-   * Number to send SMS, Example: +5599999999999
-   */
+  /** Number to send SMS, Example: +5599999999999 */
   to: string;
-  /**
-   * Message to be send
-   */
+  /** Message to be send */
   message: string;
-  /**
-   * From number registered with Twilio, Example: +5599999999999
-   */
+  /** From number registered with Twilio, Example: +5599999999999 */
   from: string;
-  /**
-   * Twilio account SID
-   */
+  /** Twilio account SID */
   twilio_sid: string;
-  /**
-   * Twilio auth token
-   */
+  /** Twilio auth token */
   twilio_token: string;
 }
 

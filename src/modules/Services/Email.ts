@@ -1,13 +1,9 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
 interface AttachmentOptions {
-  /**
-   * Archive itself
-   */
+  /** Archive itself */
   archive: string;
-  /**
-   * Name for the archive
-   */
+  /** Name for the archive */
   filename: string;
 }
 
@@ -61,16 +57,12 @@ interface EmailBase {
 }
 
 interface EmailRawText {
-  /**
-   * Message in raw text for email body
-   */
+  /** Message in raw text for email body */
   message: string;
 }
 
 interface EmailHTML {
-  /**
-   * HTML email body
-   */
+  /** HTML email body */
   html: string;
 }
 
