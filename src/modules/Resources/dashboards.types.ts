@@ -114,9 +114,7 @@ type EditDeviceResource = {
 };
 
 interface EditResourceOptions {
-  /**
-   * Identifier to send to the Analysis scope in `widget_exec`.
-   */
+  /** Identifier to send to the Analysis scope in `widget_exec`. */
   identifier?: string;
 }
 

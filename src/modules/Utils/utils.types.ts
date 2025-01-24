@@ -16,10 +16,7 @@ interface UploadFileOptions {
   filename: string;
   file_base64: string;
   public?: boolean;
-
-  /**
-   * Path where the file will be stored. Such as /reports/
-   */
+  /** Path where the file will be stored. Such as /reports/ */
   path?: string;
 }
 

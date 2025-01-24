@@ -22,13 +22,9 @@ interface ProfileLimit {
 }
 
 type ProfileAddOns = {
-  /**
-   * Whether the profile has the Custom Domain add-on purchased.
-   */
+  /** Whether the profile has the Custom Domain add-on purchased. */
   custom_dns: boolean;
-  /**
-   * Whether the profile has the Custom Mobile App add-on purchased.
-   */
+  /** Whether the profile has the Custom Mobile App add-on purchased. */
   mobile: boolean;
 };
 
@@ -84,9 +80,7 @@ interface ProfileSummary {
  * Not all of the services will be present for every statistic, only if for the usage period the service was used.
  */
 type UsageStatistic = Partial<Record<BillingService, number>> & {
-  /**
-   * Timestamp for the usage statistic.
-   */
+  /** Timestamp for the usage statistic. */
   time: Date;
 };
 
@@ -135,20 +129,14 @@ interface AddonInfo {
 }
 
 type DateFixed = {
-  /**
-   * Timestamp for fetching the hourly statistics in a day.
-   */
+  /** Timestamp for fetching the hourly statistics in a day. */
   date?: string | Date | undefined;
 };
 
 type DateRange = {
-  /**
-   * Starting date for fetching statistics in a interval.
-   */
+  /** Starting date for fetching statistics in a interval. */
   start_date: string | Date;
-  /**
-   * End date for fetching statistics in a interval.
-   */
+  /** End date for fetching statistics in a interval. */
   end_date: string | Date;
   /**
    * Periodicity of the statistics to fetch.

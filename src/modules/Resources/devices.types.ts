@@ -9,17 +9,11 @@ interface DeviceQuery
 }
 
 interface DeviceCreateInfoBasic {
-  /**
-   * Device name.
-   */
+  /** Device name. */
   name: string;
-  /**
-   * Connector ID.
-   */
+  /** Connector ID. */
   connector: GenericID;
-  /**
-   * Network ID.
-   */
+  /** Network ID. */
   network: GenericID;
   /**
    * Device's data storage (bucket) type.
@@ -27,37 +21,21 @@ interface DeviceCreateInfoBasic {
    * @default "legacy"
    */
   type?: DataStorageType;
-  /**
-   * Description of the device.
-   */
+  /** Description of the device. */
   description?: string | null;
-  /**
-   * Set if the device will be active.
-   */
+  /** Set if the device will be active. */
   active?: boolean;
-  /**
-   * Set if the device will be visible.
-   */
+  /** Set if the device will be visible. */
   visible?: boolean;
-  /**
-   * An array of configuration params
-   */
+  /** An array of configuration params */
   configuration_params?: ConfigurationParams[];
-  /**
-   * An array of tags
-   */
+  /** An array of tags */
   tags?: TagsObj[];
-  /**
-   * Device serial number.
-   */
+  /** Device serial number. */
   serie_number?: string;
-  /**
-   * If device will use connector parser
-   */
+  /** If device will use connector parser */
   connector_parse?: boolean;
-  /**
-   * Javascript code for use as payload parser
-   */
+  /** Javascript code for use as payload parser */
   parse_function?: string;
 }
 
@@ -93,13 +71,9 @@ type DeviceCreateInfo = DeviceCreateInfoLegacy | DeviceCreateInfoMutable | Devic
 type DeviceEditInfo = Partial<Omit<DeviceCreateInfo, "chunk_period" | "type"> & { chunk_retention: number }>;
 
 interface DeviceInfoBase {
-  /**
-   * Device ID.
-   */
+  /** Device ID. */
   id: GenericID;
-  /**
-   * ID of the profile that owns the device.
-   */
+  /** ID of the profile that owns the device. */
   profile: GenericID;
   /**
    * Bucket storing the device's data.
@@ -116,17 +90,11 @@ interface DeviceInfoBase {
    * Encoded string when enabled, `null` when not enabled.
    */
   payload_decoder: string | null;
-  /**
-   * Date for the device's creation.
-   */
+  /** Date for the device's creation. */
   created_at: Date;
-  /**
-   * Date for the device's last update.
-   */
+  /** Date for the device's last update. */
   updated_at: Date;
-  /**
-   * Date for the device's last input.
-   */
+  /** Date for the device's last input. */
   last_input: Date | null;
   /**
    * Device-specific soft limits on RPM.

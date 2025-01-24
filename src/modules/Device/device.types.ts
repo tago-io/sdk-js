@@ -76,9 +76,7 @@ interface DataQueryBase {
    * It can ben a array or only one element
    */
   values?: valuesTypes[] | valuesTypes;
-  /**
-   * Set the start date of query
-   */
+  /** Set the start date of query */
   start_date?: Date | string;
   /**
    * Set the end date of query
@@ -86,26 +84,20 @@ interface DataQueryBase {
    * Date.now()
    */
   end_date?: Date | string;
-  /**
-   * Add internal details in each record
-   */
+  /** Add internal details in each record */
   details?: boolean;
 }
 
 type DataQueryDefault = DataQueryBase & {
   query?: "default";
-  /**
-   * Qty of records to retrieve
-   */
+  /** Qty of records to retrieve */
   qty?: number;
   /**
    * Change ordination of query
    * @default "descending"
    */
   ordination?: "descending" | "ascending";
-  /**
-   * Skip records, used on pagination or pooling
-   */
+  /** Skip records, used on pagination or pooling */
   skip?: number;
 };
 

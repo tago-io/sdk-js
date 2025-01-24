@@ -2,32 +2,20 @@ import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { Data } from "../../types";
 
 interface AWSCredentials {
-  /**
-   * AWS region, e.g., us-east-1
-   */
+  /** AWS region, e.g., us-east-1 */
   aws_region: string;
-  /**
-   * SQS queue URL
-   */
+  /** SQS queue URL */
   queue_url: string;
-  /**
-   * AWS Access Key ID
-   */
+  /** AWS Access Key ID */
   access_key_id: string;
-  /**
-   * AWS Secret Access Key
-   */
+  /** AWS Secret Access Key */
   secret_access_key: string;
 }
 
 interface AWSSQSData {
-  /**
-   * SQS secret or AWS credentials
-   */
+  /** SQS secret or AWS credentials */
   sqs_secret: string | AWSCredentials;
-  /**
-   * Message to be sent to SQS
-   */
+  /** Message to be sent to SQS */
   data?: Partial<Data> | Partial<Data>[];
 }
 

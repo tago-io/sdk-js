@@ -2,35 +2,23 @@ import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModul
 import type { AttachmentOptions } from "./Email";
 
 interface TwilioWhatsappData {
-  /**
-   * Number to send Whatsapp message, Example: +5599999999999
-   */
+  /** Number to send Whatsapp message, Example: +5599999999999 */
   to: string;
-  /**
-   * From number registered with Twilio, Example: +5599999999999
-   */
+  /** From number registered with Twilio, Example: +5599999999999 */
   from: string;
-  /**
-   * Twilio account SID
-   */
+  /** Twilio account SID */
   twilio_sid: string;
-  /**
-   * Twilio auth token
-   */
+  /** Twilio auth token */
   twilio_token: string;
 }
 
 interface TwilioWhatsappDataMessage extends TwilioWhatsappData {
-  /**
-   * Message to be send
-   */
+  /** Message to be send */
   message: string;
 }
 
 interface TwilioWhatsappDataAttachment extends TwilioWhatsappDataMessage {
-  /**
-   * Content/Type of the request when sending a file, must be the same content type of the file
-   */
+  /** Content/Type of the request when sending a file, must be the same content type of the file */
   content_type: string;
   /**
    * File attachment for the whatsapp (optional)
@@ -40,13 +28,9 @@ interface TwilioWhatsappDataAttachment extends TwilioWhatsappDataMessage {
 }
 
 interface TwilioWhatsappDataTemplate extends TwilioWhatsappData {
-  /**
-   * Template SID for the message
-   */
+  /** Template SID for the message */
   content_sid: string;
-  /**
-   * Template Variables for the message
-   */
+  /** Template Variables for the message */
   content_variables: {
     [key: string]: string;
   };

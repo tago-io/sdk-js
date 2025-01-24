@@ -9,9 +9,11 @@ type ActionType =
   | "usage_alert"
   | "condition_geofence";
 type TriggerGeofenceValueType = {
-  center?: number[]; // [longitude, latitude]
+  /** E.g [longitude, latitude] */
+  center?: number[];
   radius?: number;
-  coordinates?: number[][]; // [[longitude, latitude], [longitude, latitude], ...]
+  /** E.g [[longitude, latitude], [longitude, latitude], ...] */
+  coordinates?: number[][];
 };
 
 type ActionTypeParams =
@@ -65,6 +67,7 @@ type ActionTriggerType =
     }
   | {
       timezone: string | Date;
+      /** The cron expression */
       cron: string;
     }
   | {
@@ -105,46 +108,26 @@ type ActionTriggerType =
     };
 
 interface ActionCreateInfo {
-  /**
-   * The name for the action.
-   */
+  /** The name for the action. */
   name: string;
-  /**
-   * Profile identification
-   */
+  /** Profile identification */
   profile?: GenericID;
-  /**
-   * True if the action is active or not. The default is true.
-   */
+  /** True if the action is active or not. The default is true. */
   active?: boolean;
-  /**
-   * An array of tags.
-   */
+  /** An array of tags. */
   tags?: TagsObj[];
-  /**
-   * Description of the action.
-   */
+  /** Description of the action. */
   description?: string | null;
   lock?: boolean;
-  /**
-   * Type of action
-   */
+  /** Type of action */
   type?: ActionType;
-  /**
-   * Array of trigger configuration according to type
-   */
+  /** Array of trigger configuration according to type */
   trigger?: ActionTriggerType[];
-  /**
-   * Action configuration
-   */
+  /** Action configuration */
   action: ActionTypeParams;
-  /**
-   * Action action.
-   */
+  /** Action action. */
   id?: GenericID;
-  /**
-   * Trigger the action when unlock condition is met.
-   */
+  /** Trigger the action when unlock condition is met. */
   trigger_when_unlock?: boolean;
 }
 

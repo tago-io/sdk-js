@@ -73,6 +73,7 @@ interface RunInfo {
     url: string;
   }[];
   anonymous_token: string;
+  /** Time to live for the token. */
   auth_token_ttl: string;
   dictionary: GenericID;
 }
@@ -147,34 +148,24 @@ interface SAMLAttributeMappings {
 }
 
 interface RunSAMLInfo {
-  /**
-   * Information for TagoIO's API routes to use as a Service Provider in SAML authentication flows.
-   */
+  /** Information for TagoIO's API routes to use as a Service Provider in SAML authentication flows. */
   sp: {
     entity_id: string;
     acs_url: string;
     metadata: string;
   };
-  /**
-   * Relevant information from the Identity Provider's metadata after being parsed by TagoIO.
-   */
+  /** Relevant information from the Identity Provider's metadata after being parsed by TagoIO. */
   idp: {
     issuer: string;
   };
-  /**
-   * Attribute mappings for the Identity Provider's attributes to the attributes used in TagoIO.
-   */
+  /** Attribute mappings for the Identity Provider's attributes to the attributes used in TagoIO. */
   mapping: SAMLAttributeMappings;
 }
 
 interface RunSAMLEditInfo {
-  /**
-   * Identity Provider's XML metadata encoded in a base 64 string.
-   */
+  /** Identity Provider's XML metadata encoded in a base 64 string. */
   idp_metadata?: string;
-  /**
-   * Attribute mappings for the Identity Provider's attributes to the attributes used in TagoIO.
-   */
+  /** Attribute mappings for the Identity Provider's attributes to the attributes used in TagoIO. */
   mapping?: SAMLAttributeMappings;
 }
 
@@ -187,17 +178,11 @@ type CustomDomainDnsRecord = {
    * value in the DNS record does not match the `value` provided.
    */
   status: boolean;
-  /**
-   * Type of the DNS record.
-   */
+  /** Type of the DNS record. */
   type: string;
-  /**
-   * Key for key-value pair in the DNS record.
-   */
+  /** Key for key-value pair in the DNS record. */
   key: string;
-  /**
-   * Value for the key-value pair the DNS record.
-   */
+  /** Value for the key-value pair the DNS record. */
   value: string;
   /**
    * Current value in the provider's record for the DNS record's `key`.
@@ -223,17 +208,11 @@ interface CustomDomainResponse {
    * This is only `true` when all the required DNS records are properly configured in the DNS provider.
    */
   active: boolean;
-  /**
-   * Configured domain for the RUN.
-   */
+  /** Configured domain for the RUN. */
   domain: string;
-  /**
-   * Configured subdomain for the RUN.
-   */
+  /** Configured subdomain for the RUN. */
   subdomain: string;
-  /**
-   * Mailing address for the RUN with custom domain.
-   */
+  /** Mailing address for the RUN with custom domain. */
   email: string;
   /**
    * DNS record for the SSL certificate.
@@ -265,9 +244,7 @@ interface CustomDomainResponse {
    * The information in this record needs to be configured in the DNS provider for the custom domain.
    */
   dns_email_3: CustomDomainDnsRecord;
-  /**
-   * Timestamp (in string format) for when the custom domain was configured.
-   */
+  /** Timestamp (in string format) for when the custom domain was configured. */
   created_at: string;
 }
 
@@ -275,9 +252,7 @@ interface CustomDomainResponse {
  * Type for the Custom Domain information in a profile's RUN.
  */
 interface CustomDomainInfo extends Omit<CustomDomainResponse, "created_at"> {
-  /**
-   * Timestamp for when the custom domain was configured.
-   */
+  /** Timestamp for when the custom domain was configured. */
   created_at: Date;
 }
 
