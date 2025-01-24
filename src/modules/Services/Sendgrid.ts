@@ -70,16 +70,25 @@ class Sendgrid extends TagoIOModule<GenericModuleParams> {
    * const html = "<h1>Hello World</h1>";
    * const base64 = Buffer.from(html).toString("base64");
    * const pdfService = new Services({ token: context.token }).pdf;
-   * const pdfBase64 = await pdfService.generate({ base64 });
+   * const pdfBase64 = await pdfService.generate({ base64, options: {
+   *  displayHeaderFooter: true,
+   *  margin: {
+   *     top: "1.5cm",
+   *     right: "1.5cm",
+   *     left: "1.5cm",
+   *     bottom: "1.5cm",
+   *   },
+   * }});
    *
    * const sendgridService = new Services({ token: context.token }).sendgrid;
-   * const result = await sendgridService.send({
+   * await sendgridService.send({
    *  from: "sender@company.com",
    *  to: "client@company.com",
    *  subject: "Reports",
    *  message: "Hello clients, it's your report",
-   *  attachments: {
+   *  attachment: {
    *    archive: pdfBase64.result,
+   *    type: "base64",
    *    filename: "report.pdf",
    *  },
    *  sendgrid_api_key: "YOUR_SENDGRID_API_KEY"

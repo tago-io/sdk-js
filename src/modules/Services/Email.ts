@@ -3,6 +3,8 @@ import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 interface AttachmentOptions {
   /** Archive itself */
   archive: string;
+  /** Type of attached data e.g. “base64” */
+  type?: string;
   /** Name for the archive */
   filename: string;
 }
