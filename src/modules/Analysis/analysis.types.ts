@@ -1,10 +1,10 @@
-import { Regions } from "../../regions";
+import { Regions, RegionsObj } from "../../regions";
 
 type analysisFunction = (context: any, data: any) => any;
 
 interface AnalysisConstructorParams {
   token?: string;
-  region?: Regions;
+  region?: Regions | RegionsObj;
   // options?: any;
   /**
    * Auto Start analysis after instance the class
