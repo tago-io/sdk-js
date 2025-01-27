@@ -15,20 +15,21 @@ import { Cache } from "../../modules";
 
 class Dictionaries extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieve a list with all dictionaries from an account.
+   * @description Lists all dictionaries from your application with pagination support.
    *
-   * @default
-   * ```json
-   * queryObj: {
+   * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dictionary** / **Access** in Access Management.
+   * ```typescript
+   * const result = await Resources.dictionaries.list({
    *   page: 1,
-   *   fields: ["id", "name", "slug", "languages"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "name,asc",
-   * }
+   *   fields: ["id", "name", "slug"],
+   *   amount: 10,
+   *   orderBy: ["name", "asc"]
+   * });
+   * console.log(result); // [ { id: 'dictionary-id-123', name: 'My Dictionary', slug: 'DICT' } ]
    * ```
-   *
-   * @param queryObj Search query params.
    */
   public async list(queryObj?: DictionaryQuery): Promise<DictionaryInfo[]> {
     let result = await this.doRequest<DictionaryInfo[]>({
@@ -49,9 +50,19 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generate a new dictionary for the account.
+   * @description Creates a new dictionary in your application.
    *
-   * @param dictionaryObj Object with data to create new dictionary.
+   * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dictionary** / **Create** in Access Management.
+   * ```typescript
+   * const result = await Resources.dictionaries.create({
+   *   name: "My Dictionary",
+   *   slug: "DICT",
+   * });
+   * console.log(result.dictionary); // dictionary-id-123
+   * ```
    */
   public async create(dictionaryObj: DictionaryCreateInfo): Promise<{ dictionary: string }> {
     const result = await this.doRequest<{ dictionary: string }>({
@@ -64,10 +75,18 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modify any property of a dictionary.
+   * @description Modifies an existing dictionary's properties.
    *
-   * @param dictionaryID Dictionary ID.
-   * @param dictionaryObj Dictionary Object data to be replaced.
+   * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dictionary** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.dictionaries.edit("dictionary-id-123", {
+   *   name: "Updated Dictionary",
+   * });
+   * console.log(result); // Successfully Updated
+   * ```
    */
   public async edit(dictionaryID: GenericID, dictionaryObj: Partial<DictionaryCreateInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -80,9 +99,16 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete a dictionary from the account.
+   * @description Deletes a dictionary from your application.
    *
-   * @param dictionaryID Dictionary ID.
+   * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dictionary** / **Delete** in Access Management.
+   * ```typescript
+   * const result = await Resources.dictionaries.delete("dictionary-id-123");
+   * console.log(result); // Successfully Removed
+   * ```
    */
   public async delete(dictionaryID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -96,9 +122,16 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get information about a dictionary.
+   * @description Retrieves detailed information about a specific dictionary.
    *
-   * @param dictionaryID Dictionary ID.
+   * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dictionary** / **Access** in Access Management.
+   * ```typescript
+   * const result = await Resources.dictionaries.info("dictionary-id-123");
+   * console.log(result); // { id: 'dictionary-id-123', name: 'My Dictionary', slug: 'DICT', languages: ['en-US'], ... }
+   * ```
    */
   public async info(dictionaryID: GenericID): Promise<DictionaryInfo> {
     let result = await this.doRequest<DictionaryInfo>({
@@ -110,6 +143,21 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
+  /**
+   * @description Edits a language's content in a dictionary.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
+   *
+   * @example
+   * ```typescript
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.dictionaries.languageEdit("dictionary-id-123", "en-US", {
+   *   dictionary: { HELLO: "Hello" },
+   *   active: true
+   * });
+   * console.log(result); // Dictionary language Successfully Updated
+   * ```
+   */
   public async languageEdit(dictionaryID: GenericID, locale: string, languageObj: LanguageEditData): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/dictionary/${dictionaryID}/${locale}`,
@@ -123,10 +171,16 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete a language from a dictionary.
+   * @description Removes a language from a dictionary.
    *
-   * @param dictionaryID Dictionary ID.
-   * @param locale Language locale string (e.g. `en-US`).
+   * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dictionary** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.dictionaries.languageDelete("dictionary-id-123", "en-US");
+   * console.log(result);
+   * ```
    */
   public async languageDelete(dictionaryID: GenericID, locale: string): Promise<string> {
     const result = await this.doRequest<string>({
@@ -140,11 +194,18 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get information about a dictionary by ID.
+   * @description Retrieves language-specific content from a dictionary by ID.
    *
-   * @param dictionaryID Dictionary ID.
-   * @param locale Language locale string (e.g. `en-US`).
-   * @param queryObj Language info query params.
+   * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dictionary** / **Access** in Access Management.
+   * ```typescript
+   * const result = await Resources.dictionaries.languageInfo("dictionary-id-123", "en-US", {
+   *   fallback: true
+   * });
+   * console.log(result); // { ACCEPT: 'Accept', ACCEPTED: 'Accepted', ...}
+   * ```
    */
   public async languageInfo(
     dictionaryID: GenericID,
@@ -165,11 +226,18 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get information about a dictionary querying by slug instead of the dictionary's ID.
+   * @description Retrieves language-specific content from a dictionary by its slug.
    *
-   * @param slug Dictionary slug.
-   * @param locale Language locale string (e.g. `en-US`).
-   * @param queryObj Language info query params.
+   * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dictionary** / **Access** in Access Management.
+   * ```typescript
+   * const result = await Resources.dictionaries.languageInfoBySlug("SLUG", "en-US", {
+   *   fallback: true
+   * });
+   * console.log(result);
+   * ```
    */
   public async languageInfoBySlug(slug: string, locale: string, queryObj?: LanguageInfoQuery): Promise<LanguageData> {
     const result = await this.doRequest<LanguageData>({

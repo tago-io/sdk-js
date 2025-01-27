@@ -51,31 +51,21 @@ type EntityListItem<T extends EntityQuery["fields"][number] = "id"> = Pick<Entit
   Partial<EntityInfo>;
 
 type EntityDataQuery = {
-  /**
-   * Filters to narrow down the requests from the API.
-   */
-  filters?: Record<string, string | { start: string | null; end: string | null }>;
-  /**
-   * Amount of items to be fetched.
-   */
+  /** Filters to narrow down the requests from the API. */
+  filter?: Record<string, string | { start: string | null; end: string | null }>;
+  /** Amount of items to be fetched. */
   amount?: number;
   page?: number;
-  /**
-   * Amount of items to be skipped.
-   */
+  /** Amount of items to be skipped. */
   skip?: number;
-  /**
-   * Ordering for the requested data.
-   */
+  /** Ordering for the requested data. */
   order?: any;
-  /**
-   * Timestamp to pin the requested data to a specific start date.
-   */
+  /** Timestamp to pin the requested data to a specific start date. */
   startDate?: string;
-  /**
-   * Timestamp to pin the requested data up to a specific end date.
-   */
+  /** Timestamp to pin the requested data up to a specific end date. */
   endDate?: string;
+  /** Index to use for the query. */
+  index?: string;
 };
 
 type EntityData = { id: GenericID } & Record<string, any>;

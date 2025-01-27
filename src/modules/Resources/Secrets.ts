@@ -5,18 +5,20 @@ import { SecretsCreate, SecretsEdit, SecretsInfo, SecretsQuery } from "./secrets
 
 class Secrets extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieves a list with all Secrets from the profile
-   * @default
-   * ```json
-   * queryObj: {
+   * @description Retrieves a paginated list of all secrets stored in the profile with filtering and sorting options.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} Secrets
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Secrets** / **Access** in Access Management.
+   * ```typescript
+   * const result = await Resources.secrets.list({
    *   page: 1,
    *   fields: ["id", "key"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "key,asc",
-   * }
-   * ```json
-   * @param queryObj Search query params
+   *   amount: 20
+   * });
+   * console.log(result); // [ { id: 'secret-id-123', key: 'API_KEY' } ]
+   * ```
    */
   public async list(queryObj?: SecretsQuery): Promise<SecretsInfo[]> {
     const result = await this.doRequest<SecretsInfo[]>({
@@ -35,8 +37,16 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets information about the Secrets
-   * @param secretID Secret ID
+   * @description Retrieves detailed information about a specific secret using its ID.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} Secrets
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Secrets** / **Access** in Access Management.
+   * ```typescript
+   * const secretInfo = await Resources.secrets.info("secret-id-123");
+   * console.log(secretInfo); // { id: 'secret-id-123', key: 'API_KEY' }
+   * ```
    */
   public async info(secretID: GenericID): Promise<SecretsInfo> {
     let result = await this.doRequest<SecretsInfo>({
@@ -50,8 +60,19 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Create a new secret
-   * @param secretObj data object to create new TagoIO Secret
+   * @description Creates a new secret in the profile with the specified key and value.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/secrets#Creating_a_Secret} Creating a Secret
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Secrets** / **Create** in Access Management.
+   * ```typescript
+   * const result = await Resources.secrets.create({
+   *   key: "API_KEY",
+   *   value: "my-secret-value"
+   * });
+   * console.log(result); // { id: 'secret-id-132 }
+   * ```
    */
   public async create(secretObj: SecretsCreate): Promise<{ id: GenericID }> {
     const result = await this.doRequest<{ id: GenericID }>({
@@ -66,9 +87,19 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modify any property of the secret.
-   * @param secretID Secret identification
-   * @param secretObj Secret Object with data to replace
+   * @description Modifies the properties of an existing secret.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} Secrets
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Secrets** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.secrets.edit("secret-id-123", {
+   *   value: "new-secret-value",
+   *   tags: [{ key: "type", value: "user" }]
+   * });
+   * console.log(result); // Successfully Updated
+   * ```
    */
   public async edit(secretID: GenericID, secretObj: SecretsEdit): Promise<string> {
     const result = await this.doRequest<string>({
@@ -83,8 +114,16 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes a secret from the account
-   * @param secretID Secret identification
+   * @description Permanently removes a secret from the profile.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} Secrets
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Secrets** / **delete** in Access Management.
+   * ```typescript
+   * const result = await Resources.secrets.delete("secret-id-123");
+   * console.log(result); // Successfully Removed
+   * ```
    */
   public async delete(secretID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({

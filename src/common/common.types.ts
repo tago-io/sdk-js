@@ -1,3 +1,5 @@
+import { OTPType } from "../types";
+
 interface Metadata {
   color?: string;
   x?: string | number;
@@ -188,6 +190,15 @@ interface TokenDataList {
   created_by: string | null;
 }
 
+interface Autenticador {
+  email: string;
+  password: string;
+  /** The “pin_code” field is required when 2FA is activated */
+  pin_code?: string;
+  /** The "otp_type” field is required when 2FA is activated */
+  otp_type?: OTPType;
+}
+
 interface TokenData {
   /**
    * A name for the token.
@@ -240,4 +251,5 @@ export {
   TokenData,
   TokenDataList,
   RecursivePartial,
+  Autenticador,
 };

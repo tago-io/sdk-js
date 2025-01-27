@@ -11,9 +11,36 @@ import {
 
 class Widgets extends TagoIOModule<GenericModuleParams> {
   /**
-   * Create a Dashboard Widget
-   * @param dashboardID Dashboard identification
-   * @param widgetObj
+   * @description Creates a new widget for a specified dashboard with the given configuration.
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dashboard** / **Create and Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.dashboards.widgets.create("dashboard-id-123", {
+   *   data : [{
+   *     origin: "origin-id-123",
+   *     query: "last_value",
+   *     variables: ["temperature"]
+   *   }],
+   *   display: {
+   *     show_units: true,
+   *     show_variables: true,
+   *     variables: [{
+   *       origin: "origin-id-123",
+   *       variable: "temperature"
+   *     }]
+   *   },
+   *   label: "Temperature",
+   *   type: "display",
+   * });
+   * console.log(result); // { widget: "widget-id-456" }
+   *
+   * // To add the widget size to the dashboard
+   * // Before running this, make sure doesn't have more widgets in the dashboard.
+   * await Resources.dashboards.edit("dashboard-id-123", {
+   *  arrangement: [{ widget_id: result.widget, width: 1, height: 2, minW: 1, minH: 2, x: 0, y: 0 }]
+   * });
+   * ```
    */
   public async create(dashboardID: GenericID, widgetObj: WidgetInfo): Promise<{ widget: GenericID }> {
     const result = await this.doRequest<any>({
@@ -26,10 +53,16 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Edit the Dashboard Widget
-   * @param dashboardID Dashboard identification
-   * @param widgetID Widget identification
-   * @param data
+   * @description Updates an existing widget's configuration on a dashboard.
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dashboard** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.dashboards.widgets.edit("dashboard-id-123", "widget-id-456", {
+   *   label: "Updated Temperature",
+   * });
+   * console.log(result); // Successfully Updated
+   * ```
    */
   public async edit(dashboardID: GenericID, widgetID: GenericID, data: Partial<WidgetInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -42,9 +75,18 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete the Dashboard Widget
-   * @param dashboardID Dashboard identification
-   * @param widgetID Widget identification
+   * @description Permanently removes a widget from a dashboard.
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dashboard** / **Delete and Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.dashboards.widgets.delete("dashboard-id-123", "widget-id-456");
+   * console.log(result); // Successfully Removed
+   *
+   * // To remove sizes from all widgets from a dashboard
+   * // Before running this, make sure doesn't have more widgets in the dashboard.
+   * await Resources.dashboards.edit("dashboard-id-123", { arrangement: [] });
+   * ```
    */
   public async delete(dashboardID: GenericID, widgetID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -56,9 +98,14 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get Info of the Dashboard Widget
-   * @param dashboardID Dashboard identification
-   * @param widgetID Widget identification
+   * @description Retrieves detailed information about a specific widget.
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dashboard** / **Access** in Access Management.
+   * ```typescript
+   * const result = await Resources.dashboards.widgets.info("dashboard-id-123", "widget-id-456");
+   * console.log(result); // { id: "widget-id-456", data: [ { query: "last_value", ... }, ... ], ... }
+   * ```
    */
   public async info(dashboardID: GenericID, widgetID: GenericID): Promise<WidgetInfo> {
     const result = await this.doRequest<WidgetInfo>({
@@ -70,10 +117,18 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get all data or resource list for the current widget
-   * @param dashboardID Dashboard identification
-   * @param widgetID Widget identification
-   * @param overwrite It can overwrite 'start_date', 'end_date', 'timezone' fields
+   * @description Retrieves data or resource list for a specific widget based on the given parameters.
+   *
+   * @example
+   * ```typescript
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.dashboards.widgets.getData("dashboard-id-123", "widget-id-456", {
+   *   start_date: "2025-01-01",
+   *   end_date: "2025-12-31",
+   *   timezone: "UTC"
+   * });
+   * console.log(result); // { widget: { analysis_run: null, dashboard: '6791456f8b726c0009adccec', ... }, ...}
+   * ```
    */
   public async getData(dashboardID: GenericID, widgetID: GenericID, params?: GetDataModel): Promise<object> {
     const result = await this.doRequest<object>({
@@ -86,11 +141,19 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Send value of variable for the current widget
-   * @param dashboardID Dashboard identification
-   * @param widgetID Widget identification
-   * @param data
-   * @param bypassBucket
+   * @description Sends new data values to be displayed in the widget.
+   *
+   * @example
+   * ```typescript
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.dashboards.widgets.sendData("dashboard-id-123", "widget-id-456", {
+   *   origin: "origin-id-123",
+   *   variable: "temperature",
+   *   value: 25.5,
+   *   unit: "C"
+   * });
+   * console.log(result); // [ '1 Data Added' ]
+   * ```
    */
   public async sendData(
     dashboardID: GenericID,
@@ -111,11 +174,18 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Update value of variable for the current widget
-   * @param dashboardID Dashboard identification
-   * @param widgetID Widget identification
-   * @param data
-   * @param bypassBucket
+   * @description Updates existing data values for a specific widget.
+   *
+   * @example
+   * ```typescript
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.dashboards.widgets.editData("dashboard-id-123", "widget-id-456", {
+   *   origin: "origin-id-123",
+   *   id: "data-id-789",
+   *   value: 25.5
+   * });
+   * console.log(result); // Device Data Updated
+   * ```
    */
   public async editData(
     dashboardID: GenericID,
@@ -136,11 +206,36 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Update value of a resource for the current widget
-   * @param dashboardID Dashboard identification
-   * @param widgetID Widget identification
-   * @param resourceData Updated data for the resource
-   * @param options Additional options
+   * @description Removes specific data points from the widget by their IDs.
+   *
+   * @example
+   * ```typescript
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.dashboards.widgets.deleteData(
+   *   "dashboard-id-123", "widget-id-456", "data-id-789", "device-id-123"
+   * );
+   * console.log(result); // Widget Data Removed
+   * ```
+   */
+  public async deleteData(
+    dashboardID: GenericID,
+    widgetID: GenericID,
+    variableID: GenericID,
+    deviceID: GenericID
+  ): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/data/${dashboardID}/${widgetID}`,
+      method: "DELETE",
+      params: {
+        ids: `${variableID}:${deviceID}`,
+      },
+    });
+
+    return result;
+  }
+
+  /**
+   * @description Updates resource values associated with the widget.
    */
   public async editResource(
     dashboardID: GenericID,
@@ -161,44 +256,14 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Run analysis without inserting data to bucket
-   * @param dashboardID Dashboard identification
-   * @param widgetID Widget identification
-   * @param data
-   */
-  public async runAnalysis(dashboardID: GenericID, widgetID: GenericID, data: [object | Data]): Promise<object> {
-    const result = await this.doRequest<object>({
-      path: `/data/${dashboardID}/${widgetID}/run`,
-      method: "POST",
-      body: data,
-    });
-
-    return result;
-  }
-
-  /**
-   * Delete data by it's id, bucket and variable must be associeted with the widget
-   * @param dashboardID Dashboard identification
-   * @param widgetID Widget identification
-   * @param ids
-   */
-  public async deleteData(dashboardID: GenericID, widgetID: GenericID, ids: GenericID): Promise<string> {
-    const result = await this.doRequest<string>({
-      path: `/data/${dashboardID}/${widgetID}`,
-      method: "DELETE",
-      params: {
-        ids,
-      },
-    });
-
-    return result;
-  }
-
-  /**
-   * Generate a new token for the embed widgets
-   * It can regenerate the token if call it multi-times
-   * @param dashboardID Dashboard identification
-   * @param widgetID Widget identification
+   * @description Generates a new authentication token for embedding a widget. Each call regenerates the token.
+   *
+   * @example
+   * ```typescript
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.dashboards.widgets.tokenGenerate("dashboard-id-123", "widget-id-456");
+   * console.log(result); // { widget_token: "widget-token-123" }
+   * ```
    */
   public async tokenGenerate(dashboardID: GenericID, widgetID: GenericID): Promise<{ widget_token: GenericToken }> {
     const result = await this.doRequest<{ widget_token: GenericToken }>({

@@ -39,6 +39,7 @@ interface NotificationCreate {
   buttons_enabled?: boolean;
   buttons_autodisable?: boolean;
 }
+// TODO: FIX: The filter condition read is not working.
 type NotificationQuery = Query<{ read: boolean }, "created_at">;
 type NotificationInfo = { id: GenericID; created_at: Date } & Required<NotificationCreate>;
 

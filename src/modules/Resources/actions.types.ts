@@ -137,7 +137,7 @@ interface ActionCreateInfo {
   /**
    * Action configuration
    */
-  action?: ActionTypeParams;
+  action: ActionTypeParams;
   /**
    * Action action.
    */

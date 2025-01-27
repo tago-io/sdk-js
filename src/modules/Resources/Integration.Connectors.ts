@@ -5,18 +5,21 @@ import { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery } from "./integratio
 
 class Connectors extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieves a list with all connectors from account
-   * @default
-   * ```json
-   * queryObj: {
+   * @description Lists all connectors from the application with pagination support.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Connector** / **Access** in Access Management.
+   * ```typescript
+   * const result = await Resources.integration.connectors.list({
    *   page: 1,
    *   fields: ["id", "name"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "name,asc",
-   * }
+   *   amount: 10,
+   *   orderBy: ["name", "asc"]
+   * });
+   * console.log(result); // [ { id: 'connector-id-123', name: 'My Connector' } ]
    * ```
-   * @param queryObj Search query params
    */
   public async list(queryObj?: ConnectorQuery): Promise<ConnectorInfo[]> {
     let result = await this.doRequest<ConnectorInfo[]>({
@@ -37,9 +40,16 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Get Info of the Connector
-   * @param connectorID Connector identification
-   * @param fields Fields to fetch.
+   * @description Retrieves detailed information about a specific connector.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Connector** / **Access** in Access Management.
+   * ```typescript
+   * const result = await Resources.integration.connectors.info("connector-id-123", ["id", "name"]);
+   * console.log(result); // { id: 'connector-id-123', name: 'My Connector', profile: 'profile-id-123' }
+   * ```
    */
   public async info(connectorID: GenericID, fields?: string[]): Promise<ConnectorInfo> {
     let result = await this.doRequest<ConnectorInfo>({
@@ -56,8 +66,21 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates and retrieves a new connector from the account
-   * @param connectorObj Object data to create new Connector
+   * @description Creates a new connector in the application.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview#Creating_a_connector} Creating a connector
+   *
+   * @example
+   * ```typescript
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.integration.connectors.create({
+   *   name: "My Connector",
+   *   type: "custom",
+   *   networks: ["network-id-123"],
+   *   enabled: true
+   * });
+   * console.log(result.connector); // 'connector-id-123'
+   * ```
    */
   public async create(connectorObj: ConnectorCreateInfo): Promise<{ connector: GenericID }> {
     const result = await this.doRequest<{ connector: GenericID }>({
@@ -72,9 +95,16 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modify any property of the connector
-   * @param connectorID Connector identification
-   * @param connectorObj Object data to create new Connector
+   * @description Modifies an existing connector's properties.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
+   *
+   * @example
+   * ```typescript
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.integration.connectors.edit("connector-id-123", { name: "Updated Connector" });
+   * console.log(result); // Connector Successfully Updated
+   * ```
    */
   public async edit(connectorID: GenericID, connectorObj: Partial<ConnectorCreateInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -89,8 +119,16 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Delete the connector
-   * @param connectorID Connector identification
+   * @description Deletes a connector from the application.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
+   *
+   * @example
+   * ```typescript
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.integration.connectors.delete("connector-id-123");
+   * console.log(result); // Connector Successfully Deleted
+   * ```
    */
   public async delete(connectorID: string): Promise<string> {
     const result = await this.doRequest<string>({

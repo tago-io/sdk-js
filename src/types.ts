@@ -13,7 +13,6 @@ export * from "./modules/Resources/notifications.types";
 export * from "./modules/Resources/plan.types";
 export * from "./modules/Resources/profile.types";
 export * from "./modules/Resources/run.types";
-export * from "./modules/Resources/_share.types";
 export * from "./modules/Resources/template.types";
 export * from "./modules/Resources/paymentHistory.types";
 export * from "./modules/Resources/billing.types";
