@@ -14,7 +14,8 @@ interface TwilioData {
    */
   from?: string;
   /**
-   * MessagingServiceSid from Twilio, must be used instead of from number
+   * MessagingServiceSID from Twilio - Use this instead of a phone number
+   * When specified, this will override the 'from' parameter
    */
   messaging_service_sid?: string;
   /**
