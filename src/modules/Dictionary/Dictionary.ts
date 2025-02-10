@@ -51,11 +51,14 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
         });
         return response;
       } else {
-        const response = await TagoIOModule.doRequestAnonymous<LanguageData>({
-          path: `/dictionary/${this.runURL}/${dictionary}/${language}`,
-          method: "GET",
-          cacheTTL: 3600000,
-        });
+        const response = await TagoIOModule.doRequestAnonymous<LanguageData>(
+          {
+            path: `/dictionary/${this.runURL}/${dictionary}/${language}`,
+            method: "GET",
+            cacheTTL: 3600000,
+          },
+          this.params.region
+        );
         return response;
       }
     } catch (e) {
