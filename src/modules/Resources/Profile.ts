@@ -1,5 +1,5 @@
 import {
-  Autenticador,
+  Authenticator,
   GenericID,
   GenericToken,
   ListTokenQuery,
@@ -363,7 +363,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
    * console.log(result); // { token: 'token-value', name: 'API Access', ... }
    * ```
    */
-  public async tokenCreate(profileID: GenericID, tokenParams: TokenData & Autenticador): Promise<TokenCreateResponse> {
+  public async tokenCreate(profileID: GenericID, tokenParams: TokenData & Authenticator): Promise<TokenCreateResponse> {
     let result = await this.doRequest<TokenCreateResponse>({
       path: `/profile/${profileID}/token`,
       method: "POST",

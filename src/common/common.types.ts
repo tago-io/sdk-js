@@ -190,12 +190,12 @@ interface TokenDataList {
   created_by: string | null;
 }
 
-interface Autenticador {
+interface Authenticator {
   email: string;
   password: string;
-  /** The “pin_code” field is required when 2FA is activated */
+  /** The "pin_code" field is required when 2FA is activated */
   pin_code?: string;
-  /** The "otp_type” field is required when 2FA is activated */
+  /** The "otp_type" field is required when 2FA is activated */
   otp_type?: OTPType;
 }
 
@@ -251,5 +251,5 @@ export {
   TokenData,
   TokenDataList,
   RecursivePartial,
-  Autenticador,
+  Authenticator,
 };
