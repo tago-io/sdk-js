@@ -3,6 +3,7 @@ import ConsoleService from "../Services/Console";
 import { openSSEListening } from "../../infrastructure/apiSSE";
 import { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment } from "./analysis.types";
 import { JSONParseSafe } from "../../common/JSONParseSafe";
+import getRegionObj, { setRuntimeRegion } from "../../regions";
 
 /**
  * This class is used to instance an analysis
@@ -153,8 +154,13 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
   }
 
   public static use(analysis: analysisFunction, params?: AnalysisConstructorParams) {
-    if (!process.env.T_ANALYSIS_TOKEN) {
+    if (!process.env.T_ANALYSIS_TOKEN && params?.token) {
       process.env.T_ANALYSIS_TOKEN = params.token;
+    }
+
+    const runtimeRegion = params?.region ? getRegionObj(params.region) : null;
+    if (runtimeRegion) {
+      setRuntimeRegion(runtimeRegion);
     }
 
     return new Analysis(analysis, params);
