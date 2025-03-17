@@ -12,7 +12,7 @@ interface TwilioData {
   /**
    * From number registered with Twilio, Example: +5599999999999
    */
-  from?: string;
+  from: string;
   /**
    * Twilio account SID
    */
