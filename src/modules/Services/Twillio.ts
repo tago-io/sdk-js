@@ -14,11 +14,6 @@ interface TwilioData {
    */
   from?: string;
   /**
-   * MessagingServiceSID from Twilio - Use this instead of a phone number
-   * When specified, this will override the 'from' parameter
-   */
-  messaging_service_sid?: string;
-  /**
    * Twilio account SID
    */
   twilio_sid: string;
@@ -63,7 +58,7 @@ class Twilio extends TagoIOModule<GenericModuleParams> {
    * const result = await twilioService.send({
    *   to: "+1234567890",
    *   message: "Hello from TagoIO!",
-   *   messaging_service_sid: environment.TWILIO_MESSAGING_SERVICE_SID,
+   *   from: "MYFROMID",
    *   twilio_sid: environment.TWILIO_SID,
    *   twilio_token: environment.TWILIO_TOKEN,
    * });
@@ -76,7 +71,7 @@ class Twilio extends TagoIOModule<GenericModuleParams> {
    * const result = await twilioService.send({
    *   to: "+1234567890",
    *   message: "Hello from TagoIO!",
-   *   from: "MYFROMID",
+   *   from: "MGXXXXXXXXXXXXXXXX",
    *   twilio_sid: environment.TWILIO_SID,
    *   twilio_token: environment.TWILIO_TOKEN,
    * });
