@@ -5,19 +5,25 @@
 
 interface RegionsObj {
   api: string;
-  realtime: string;
+  realtime?: string;
   sse: string;
 }
+
+type Regions = "us-e1" | "eu-w1" | "env";
 
 /**
  * Object of Regions Definition
  * @internal
  */
 const regionsDefinition = {
-  "usa-1": {
+  "us-e1": {
     api: "https://api.tago.io",
     realtime: "https://realtime.tago.io",
     sse: "https://sse.tago.io/events",
+  },
+  "eu-w1": {
+    api: "https://api.eu-w1.tago.io",
+    sse: "https://sse.eu-w1.tago.io/events",
   },
   env: undefined as void, // ? process object should be on trycatch.
 };
@@ -27,8 +33,14 @@ const regionsDefinition = {
  * @internal
  * @param region Region
  */
-function getConnectionURI(region?: Regions): RegionsObj {
-  const value = regionsDefinition[region];
+function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
+  // @ts-expect-error Fallback
+  if (region === "usa-1") {
+    region = "us-e1";
+  }
+
+  const value =
+    typeof region === "string" ? regionsDefinition[region] : typeof region === "object" ? region : undefined;
 
   if (value) {
     return value;
@@ -54,11 +66,10 @@ function getConnectionURI(region?: Regions): RegionsObj {
     //   noRegionWarning = true;
     // }
 
-    return regionsDefinition["usa-1"];
+    return regionsDefinition["us-e1"];
   }
 }
 
-type Regions = "usa-1" | "env";
-
 export default getConnectionURI;
-export { Regions };
+export type { Regions, RegionsObj };
+export { regionsDefinition };

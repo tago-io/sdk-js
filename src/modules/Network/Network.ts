@@ -1,8 +1,8 @@
-import TagoIOModule, { ConnectorModuleParams } from "../../common/TagoIOModule";
-import { NetworkDeviceListQuery, INetworkInfo, NetworkDeviceListQueryInfo } from "./network.types";
 import { GenericID, GenericToken } from "../../common/common.types";
-import dateParser from "../Utils/dateParser";
+import TagoIOModule, { ConnectorModuleParams } from "../../common/TagoIOModule";
 import { ConfigurationParams } from "../Resources/devices.types";
+import dateParser from "../Utils/dateParser";
+import { INetworkInfo, NetworkDeviceListQuery, NetworkDeviceListQueryInfo } from "./network.types";
 
 class Network extends TagoIOModule<ConnectorModuleParams> {
   /**
@@ -35,6 +35,43 @@ class Network extends TagoIOModule<ConnectorModuleParams> {
       method: "GET",
       params: {
         details: this.params.details,
+      },
+    });
+
+    return result;
+  }
+
+  /**
+   * Publish a message to the MQTT relay
+   * @param options Options for publishing the message
+   * @param options.topic The topic to publish to
+   * @param options.message The message to publish (optional)
+   * @param options.qos Quality of Service level (optional)
+   * @param options.bucket The bucket to publish to (optional)
+   * @param options.retain Whether to retain the message (optional)
+   * @param options.device The device to publish to (optional)
+   * @returns A promise that resolves when the message is published
+   */
+  public async publishToRelay(options: {
+    topic: string;
+    message?: string;
+    qos?: number;
+    retain?: boolean;
+    device: string;
+  }): Promise<string> {
+    if (!options.device) {
+      throw new Error("Either bucket or device must be provided");
+    }
+
+    const result = await this.doRequest<string>({
+      path: "/integration/network/publish",
+      method: "POST",
+      body: {
+        topic: options.topic,
+        message: options.message,
+        qos: options.qos,
+        retain: options.retain,
+        device: options.device,
       },
     });
 
@@ -98,7 +135,6 @@ class Network extends TagoIOModule<ConnectorModuleParams> {
           }
         : configObj,
     });
-
     return result;
   }
 }
