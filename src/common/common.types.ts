@@ -34,17 +34,11 @@ type LocationGeoJSON = {
 
 type LocationLatLng = { lat: number; lng: number };
 
-/**
- * Type for the data returned from the API.
- */
+/** Type for the data returned from the API. */
 interface Data {
-  /**
-   * Data ID.
-   */
+  /** Data ID. */
   id: string;
-  /**
-   * ID of the device holding the data.
-   */
+  /** ID of the device holding the data. */
   device: GenericID;
   /**
    * ID of the device holding the data.
@@ -52,17 +46,11 @@ interface Data {
    * @deprecated Deprecating this in favor of `device`.
    */
   origin?: GenericID;
-  /**
-   * Name of the variable for the data.
-   */
+  /** Name of the variable for the data. */
   variable: string;
-  /**
-   * Data value.
-   */
+  /** Data value. */
   value?: string | number | boolean;
-  /**
-   * Group for the data. Used for grouping different data values.
-   */
+  /** Group for the data. Used for grouping different data values. */
   group?: string;
   /**
    * Series for the data. Used for grouping different data values.
@@ -70,48 +58,30 @@ interface Data {
    * @deprecated Deprecating this in favor of `group`.
    */
   serie?: string;
-  /**
-   * Unit for the data value.
-   */
+  /** Unit for the data value. */
   unit?: string;
-  /**
-   * Location for the data value.
-   */
+  /** Location for the data value. */
   location?: LocationGeoJSON;
-  /**
-   * Metadata for the data value.
-   */
+  /** Metadata for the data value. */
   metadata?: Metadata;
-  /**
-   * Timestamp for the data value.
-   */
+  /** Timestamp for the data value. */
   time: Date;
-  /**
-   * Timestamp for the data value. Determined by the API.
-   */
+  /** Timestamp for the data value. Determined by the API. */
   created_at?: Date;
 }
 
-/**
- * Type for creating data and sending it to the API.
- */
+/** Type for creating data and sending it to the API. */
 type DataCreate = Required<Pick<Data, "variable">> &
   Partial<
     Omit<Data, "id" | "device" | "origin" | "location" | "time" | "created_at"> & {
-      /**
-       * Location for the data value.
-       */
+      /** Location for the data value. */
       location: LocationGeoJSON | LocationLatLng | null;
-      /**
-       * Timestamp for the data value.
-       */
+      /** Timestamp for the data value. */
       time: string | Date;
     }
   >;
 
-/**
- * Type for editing data and sending it to the API.
- */
+/** Type for editing data and sending it to the API. */
 type DataEdit = Required<Pick<Data, "id">> &
   Partial<Pick<DataCreate, "value" | "group" | "serie" | "unit" | "metadata" | "time" | "location">>;
 
@@ -128,36 +98,22 @@ type RecursivePartial<T> = {
       : T[P];
 };
 interface Query<T, U> {
-  /**
-   * Page of list starting from 1
-   */
+  /** Page of list starting from 1 */
   page?: number;
-  /**
-   * Amount of items will return.
-   */
+  /** Amount of items will return. */
   amount?: number;
-  /**
-   *  Array of field names.
-   */
+  /** Array of field names. */
   fields?: (keyof T)[];
-  /**
-   *  Filter object.
-   */
+  /** Filter object. */
   filter?: RecursivePartial<T>;
-  /**
-   * Tuple with a field and an order
-   */
+  /** Tuple with a field and an order */
   orderBy?: [Extract<keyof T, U>, "asc" | "desc"];
 }
 
-/**
- * ID used on TagoIO, string with 24 character
- */
+/** ID used on TagoIO, string with 24 character */
 type GenericID = string;
 
-/**
- * Token used on TagoIO, string with 36 characters
- */
+/** Token used on TagoIO, string with 36 characters */
 type GenericToken = string;
 
 type Base64 = string;
@@ -200,9 +156,7 @@ interface Authenticator {
 }
 
 interface TokenData {
-  /**
-   * A name for the token.
-   */
+  /** A name for the token. */
   name: string;
   /**
    * The time for when the token should expire.
@@ -210,21 +164,13 @@ interface TokenData {
    * Accepts “never” as value.
    */
   expire_time?: ExpireTimeOption;
-  /**
-   * Token permission should be 'write', 'read' or 'full'.
-   */
+  /** Token permission should be 'write', 'read' or 'full'. */
   permission: PermissionOption;
-  /**
-   * [optional] The serial number of the device.
-   */
+  /** [optional] The serial number of the device. */
   serie_number?: string;
-  /**
-   * [optional] Verification code to validate middleware requests.
-   */
+  /** [optional] Verification code to validate middleware requests. */
   verification_code?: string;
-  /**
-   * [optional] Middleware or type of the device that will be added.
-   */
+  /** [optional] Middleware or type of the device that will be added. */
   middleware?: string;
 }
 

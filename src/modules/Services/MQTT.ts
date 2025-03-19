@@ -2,25 +2,15 @@ import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import { GenericID } from "../../common/common.types";
 
 interface MQTTData {
-  /**
-   * Topic of the message
-   */
+  /** Topic of the message */
   topic: string;
-  /**
-   * Message scope
-   */
+  /** Message scope */
   message: string;
-  /**
-   * Device to receive message
-   */
+  /** Device to receive message */
   device: GenericID;
-  /**
-   * Options of the publishing message
-   */
+  /** Options of the publishing message */
   options?: {
-    /**
-     * Default 0
-     */
+    /** Default 0 */
     qos?: number;
   };
 }

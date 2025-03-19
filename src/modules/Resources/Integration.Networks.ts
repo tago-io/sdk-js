@@ -1,7 +1,13 @@
 import { GenericID, GenericToken, ListTokenQuery, TokenCreateResponse, TokenData } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import { NetworkCreateInfo, NetworkInfo, NetworkQuery, NetworkTokenInfo } from "./integration.networks.types";
+import {
+  NetworkCreateInfo,
+  NetworkInfo,
+  NetworkQuery,
+  NetworkTokenCreateResponse,
+  NetworkTokenInfo,
+} from "./integration.networks.types";
 
 class Networks extends TagoIOModule<GenericModuleParams> {
   /**
@@ -126,8 +132,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    * console.log(result); // [ { name: 'Token #1', token: 'token-value' } ]
    * ```
    */
-  public async tokenList(networkID: GenericID, queryObj?: ListTokenQuery): Promise<Partial<NetworkTokenInfo>[]> {
-    let result = await this.doRequest<Partial<NetworkTokenInfo>[]>({
+  public async tokenList(networkID: GenericID, queryObj?: ListTokenQuery): Promise<NetworkTokenInfo[]> {
+    const result = await this.doRequest<NetworkTokenInfo[]>({
       path: `/integration/network/token/${networkID}`,
       method: "GET",
       params: {
@@ -138,8 +144,6 @@ class Networks extends TagoIOModule<GenericModuleParams> {
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "created_at,desc",
       },
     });
-
-    result = result.map((data) => dateParser(data, ["created_at", "updated_at"]));
 
     return result;
   }
@@ -159,8 +163,8 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    * console.log(token); // { token: 'token-value', name: 'My Token', network: 'network-id-123' }
    * ```
    */
-  public async tokenCreate(networkID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
-    const result = await this.doRequest<TokenCreateResponse>({
+  public async tokenCreate(networkID: GenericID, tokenParams: TokenData): Promise<NetworkTokenCreateResponse> {
+    const result = await this.doRequest<NetworkTokenCreateResponse>({
       path: `/integration/network/token`,
       method: "POST",
       body: { network: networkID, ...tokenParams },
