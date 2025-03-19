@@ -7,14 +7,10 @@ interface PDFResult {
 }
 
 interface PDFParams {
-  /**
-   * HTML as string
-   */
+  /** HTML as string */
   html?: string;
 
-  /**
-   * HTML on base64 format
-   */
+  /** HTML on base64 format */
   base64?: string;
 
   /**
@@ -24,28 +20,18 @@ interface PDFParams {
    */
   fileName?: string;
 
-  /**
-   * Generate pdf from URL
-   */
+  /** Generate pdf from URL */
   url?: string;
 
-  /**
-   * PDF Custom Options
-   */
+  /** PDF Custom Options */
   options?: {
-    /**
-     * Display header and footer. Defaults to `false`.
-     */
+    /** Display header and footer. Defaults to `false`. */
     displayHeaderFooter?: boolean;
 
-    /**
-     * HTML template for the print footer. Should use the same format as the `headerTemplate`.
-     */
+    /** HTML template for the print footer. Should use the same format as the `headerTemplate`. */
     footerTemplate?: string;
 
-    /**
-     * Paper format. If set, takes priority over `width` or `height` options. Defaults to 'Letter'.
-     */
+    /** Paper format. If set, takes priority over `width` or `height` options. Defaults to 'Letter'. */
     format?: string;
 
     /**
@@ -59,44 +45,28 @@ interface PDFParams {
      */
     headerTemplate?: string;
 
-    /**
-     * Paper height, accepts values labeled with units.
-     */
+    /** Paper height, accepts values labeled with units. */
     height?: string | number;
 
-    /**
-     * Paper orientation. Defaults to `false`.
-     */
+    /** Paper orientation. Defaults to `false`. */
     landscape?: boolean;
 
-    /**
-     * Paper margins, defaults to none.
-     */
+    /** Paper margins, defaults to none. */
     margin?: {
-      /**
-       * Top margin, accepts values labeled with units. Defaults to `0`.
-       */
+      /** Top margin, accepts values labeled with units. Defaults to `0`. */
       top?: string | number;
 
-      /**
-       * Right margin, accepts values labeled with units. Defaults to `0`.
-       */
+      /** Right margin, accepts values labeled with units. Defaults to `0`. */
       right?: string | number;
 
-      /**
-       * Bottom margin, accepts values labeled with units. Defaults to `0`.
-       */
+      /** Bottom margin, accepts values labeled with units. Defaults to `0`. */
       bottom?: string | number;
 
-      /**
-       * Left margin, accepts values labeled with units. Defaults to `0`.
-       */
+      /** Left margin, accepts values labeled with units. Defaults to `0`. */
       left?: string | number;
     };
 
-    /**
-     * Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages.
-     */
+    /** Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages. */
     pageRanges?: string;
 
     /**
@@ -105,19 +75,13 @@ interface PDFParams {
      */
     preferCSSPageSize?: boolean;
 
-    /**
-     * Print background graphics. Defaults to `false`.
-     */
+    /** Print background graphics. Defaults to `false`. */
     printBackground?: boolean;
 
-    /**
-     * Scale of the webpage rendering. Defaults to `1`. Scale amount must be between 0.1 and 2.
-     */
+    /** Scale of the webpage rendering. Defaults to `1`. Scale amount must be between 0.1 and 2. */
     scale?: number;
 
-    /**
-     * Paper width, accepts values labeled with units.
-     */
+    /** Paper width, accepts values labeled with units. */
     width?: string | number;
   };
 }
