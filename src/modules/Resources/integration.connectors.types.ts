@@ -6,7 +6,8 @@ interface IDeviceParameters {
   type?: "text" | "dropdown" | "switch" | "number";
   default?: any;
   group?: "default" | "main" | "advanced" | "hide";
-  options?: any[]; // optional, only for dropdown
+  /** Optional only for dropdown */
+  options?: any[];
 }
 
 interface ConnectorCreateInfo {
@@ -14,10 +15,13 @@ interface ConnectorCreateInfo {
   description?: string;
   logo_url?: string;
   device_parameters?: IDeviceParameters[];
-  networks?: string[];
+  networks?: GenericID[];
   payload_encoder?: string;
+  /** Base64 decoded string */
   payload_decoder?: string;
+  /** Refers to the **description** in the Documentation settings */
   install_text?: string;
+  /** Refers to the **completion text** in the Documentation settings */
   install_end_text?: string;
   device_annotation?: string;
 }
@@ -30,8 +34,10 @@ interface ConnectorInfo extends ConnectorCreateInfo {
   created_at: Date;
   updated_at: Date;
   device_parameters?: IDeviceParameters[];
-  networks?: string[];
+  networks?: GenericID[];
+  /** Refers to the **description** in the Documentation settings */
   install_text?: string;
+  /** Refers to the **completion text** in the Documentation settings */
   install_end_text?: string;
   device_annotation?: string;
 }

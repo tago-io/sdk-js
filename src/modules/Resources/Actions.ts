@@ -5,18 +5,22 @@ import { ActionCreateInfo, ActionInfo, ActionQuery } from "./actions.types";
 
 class Actions extends TagoIOModule<GenericModuleParams> {
   /**
-   * Retrieves a list with all actions from the account
-   * @default
-   * ```json
-   * queryObj: {
+   * @description Lists all actions from the application with pagination support.
+   * Use this to retrieve and manage actions in your application.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Action** / **Access** in Access Management.
+   * ```typescript
+   * const list = await Resources.actions.list({
    *   page: 1,
    *   fields: ["id", "name"],
-   *   filter: {},
-   *   amount: 20,
-   *   orderBy: "name,asc",
-   * }
+   *   amount: 10,
+   *   orderBy: ["name", "asc"]
+   * });
+   * console.log(list); // [ { id: '66ab7c62e5f0db000998ce42', name: 'Action Test', ...} ]
    * ```
-   * @param queryObj Search query params
    */
   public async list(queryObj?: ActionQuery): Promise<ActionInfo[]> {
     let result = await this.doRequest<ActionInfo[]>({
@@ -37,8 +41,24 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Generates and retrieves a new action from the account
-   * @param actionObj Object data to create new TagoIO Action
+   * @description Creates a new action in your application.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Action** / **Create** in Access Management.
+   * ```typescript
+   * const newAction = await Resources.actions.create({
+   *   name: "My Action",
+   *   type: "condition",
+   *   action: {
+   *     script: ["analysis-id"],
+   *     type: "script"
+   *   },
+   *   tags: [{ key: "type", value: "notification" }]
+   * });
+   * console.log(newAction.action); // action-id-123
+   * ```
    */
   public async create(actionObj: ActionCreateInfo): Promise<{ action: string }> {
     const result = await this.doRequest<{ action: string }>({
@@ -51,9 +71,19 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Modify any property of the action.
-   * @param actionID Action ID
-   * @param actionObj Action Object with data to be replaced
+   * @description Modifies an existing action.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Action** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.actions.edit("action-id-123", {
+   *   name: "Updated Action",
+   *   active: false
+   * });
+   * console.log(result); // Successfully Updated
+   * ```
    */
   public async edit(actionID: GenericID, actionObj: Partial<ActionCreateInfo>): Promise<string> {
     const result = await this.doRequest<string>({
@@ -66,8 +96,16 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Deletes an action from the account
-   * @param actionID Action ID
+   * @description Deletes an action from your application.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Action** / **Delete** in Access Management.
+   * ```typescript
+   * const result = await Resources.actions.delete("action-id-123");
+   * console.log(result); // Successfully Removed
+   * ```
    */
   public async delete(actionID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
@@ -79,8 +117,16 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Gets information about the action
-   * @param actionID Action ID
+   * @description Retrieves detailed information about a specific action.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Action** / **Access** in Access Management.
+   * ```typescript
+   * const actionInfo = await Resources.actions.info("action-id-123");
+   * console.log(actionInfo); // { id: 'action-id-123', name: 'My Action', ... }
+   * ```
    */
   public async info(actionID: GenericID): Promise<ActionInfo> {
     let result = await this.doRequest<ActionInfo>({

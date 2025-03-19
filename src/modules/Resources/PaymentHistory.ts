@@ -3,7 +3,15 @@ import { PaymentInfo } from "./paymentHistory.types";
 
 class PaymentHistory extends TagoIOModule<GenericModuleParams> {
   /**
-   * Get the payment History of the current account
+   * @description Retrieves the payment transaction history for the current account, including all past payments and their details.
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy in Access Management.
+   * ```typescript
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const result = await resources.paymentHistory.getHistory();
+   * console.log(result); // [ { strip_id: 'stripe-id-123', invoice_number: 'ABC-123', status: 'paid', ... } ]
+   * ```
    */
   public async getHistory(): Promise<PaymentInfo[]> {
     const result = await this.doRequest<PaymentInfo[]>({
