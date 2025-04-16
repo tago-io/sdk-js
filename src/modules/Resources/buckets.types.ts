@@ -12,21 +12,13 @@ interface ExportBucketOption {
 }
 
 interface BucketCreateInfo {
-  /**
-   * A name for the bucket.
-   */
+  /** A name for the bucket. */
   name: string;
-  /**
-   * Description for the bucket.
-   */
+  /** Description for the bucket. */
   description?: string | void;
-  /**
-   * Set if the bucket will be visible or not. Default True.
-   */
+  /** Set if the bucket will be visible or not. Default True. */
   visible?: boolean;
-  /**
-   * An array of tags.
-   */
+  /** An array of tags. */
   tags?: TagsObj[];
 }
 
@@ -37,9 +29,7 @@ type DataStorageType = "immutable" | "mutable" | "legacy";
 type ChunkPeriod = "day" | "week" | "month" | "quarter";
 interface BucketInfoBasic extends BucketCreateInfo {
   id: GenericID;
-  /**
-   * Data storage type for the bucket.
-   */
+  /** Data storage type for the bucket. */
   profile: GenericID;
   last_retention: string | void;
   created_at: Date;
@@ -99,17 +89,11 @@ interface VariablesInfo {
 }
 
 interface ListVariablesOptions {
-  /**
-   * return amount of each variable
-   */
+  /** return amount of each variable */
   showAmount?: boolean;
-  /**
-   * return array of async deleted
-   */
+  /** return array of async deleted */
   showDeleted?: boolean;
-  /**
-   * Change origins to array of object with id and name
-   */
+  /** Change origins to array of object with id and name */
   resolveOriginName?: boolean;
 }
 

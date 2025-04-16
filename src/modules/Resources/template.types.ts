@@ -5,9 +5,7 @@ interface TemplateObjDashboard {
   name: string;
   image_logo?: string;
   image_main?: string;
-  /**
-   * Dashboard Setup Object
-   */
+  /** Dashboard Setup Object */
   setup?: any;
 }
 
@@ -16,9 +14,7 @@ interface TemplateObjAnalysis {
   name: string;
   image_logo?: string;
   image_main?: string;
-  /**
-   * Analysis Setup Object
-   */
+  /** Analysis Setup Object */
   setup?: any;
 }
 

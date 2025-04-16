@@ -1,14 +1,19 @@
 import { GenericID, TagsObj, Query } from "../../common/common.types";
 
+interface Permissions {
+  effect: "allow" | "deny";
+  action: string[];
+  resource: string[];
+}
+
 interface AccessCreateInfo {
   name: string;
-  // TODO: permissions type
-  permissions: [];
+  permissions: Permissions[];
   // TODO: target type
   targets: [];
   profile?: GenericID;
   tags?: TagsObj[];
-  active?: number;
+  active?: boolean;
 }
 
 interface AccessInfo extends AccessCreateInfo {
@@ -19,4 +24,4 @@ interface AccessInfo extends AccessCreateInfo {
 
 type AccessQuery = Query<AccessInfo, "name" | "active" | "created_at" | "updated_at">;
 
-export { AccessCreateInfo, AccessInfo, AccessQuery };
+export { AccessCreateInfo, AccessInfo, AccessQuery, Permissions };
