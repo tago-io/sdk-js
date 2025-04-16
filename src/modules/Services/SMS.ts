@@ -1,13 +1,9 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
 interface SMSData {
-  /**
-   * Number to send SMS, Example: +5599999999999
-   */
+  /** Number to send SMS, Example: +5599999999999 */
   to: string;
-  /**
-   * Message to be send
-   */
+  /** Message to be send */
   message: string;
 }
 

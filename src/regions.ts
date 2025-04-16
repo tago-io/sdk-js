@@ -28,6 +28,8 @@ const regionsDefinition = {
   env: undefined as void, // ? process object should be on trycatch.
 };
 
+let runtimeRegion: RegionsObj | undefined;
+
 /**
  * Get connection URI for Realtime and API
  * @internal
@@ -44,6 +46,10 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
 
   if (value) {
     return value;
+  }
+
+  if (runtimeRegion) {
+    return runtimeRegion;
   }
 
   if (region !== undefined && !region !== null && region !== "env") {
@@ -70,6 +76,28 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
   }
 }
 
+/**
+ * Set region in-memory to be inherited by other modules when set in the Analysis runtime
+ * with `Analysis.use()`.
+ *
+ * @example
+ *
+ * ```ts
+ * async function myAnalysis(context, scope) {
+ *   // this uses the region defined through `use`
+ *   const resources = new Resources({ token });
+ *
+ *   // it's still possible to override if needed
+ *   const europeResources = new Resources({ token, region: "eu-w1" });
+ * }
+ *
+ * Analysis.use(myAnalysis, { region: "us-e1" });
+ * ```
+ */
+function setRuntimeRegion(region: RegionsObj) {
+  runtimeRegion = region;
+}
+
 export default getConnectionURI;
 export type { Regions, RegionsObj };
-export { regionsDefinition };
+export { regionsDefinition, setRuntimeRegion };
