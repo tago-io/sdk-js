@@ -3,10 +3,12 @@ import { GenericID, Query } from "../../common/common.types";
 interface DictionaryCreateInfo {
   name: string;
   slug: string;
+  /** First dictionary language E.g "en-US" */
   fallback: string;
 }
 
 interface DictionaryLanguage {
+  /** Language code E.g "en-US" */
   code: string;
   active: boolean;
 }

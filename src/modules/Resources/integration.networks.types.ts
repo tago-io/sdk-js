@@ -1,4 +1,4 @@
-import { GenericID, Query, TokenData } from "../../common/common.types";
+import { GenericID, GenericToken, Query } from "../../common/common.types";
 
 interface IDeviceParameters {
   name?: string;
@@ -18,6 +18,7 @@ interface NetworkCreateInfo {
   device_parameters?: IDeviceParameters[];
   middleware_endpoint?: string;
   payload_encoder?: string;
+  /** Base64 decoded string */
   payload_decoder?: string;
   public?: boolean;
   documentation_url?: string;
@@ -42,6 +43,7 @@ interface NetworkInfo extends NetworkCreateInfo {
   device_parameters?: IDeviceParameters[];
   middleware_endpoint?: string;
   payload_encoder?: string;
+  /** Base64 decoded string */
   payload_decoder?: string;
   public?: boolean;
   documentation_url?: string;
@@ -55,11 +57,15 @@ interface NetworkInfo extends NetworkCreateInfo {
   };
 }
 
-interface NetworkTokenInfo extends TokenData {
-  created_at: Date;
-  updated_at: Date;
-  Network: GenericID;
-  type: "type" | "Network";
+interface NetworkTokenInfo {
+  name: string;
+  token: GenericToken;
+}
+
+interface NetworkTokenCreateResponse {
+  token: GenericToken;
+  name: string;
+  network: GenericID;
 }
 
 type NetworkQuery = Query<
@@ -80,4 +86,4 @@ type NetworkQuery = Query<
   | "updated_at"
 >;
 
-export { NetworkInfo, NetworkCreateInfo, NetworkTokenInfo, NetworkQuery };
+export { NetworkInfo, NetworkCreateInfo, NetworkTokenInfo, NetworkQuery, NetworkTokenCreateResponse };

@@ -8,16 +8,27 @@ interface PaymentMethodCreateInfo {
   default_card?: boolean;
 }
 
-interface PaymentMethodInfo extends PaymentMethodCreateInfo {
-  id: GenericID;
+interface PaymentMethodInfo {
+  name: string;
+  brand: string;
+  /** Last four digits of card */
   last4: string;
-  active: boolean;
-  default_card: boolean;
+  funding: string;
   exp_month: string;
   exp_year: string;
 }
 
+interface PaymentMethodListResponse {
+  card: PaymentMethodInfo;
+}
+
 class PaymentMethods extends TagoIOModule<GenericModuleParams> {
+  /**
+   * @description Creates a new payment method for the current account using the provided payment information.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/204-payment-methods} Payment Methods
+   * @see {@link https://help.tago.io/portal/en/kb/articles/205-common-billing-issues} Common Billing Issues
+   */
   public async create(paymentMethodData: PaymentMethodCreateInfo): Promise<PaymentMethodInfo[]> {
     const result = await this.doRequest<PaymentMethodInfo[]>({
       path: "/account/payment_method/",
@@ -28,8 +39,22 @@ class PaymentMethods extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async list(): Promise<PaymentMethodInfo[]> {
-    const result = await this.doRequest<PaymentMethodInfo[]>({
+  /**
+   * @description Retrieves all payment methods associated with the current account.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/204-payment-methods} Payment Methods
+   * @see {@link https://help.tago.io/portal/en/kb/articles/205-common-billing-issues} Common Billing Issues
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy in Access Management.
+   * ```typescript
+   * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
+   * const paymentMethods = await resources.paymentMethods.list();
+   * console.log(paymentMethods); // { card: { name: 'My Card', brand: 'Visa', last4: '1234', ... } }
+   * ```
+   */
+  public async list(): Promise<PaymentMethodListResponse> {
+    const result = await this.doRequest<PaymentMethodListResponse>({
       path: "/account/payment_method/",
       method: "GET",
     });
@@ -37,18 +62,12 @@ class PaymentMethods extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public async setDefault(paymentMethodID: GenericID): Promise<string> {
-    const result = await this.doRequest<string>({
-      path: "/account/payment_method/",
-      method: "PUT",
-      body: {
-        id: paymentMethodID,
-      },
-    });
-
-    return result;
-  }
-
+  /**
+   * @description Removes a payment method from the account using its ID.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/204-payment-methods} Payment Methods
+   * @see {@link https://help.tago.io/portal/en/kb/articles/205-common-billing-issues} Common Billing Issues
+   */
   public async delete(paymentMethodID: GenericID): Promise<string> {
     const result = await this.doRequest<string>({
       path: "/account/payment_method/",
