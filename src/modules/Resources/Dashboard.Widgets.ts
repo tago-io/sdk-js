@@ -1,4 +1,4 @@
-import { Data, GenericID, GenericToken } from "../../common/common.types";
+import { GenericID, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import {
   EditDataModel,

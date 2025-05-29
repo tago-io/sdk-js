@@ -1,6 +1,5 @@
-import { GenericID, GenericToken, ListTokenQuery, TokenCreateResponse, TokenData } from "../../common/common.types";
+import { GenericID, GenericToken, ListTokenQuery, TokenData } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import dateParser from "../Utils/dateParser";
 import {
   NetworkCreateInfo,
   NetworkInfo,

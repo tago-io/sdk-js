@@ -1,5 +1,4 @@
 import { ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
-import { NotificationButton, NotificationCreate } from "./notifications.types";
 
 interface RunInfo {
   profile: GenericID;

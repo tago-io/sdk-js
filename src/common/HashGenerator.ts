@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from "axios";
+import { RequestConfig } from "./common.types";
 
 function hashGenerator(obj: any): number {
   const objString = JSON.stringify(obj);
@@ -19,13 +19,13 @@ function hashGenerator(obj: any): number {
   return hash;
 }
 
-function generateRequestID(axiosObj: AxiosRequestConfig): number {
+function generateRequestID(requestConfig: RequestConfig): number {
   const objKey = {
-    url: axiosObj.url,
-    token: axiosObj.headers?.token,
-    params: axiosObj.params,
-    body: axiosObj.data,
-    method: axiosObj.method,
+    url: requestConfig.url,
+    token: requestConfig.headers?.token,
+    params: requestConfig.params,
+    body: requestConfig.data,
+    method: requestConfig.method,
   };
 
   const requestID = hashGenerator(objKey);

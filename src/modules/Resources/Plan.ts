@@ -1,6 +1,6 @@
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import { CurrentPrices, PlanInfo, PlanSetInfo, Summary } from "./plan.types";
+import { CurrentPrices, PlanInfo, PlanSetInfo } from "./plan.types";
 
 class Plan extends TagoIOModule<GenericModuleParams> {
   /**

@@ -113,7 +113,7 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     const analysis = await this.doRequest<{ name: string; active: boolean; run_on: "external" | "tago" }>({
       path: "/info",
       method: "GET",
-    }).catch((_) => undefined);
+    }).catch((_): undefined => undefined);
 
     setInterval(() => {
       if (sse.OPEN === sse.readyState) {
@@ -148,7 +148,7 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
       this.runLocal(data.environment, data.data, data.analysis_id, data.token);
     });
 
-    sse.addEventListener("error", (err) => {
+    sse.addEventListener("error", (_err) => {
       // console.debug(_error);
       console.error("¬ Connection was closed, trying to reconnect...");
     });

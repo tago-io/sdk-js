@@ -50,7 +50,7 @@ export function convert(oldWidget: any): WidgetInfo {
   };
 
   if (Array.isArray(oldWidget.data)) {
-    newStructure.data = [oldWidget.data?.[0]] || [];
+    newStructure.data = oldWidget.data?.[0] ? [oldWidget.data[0]] : [];
   }
   return newStructure;
 }

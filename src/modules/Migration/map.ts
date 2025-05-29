@@ -184,7 +184,7 @@ export function convert(oldWidget: any): WidgetInfo {
         const aliasType = oldDisplay?.vars_that_have_conditions?.[key] ? "icon" : "text";
         const iconLabelConditions = oldDisplay?.conditions?.[key] || [];
 
-        const image = { static_image: oldDisplay?.vars_images?.[key] } || null;
+        const image = oldDisplay?.vars_images?.[key] ? { static_image: oldDisplay.vars_images[key] } : null;
 
         const url = oldDisplay?.vars_url?.[key]?.url || null;
         const label = oldDisplay?.vars_url?.[key]?.alias || null;

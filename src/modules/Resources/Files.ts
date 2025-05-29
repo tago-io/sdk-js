@@ -271,7 +271,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @description Creates a multipart upload instance
    */
   private async createMultipartUpload(filename: string, options?: UploadOptions) {
-    const { dashboard, widget, fieldId, isPublic, contentType } = options || {};
+    const { dashboard, widget, fieldId, isPublic: _isPublic, contentType } = options || {};
 
     const path = dashboard && widget && fieldId ? `/data/files/${dashboard}/${widget}` : `/files`;
 
@@ -385,7 +385,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
 
     const partsOrdered = parts.sort((a, b) => a.PartNumber - b.PartNumber);
 
-    const headers = { "Content-Type": "multipart/form-data" };
+    const _headers = { "Content-Type": "multipart/form-data" };
 
     const result = await this.doRequest<{ file: string }>({
       path,
@@ -435,7 +435,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
     const uploadID = await this.createMultipartUpload(filename, options);
 
     const bytesPerChunk = options?.chunkSize || 7 * MB;
-    const fileSize = file instanceof Buffer ? file.length : file.size;
+    const fileSize = file instanceof Buffer ? file.length : (file as Blob).size;
     const chunkAmount = Math.floor(fileSize / bytesPerChunk) + 1;
     const partsPerTime = 3;
 

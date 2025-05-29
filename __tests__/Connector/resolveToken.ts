@@ -42,7 +42,7 @@ describe("Network class", () => {
 
     expect(result).toBe("token");
     expect(url).toBe("/integration/network/resolve/serieNumber");
-    expect(body).toMatchObject({});
+    expect(body || {}).toMatchObject({});
   });
 
   test("Resolving token with authorization", async () => {
@@ -62,7 +62,7 @@ describe("Network class", () => {
     expect(result).toBe("token");
     expect(url).toBe("/integration/network/resolve/serieNumber/authorization");
     expect(query).toMatchObject({});
-    expect(body).toMatchObject({});
+    expect(body || {}).toMatchObject({});
   });
 
   test("Resolving token with detail true", async () => {

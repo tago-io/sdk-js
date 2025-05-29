@@ -1,18 +1,18 @@
-import { AxiosRequestConfig } from "axios";
+import { RequestConfig } from "./common.types";
 import { generateRequestID } from "./HashGenerator";
 
 const requestsInProgress = new Set<number>();
 
-function addRequestInProgress(axiosObj: AxiosRequestConfig): void {
-  requestsInProgress.add(generateRequestID(axiosObj));
+function addRequestInProgress(requestConfig: RequestConfig): void {
+  requestsInProgress.add(generateRequestID(requestConfig));
 }
 
-function removeRequestInProgress(axiosObj: AxiosRequestConfig): void {
-  requestsInProgress.delete(generateRequestID(axiosObj));
+function removeRequestInProgress(requestConfig: RequestConfig): void {
+  requestsInProgress.delete(generateRequestID(requestConfig));
 }
 
-function isRequestInProgress(axiosObj: AxiosRequestConfig): boolean {
-  return requestsInProgress.has(generateRequestID(axiosObj));
+function isRequestInProgress(requestConfig: RequestConfig): boolean {
+  return requestsInProgress.has(generateRequestID(requestConfig));
 }
 
 export { addRequestInProgress, removeRequestInProgress, isRequestInProgress };

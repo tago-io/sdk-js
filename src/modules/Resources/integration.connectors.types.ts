@@ -1,4 +1,4 @@
-import { GenericID, Query, TokenData } from "../../common/common.types";
+import { GenericID, Query, TokenData as _TokenData } from "../../common/common.types";
 
 interface IDeviceParameters {
   name?: string;

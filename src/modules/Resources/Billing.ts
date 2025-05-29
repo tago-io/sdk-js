@@ -1,7 +1,5 @@
-import { GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import type {
-  BillingAddOn,
   BillingCoupon,
   BillingEditInformation,
   BillingEditResourceAllocation,

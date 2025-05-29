@@ -66,7 +66,7 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
     }
 
     return { api, realtime, sse };
-  } catch (error) {
+  } catch (_) {
     // if (!noRegionWarning) {
     //   console.info("> TagoIO-SDK: No region or env defined, using fallback as usa-1.");
     //   noRegionWarning = true;

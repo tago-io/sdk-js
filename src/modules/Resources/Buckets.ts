@@ -1,7 +1,6 @@
-import type { ExportOption, GenericID } from "../../common/common.types";
+import type { GenericID } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import Devices from "./Devices";
-import type { ExportBucket, ExportBucketOption } from "./buckets.types";
 import type { DeviceQuery } from "./devices.types";
 
 /**

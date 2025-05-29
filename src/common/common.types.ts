@@ -1,5 +1,17 @@
 import { OTPType } from "../types";
 
+/**
+ * Request configuration interface for API requests (replaces AxiosRequestConfig)
+ */
+export interface RequestConfig {
+  url?: string;
+  method?: string;
+  headers?: Record<string, string>;
+  data?: any;
+  params?: Record<string, any>;
+  timeout?: number;
+}
+
 interface Metadata {
   color?: string;
   x?: string | number;

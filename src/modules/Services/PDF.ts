@@ -1,4 +1,3 @@
-import axios from "axios";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
 interface PDFResult {
@@ -93,18 +92,24 @@ class PDFService extends TagoIOModule<GenericModuleParams> {
    */
   public async generate(params: PDFParams): Promise<PDFResult> {
     try {
-      const result = await axios({
+      const response = await fetch("https://pdf.middleware.tago.io", {
         method: "POST",
-        url: "https://pdf.middleware.tago.io",
-        data: params,
         headers: {
+          "Content-Type": "application/json",
           token: this.params.token,
         },
+        body: JSON.stringify(params),
       });
 
-      return result?.data;
-    } catch (error) {
-      return Promise.reject(error?.response?.data || { result: false, stuats: "unknown error" });
+      if (!response.ok) {
+        const errorData = await response.json();
+        return Promise.reject(errorData || { result: false, status: "HTTP error" });
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error: any) {
+      return Promise.reject(error || { result: false, status: "unknown error" });
     }
   }
 }

@@ -8,8 +8,8 @@ describe("getLanguagesData", () => {
   let app: Express;
   let service: http.Server;
   let dictionary: Dictionary;
-  let url: string;
-  let body: object;
+  let url: string | undefined;
+  let body: object | undefined;
 
   const slug = "SLUG";
   const language = "en-US";
@@ -61,7 +61,7 @@ describe("getLanguagesData", () => {
 
     expect(result).toBe("This is a string with two dictionary expressions: first value and second value.");
     expect(url).toBe(`/dictionary/${slug}/${language}?fallback=true`);
-    expect(body).toMatchObject({});
+    expect(body).toBeUndefined();
   });
 
   it("does not make a request if there's no dictionary expression in the string", async () => {

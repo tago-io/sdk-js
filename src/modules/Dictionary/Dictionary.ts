@@ -61,7 +61,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
         );
         return response;
       }
-    } catch (e) {
+    } catch (_e) {
       return null;
     }
   }
@@ -204,7 +204,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * const result = dictionary.applyToString("Words are ignored #TEST.DICT_KEY#");
    * ```
    */
-  public async applyToString(rawString: string, options?: IApplyToStringOptions): Promise<string> {
+  public async applyToString(rawString: string, _options?: IApplyToStringOptions): Promise<string> {
     const { language } = this;
 
     // Handling undefined strings is not this function's job

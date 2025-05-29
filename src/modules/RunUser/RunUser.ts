@@ -5,7 +5,7 @@ import { NotificationInfo, NotificationQuery } from "../Resources/notifications.
 import { OTPType } from "../Resources/account.types";
 import dateParser from "../Utils/dateParser";
 import {
-  RunNotificationInfo,
+  RunNotificationInfo as _RunNotificationInfo,
   RunUserCreateInfo,
   RunUserCreate,
   RunUserInfo,

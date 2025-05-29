@@ -1,5 +1,3 @@
-import { GenericID, Query } from "../../common/common.types";
-
 interface QRCodeFormat {
   type: string;
   schema_id: string;

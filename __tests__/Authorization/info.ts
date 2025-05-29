@@ -29,9 +29,9 @@ describe("Authorization class", () => {
   });
 
   test("info", async () => {
-    let url: string;
-    let body: object;
-    let query: object;
+    let url: string | undefined;
+    let body: object | undefined;
+    let query: object | undefined;
     app.get("/info", (req, res) => {
       url = req.path;
       body = req.body;
@@ -45,13 +45,13 @@ describe("Authorization class", () => {
     expect(result).toMatchObject({ id: "test" });
     expect(url).toBe("/info");
     expect(query).toMatchObject({});
-    expect(body).toMatchObject({});
+    expect(body).toBeUndefined();
   });
 
   test("info with details", async () => {
-    let url: string;
-    let body: object;
-    let query: object;
+    let url: string | undefined;
+    let body: object | undefined;
+    let query: object | undefined;
     app.get("/info", (req, res) => {
       url = req.url;
       body = req.body;

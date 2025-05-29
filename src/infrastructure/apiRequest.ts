@@ -1,17 +1,24 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import config from "../config";
 import sleep from "../common/sleep";
 import isBrowser from "./isBrowser";
 import envParams from "./envParams.json";
+import qs from "qs";
 import { addRequestInProgress, isRequestInProgress, removeRequestInProgress } from "../common/RequestInProgress";
 import { addCache, getCache } from "../common/Cache";
+import { RequestConfig } from "../common/common.types";
+
+interface ResponseData {
+  data: any;
+  status: number;
+  statusText: string;
+}
 
 /**
  * Handle the TagoIO Response
  * @internal
- * @param result Axios Result
+ * @param result Fetch Response
  */
-function resultHandler(result: AxiosResponse) {
+function resultHandler(result: ResponseData) {
   if (!result.data) {
     throw result.statusText;
   }
@@ -26,29 +33,30 @@ function resultHandler(result: AxiosResponse) {
 /**
  * Handle all request to TagoIO API
  * @internal
- * @param axiosObj Axios Object
+ * @param requestConfig Request Configuration Object
  */
-async function apiRequest(axiosObj: AxiosRequestConfig, cacheTTL?: number): Promise<any> {
+async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Promise<any> {
   if (cacheTTL) {
-    if (isRequestInProgress(axiosObj)) {
+    if (isRequestInProgress(requestConfig)) {
       await sleep(100);
-      return apiRequest(axiosObj, cacheTTL);
+      return apiRequest(requestConfig, cacheTTL);
     }
 
-    const objCached = getCache(axiosObj);
+    const objCached = getCache(requestConfig);
     if (objCached) {
       return objCached;
     }
   }
 
-  addRequestInProgress(axiosObj);
+  addRequestInProgress(requestConfig);
 
-  axiosObj.timeout = config.requestTimeout;
+  // Prepare headers
+  let headers = { ...requestConfig.headers };
 
   if (isBrowser()) {
     // Prevent cache on Browsers
-    axiosObj.headers = {
-      ...axiosObj.headers,
+    headers = {
+      ...headers,
       Pragma: "no-cache",
       "Cache-Control": "no-cache",
     };
@@ -58,16 +66,70 @@ async function apiRequest(axiosObj: AxiosRequestConfig, cacheTTL?: number): Prom
         ? `(Running at TagoIO)`
         : `(External; Node.js/${process.version} ${process.platform}/${process.arch})`;
 
-    axiosObj.headers = {
-      ...axiosObj.headers,
+    headers = {
+      ...headers,
       "User-Agent": `TagoIO-SDK|JS|${envParams.version} ${banner}`,
     };
   }
 
-  const request = () => {
-    return axios(axiosObj)
-      .then(resultHandler)
-      .catch((error) => ({ error }));
+  // Build URL with params
+  let url = requestConfig.url || "";
+  if (requestConfig.params) {
+    const paramString = qs.stringify(requestConfig.params);
+    if (paramString) {
+      url += (url.includes("?") ? "&" : "?") + paramString;
+    }
+  }
+
+  const request = async () => {
+    try {
+      // Create AbortController for timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => {
+        controller.abort();
+      }, requestConfig.timeout || config.requestTimeout);
+
+      const fetchOptions: RequestInit = {
+        method: requestConfig.method || "GET",
+        headers,
+        signal: controller.signal,
+      };
+
+      // Add body for non-GET requests
+      if (requestConfig.data && requestConfig.method && requestConfig.method.toUpperCase() !== "GET") {
+        if (typeof requestConfig.data === "string") {
+          fetchOptions.body = requestConfig.data;
+        } else {
+          fetchOptions.body = JSON.stringify(requestConfig.data);
+          headers["Content-Type"] = headers["Content-Type"] || "application/json";
+        }
+      }
+
+      // console.debug(
+      //   `Request: ${fetchOptions.method} ${url} - Headers: ${JSON.stringify(fetchOptions.headers)} - Body: ${fetchOptions.body}`
+      // );
+
+      const response = await fetch(url, fetchOptions);
+      clearTimeout(timeoutId);
+
+      let data;
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+      } else {
+        data = await response.text();
+      }
+
+      const result: ResponseData = {
+        data,
+        status: response.status,
+        statusText: response.statusText,
+      };
+
+      return resultHandler(result);
+    } catch (error: any) {
+      return { error };
+    }
   };
 
   let result;
@@ -79,40 +141,68 @@ async function apiRequest(axiosObj: AxiosRequestConfig, cacheTTL?: number): Prom
       break;
     }
 
-    if (error.response) {
+    // Handle fetch errors
+    if (error.name === "AbortError") {
+      resulterror = {
+        from: "CLIENT_REQUEST",
+        url,
+        method: String(requestConfig.method || "GET").toUpperCase(),
+        status: -1,
+        code: "TIMEOUT",
+        statusText: "Request timeout",
+      };
+    } else if (error instanceof TypeError && error.message.includes("fetch")) {
+      resulterror = {
+        from: "CLIENT_REQUEST",
+        url,
+        method: String(requestConfig.method || "GET").toUpperCase(),
+        status: -1,
+        code: "NETWORK_ERROR",
+        statusText: error.message,
+      };
+    } else if (error.status) {
+      // HTTP error response
       resulterror = {
         from: "SERVER_RESPONSE",
-        url: error.config.url,
-        method: String(error.config.method).toUpperCase(),
-        status: error.response.status,
-        code: error.code || "UNKNOWN",
-        statusText: error.response.statusText,
+        url,
+        method: String(requestConfig.method || "GET").toUpperCase(),
+        status: error.status,
+        code: "HTTP_ERROR",
+        statusText: error.statusText || "HTTP Error",
       };
+
+      // For client errors (4xx), don't retry and use resultHandler
+      if (error.status >= 400 && error.status < 500) {
+        try {
+          resulterror = resultHandler({
+            data: error.data,
+            status: error.status,
+            statusText: error.statusText,
+          });
+        } catch (handlerError) {
+          resulterror = handlerError;
+        }
+        break;
+      }
     } else {
       resulterror = {
         from: "CLIENT_REQUEST",
-        url: error.config.url,
-        method: String(error.config.method).toUpperCase(),
+        url,
+        method: String(requestConfig.method || "GET").toUpperCase(),
         status: -1,
-        code: error.code || "UNKNOWN",
-        statusText: "UNKNOWN",
+        code: "UNKNOWN",
+        statusText: error.message || "Unknown error",
       };
-    }
-
-    // ? Requests with client errors not retry.
-    if (error.response && (error.response.status >= 400 || error.response.status < 500)) {
-      resulterror = resultHandler(error.response);
-      break;
     }
 
     await sleep(1500);
   }
 
   if (cacheTTL && result && !resulterror) {
-    addCache(axiosObj, result, cacheTTL);
+    addCache(requestConfig, result, cacheTTL);
   }
 
-  removeRequestInProgress(axiosObj);
+  removeRequestInProgress(requestConfig);
 
   if (!result && resulterror) {
     throw resulterror;
