@@ -1,9 +1,9 @@
-import TagoIOModule from "../../common/TagoIOModule";
-import ConsoleService from "../Services/Console";
-import { openSSEListening } from "../../infrastructure/apiSSE";
-import { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment } from "./analysis.types";
 import { JSONParseSafe } from "../../common/JSONParseSafe";
+import TagoIOModule from "../../common/TagoIOModule";
+import { openSSEListening } from "../../infrastructure/apiSSE";
 import getRegionObj, { setRuntimeRegion } from "../../regions";
+import ConsoleService from "../Services/Console";
+import type { AnalysisConstructorParams, AnalysisEnvironment, analysisFunction } from "./analysis.types";
 
 /**
  * This class is used to instance an analysis
@@ -26,9 +26,8 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
   public start() {
     if (this.started) {
       return;
-    } else {
-      this.started = true;
     }
+    this.started = true;
 
     if (!process.env.T_ANALYSIS_CONTEXT) {
       this.localRuntime();
@@ -113,7 +112,7 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     const analysis = await this.doRequest<{ name: string; active: boolean; run_on: "external" | "tago" }>({
       path: "/info",
       method: "GET",
-    }).catch((_) => undefined);
+    }).catch((_): undefined => undefined);
 
     setInterval(() => {
       if (sse.OPEN === sse.readyState) {
@@ -148,7 +147,7 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
       this.runLocal(data.environment, data.data, data.analysis_id, data.token);
     });
 
-    sse.addEventListener("error", (err) => {
+    sse.addEventListener("error", (_err) => {
       // console.debug(_error);
       console.error("¬ Connection was closed, trying to reconnect...");
     });

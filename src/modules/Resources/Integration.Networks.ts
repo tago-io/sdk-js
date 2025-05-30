@@ -1,7 +1,6 @@
-import { GenericID, GenericToken, ListTokenQuery, TokenCreateResponse, TokenData } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import dateParser from "../Utils/dateParser";
-import {
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID, GenericToken, ListTokenQuery, TokenData } from "../../common/common.types";
+import type {
   NetworkCreateInfo,
   NetworkInfo,
   NetworkQuery,
@@ -84,7 +83,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    */
   public async create(connectorObj: NetworkCreateInfo): Promise<{ network: GenericID }> {
     const result = await this.doRequest<{ network: GenericID }>({
-      path: `/integration/network/`,
+      path: "/integration/network/",
       method: "POST",
       body: {
         ...connectorObj,
@@ -165,7 +164,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    */
   public async tokenCreate(networkID: GenericID, tokenParams: TokenData): Promise<NetworkTokenCreateResponse> {
     const result = await this.doRequest<NetworkTokenCreateResponse>({
-      path: `/integration/network/token`,
+      path: "/integration/network/token",
       method: "POST",
       body: { network: networkID, ...tokenParams },
     });

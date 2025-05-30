@@ -1,4 +1,4 @@
-import { GenericID, GenericToken, TagsObj, Query } from "../../common/common.types";
+import type { GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
 
 interface TagoCoreComputerUsage {
   total: number;
@@ -76,4 +76,4 @@ type TagoCoreQuery = Query<
   | "machine_id"
 >;
 
-export { TagoCoreComputerUsage, TagoCoreInfo, TagoCoreListInfo, TagoCoreOS, TagoCoreQuery, TagoCoreSummary };
+export type { TagoCoreComputerUsage, TagoCoreInfo, TagoCoreListInfo, TagoCoreOS, TagoCoreQuery, TagoCoreSummary };

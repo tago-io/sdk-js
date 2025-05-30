@@ -1,7 +1,7 @@
-import express, { Express } from "express";
-import http from "http";
+import type http from "node:http";
+import type { AddressInfo } from "node:net";
+import express, { type Express } from "express";
 import { Network } from "../../src/modules";
-import { AddressInfo } from "net";
 
 jest.setTimeout(3000);
 
@@ -31,7 +31,7 @@ describe("Network class", () => {
   test("Resolving token without authorization", async () => {
     let url: string;
     let body: object;
-    app.get(`/integration/network/resolve/:serieNumber`, (req, res) => {
+    app.get("/integration/network/resolve/:serieNumber", (req, res) => {
       url = req.url;
       body = req.body;
       res.send({ status: true, result: "token" });
@@ -42,14 +42,14 @@ describe("Network class", () => {
 
     expect(result).toBe("token");
     expect(url).toBe("/integration/network/resolve/serieNumber");
-    expect(body).toMatchObject({});
+    expect(body || {}).toMatchObject({});
   });
 
   test("Resolving token with authorization", async () => {
     let url: string;
     let body: object;
     let query: object;
-    app.get(`/integration/network/resolve/:serieNumber/:authorization`, (req, res) => {
+    app.get("/integration/network/resolve/:serieNumber/:authorization", (req, res) => {
       url = req.url;
       body = req.body;
       query = req.query;
@@ -62,12 +62,12 @@ describe("Network class", () => {
     expect(result).toBe("token");
     expect(url).toBe("/integration/network/resolve/serieNumber/authorization");
     expect(query).toMatchObject({});
-    expect(body).toMatchObject({});
+    expect(body || {}).toMatchObject({});
   });
 
   test("Resolving token with detail true", async () => {
     let query: object;
-    app.get(`/integration/network/resolve/:serieNumber`, (req, res) => {
+    app.get("/integration/network/resolve/:serieNumber", (req, res) => {
       query = req.query;
       res.send({ status: true, result: "token" });
     });

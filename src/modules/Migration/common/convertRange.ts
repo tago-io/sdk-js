@@ -4,11 +4,11 @@
 // ? ====================================================================================
 
 const isNumber = (s: any): boolean => {
-  const str = ("" + s).trim();
+  const str = `${s}`.trim();
   if (str.length === 0) {
     return false;
   }
-  return !isNaN(+str);
+  return !Number.isNaN(+str);
 };
 
 function convertRange(oldWidgetDisplay: any): any {

@@ -4,7 +4,7 @@ import { enUS, ptBR } from "./__mocks__/dictionaries";
 
 describe("applyToString", () => {
   let dictionary: Dictionary;
-  let options: Object;
+  let options: any;
   let fn: jest.SpyInstance;
 
   beforeAll(() => {

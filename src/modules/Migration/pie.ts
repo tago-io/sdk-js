@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old PIE to new PIE
 // ? ====================================================================================
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 import { chartColors } from "./common";
 
 export function convert(oldWidget: any): WidgetInfo {
@@ -34,7 +34,7 @@ export function convert(oldWidget: any): WidgetInfo {
         continue;
       }
 
-      for (const variable of item?.variables) {
+      for (const variable of item?.variables || []) {
         const key = `${item.origin}${variable}`;
 
         const alias = oldDisplay.vars_labels?.[key];

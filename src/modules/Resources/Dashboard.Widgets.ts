@@ -1,6 +1,6 @@
-import { GenericID, GenericIDPair, GenericToken } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import {
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID, GenericIDPair, GenericToken } from "../../common/common.types";
+import type {
   EditDataModel,
   EditDeviceResource,
   EditResourceOptions,
@@ -159,7 +159,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
     dashboardID: GenericID,
     widgetID: GenericID,
     data: PostDataModel | PostDataModel[],
-    bypassBucket: boolean = false
+    bypassBucket = false
   ): Promise<object> {
     const result = await this.doRequest<object>({
       path: `/data/${dashboardID}/${widgetID}`,
@@ -191,7 +191,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
     dashboardID: GenericID,
     widgetID: GenericID,
     data: EditDataModel | EditDataModel[],
-    bypassBucket: boolean = false
+    bypassBucket = false
   ): Promise<object> {
     const result = await this.doRequest<object>({
       path: `/data/${dashboardID}/${widgetID}/data`,

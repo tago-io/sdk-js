@@ -1,6 +1,6 @@
-import express, { Express } from "express";
-import http from "http";
-import { AddressInfo } from "net";
+import type http from "node:http";
+import type { AddressInfo } from "node:net";
+import express, { type Express } from "express";
 import { Utils } from "../../src/modules";
 
 jest.setTimeout(3000);

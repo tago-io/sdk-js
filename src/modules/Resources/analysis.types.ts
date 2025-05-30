@@ -1,4 +1,4 @@
-import { Base64, RunTypeOptions, GenericID, TagsObj, Query, ExpireTimeOption } from "../../common/common.types";
+import type { Base64, ExpireTimeOption, GenericID, Query, RunTypeOptions, TagsObj } from "../../common/common.types";
 
 interface ScriptFile {
   name: string;
@@ -48,4 +48,4 @@ interface AnalysisInfo extends AnalysisCreateInfo {
 type AnalysisQuery = Query<AnalysisInfo, "name" | "active" | "run_on" | "last_run" | "created_at" | "updated_at">;
 type AnalysisListItem<T extends AnalysisQuery["fields"][number] = null> = Pick<AnalysisInfo, T> & Partial<AnalysisInfo>;
 
-export { AnalysisInfo, AnalysisCreateInfo, ScriptFile, AnalysisQuery, AnalysisListItem };
+export type { AnalysisInfo, AnalysisCreateInfo, ScriptFile, AnalysisQuery, AnalysisListItem };

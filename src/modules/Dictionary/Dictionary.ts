@@ -1,14 +1,14 @@
 import * as Papa from "papaparse";
 
 import TagoIOModule from "../../common/TagoIOModule";
-import {
+import type { LanguageData } from "../Resources/dictionaries.types";
+import type {
+  IApplyToStringOptions,
   IDictionaryModuleParams,
+  IDictionaryModuleParamsAnonymous,
   IParsedExpression,
   IResolveExpressionParams,
-  IApplyToStringOptions,
-  IDictionaryModuleParamsAnonymous,
 } from "./dictionary.types";
-import { LanguageData } from "../Resources/dictionaries.types";
 
 // Regular expressions that are used for parsing the strings:
 // - SPLIT is used to split the string into normal words/phrases and expressions
@@ -50,18 +50,17 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
           },
         });
         return response;
-      } else {
-        const response = await TagoIOModule.doRequestAnonymous<LanguageData>(
-          {
-            path: `/dictionary/${this.runURL}/${dictionary}/${language}`,
-            method: "GET",
-            cacheTTL: 3600000,
-          },
-          this.params.region
-        );
-        return response;
       }
-    } catch (e) {
+      const response = await TagoIOModule.doRequestAnonymous<LanguageData>(
+        {
+          path: `/dictionary/${this.runURL}/${dictionary}/${language}`,
+          method: "GET",
+          cacheTTL: 3600000,
+        },
+        this.params.region
+      );
+      return response;
+    } catch (_e) {
       return null;
     }
   }
@@ -204,7 +203,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * const result = dictionary.applyToString("Words are ignored #TEST.DICT_KEY#");
    * ```
    */
-  public async applyToString(rawString: string, options?: IApplyToStringOptions): Promise<string> {
+  public async applyToString(rawString: string, _options?: IApplyToStringOptions): Promise<string> {
     const { language } = this;
 
     // Handling undefined strings is not this function's job
@@ -234,9 +233,8 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
         return params
           ? this.resolveExpression({ language, expression })
           : this.getValueFromKey(language, dictionary, key);
-      } else {
-        return token;
       }
+      return token;
     });
 
     let resultString: string;

@@ -38,7 +38,7 @@ describe("Pie widget - migration suite", () => {
      * Check if all the colors are different
      */
     // TODO(buildUpdate) Remove disabled rule and fix it
-    // eslint-disable-next-line array-callback-return
+
     newStructure.display.variables.map((e: any) => {
       expect(
         !displayVariables.find(
@@ -76,8 +76,8 @@ describe("Pie widget - migration suite", () => {
   it("correctly identifies when header_buttons or help is undefined", () => {
     // Testing when is just row or column deleted
     const copyOfOld1 = Object.assign({ ...oldWidget }, {});
-    delete copyOfOld1.display.header_buttons;
-    delete copyOfOld1.display.help;
+    copyOfOld1.display.header_buttons = undefined;
+    copyOfOld1.display.help = undefined;
 
     const newStructure1 = convert(copyOfOld1);
     expect(newStructure1.display).not.toBeFalsy();

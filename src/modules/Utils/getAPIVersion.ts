@@ -1,5 +1,5 @@
-import TagoIOModule, { GenericModuleParams, doRequestParams } from "../../common/TagoIOModule";
-import { Regions, RegionsObj } from "../../regions";
+import TagoIOModule, { type GenericModuleParams, type doRequestParams } from "../../common/TagoIOModule";
+import type { Regions, RegionsObj } from "../../regions";
 
 class GetAPIVersion extends TagoIOModule<GenericModuleParams> {
   public static async getVersion(region?: Regions | RegionsObj): Promise<string> {

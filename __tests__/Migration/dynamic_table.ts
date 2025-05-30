@@ -1,4 +1,4 @@
-import { dynamicTableConfig, convert, isOldStructure } from "../../src/modules/Migration/dynamic_table";
+import { convert, dynamicTableConfig, isOldStructure } from "../../src/modules/Migration/dynamic_table";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget1 = oldStructure.dynamicTableStructure;
@@ -285,8 +285,8 @@ describe("Dynamic table widget - migration suite", () => {
   it("correctly identifies when header_buttons or help is undefined", () => {
     // Testing when is just row or column deleted
     const copyOfOld1 = Object.assign({ ...oldWidget1 }, {});
-    delete copyOfOld1.display.header_buttons;
-    delete copyOfOld1.display.help;
+    copyOfOld1.display.header_buttons = undefined;
+    copyOfOld1.display.help = undefined;
 
     const newStructure1 = convert(copyOfOld1);
     expect(newStructure1.display).not.toBeFalsy();

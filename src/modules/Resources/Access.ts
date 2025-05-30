@@ -1,7 +1,7 @@
-import { GenericID } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID } from "../../common/common.types";
 import dateParser from "../Utils/dateParser";
-import { AccessCreateInfo, AccessInfo, AccessQuery } from "./access.types";
+import type { AccessCreateInfo, AccessInfo, AccessQuery } from "./access.types";
 
 class Access extends TagoIOModule<GenericModuleParams> {
   /**

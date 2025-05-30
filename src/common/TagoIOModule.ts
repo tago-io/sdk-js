@@ -1,8 +1,6 @@
-import { AxiosRequestConfig, Method } from "axios";
-import qs from "qs";
 import apiRequest from "../infrastructure/apiRequest";
-import regions, { Regions, RegionsObj } from "../regions";
-import { RefType, GenericID } from "./common.types";
+import regions, { type Regions, type RegionsObj } from "../regions";
+import type { GenericID, RefType, RequestConfig } from "./common.types";
 
 interface GenericModuleParams {
   token?: string;
@@ -33,11 +31,11 @@ interface AuthorizationModuleParams extends GenericModuleParams {
  */
 interface doRequestParams {
   path: string;
-  method: Method;
+  method: string;
   body?: any;
   params?: any;
   headers?: any;
-  overwriteAxiosConfig?: AxiosRequestConfig;
+  overwriteRequestConfig?: RequestConfig;
   maxContentLength?: number;
   /**
    * Cache for request
@@ -47,26 +45,24 @@ interface doRequestParams {
 }
 
 /**
- * Create a Object for Axios
+ * Create a Object for Request
  * @internal
  * @param uri URI
  * @param requestObj doRequestParams
  */
-function mountAxiosRequest(uri: string, requestObj: doRequestParams): AxiosRequestConfig {
-  const axiosObj: AxiosRequestConfig = {
+function mountRequestConfig(uri: string, requestObj: doRequestParams): RequestConfig {
+  const requestConfig: RequestConfig = {
     url: `${uri}${requestObj.path}`,
     method: requestObj.method,
     data: requestObj.body,
     params: requestObj.params,
-    maxContentLength: requestObj.maxContentLength,
-    paramsSerializer: (p) => qs.stringify(p),
     headers: {
       ...requestObj.headers,
     },
-    ...requestObj.overwriteAxiosConfig,
+    ...requestObj.overwriteRequestConfig,
   };
 
-  return axiosObj;
+  return requestConfig;
 }
 
 /**
@@ -102,13 +98,13 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
       throw new Error("Invalid region");
     }
 
-    const axiosObj = mountAxiosRequest(apiURI, requestObj);
-    axiosObj.headers = {
+    const requestConfig = mountRequestConfig(apiURI, requestObj);
+    requestConfig.headers = {
       token: this.params.token,
-      ...axiosObj.headers,
+      ...requestConfig.headers,
     };
 
-    const result = await apiRequest(axiosObj, requestObj.cacheTTL);
+    const result = await apiRequest(requestConfig, requestObj.cacheTTL);
 
     return result as Promise<TR>;
   }
@@ -122,16 +118,16 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
       throw new Error("Invalid region");
     }
 
-    const axiosObj = mountAxiosRequest(apiURI, requestObj);
+    const requestConfig = mountRequestConfig(apiURI, requestObj);
 
-    const result = await apiRequest(axiosObj, requestObj.cacheTTL);
+    const result = await apiRequest(requestConfig, requestObj.cacheTTL);
 
     return result as Promise<TR>;
   }
 }
 
 export default TagoIOModule;
-export {
+export type {
   GenericModuleParams,
   ShareModuleParams,
   doRequestParams,

@@ -1,7 +1,7 @@
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { GenericID } from "../../types";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID } from "../../types";
 import dateParser from "../Utils/dateParser";
-import { SecretsCreate, SecretsEdit, SecretsInfo, SecretsQuery } from "./secrets.type";
+import type { SecretsCreate, SecretsEdit, SecretsInfo, SecretsQuery } from "./secrets.type";
 
 class Secrets extends TagoIOModule<GenericModuleParams> {
   /**
@@ -76,7 +76,7 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
    */
   public async create(secretObj: SecretsCreate): Promise<{ id: GenericID }> {
     const result = await this.doRequest<{ id: GenericID }>({
-      path: `/secrets`,
+      path: "/secrets",
       method: "POST",
       body: {
         ...secretObj,

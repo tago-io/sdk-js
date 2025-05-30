@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old COMPOSE to new COMPOSE
 // ? ====================================================================================
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 import { removeHttpFromURL } from "./common/";
 
 export function convert(oldWidget: any): WidgetInfo {
@@ -71,7 +71,7 @@ export function convert(oldWidget: any): WidgetInfo {
 
         const colorConditions = [];
         const icon = oldDisplay.vars_icons?.[key] || null;
-        if (icon && icon?.url) {
+        if (icon?.url) {
           colorConditions.push({
             color: icon?.color ? icon.color : "rgb(49, 60, 70)",
             condition: "*",
