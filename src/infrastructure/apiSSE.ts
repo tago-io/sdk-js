@@ -29,7 +29,7 @@ async function loadEventSourceLib(): Promise<typeof EventSource> {
   }
 
   // @ts-expect-error EventSource types from DOMLib
-  return import("eventsource").then((x) => x?.default || x);
+  return import("eventsource").then((x) => x?.EventSource || x);
 }
 
 function formatChannel(configuration: OpenSSEConfig) {

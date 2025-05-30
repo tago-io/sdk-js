@@ -1,6 +1,6 @@
 {
   "name": "@tago-io/sdk",
-  "version": "11.3.9",
+  "version": "11.3.10",
   "description": "TagoIO SDK for JavaScript in the browser and Node.js",
   "author": "TagoIO Inc.",
   "homepage": "https://tago.io",
@@ -64,6 +64,6 @@
     "socket.io-client": "4.7.5"
   },
   "optionalDependencies": {
-    "eventsource": "2.0.2"
+    "eventsource": "4.0.0"
   }
 }

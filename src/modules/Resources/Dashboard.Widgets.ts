@@ -1,4 +1,4 @@
-import { Data, GenericID, GenericToken } from "../../common/common.types";
+import { GenericID, GenericIDPair, GenericToken } from "../../common/common.types";
 import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import {
   EditDataModel,
@@ -206,28 +206,28 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes specific data points from the widget by their IDs.
+   * @description Removes multiple data items from the widget by pairs of data ID and resource ID.
    *
    * @example
    * ```typescript
    * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
-   * const result = await resources.dashboards.widgets.deleteData(
-   *   "dashboard-id-123", "widget-id-456", "data-id-789", "device-id-123"
+   * const result = await resources.dashboards.widgets.deleteMultipleData(
+   *   "dashboard-id",
+   *   "widget-id",
+   *   [
+   *     "data_1-id:device_A-id",
+   *     "data_2-id:device_A-id",
+   *     "data_3-id:device_B-id",
+   *   ]
    * );
-   * console.log(result); // Widget Data Removed
    * ```
    */
-  public async deleteData(
-    dashboardID: GenericID,
-    widgetID: GenericID,
-    variableID: GenericID,
-    deviceID: GenericID
-  ): Promise<string> {
+  public async deleteData(dashboardID: GenericID, widgetID: GenericID, idPairs: GenericIDPair[]): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/data/${dashboardID}/${widgetID}`,
       method: "DELETE",
       params: {
-        ids: `${variableID}:${deviceID}`,
+        ids: idPairs,
       },
     });
 

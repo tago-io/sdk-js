@@ -115,6 +115,12 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
       method: "GET",
     }).catch((_) => undefined);
 
+    setInterval(() => {
+      if (sse.OPEN === sse.readyState) {
+        sse.dispatchEvent(new Event("keep-alive"));
+      }
+    }, 15000); // 15 seconds
+
     if (!analysis) {
       console.error("¬ Error :: Analysis not found or not active.");
       return;
@@ -131,7 +137,7 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
 
     const tokenEnd = this.params.token.slice(-5);
 
-    sse.onmessage = (event) => {
+    sse.addEventListener("message", (event) => {
       const data = JSONParseSafe(event?.data, {})?.payload;
 
       if (!data) {
@@ -140,17 +146,17 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
       }
 
       this.runLocal(data.environment, data.data, data.analysis_id, data.token);
-    };
+    });
 
-    sse.onerror = (_error) => {
+    sse.addEventListener("error", (err) => {
       // console.debug(_error);
       console.error("¬ Connection was closed, trying to reconnect...");
-    };
+    });
 
-    sse.onopen = () => {
+    sse.addEventListener("open", () => {
       console.info(`\n¬ Connected to TagoIO :: Analysis [${analysis.name}](${tokenEnd}) is ready.`);
       console.info("¬ Waiting for analysis trigger...\n");
-    };
+    });
   }
 
   public static use(analysis: analysisFunction, params?: AnalysisConstructorParams) {
