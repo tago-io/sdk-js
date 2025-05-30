@@ -1,4 +1,4 @@
-import { OTPType } from "../types";
+import type { OTPType } from "../types";
 
 /**
  * Request configuration interface for API requests (replaces AxiosRequestConfig)
@@ -191,7 +191,7 @@ interface TokenData {
 interface ListTokenQuery
   extends Query<TokenDataList, "name" | "permission" | "serie_number" | "verification_code" | "created_at"> {}
 
-export {
+export type {
   Data,
   DataCreate,
   DataEdit,

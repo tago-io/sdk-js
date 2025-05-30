@@ -1,6 +1,6 @@
-import { GenericID, GenericToken, ListTokenQuery, TokenData } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import {
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID, GenericToken, ListTokenQuery, TokenData } from "../../common/common.types";
+import type {
   NetworkCreateInfo,
   NetworkInfo,
   NetworkQuery,

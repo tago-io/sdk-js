@@ -1,4 +1,5 @@
-import { WidgetInfo } from "../Resources/dashboards.types";
+import TagoIOModule from "../../common/TagoIOModule";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 import { convert as convertAngular, isOldStructure as isOldStructureAngular } from "./angular";
 import { convert as convertAreaChart, isOldStructure as isOldStructureAreaChart } from "./areachart";
 import { convert as convertCard, isOldStructure as isOldStructureCard } from "./card";
@@ -19,8 +20,8 @@ import { convert as convertIcon, isOldStructure as isOldStructureIcon } from "./
 import { convert as convertImage, isOldStructure as isOldStructureImage } from "./image";
 import {
   convert as convertImageMarker,
-  isOldStructure as isOldStructureImageMarker,
   convertLayerData,
+  isOldStructure as isOldStructureImageMarker,
 } from "./imagemarker";
 import { convert as convertInputControl, isOldStructure as isOldStructureInputControl } from "./inputcontrol";
 import { convert as convertInputForm, isOldStructure as isOldStructureInputForm } from "./inputform";
@@ -45,7 +46,6 @@ import {
 } from "./verticalbarchart";
 import { convert as convertVideo, isOldStructure as isOldStructureVideo } from "./video";
 import { convert as convertVuMeter, isOldStructure as isOldStructureVuMeter } from "./vumeter";
-import TagoIOModule from "../../common/TagoIOModule";
 
 class Migration extends TagoIOModule<any> {
   public static convertImagerMarkerData(widget: any, widgetData: any) {

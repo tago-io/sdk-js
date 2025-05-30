@@ -1,10 +1,10 @@
-import { chunk } from "../../common/chunk";
-import { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
-import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
-import { ConfigurationParams } from "../Resources/devices.types";
+import { chunk } from "../../common/chunk";
+import type { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
+import sleep from "../../common/sleep";
+import type { ConfigurationParams } from "../Resources/devices.types";
 import dateParser from "../Utils/dateParser";
-import {
+import type {
   DataQuery,
   DataQueryAggregate,
   DataQueryDefault,
@@ -249,8 +249,8 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     }
 
     const qty: number = Math.ceil(poolingRecordQty);
-    let skip: number = 0;
-    let stop: boolean = false;
+    let skip = 0;
+    let stop = false;
 
     while (!stop) {
       await sleep(poolingTime);

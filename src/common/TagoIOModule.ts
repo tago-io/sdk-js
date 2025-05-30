@@ -1,6 +1,6 @@
 import apiRequest from "../infrastructure/apiRequest";
-import regions, { Regions, RegionsObj } from "../regions";
-import { RefType, GenericID, RequestConfig } from "./common.types";
+import regions, { type Regions, type RegionsObj } from "../regions";
+import type { GenericID, RefType, RequestConfig } from "./common.types";
 
 interface GenericModuleParams {
   token?: string;
@@ -127,7 +127,7 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
 }
 
 export default TagoIOModule;
-export {
+export type {
   GenericModuleParams,
   ShareModuleParams,
   doRequestParams,

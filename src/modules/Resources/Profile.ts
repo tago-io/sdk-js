@@ -1,4 +1,5 @@
-import {
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type {
   Authenticator,
   GenericID,
   GenericToken,
@@ -7,9 +8,8 @@ import {
   TokenData,
   TokenDataList,
 } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import { BillingAddOn } from "./billing.types";
+import type { BillingAddOn } from "./billing.types";
 
 import type {
   AddonInfo,

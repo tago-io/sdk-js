@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old MAP to new MAP
 // ? ====================================================================================
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 import { convertFormula, convertInterval } from "./common/";
 
 function isValidMode(mode: string): boolean {

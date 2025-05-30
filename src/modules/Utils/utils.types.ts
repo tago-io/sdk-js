@@ -25,4 +25,4 @@ interface DownlinkOptions {
   confirmed?: boolean;
 }
 
-export { QRCodeFormat, UploadFileOptions, DownlinkOptions };
+export type { QRCodeFormat, UploadFileOptions, DownlinkOptions };

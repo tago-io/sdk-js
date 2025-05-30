@@ -1,4 +1,4 @@
-import { LanguageData } from "../../../src/modules/Account/dictionaries.types";
+import type { LanguageData } from "../../../src/modules/Account/dictionaries.types";
 
 interface IMockLanguageData {
   [slug: string]: LanguageData;

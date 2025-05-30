@@ -1,11 +1,11 @@
-import config from "../config";
-import sleep from "../common/sleep";
-import isBrowser from "./isBrowser";
-import envParams from "./envParams.json";
 import qs from "qs";
-import { addRequestInProgress, isRequestInProgress, removeRequestInProgress } from "../common/RequestInProgress";
 import { addCache, getCache } from "../common/Cache";
-import { RequestConfig } from "../common/common.types";
+import { addRequestInProgress, isRequestInProgress, removeRequestInProgress } from "../common/RequestInProgress";
+import type { RequestConfig } from "../common/common.types";
+import sleep from "../common/sleep";
+import config from "../config";
+import envParams from "./envParams.json";
+import isBrowser from "./isBrowser";
 
 interface ResponseData {
   data: any;

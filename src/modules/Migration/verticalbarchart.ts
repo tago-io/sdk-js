@@ -3,7 +3,7 @@
 //     Migration of old VARTICAL BAR CHART to new VERTICAL BAR CHART
 // ? ====================================================================================
 
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 import { chartColors, convertDownsample, convertFormula, convertInterval } from "./common";
 
 export function convert(oldWidget: any): WidgetInfo {

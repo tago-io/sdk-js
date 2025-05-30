@@ -1,7 +1,7 @@
-import express, { Express } from "express";
-import http from "http";
+import type http from "http";
+import type { AddressInfo } from "net";
+import express, { type Express } from "express";
 import { Authorization } from "../../src/modules";
-import { AddressInfo } from "net";
 
 jest.setTimeout(3000);
 

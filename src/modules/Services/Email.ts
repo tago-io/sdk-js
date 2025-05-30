@@ -1,4 +1,4 @@
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
 
 interface AttachmentOptions {
   /** Archive itself */

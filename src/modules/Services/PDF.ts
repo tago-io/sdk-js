@@ -1,4 +1,4 @@
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
 
 interface PDFResult {
   status: boolean;
@@ -115,4 +115,4 @@ class PDFService extends TagoIOModule<GenericModuleParams> {
 }
 
 export default PDFService;
-export { PDFParams };
+export type { PDFParams };

@@ -1,7 +1,7 @@
-import { GenericID, GenericToken } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID, GenericToken } from "../../common/common.types";
 import dateParser from "../Utils/dateParser";
-import { NotificationCreate, NotificationInfo, NotificationQuery } from "./notifications.types";
+import type { NotificationCreate, NotificationInfo, NotificationQuery } from "./notifications.types";
 
 class Notifications extends TagoIOModule<GenericModuleParams> {
   /**

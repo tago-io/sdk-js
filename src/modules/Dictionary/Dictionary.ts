@@ -1,14 +1,14 @@
 import * as Papa from "papaparse";
 
 import TagoIOModule from "../../common/TagoIOModule";
-import {
+import type { LanguageData } from "../Resources/dictionaries.types";
+import type {
+  IApplyToStringOptions,
   IDictionaryModuleParams,
+  IDictionaryModuleParamsAnonymous,
   IParsedExpression,
   IResolveExpressionParams,
-  IApplyToStringOptions,
-  IDictionaryModuleParamsAnonymous,
 } from "./dictionary.types";
-import { LanguageData } from "../Resources/dictionaries.types";
 
 // Regular expressions that are used for parsing the strings:
 // - SPLIT is used to split the string into normal words/phrases and expressions

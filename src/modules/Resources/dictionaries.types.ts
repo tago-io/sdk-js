@@ -1,4 +1,4 @@
-import { GenericID, Query } from "../../common/common.types";
+import type { GenericID, Query } from "../../common/common.types";
 
 interface DictionaryCreateInfo {
   name: string;
@@ -35,4 +35,11 @@ interface LanguageInfoQuery {
 
 type DictionaryQuery = Query<DictionaryInfo, "name" | "slug" | "languages" | "fallback" | "created_at" | "updated_at">;
 
-export { DictionaryCreateInfo, DictionaryInfo, LanguageInfoQuery, DictionaryQuery, LanguageData, LanguageEditData };
+export type {
+  DictionaryCreateInfo,
+  DictionaryInfo,
+  LanguageInfoQuery,
+  DictionaryQuery,
+  LanguageData,
+  LanguageEditData,
+};

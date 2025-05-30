@@ -1,4 +1,4 @@
-import { GenericID, TagsObj, Query } from "../../common/common.types";
+import type { GenericID, Query, TagsObj } from "../../common/common.types";
 
 interface Permissions {
   effect: "allow" | "deny";
@@ -24,4 +24,4 @@ interface AccessInfo extends AccessCreateInfo {
 
 type AccessQuery = Query<AccessInfo, "name" | "active" | "created_at" | "updated_at">;
 
-export { AccessCreateInfo, AccessInfo, AccessQuery, Permissions };
+export type { AccessCreateInfo, AccessInfo, AccessQuery, Permissions };

@@ -1,7 +1,7 @@
-import { TagoContext } from "../../Analysis/analysis.types";
-import Device from "../../Device/Device";
-import Account from "../../Resources/AccountDeprecated";
-import { UserCreateInfo } from "../../Resources/run.types";
+import type { TagoContext } from "../../Analysis/analysis.types";
+import type Device from "../../Device/Device";
+import type Account from "../../Resources/AccountDeprecated";
+import type { UserCreateInfo } from "../../Resources/run.types";
 
 /**
  * User List scope to be used in your analysis
@@ -73,4 +73,4 @@ interface RouterConstructor {
   context?: TagoContext;
 }
 
-export { RouterConstructor, UserListScope, DeviceListScope, CustomBtnScope };
+export type { RouterConstructor, UserListScope, DeviceListScope, CustomBtnScope };

@@ -1,15 +1,15 @@
-import { ExpireTimeOption, GenericID } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { ExpireTimeOption, GenericID } from "../../common/common.types";
+import dateParser from "../Utils/dateParser";
 import Widgets from "./Dashboard.Widgets";
-import {
+import type {
+  AnalysisRelated,
   DashboardCreateInfo,
   DashboardInfo,
   DashboardQuery,
   DevicesRelated,
-  AnalysisRelated,
   PublicKeyResponse,
 } from "./dashboards.types";
-import dateParser from "../Utils/dateParser";
 
 class Dashboards extends TagoIOModule<GenericModuleParams> {
   /**

@@ -1,4 +1,4 @@
-import { RouterConstructor } from "./router";
+import type { RouterConstructor } from "./router";
 
 class RouterService {
   private serviceFunction: Function;

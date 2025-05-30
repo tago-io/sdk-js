@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old GRAINBIN to new GRAINBIN
 // ? ====================================================================================
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};

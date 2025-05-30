@@ -1,5 +1,5 @@
-import { RequestConfig } from "./common.types";
 import { generateRequestID } from "./HashGenerator";
+import type { RequestConfig } from "./common.types";
 
 const requestsInProgress = new Set<number>();
 

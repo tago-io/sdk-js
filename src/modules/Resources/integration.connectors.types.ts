@@ -1,4 +1,4 @@
-import { GenericID, Query, TokenData as _TokenData } from "../../common/common.types";
+import { type GenericID, type Query, TokenData as _TokenData } from "../../common/common.types";
 
 interface IDeviceParameters {
   name?: string;
@@ -55,4 +55,4 @@ type ConnectorQuery = Query<
   | "networks"
 >;
 
-export { ConnectorInfo, ConnectorCreateInfo, ConnectorQuery };
+export type { ConnectorInfo, ConnectorCreateInfo, ConnectorQuery };

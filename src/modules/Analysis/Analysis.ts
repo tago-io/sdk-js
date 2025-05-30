@@ -1,9 +1,9 @@
-import TagoIOModule from "../../common/TagoIOModule";
-import ConsoleService from "../Services/Console";
-import { openSSEListening } from "../../infrastructure/apiSSE";
-import { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment } from "./analysis.types";
 import { JSONParseSafe } from "../../common/JSONParseSafe";
+import TagoIOModule from "../../common/TagoIOModule";
+import { openSSEListening } from "../../infrastructure/apiSSE";
 import getRegionObj, { setRuntimeRegion } from "../../regions";
+import ConsoleService from "../Services/Console";
+import type { AnalysisConstructorParams, AnalysisEnvironment, analysisFunction } from "./analysis.types";
 
 /**
  * This class is used to instance an analysis

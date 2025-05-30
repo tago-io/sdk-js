@@ -1,19 +1,19 @@
-import { GenericID, GenericToken } from "../../common/common.types";
-import TagoIOModule, { doRequestParams, GenericModuleParams } from "../../common/TagoIOModule";
-import { Regions, RegionsObj } from "../../regions";
-import { NotificationInfo, NotificationQuery } from "../Resources/notifications.types";
-import { OTPType } from "../Resources/account.types";
+import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID, GenericToken } from "../../common/common.types";
+import type { Regions, RegionsObj } from "../../regions";
+import type { OTPType } from "../Resources/account.types";
+import type { NotificationInfo, NotificationQuery } from "../Resources/notifications.types";
 import dateParser from "../Utils/dateParser";
-import {
-  RunNotificationInfo as _RunNotificationInfo,
-  RunUserCreateInfo,
-  RunUserCreate,
-  RunUserInfo,
-  RunUserLogin,
-  RunUserLoginResponse,
-  RunUserCredentials,
-} from "./runUser.types";
 import SDB from "./SDB";
+import {
+  type RunUserCreate,
+  type RunUserCreateInfo,
+  type RunUserCredentials,
+  type RunUserInfo,
+  type RunUserLogin,
+  type RunUserLoginResponse,
+  RunNotificationInfo as _RunNotificationInfo,
+} from "./runUser.types";
 
 class RunUser extends TagoIOModule<GenericModuleParams> {
   /**

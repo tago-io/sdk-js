@@ -1,5 +1,5 @@
-import { Data, ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
-import { BucketDeviceInfo } from "./buckets.types";
+import type { Data, ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
+import type { BucketDeviceInfo } from "./buckets.types";
 
 interface Arrangement {
   widget_id: string;
@@ -162,7 +162,7 @@ type widgetOverwrite = {
   [key in widgetOverwriteOptions]: any;
 };
 
-export {
+export type {
   DashboardQuery,
   PublicKeyResponse,
   DevicesRelated,

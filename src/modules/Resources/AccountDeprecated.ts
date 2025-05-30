@@ -1,4 +1,5 @@
 import Access from "./Access";
+import Account from "./Account";
 import Actions from "./Actions";
 import Analyses from "./Analyses";
 import Billing from "./Billing";
@@ -7,6 +8,7 @@ import Dashboards from "./Dashboards";
 import Devices from "./Devices";
 import Dictionaries from "./Dictionaries";
 import Files from "./Files";
+import Integration from "./Integration";
 import Notifications from "./Notifications";
 import PaymentHistory from "./PaymentHistory";
 import PaymentMethods from "./PaymentMethods";
@@ -14,11 +16,9 @@ import Plan from "./Plan";
 import Profile from "./Profile";
 import Run from "./Run";
 import ServiceAuthorization from "./ServiceAuthorization";
+import TagoCores from "./TagoCores";
 import Tags from "./Tags";
 import Template from "./Template";
-import Integration from "./Integration";
-import TagoCores from "./TagoCores";
-import Account from "./Account";
 
 /**
  * @internal

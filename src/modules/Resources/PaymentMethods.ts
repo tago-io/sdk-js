@@ -1,5 +1,5 @@
-import { GenericID, GenericToken } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID, GenericToken } from "../../common/common.types";
 
 interface PaymentMethodCreateInfo {
   name: string;

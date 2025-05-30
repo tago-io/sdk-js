@@ -1,9 +1,9 @@
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 
-import { GenericID } from "../../common/common.types";
-import { EntityCreateInfo, EntityData, EntityDataQuery, EntityInfo } from "./entities.types";
-import { EntityListItem, EntityQuery, EntitySchema, EntityUnknownData } from "./entities.types";
+import type { GenericID } from "../../common/common.types";
+import type { EntityCreateInfo, EntityData, EntityDataQuery, EntityInfo } from "./entities.types";
+import type { EntityListItem, EntityQuery, EntitySchema, EntityUnknownData } from "./entities.types";
 
 class Entities extends TagoIOModule<GenericModuleParams> {
   /**

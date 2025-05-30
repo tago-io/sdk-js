@@ -1,9 +1,9 @@
 import FormData from "form-data";
-import { GenericID } from "../../common/common.types";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import {
+import type {
   Base64File,
   CopyFiles,
   FileListInfo,
@@ -340,7 +340,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
         ...(options?.blueprint_devices?.length > 0 && { blueprint_devices: options.blueprint_devices }),
       },
       body: form,
-      maxContentLength: Infinity,
+      maxContentLength: Number.POSITIVE_INFINITY,
       headers,
     });
 
@@ -392,7 +392,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   async _completeMultipartUpload(
     filename: string,
     uploadID: string,
-    parts: { ETag: String; PartNumber: number }[],
+    parts: { ETag: string; PartNumber: number }[],
     options?: UploadOptions
   ) {
     const { fieldId } = options || {};

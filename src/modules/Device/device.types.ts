@@ -1,5 +1,5 @@
-import { Data, DataCreate, DataEdit, GenericID, GenericToken, TagsObj } from "../../common/common.types";
-import { Regions, RegionsObj } from "../../regions";
+import type { Data, DataCreate, DataEdit, GenericID, GenericToken, TagsObj } from "../../common/common.types";
+import type { Regions, RegionsObj } from "../../regions";
 
 interface DeviceItem {
   id: GenericID;
@@ -175,7 +175,7 @@ type ListResponse = DeviceItem[];
 
 type DataQueryNumberResponse = Pick<Data, "time"> & { value: number };
 
-export {
+export type {
   DeviceConstructorParams,
   DeviceItem,
   DataToSend,

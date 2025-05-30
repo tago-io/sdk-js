@@ -1,5 +1,5 @@
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { Base64 } from "../../common/common.types";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { Base64 } from "../../common/common.types";
 
 interface ArchiveFile {
   name: string;

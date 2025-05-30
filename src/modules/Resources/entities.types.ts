@@ -1,4 +1,4 @@
-import { GenericID, Query, TagsObj } from "../../common/common.types";
+import type { GenericID, Query, TagsObj } from "../../common/common.types";
 
 type EntityFieldType = "uuid" | "string" | "int" | "float" | "json" | "timestamp" | "text" | "boolean";
 
@@ -74,7 +74,7 @@ type EntityUnknownData = {
   [field: string]: any;
 };
 
-export {
+export type {
   EntityIndex,
   EntitySchema,
   EntityFieldType,

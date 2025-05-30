@@ -1,6 +1,6 @@
 import Account from "../Resources/AccountDeprecated";
 import Resources from "../Resources/Resources";
-import { DownlinkOptions } from "./utils.types";
+import type { DownlinkOptions } from "./utils.types";
 
 interface DownlinkError {
   response?: {

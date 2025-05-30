@@ -1,5 +1,12 @@
-import { ExpireTimeOption, GenericID, GenericToken, PermissionOption, Query, TagsObj } from "../../common/common.types";
-import { DataStorageType } from "./buckets.types";
+import type {
+  ExpireTimeOption,
+  GenericID,
+  GenericToken,
+  PermissionOption,
+  Query,
+  TagsObj,
+} from "../../common/common.types";
+import type { DataStorageType } from "./buckets.types";
 
 interface DeviceQuery
   extends Query<DeviceInfo, "name" | "visible" | "active" | "last_input" | "created_at" | "updated_at"> {
@@ -246,7 +253,7 @@ interface DeviceChunkCopyResponse {
   status: "scheduled";
 }
 
-export {
+export type {
   DeviceQuery,
   DeviceCreateInfo,
   ConfigurationParams,

@@ -1,13 +1,13 @@
-import { GenericID } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID } from "../../common/common.types";
 import dateParser from "../Utils/dateParser";
-import {
-  TemplateObjDashboard,
-  TemplateObjAnalysis,
-  TemplateInstallDashboard,
+import type {
   TemplateInstallAnalysis,
-  TemplateObj,
+  TemplateInstallDashboard,
   TemplateInstallReturn,
+  TemplateObj,
+  TemplateObjAnalysis,
+  TemplateObjDashboard,
 } from "./template.types";
 
 type TemplateInstallParams = TemplateInstallDashboard | TemplateInstallAnalysis;

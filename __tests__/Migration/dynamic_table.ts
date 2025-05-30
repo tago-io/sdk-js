@@ -1,4 +1,4 @@
-import { dynamicTableConfig, convert, isOldStructure } from "../../src/modules/Migration/dynamic_table";
+import { convert, dynamicTableConfig, isOldStructure } from "../../src/modules/Migration/dynamic_table";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget1 = oldStructure.dynamicTableStructure;

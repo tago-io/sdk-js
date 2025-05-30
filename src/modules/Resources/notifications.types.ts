@@ -1,4 +1,4 @@
-import { GenericID, Query } from "../../common/common.types";
+import type { GenericID, Query } from "../../common/common.types";
 
 interface NotificationTriggerAnalysis {
   analysis_id: GenericID;
@@ -43,7 +43,7 @@ interface NotificationCreate {
 type NotificationQuery = Query<{ read: boolean }, "created_at">;
 type NotificationInfo = { id: GenericID; created_at: Date } & Required<NotificationCreate>;
 
-export {
+export type {
   NotificationCreate,
   NotificationQuery,
   NotificationInfo,

@@ -1,4 +1,4 @@
-import { GenericID, TagsObj, Query } from "../../common/common.types";
+import type { GenericID, Query, TagsObj } from "../../common/common.types";
 
 type ExportBucket = {
   id: string;
@@ -99,7 +99,7 @@ interface ListVariablesOptions {
 
 type BucketQuery = Query<BucketInfo, "name" | "visible" | "data_retention" | "created_at" | "updated_at">;
 
-export {
+export type {
   BucketInfo,
   BucketCreateInfo,
   VariablesInfo,

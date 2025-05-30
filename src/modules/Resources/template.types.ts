@@ -1,4 +1,4 @@
-import { GenericID } from "../../common/common.types";
+import type { GenericID } from "../../common/common.types";
 
 interface TemplateObjDashboard {
   dashboard: GenericID;
@@ -44,7 +44,7 @@ interface TemplateInstallReturn {
   analysis?: string;
 }
 
-export {
+export type {
   TemplateObjDashboard,
   TemplateObjAnalysis,
   TemplateInstallDashboard,
