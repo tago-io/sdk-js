@@ -76,26 +76,34 @@ class Migration extends TagoIOModule<any> {
       case "gauge":
         if (gauge_type === "angular") {
           return true;
-        } else if (gauge_type === "solid") {
+        }
+        if (gauge_type === "solid") {
           return true;
-        } else if (gauge_type === "clock") {
+        }
+        if (gauge_type === "clock") {
           return true;
-        } else if (gauge_type === "vu_meter") {
+        }
+        if (gauge_type === "vu_meter") {
           return true;
-        } else if (gauge_type === "dial") {
+        }
+        if (gauge_type === "dial") {
           return true;
         }
         return false;
       case "chart":
         if (chart_type === "spline") {
           return true;
-        } else if (chart_type === "area") {
+        }
+        if (chart_type === "area") {
           return true;
-        } else if (chart_type === "bar_horizontal") {
+        }
+        if (chart_type === "bar_horizontal") {
           return true;
-        } else if (chart_type === "bar_vertical") {
+        }
+        if (chart_type === "bar_vertical") {
           return true;
-        } else if (chart_type === "multiple_axis") {
+        }
+        if (chart_type === "multiple_axis") {
           return true;
         }
         return false;
@@ -122,11 +130,14 @@ class Migration extends TagoIOModule<any> {
       case "layer":
         if (layer_type === "heat_map") {
           return true;
-        } else if (layer_type === "image_marker") {
+        }
+        if (layer_type === "image_marker") {
           return true;
-        } else if (layer_type === "compose") {
+        }
+        if (layer_type === "compose") {
           return true;
-        } else if (layer_type === "virtualization_layer") {
+        }
+        if (layer_type === "virtualization_layer") {
           return true;
         }
         return false;
@@ -165,26 +176,34 @@ class Migration extends TagoIOModule<any> {
       case "gauge":
         if (gauge_type === "angular") {
           return isOldStructureAngular(widget);
-        } else if (gauge_type === "solid") {
+        }
+        if (gauge_type === "solid") {
           return isOldStructureSolid(widget);
-        } else if (gauge_type === "clock") {
+        }
+        if (gauge_type === "clock") {
           return isOldStructureClock(widget);
-        } else if (gauge_type === "vu_meter") {
+        }
+        if (gauge_type === "vu_meter") {
           return isOldStructureVuMeter(widget);
-        } else if (gauge_type === "dial") {
+        }
+        if (gauge_type === "dial") {
           return isOldStructureDial(widget);
         }
         return widget;
       case "chart":
         if (chart_type === "spline") {
           return isOldStructureLineChart(widget);
-        } else if (chart_type === "area") {
+        }
+        if (chart_type === "area") {
           return isOldStructureAreaChart(widget);
-        } else if (chart_type === "bar_horizontal") {
+        }
+        if (chart_type === "bar_horizontal") {
           return isOldStructureHorizontalBarChart(widget);
-        } else if (chart_type === "bar_vertical") {
+        }
+        if (chart_type === "bar_vertical") {
           return isOldStructureVerticalBarChart(widget);
-        } else if (chart_type === "multiple_axis") {
+        }
+        if (chart_type === "multiple_axis") {
           return isOldStructureMultipleAxisChart(widget);
         }
         return widget;
@@ -214,11 +233,14 @@ class Migration extends TagoIOModule<any> {
       case "layer":
         if (layer_type === "heat_map") {
           return isOldStructureHeatMap(widget);
-        } else if (layer_type === "image_marker") {
+        }
+        if (layer_type === "image_marker") {
           return isOldStructureImageMarker(widget);
-        } else if (layer_type === "compose") {
+        }
+        if (layer_type === "compose") {
           return isOldStructureCompose(widget);
-        } else if (layer_type === "virtualization_layer") {
+        }
+        if (layer_type === "virtualization_layer") {
           return isOldStructureCompose(widget);
         }
         return widget;
@@ -254,26 +276,34 @@ class Migration extends TagoIOModule<any> {
       case "gauge":
         if (gauge_type === "angular") {
           return convertAngular(widget);
-        } else if (gauge_type === "solid") {
+        }
+        if (gauge_type === "solid") {
           return convertSolid(widget);
-        } else if (gauge_type === "clock") {
+        }
+        if (gauge_type === "clock") {
           return convertClock(widget);
-        } else if (gauge_type === "vu_meter") {
+        }
+        if (gauge_type === "vu_meter") {
           return convertVuMeter(widget);
-        } else if (gauge_type === "dial") {
+        }
+        if (gauge_type === "dial") {
           return convertDial(widget);
         }
         return widget;
       case "chart":
         if (chart_type === "spline") {
           return convertLineChart(widget);
-        } else if (chart_type === "area") {
+        }
+        if (chart_type === "area") {
           return convertAreaChart(widget);
-        } else if (chart_type === "bar_horizontal") {
+        }
+        if (chart_type === "bar_horizontal") {
           return convertHorizontalBarChart(widget);
-        } else if (chart_type === "bar_vertical") {
+        }
+        if (chart_type === "bar_vertical") {
           return convertVerticalBarChart(widget);
-        } else if (chart_type === "multiple_axis") {
+        }
+        if (chart_type === "multiple_axis") {
           return convertMultipleAxisChart(widget);
         }
         return widget;
@@ -303,11 +333,14 @@ class Migration extends TagoIOModule<any> {
       case "layer":
         if (layer_type === "heat_map") {
           return convertHeatMap(widget);
-        } else if (layer_type === "image_marker") {
+        }
+        if (layer_type === "image_marker") {
           return convertImageMarker(widget);
-        } else if (layer_type === "compose") {
+        }
+        if (layer_type === "compose") {
           return convertCompose(widget);
-        } else if (layer_type === "virtualization_layer") {
+        }
+        if (layer_type === "virtualization_layer") {
           return convertCompose(widget);
         }
         return widget;

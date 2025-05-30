@@ -50,17 +50,16 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
           },
         });
         return response;
-      } else {
-        const response = await TagoIOModule.doRequestAnonymous<LanguageData>(
-          {
-            path: `/dictionary/${this.runURL}/${dictionary}/${language}`,
-            method: "GET",
-            cacheTTL: 3600000,
-          },
-          this.params.region
-        );
-        return response;
       }
+      const response = await TagoIOModule.doRequestAnonymous<LanguageData>(
+        {
+          path: `/dictionary/${this.runURL}/${dictionary}/${language}`,
+          method: "GET",
+          cacheTTL: 3600000,
+        },
+        this.params.region
+      );
+      return response;
     } catch (_e) {
       return null;
     }
@@ -234,9 +233,8 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
         return params
           ? this.resolveExpression({ language, expression })
           : this.getValueFromKey(language, dictionary, key);
-      } else {
-        return token;
       }
+      return token;
     });
 
     let resultString: string;

@@ -116,7 +116,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
     };
 
     const result = await this.doRequest<{ id: GenericID }>({
-      path: `/profile/`,
+      path: "/profile/",
       method: "POST",
       body: profileObj,
       params,

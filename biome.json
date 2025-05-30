@@ -72,6 +72,33 @@
           }
         }
       }
+    },
+    {
+      "include": [
+        "src/modules/Migration/**/*.ts",
+        "src/modules/Utils/router/**/*.ts",
+        "src/modules/Resources/*.types.ts",
+        "src/common/**/*.ts",
+        "src/infrastructure/**/*.ts",
+        "src/modules/Analysis/**/*.ts",
+        "src/modules/Utils/sendDownlink.ts",
+        "src/modules/Utils/updateMultipleDropdown.ts",
+        "src/modules/Dictionary/**/*.ts",
+        "src/modules/Network/**/*.ts",
+        "src/modules/Resources/**/*.ts",
+        "src/modules/Services/**/*.ts",
+        "src/modules/RunUser/**/*.ts"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off"
+          },
+          "complexity": {
+            "noBannedTypes": "off"
+          }
+        }
+      }
     }
   ],
   "javascript": {

@@ -148,8 +148,8 @@ interface DeviceTokenData {
   network_id: GenericID;
   name: string;
   permission: PermissionOption;
-  serie_number: string | void;
-  last_authorization: string | void;
+  serie_number: string | undefined;
+  last_authorization: string | undefined;
   expire_time: ExpireTimeOption;
   created_at: string;
 }

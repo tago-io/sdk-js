@@ -76,7 +76,7 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
    */
   public async create(secretObj: SecretsCreate): Promise<{ id: GenericID }> {
     const result = await this.doRequest<{ id: GenericID }>({
-      path: `/secrets`,
+      path: "/secrets",
       method: "POST",
       body: {
         ...secretObj,

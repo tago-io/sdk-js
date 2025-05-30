@@ -283,7 +283,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   private async createMultipartUpload(filename: string, options?: UploadOptions) {
     const { dashboard, widget, fieldId, isPublic: _isPublic, contentType } = options || {};
 
-    const path = dashboard && widget ? `/data/files/${dashboard}/${widget}` : `/files`;
+    const path = dashboard && widget ? `/data/files/${dashboard}/${widget}` : "/files";
 
     const result = await this.doRequest<any>({
       path,
@@ -315,7 +315,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   ) {
     const { fieldId } = options || {};
     const path =
-      options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
+      options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : "/files";
 
     const form = new FormData();
     form.append("filename", filename);
@@ -397,7 +397,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   ) {
     const { fieldId } = options || {};
     const path =
-      options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
+      options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : "/files";
 
     const partsOrdered = parts.sort((a, b) => a.PartNumber - b.PartNumber);
 
@@ -440,7 +440,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * ```
    */
   public async uploadFile(file: Buffer | Blob, filename: string, options?: UploadOptions) {
-    const MB = Math.pow(2, 20);
+    const MB = 2 ** 20;
 
     let cancelled = false;
     if (options?.onCancelToken) {

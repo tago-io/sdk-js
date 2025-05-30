@@ -25,7 +25,7 @@ const regionsDefinition = {
     api: "https://api.eu-w1.tago.io",
     sse: "https://sse.eu-w1.tago.io/events",
   },
-  env: undefined as void, // ? process object should be on trycatch.
+  env: undefined as undefined, // ? process object should be on trycatch.
 };
 
 let runtimeRegion: RegionsObj | undefined;
@@ -36,13 +36,17 @@ let runtimeRegion: RegionsObj | undefined;
  * @param region Region
  */
 function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
-  // @ts-expect-error Fallback
-  if (region === "usa-1") {
-    region = "us-e1";
+  let normalizedRegion = region;
+  if (typeof normalizedRegion === "string" && (normalizedRegion as string) === "usa-1") {
+    normalizedRegion = "us-e1";
   }
 
   const value =
-    typeof region === "string" ? regionsDefinition[region] : typeof region === "object" ? region : undefined;
+    typeof normalizedRegion === "string"
+      ? regionsDefinition[normalizedRegion]
+      : typeof normalizedRegion === "object"
+        ? normalizedRegion
+        : undefined;
 
   if (value) {
     return value;

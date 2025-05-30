@@ -22,7 +22,7 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    */
   public async tokenList(query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
     let result = await this.doRequest<Partial<TokenDataList>[]>({
-      path: `/serviceauth`,
+      path: "/serviceauth",
       method: "GET",
       params: {
         page: query?.page || 1,
@@ -55,7 +55,7 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    */
   public async tokenCreate(tokenParams: TokenData): Promise<TokenCreateResponse> {
     const result = await this.doRequest<TokenCreateResponse>({
-      path: `/serviceauth`,
+      path: "/serviceauth",
       method: "POST",
       body: tokenParams,
     });

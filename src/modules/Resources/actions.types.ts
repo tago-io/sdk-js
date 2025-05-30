@@ -50,7 +50,7 @@ type ActionTypeParams =
       type: "mqtt";
     }
   | {
-      headers: {};
+      headers: Record<string, any>;
       type: "post";
       url: string;
     };

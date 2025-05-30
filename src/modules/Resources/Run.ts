@@ -143,7 +143,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    */
   public async userCreate(data: UserCreateInfo): Promise<UserCreateResponse> {
     const result = await this.doRequest<UserCreateResponse>({
-      path: `/run/users`,
+      path: "/run/users",
       method: "POST",
       body: data,
     });
@@ -229,7 +229,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    */
   public async emailTest(data: { subject: string; body: string }): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/run/email_test`,
+      path: "/run/email_test",
       method: "POST",
       body: data,
     });
@@ -272,7 +272,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    */
   public async notificationCreate(userID: GenericID, data: NotificationCreate): Promise<{ id: GenericID }> {
     const result = await this.doRequest<{ id: GenericID }>({
-      path: `/run/notification/`,
+      path: "/run/notification/",
       method: "POST",
       body: {
         run_user: userID,

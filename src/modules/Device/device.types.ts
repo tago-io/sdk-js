@@ -9,7 +9,7 @@ interface DeviceItem {
     name: string;
   };
   name: string;
-  description: string | void;
+  description: string | undefined;
   visible: boolean;
   active: boolean;
   last_output: Date | null;
@@ -38,7 +38,7 @@ interface DeviceConstructorParams {
 type DataToSend = DataCreate;
 type DataToEdit = DataEdit;
 
-type valuesTypes = string | number | boolean | void;
+type valuesTypes = string | number | boolean | undefined;
 
 interface DataQueryBase {
   /**

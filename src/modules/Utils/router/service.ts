@@ -1,13 +1,13 @@
 import type { RouterConstructor } from "./router";
 
 class RouterService {
-  private serviceFunction: Function;
-  private whenList: Function[] = [];
-  constructor(service: Function) {
+  private serviceFunction: (...args: any[]) => any;
+  private whenList: ((...args: any[]) => any)[] = [];
+  constructor(service: (...args: any[]) => any) {
     this.serviceFunction = service;
   }
 
-  private addFunc(func: Function) {
+  private addFunc(func: (...args: any[]) => any) {
     this.whenList.push(func);
   }
   /**
@@ -65,7 +65,7 @@ class RouterService {
   public whenDeviceListIdentifier(btn_id: string) {
     this.addFunc(
       (scope: any, environment: any) =>
-        environment._widget_exec === btn_id || !!scope.find((x: any) => x.device_list_button_id == btn_id)
+        environment._widget_exec === btn_id || !!scope.find((x: any) => x.device_list_button_id === btn_id)
     );
     return this;
   }
@@ -77,7 +77,7 @@ class RouterService {
   public whenUserListIdentifier(btn_id: string) {
     this.addFunc(
       (scope: any, environment: any) =>
-        environment._widget_exec === btn_id || !!scope.find((x: any) => x.user_list_button_id == btn_id)
+        environment._widget_exec === btn_id || !!scope.find((x: any) => x.user_list_button_id === btn_id)
     );
     return this;
   }
@@ -89,7 +89,7 @@ class RouterService {
   public whenCustomBtnID(btn_id: string) {
     this.addFunc(
       (scope: any, environment: any) =>
-        !!scope.find((x: any) => x.device_list_button_id == btn_id || x.user_list_button_id === btn_id) ||
+        !!scope.find((x: any) => x.device_list_button_id === btn_id || x.user_list_button_id === btn_id) ||
         environment._widget_exec === btn_id // keep for legacy support
     );
     return this;

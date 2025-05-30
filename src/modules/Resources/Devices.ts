@@ -347,7 +347,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    */
   public async tokenCreate(deviceID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
     let result = await this.doRequest<TokenCreateResponse>({
-      path: `/device/token`,
+      path: "/device/token",
       method: "POST",
       body: { device: deviceID, ...tokenParams },
     });
@@ -416,7 +416,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    */
   public async getDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<Data[]> {
     if (queryParams?.query === "default") {
-      delete queryParams.query;
+      queryParams.query = undefined;
     }
 
     let result = await this.doRequest<Data[] | number>({

@@ -84,7 +84,7 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    */
   public async create(connectorObj: ConnectorCreateInfo): Promise<{ connector: GenericID }> {
     const result = await this.doRequest<{ connector: GenericID }>({
-      path: `/integration/connector/`,
+      path: "/integration/connector/",
       method: "POST",
       body: {
         ...connectorObj,

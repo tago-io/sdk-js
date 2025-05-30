@@ -167,9 +167,9 @@ describe("Multiple axis chart widget - migration suite", () => {
       ...oldWidget.display,
     };
 
-    delete newDisplay.downsample_enabled;
-    delete newDisplay.downsample_factor;
-    delete newDisplay.downsample_threshold;
+    newDisplay.downsample_enabled = undefined;
+    newDisplay.downsample_factor = undefined;
+    newDisplay.downsample_threshold = undefined;
 
     let newStructure = convert({ ...oldWidget, display: newDisplay });
     expect(newStructure.display.downsample.enabled).toBeFalsy();
@@ -186,7 +186,7 @@ describe("Multiple axis chart widget - migration suite", () => {
     expect(newStructure.display.downsample.factor).toEqual(50);
 
     newDisplay.downsample_enabled = false;
-    delete newDisplay.downsample_factor;
+    newDisplay.downsample_factor = undefined;
     newDisplay.downsample_threshold = 8000;
     newStructure = convert({ ...oldWidget, display: newDisplay });
     expect(newStructure.display.downsample.enabled).toBeFalsy();
@@ -202,8 +202,8 @@ describe("Multiple axis chart widget - migration suite", () => {
       ...oldWidget.display,
     };
 
-    delete newDisplay.order_by;
-    delete newDisplay.group_by;
+    newDisplay.order_by = undefined;
+    newDisplay.group_by = undefined;
     let newStructure = convert({ ...oldWidget, display: newDisplay });
     expect(newStructure.display.order_by).toEqual("time");
     expect(newStructure.display.group_by).toEqual("time");
@@ -229,9 +229,9 @@ describe("Multiple axis chart widget - migration suite", () => {
       ...oldWidget.display,
     };
 
-    delete newDisplay.max_points;
-    delete newDisplay.stacked;
-    delete newDisplay.line_curve;
+    newDisplay.max_points = undefined;
+    newDisplay.stacked = undefined;
+    newDisplay.line_curve = undefined;
     let newStructure = convert({ ...oldWidget, display: newDisplay });
     expect(newStructure.display.max_points).toEqual(5000);
     expect(newStructure.display.stacked).toBeFalsy();
@@ -254,7 +254,7 @@ describe("Multiple axis chart widget - migration suite", () => {
       ...oldWidget.display,
     };
 
-    delete newDisplay.intervals;
+    newDisplay.intervals = undefined;
     let newStructure = convert({ ...oldWidget, display: newDisplay });
     expect(newStructure.display.intervals).toHaveLength(0);
 
@@ -275,7 +275,7 @@ describe("Multiple axis chart widget - migration suite", () => {
       ...oldWidget.display,
     };
 
-    delete newDisplay.plot_by;
+    newDisplay.plot_by = undefined;
     let newStructure = convert({ ...oldWidget, display: newDisplay });
     expect(newStructure.display.x_axis.plot_by).toEqual("realtime");
     expect(newStructure.display.x_axis.type).toEqual("time");
@@ -320,9 +320,9 @@ describe("Multiple axis chart widget - migration suite", () => {
       ...oldWidget.display,
     };
 
-    delete newDisplay.scale;
-    delete newDisplay.y_max;
-    delete newDisplay.y_min;
+    newDisplay.scale = undefined;
+    newDisplay.y_max = undefined;
+    newDisplay.y_min = undefined;
     let newStructure = convert({ ...oldWidget, display: newDisplay });
     expect(newStructure.display.y_axis.scale.type).toEqual("dynamic");
 
@@ -346,8 +346,8 @@ describe("Multiple axis chart widget - migration suite", () => {
   it("correctly identifies when header_buttons or help is undefined", () => {
     // Testing when is just row or column deleted
     const copyOfOld1 = Object.assign({ ...oldWidget }, {});
-    delete copyOfOld1.display.header_buttons;
-    delete copyOfOld1.display.help;
+    copyOfOld1.display.header_buttons = undefined;
+    copyOfOld1.display.help = undefined;
 
     const newStructure1 = convert(copyOfOld1);
     expect(newStructure1.display).not.toBeFalsy();

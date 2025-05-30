@@ -30,7 +30,7 @@ class Template extends TagoIOModule<GenericModuleParams> {
    */
   public async generateTemplate(template: TemplateObjDashboard | TemplateObjAnalysis): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/template`,
+      path: "/template",
       method: "POST",
       body: template,
     });

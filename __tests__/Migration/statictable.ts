@@ -54,8 +54,8 @@ describe("Static table widget - migration suite", () => {
   it("correctly identifies when header_buttons or help is undefined", () => {
     // Testing when is just row or column deleted
     const copyOfOld1 = Object.assign({ ...oldWidget }, {});
-    delete copyOfOld1.display.header_buttons;
-    delete copyOfOld1.display.help;
+    copyOfOld1.display.header_buttons = undefined;
+    copyOfOld1.display.help = undefined;
 
     const newStructure1 = convert(copyOfOld1);
     expect(newStructure1.display).not.toBeFalsy();
@@ -67,8 +67,8 @@ describe("Static table widget - migration suite", () => {
   it("correctly migrate first row to bold and auto size", () => {
     // Testing when is just row or column deleted
     const copyOfOld1 = Object.assign({ ...oldWidget }, {});
-    delete copyOfOld1.display.header_buttons;
-    delete copyOfOld1.display.help;
+    copyOfOld1.display.header_buttons = undefined;
+    copyOfOld1.display.help = undefined;
 
     const newStructure1 = convert(copyOfOld1);
     for (const variable of newStructure1.display.variables) {

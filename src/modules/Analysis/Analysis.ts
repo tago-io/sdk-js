@@ -26,9 +26,8 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
   public start() {
     if (this.started) {
       return;
-    } else {
-      this.started = true;
     }
+    this.started = true;
 
     if (!process.env.T_ANALYSIS_CONTEXT) {
       this.localRuntime();

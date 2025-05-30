@@ -95,7 +95,7 @@ export function convert(oldWidget: any): WidgetInfo {
         continue;
       }
 
-      for (const variable of item?.variables) {
+      for (const variable of item?.variables || []) {
         const key = `${item.origin}${variable}`;
 
         const alias = oldDisplay.vars_labels?.[key];

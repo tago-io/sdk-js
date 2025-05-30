@@ -17,7 +17,7 @@ type EntityFieldDelete = {
   action: "delete";
 };
 
-type EntitySchema = Record<string, EntityFieldCreate | EntityFieldRename | EntityFieldDelete | {}>;
+type EntitySchema = Record<string, EntityFieldCreate | EntityFieldRename | EntityFieldDelete | Record<string, any>>;
 
 type EntityIndex = Record<
   string,

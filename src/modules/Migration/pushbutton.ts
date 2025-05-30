@@ -10,7 +10,7 @@ function convertState(oldState: any) {
     type: oldState?.type || "text",
     color: oldState?.text_color || "",
   };
-  delete newState.text_color;
+  newState.text_color = undefined;
 
   return newState;
 }

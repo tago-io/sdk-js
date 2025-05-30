@@ -44,15 +44,13 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
    * ```
    */
   public async markAsRead(notificationIDS: GenericID[] | GenericID): Promise<string> {
-    if (!Array.isArray(notificationIDS)) {
-      notificationIDS = [notificationIDS];
-    }
+    const normalizedIDs = Array.isArray(notificationIDS) ? notificationIDS : [notificationIDS];
 
     const result = await this.doRequest<string>({
       path: "/notification/read",
       method: "PUT",
       body: {
-        notification_ids: notificationIDS,
+        notification_ids: normalizedIDs,
         read: true,
       },
     });
@@ -76,15 +74,13 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
    * ```
    */
   public async markAsUnread(notificationIDS: GenericID[] | GenericID): Promise<string> {
-    if (!Array.isArray(notificationIDS)) {
-      notificationIDS = [notificationIDS];
-    }
+    const normalizedIDs = Array.isArray(notificationIDS) ? notificationIDS : [notificationIDS];
 
     const result = await this.doRequest<string>({
       path: "/notification/read",
       method: "PUT",
       body: {
-        notification_ids: notificationIDS,
+        notification_ids: normalizedIDs,
         read: false,
       },
     });
@@ -148,7 +144,7 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
    */
   public async create(notificationData: NotificationCreate): Promise<{ id: GenericID }> {
     const result = await this.doRequest<{ id: GenericID }>({
-      path: `/notification`,
+      path: "/notification",
       method: "POST",
       body: { ...notificationData },
     });
@@ -183,7 +179,7 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
    */
   public async registerDevice(deviceToken: GenericToken, platform: "ios" | "android"): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/notification/push/register`,
+      path: "/notification/push/register",
       method: "POST",
       body: {
         device_token: deviceToken,
@@ -200,7 +196,7 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
    */
   public async unRegisterDevice(deviceToken: GenericToken): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/notification/push/unregister`,
+      path: "/notification/push/unregister",
       method: "POST",
       body: {
         device_token: deviceToken,

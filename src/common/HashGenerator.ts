@@ -4,7 +4,7 @@ function hashGenerator(obj: any): number {
   const objString = JSON.stringify(obj);
 
   let hash = 0;
-  let chr;
+  let chr: number;
 
   if (objString.length === 0) {
     return hash;

@@ -31,7 +31,7 @@ function convertDefaultValue(useCurrentValue: string): string {
   return defaultValue;
 }
 
-export function convertSubmitButton(oldDisplay: any, runAnalysis: string): Object {
+export function convertSubmitButton(oldDisplay: any, runAnalysis: string): Record<string, any> {
   return {
     analysis: runAnalysis || "",
     clear_form: false,

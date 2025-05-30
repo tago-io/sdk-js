@@ -1,5 +1,5 @@
-import type http from "http";
-import type { AddressInfo } from "net";
+import type http from "node:http";
+import type { AddressInfo } from "node:net";
 import express, { type Express } from "express";
 import { Network } from "../../src/modules";
 
@@ -31,7 +31,7 @@ describe("Network class", () => {
   test("Resolving token without authorization", async () => {
     let url: string;
     let body: object;
-    app.get(`/integration/network/resolve/:serieNumber`, (req, res) => {
+    app.get("/integration/network/resolve/:serieNumber", (req, res) => {
       url = req.url;
       body = req.body;
       res.send({ status: true, result: "token" });
@@ -49,7 +49,7 @@ describe("Network class", () => {
     let url: string;
     let body: object;
     let query: object;
-    app.get(`/integration/network/resolve/:serieNumber/:authorization`, (req, res) => {
+    app.get("/integration/network/resolve/:serieNumber/:authorization", (req, res) => {
       url = req.url;
       body = req.body;
       query = req.query;
@@ -67,7 +67,7 @@ describe("Network class", () => {
 
   test("Resolving token with detail true", async () => {
     let query: object;
-    app.get(`/integration/network/resolve/:serieNumber`, (req, res) => {
+    app.get("/integration/network/resolve/:serieNumber", (req, res) => {
       query = req.query;
       res.send({ status: true, result: "token" });
     });

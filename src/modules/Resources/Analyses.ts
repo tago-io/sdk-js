@@ -60,7 +60,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    */
   public async create(analysisObj: AnalysisCreateInfo): Promise<{ id: GenericID; token: GenericToken }> {
     const result = await this.doRequest<{ id: GenericID; token: GenericToken }>({
-      path: `/analysis`,
+      path: "/analysis",
       method: "POST",
       body: {
         ...analysisObj,
@@ -153,7 +153,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * console.log(result.analysis_token);
    * ```
    */
-  public async run(analysisID: GenericID, scopeObj?: Object | any): Promise<{ analysis_token: GenericToken }> {
+  public async run(analysisID: GenericID, scopeObj?: Record<string, any>): Promise<{ analysis_token: GenericToken }> {
     const result = await this.doRequest<{ analysis_token: GenericToken }>({
       path: `/analysis/${analysisID}/run`,
       method: "POST",

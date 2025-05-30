@@ -1,5 +1,5 @@
-import type http from "http";
-import type { AddressInfo } from "net";
+import type http from "node:http";
+import type { AddressInfo } from "node:net";
 import express, { type Express } from "express";
 import { Device } from "../../src/modules";
 

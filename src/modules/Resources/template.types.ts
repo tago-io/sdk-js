@@ -19,15 +19,15 @@ interface TemplateObjAnalysis {
 }
 
 interface TemplateInstallDashboard {
-  device?: { id: GenericID; bucket: GenericID } | void;
-  devices?: { id: GenericID; bucket: GenericID } | void;
-  analysis?: GenericID[] | void;
-  replace?: { [field: string]: any } | void;
+  device?: { id: GenericID; bucket: GenericID } | undefined;
+  devices?: { id: GenericID; bucket: GenericID } | undefined;
+  analysis?: GenericID[] | undefined;
+  replace?: { [field: string]: any } | undefined;
 }
 
 interface TemplateInstallAnalysis {
   device_token?: string;
-  replace?: { [field: string]: any } | void;
+  replace?: { [field: string]: any } | undefined;
 }
 
 interface TemplateObj {

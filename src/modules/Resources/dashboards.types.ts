@@ -31,7 +31,7 @@ interface DashboardInfo extends DashboardCreateInfo {
   background: any;
   type: string;
   blueprint_device_behavior: "more_than_one" | "always";
-  blueprint_selector_behavior: void | "open" | "closed" | "always_open" | "always_closed";
+  blueprint_selector_behavior: undefined | "open" | "closed" | "always_open" | "always_closed";
   blueprint_devices: [
     {
       conditions: [{ key: string; value: string }];

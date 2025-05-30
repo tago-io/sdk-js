@@ -185,15 +185,13 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
    * @param notificationIDs array of notification ids or a single id
    */
   public async notificationMarkRead(tagoIORunURL: string, notificationIDs: GenericID | GenericID[]): Promise<string> {
-    if (!Array.isArray(notificationIDs)) {
-      notificationIDs = [notificationIDs];
-    }
+    const normalizedIDs = Array.isArray(notificationIDs) ? notificationIDs : [notificationIDs];
 
     const result = await this.doRequest<string>({
       path: `/run/${tagoIORunURL}/notification`,
       method: "PUT",
       body: {
-        notification_ids: notificationIDs,
+        notification_ids: normalizedIDs,
         read: true,
       },
     });
@@ -207,15 +205,13 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
    * @param notificationIDs array of notification ids or a single id
    */
   public async notificationMarkUnread(tagoIORunURL: string, notificationIDs: GenericID | GenericID[]): Promise<string> {
-    if (!Array.isArray(notificationIDs)) {
-      notificationIDs = [notificationIDs];
-    }
+    const normalizedIDs = Array.isArray(notificationIDs) ? notificationIDs : [notificationIDs];
 
     const result = await this.doRequest<string>({
       path: `/run/${tagoIORunURL}/notification`,
       method: "PUT",
       body: {
-        notification_ids: notificationIDs,
+        notification_ids: normalizedIDs,
         read: false,
       },
     });
@@ -275,7 +271,7 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
     typeOTP: OTPType,
     region?: Regions | RegionsObj
   ): Promise<string> {
-    const result = await this.doRequestAnonymous<string>(
+    const result = await RunUser.doRequestAnonymous<string>(
       {
         path: `/run/${tagoIORunURL}/login/otp`,
         method: "POST",

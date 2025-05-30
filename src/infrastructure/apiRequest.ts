@@ -63,7 +63,7 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
   } else if (typeof process !== "undefined") {
     const banner =
       process.env.T_ANALYSIS_CONTEXT === "tago-io"
-        ? `(Running at TagoIO)`
+        ? "(Running at TagoIO)"
         : `(External; Node.js/${process.version} ${process.platform}/${process.arch})`;
 
     headers = {
@@ -112,9 +112,9 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
       const response = await fetch(url, fetchOptions);
       clearTimeout(timeoutId);
 
-      let data;
+      let data: any;
       const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
+      if (contentType?.includes("application/json")) {
         data = await response.json();
       } else {
         data = await response.text();
@@ -132,8 +132,8 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
     }
   };
 
-  let result;
-  let resulterror;
+  let result: any;
+  let resulterror: any;
   for (let i = 1; i <= config.requestAttempts; i += 1) {
     const { data, error } = await request();
     if (!error) {

@@ -15,7 +15,7 @@ interface BucketCreateInfo {
   /** A name for the bucket. */
   name: string;
   /** Description for the bucket. */
-  description?: string | void;
+  description?: string | undefined;
   /** Set if the bucket will be visible or not. Default True. */
   visible?: boolean;
   /** An array of tags. */
@@ -31,7 +31,7 @@ interface BucketInfoBasic extends BucketCreateInfo {
   id: GenericID;
   /** Data storage type for the bucket. */
   profile: GenericID;
-  last_retention: string | void;
+  last_retention: string | undefined;
   created_at: Date;
   updated_at: Date;
   chunk_period?: ChunkPeriod;
