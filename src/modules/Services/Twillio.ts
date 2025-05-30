@@ -1,4 +1,4 @@
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
 
 interface TwilioData {
   /** Number to send SMS, Example: +5599999999999 */
@@ -36,6 +36,32 @@ class Twilio extends TagoIOModule<GenericModuleParams> {
    *   to: "+1234567890",
    *   message: "Hello from TagoIO!",
    *   from: "+0987654321",
+   *   twilio_sid: environment.TWILIO_SID,
+   *   twilio_token: environment.TWILIO_TOKEN,
+   * });
+   * console.log(result);
+   * ```
+   * @example
+   * ```typescript
+   * const environment = Utils.envToJson(context.environment);
+   * const twilioService = new Services({ token: context.token }).twilio;
+   * const result = await twilioService.send({
+   *   to: "+1234567890",
+   *   message: "Hello from TagoIO!",
+   *   from: "MYFROMID",
+   *   twilio_sid: environment.TWILIO_SID,
+   *   twilio_token: environment.TWILIO_TOKEN,
+   * });
+   * console.log(result);
+   * ```
+   * @example
+   * ```typescript
+   * const environment = Utils.envToJson(context.environment);
+   * const twilioService = new Services({ token: context.token }).twilio;
+   * const result = await twilioService.send({
+   *   to: "+1234567890",
+   *   message: "Hello from TagoIO!",
+   *   from: "MGXXXXXXXXXXXXXXXX",
    *   twilio_sid: environment.TWILIO_SID,
    *   twilio_token: environment.TWILIO_TOKEN,
    * });

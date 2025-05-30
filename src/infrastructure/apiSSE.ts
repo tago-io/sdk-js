@@ -1,7 +1,7 @@
-import { GenericModuleParams } from "../common/TagoIOModule";
+import type { GenericModuleParams } from "../common/TagoIOModule";
 import regions from "../regions";
 
-const channelsWithID = ["analysis_console", "device_inspector", "device_data", "ui_dashboard"] as const;
+const channelsWithID = ["analysis_console", "device_inspector", "device_data", "entity_data", "ui_dashboard"] as const;
 const channelsWithoutID = ["analysis_trigger", "notification", "ui"] as const;
 const channels = [...channelsWithID, ...channelsWithoutID] as const;
 
@@ -26,10 +26,10 @@ function isChannelWithID(params: OpenSSEConfig): params is OpenSSEWithID {
 async function loadEventSourceLib(): Promise<typeof EventSource> {
   if (globalThis.EventSource) {
     return globalThis.EventSource;
-  } else {
-    // @ts-expect-error EventSource types from DOMLib
-    return import("eventsource").then((x) => x?.EventSource || x);
   }
+
+  // @ts-expect-error EventSource types from DOMLib
+  return import("eventsource").then((x) => x?.EventSource || x);
 }
 
 function formatChannel(configuration: OpenSSEConfig) {
@@ -43,7 +43,7 @@ function formatChannel(configuration: OpenSSEConfig) {
 }
 
 async function openSSEListening(channels: OpenSSEConfig | OpenSSEConfig[], options: GenericModuleParams) {
-  let channelsParam: string = "";
+  let channelsParam = "";
   if (Array.isArray(channels)) {
     channelsParam = channels.map((channel) => formatChannel(channel)).join(",");
   } else {
