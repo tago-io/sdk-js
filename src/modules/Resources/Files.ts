@@ -201,14 +201,24 @@ class Files extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  private async getPathFromUrl(url: string): Promise<string> {
-    const tagoURL = url.indexOf(".tago.io/file/");
+  private async getPathFromUrl(rawURL: string): Promise<string> {
+    const urlString = rawURL.trim();
 
-    if (tagoURL === -1) {
-      return Promise.reject(`${url} is not a TagoIO files url`);
+    try {
+      const url = new URL(urlString);
+
+      if (url.protocol !== "https:" && url.protocol !== "http:") {
+        return Promise.reject(`${urlString} uses an invalid protocol for TagoIO Files`);
+      }
+
+      if (!url.pathname.startsWith("/file/")) {
+        return Promise.reject(`${urlString} uses an invalid path for TagoIO Files`);
+      }
+
+      return url.pathname;
+    } catch {
+      return Promise.reject(`${urlString} is not a valid URL for TagoIO Files`);
     }
-
-    return url.slice(tagoURL + 8, url.length);
   }
 
   /**
@@ -273,11 +283,14 @@ class Files extends TagoIOModule<GenericModuleParams> {
   private async createMultipartUpload(filename: string, options?: UploadOptions) {
     const { dashboard, widget, fieldId, isPublic: _isPublic, contentType } = options || {};
 
-    const path = dashboard && widget && fieldId ? `/data/files/${dashboard}/${widget}` : `/files`;
+    const path = dashboard && widget ? `/data/files/${dashboard}/${widget}` : `/files`;
 
     const result = await this.doRequest<any>({
       path,
       method: "POST",
+      params: {
+        ...(options?.blueprint_devices?.length > 0 && { blueprint_devices: options.blueprint_devices }),
+      },
       body: {
         multipart_action: "start",
         filename,
@@ -323,6 +336,9 @@ class Files extends TagoIOModule<GenericModuleParams> {
     const result = await this.doRequest<{ ETag: string }>({
       path,
       method: "POST",
+      params: {
+        ...(options?.blueprint_devices?.length > 0 && { blueprint_devices: options.blueprint_devices }),
+      },
       body: form,
       maxContentLength: Infinity,
       headers,
@@ -390,6 +406,9 @@ class Files extends TagoIOModule<GenericModuleParams> {
     const result = await this.doRequest<{ file: string }>({
       path,
       method: "POST",
+      params: {
+        ...(options?.blueprint_devices?.length > 0 && { blueprint_devices: options.blueprint_devices }),
+      },
       body: {
         multipart_action: "end",
         upload_id: uploadID,

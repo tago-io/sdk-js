@@ -125,6 +125,8 @@ interface Query<T, U> {
 /** ID used on TagoIO, string with 24 character */
 type GenericID = string;
 
+type GenericIDPair = `${string}:${string}`;
+
 /** Token used on TagoIO, string with 36 characters */
 type GenericToken = string;
 
@@ -197,6 +199,7 @@ export {
   Query,
   Base64,
   GenericID,
+  GenericIDPair,
   GenericToken,
   PermissionOption,
   ExpireTimeOption,
