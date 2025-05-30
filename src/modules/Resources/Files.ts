@@ -201,14 +201,24 @@ class Files extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  private async getPathFromUrl(url: string): Promise<string> {
-    const tagoURL = url.indexOf(".tago.io/file/");
+  private async getPathFromUrl(rawURL: string): Promise<string> {
+    const urlString = rawURL.trim();
 
-    if (tagoURL === -1) {
-      return Promise.reject(`${url} is not a TagoIO files url`);
+    try {
+      const url = new URL(urlString);
+
+      if (url.protocol !== "https:" && url.protocol !== "http:") {
+        return Promise.reject(`${urlString} uses an invalid protocol for TagoIO Files`);
+      }
+
+      if (!url.pathname.startsWith("/file/")) {
+        return Promise.reject(`${urlString} uses an invalid path for TagoIO Files`);
+      }
+
+      return url.pathname;
+    } catch {
+      return Promise.reject(`${urlString} is not a valid URL for TagoIO Files`);
     }
-
-    return url.slice(tagoURL + 8, url.length);
   }
 
   /**
