@@ -1,4 +1,4 @@
-import { Account, Device, Utils } from "../../src/modules";
+import { Utils } from "../../src/modules";
 
 const func = async () => {
   return true;
@@ -7,7 +7,13 @@ const func = async () => {
 describe("Parse LoRaWAN QR Code", () => {
   test("8 Fields Success", async () => {
     const scope = [
-      { variable: "test", value: 1, origin: "", time: new Date(), serie: "123" },
+      {
+        variable: "test",
+        value: 1,
+        origin: "",
+        time: new Date(),
+        serie: "123",
+      },
       { input_form_button_id: "122" },
     ];
     const qr_code = Utils.parseLorawanQRCode(
@@ -26,7 +32,13 @@ describe("Parse LoRaWAN QR Code", () => {
 
   test("4 Fields Success", async () => {
     const scope = [
-      { variable: "test", value: 1, origin: "", time: new Date(), serie: "123" },
+      {
+        variable: "test",
+        value: 1,
+        origin: "",
+        time: new Date(),
+        serie: "123",
+      },
       { input_form_button_id: "122" },
     ];
     const qr_code = Utils.parseLorawanQRCode("LW:D0:1122334455667788:AABBCCDDEEFF0011");
@@ -38,7 +50,13 @@ describe("Parse LoRaWAN QR Code", () => {
 
   test("Invalid QR Code", async () => {
     const scope = [
-      { variable: "test", value: 1, origin: "", time: new Date(), serie: "123" },
+      {
+        variable: "test",
+        value: 1,
+        origin: "",
+        time: new Date(),
+        serie: "123",
+      },
       { input_form_button_id: "122" },
     ];
 

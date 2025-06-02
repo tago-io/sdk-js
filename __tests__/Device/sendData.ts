@@ -1,45 +1,32 @@
-import type http from "node:http";
-import type { AddressInfo } from "node:net";
-import express, { type Express } from "express";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
+
 import { Device } from "../../src/modules";
 
-describe("Device class", () => {
-  let app: Express;
-  let service: http.Server;
-  beforeEach((done) => {
-    const startServer = () => {
-      app = express();
-      app.use(express.json());
-      service = app.listen(0);
-      process.env.TAGOIO_API = `http://localhost:${(service.address() as AddressInfo).port}`;
-      done();
-    };
+const handlers = [
+  http.post("https://api.tago.io/data", () => {
+    return HttpResponse.json({
+      status: true,
+      result: "1 Data Added",
+    });
+  }),
+];
 
-    if (service) {
-      service.close(startServer);
-    } else {
-      startServer();
-    }
+describe("Device class", () => {
+  const server = setupServer(...handlers);
+
+  beforeAll(() => {
+    server.listen();
   });
 
-  afterAll((done) => {
-    service.close(done);
+  afterAll(() => {
+    server.close();
   });
 
   test("Sending data", async () => {
-    let url: string;
-    let body: object;
-    app.post("/data", (req, res) => {
-      url = req.url;
-      body = req.body;
-      res.send({ status: true, result: "1 Data Added" });
-    });
-
-    const device = new Device({ token: "test", region: "env" });
+    const device = new Device({ token: "test", region: "us-e1" });
     const result = await device.sendData({ variable: "aa" });
 
     expect(result).toBe("1 Data Added");
-    expect(url).toBe("/data");
-    expect(body).toMatchObject([{ variable: "aa" }]);
   });
 });

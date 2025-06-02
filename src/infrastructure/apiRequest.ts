@@ -30,6 +30,17 @@ function resultHandler(result: ResponseData) {
   return { data: result.data.result };
 }
 
+class ServerErrorResponse<ErrorData extends { message?: string }> extends Error {
+  constructor(
+    public data: ErrorData,
+    public status: number,
+    public statusText: string
+  ) {
+    super(data.message || "Received an error from the server");
+    this.name = "ServerErrorResponse";
+  }
+}
+
 /**
  * Handle all request to TagoIO API
  * @internal
@@ -120,6 +131,11 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
         data = await response.text();
       }
 
+      // throw to handle status codes between 400 and 600
+      if (!response.ok) {
+        throw new ServerErrorResponse(data, response.status, response.statusText);
+      }
+
       const result: ResponseData = {
         data,
         status: response.status,
@@ -160,7 +176,7 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
         code: "NETWORK_ERROR",
         statusText: error.message,
       };
-    } else if (error.status) {
+    } else if (error instanceof ServerErrorResponse || error.status) {
       // HTTP error response
       resulterror = {
         from: "SERVER_RESPONSE",
