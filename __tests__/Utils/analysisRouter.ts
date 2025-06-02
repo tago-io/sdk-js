@@ -8,7 +8,11 @@ const func = async () => {
 };
 
 const params: RouterConstructor = {
-  environment: { _action_when: "create", _widget_exec: "insert", _action_type: "resource" },
+  environment: {
+    _action_when: "create",
+    _widget_exec: "insert",
+    _action_type: "resource",
+  },
   scope: [],
   account: new Account({ token: "11a2ff6b-41bb-4290-45a1-6132a1114afd" }),
   config_dev: new Device({ token: "11a2ff6b-41bb-4290-45a1-6132a1114afd" }),
@@ -18,7 +22,15 @@ const params: RouterConstructor = {
 describe("Analysis Router conditions", () => {
   test("All run tests with when conditions", async () => {
     const scope = [
-      { variable: "test", value: 1, id: "", device: "", origin: "", time: new Date(), serie: "123" },
+      {
+        variable: "test",
+        value: 1,
+        id: "",
+        device: "",
+        origin: "",
+        time: new Date(),
+        serie: "123",
+      },
       { input_form_button_id: "122" },
       { device_list_button_id: "125" },
       { user_list_button_id: "123" },
@@ -48,7 +60,15 @@ describe("Analysis Router conditions", () => {
 
   test("All tests with when invalid conditions", async () => {
     const scope = [
-      { variable: "test", value: 1, id: "", device: "", origin: "", time: new Date(), serie: "123" },
+      {
+        variable: "test",
+        value: 1,
+        id: "",
+        device: "",
+        origin: "",
+        time: new Date(),
+        serie: "123",
+      },
       { input_form_button_id: "122" },
       { device_list_button_id: "123" },
       { user_list_button_id: "125" },
@@ -80,7 +100,15 @@ describe("Analysis Router conditions", () => {
 describe("Analysis Router conditions", () => {
   test("Receive data scope in the function", async () => {
     const scope = [
-      { variable: "test", value: 1, id: "", device: "", origin: "", time: new Date(), group: "123" },
+      {
+        variable: "test",
+        value: 1,
+        id: "",
+        device: "",
+        origin: "",
+        time: new Date(),
+        group: "123",
+      },
       { input_form_button_id: "122", device: "" },
     ];
 

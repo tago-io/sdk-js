@@ -1,3 +1,4 @@
+import type { MockInstance } from "vitest";
 import { Dictionary } from "../../src/modules";
 
 import { enUS, ptBR } from "./__mocks__/dictionaries";
@@ -5,14 +6,14 @@ import { enUS, ptBR } from "./__mocks__/dictionaries";
 describe("applyToString", () => {
   let dictionary: Dictionary;
   let options: any;
-  let fn: jest.SpyInstance;
+  let fn: MockInstance;
 
   beforeAll(() => {
     dictionary = new Dictionary({ token: "mockToken" });
     options = { language: "en-US" };
 
     // Mock the function that gets data from the API
-    fn = jest.spyOn(dictionary, "getLanguagesData").mockImplementation(async (slug, language) => {
+    fn = vi.spyOn(dictionary, "getLanguagesData").mockImplementation(async (slug, language) => {
       return language === "pt-BR" ? ptBR[slug] : enUS[slug];
     });
   });

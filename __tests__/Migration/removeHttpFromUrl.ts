@@ -1,4 +1,5 @@
 import removeHttpFromURL from "../../src/modules/Migration/common/removeHttpFromURL";
+
 describe("removeHttpFromURL - migration suite", () => {
   it("removes HTTP(s) from URLs correctly", () => {
     const url = "https://tago.io";

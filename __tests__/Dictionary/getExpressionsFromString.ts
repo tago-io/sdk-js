@@ -35,7 +35,11 @@ describe("getExpressionsFromString", () => {
 
     expect(parsed).toEqual([
       { dictionary: "TEST", key: "TEST_KEY", params: ["123", "456"] },
-      { dictionary: "TEST", key: "ANOTHER_TEST_KEY", params: ["123,456", "789, 10, 11"] },
+      {
+        dictionary: "TEST",
+        key: "ANOTHER_TEST_KEY",
+        params: ["123,456", "789, 10, 11"],
+      },
     ]);
   });
 
@@ -46,7 +50,11 @@ describe("getExpressionsFromString", () => {
 
     expect(parsed).toEqual([
       { dictionary: "TEST", key: "TEST_KEY", params: ["123", "456"] },
-      { dictionary: "TEST", key: "ANOTHER_TEST_KEY", params: ["#123,#456", "#789, #10, #11"] },
+      {
+        dictionary: "TEST",
+        key: "ANOTHER_TEST_KEY",
+        params: ["#123,#456", "#789, #10, #11"],
+      },
     ]);
   });
 

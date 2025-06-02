@@ -1,8 +1,9 @@
+import type { MockInstance } from "vitest";
 import Files from "./Files";
 
 describe("Files", () => {
   let filesInstance: Files;
-  let doRequestSpy: jest.SpyInstance;
+  let doRequestSpy: MockInstance;
 
   const requestBase = {
     method: "GET",
@@ -17,12 +18,12 @@ describe("Files", () => {
   beforeEach(() => {
     filesInstance = new Files({ token: "test-token" });
 
-    doRequestSpy = jest.spyOn(filesInstance as any, "doRequest");
+    doRequestSpy = vi.spyOn(filesInstance as any, "doRequest");
     doRequestSpy.mockResolvedValue(successResponse);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe("getFileURLSigned", () => {
@@ -33,7 +34,10 @@ describe("Files", () => {
       const rootResult = await filesInstance.getFileURLSigned(`${baseURL}${rootPath}`);
 
       expect(doRequestSpy).toHaveBeenCalledTimes(1);
-      expect(doRequestSpy).toHaveBeenCalledWith({ ...requestBase, path: rootPath });
+      expect(doRequestSpy).toHaveBeenCalledWith({
+        ...requestBase,
+        path: rootPath,
+      });
       expect(rootResult).toEqual(successResponse);
       doRequestSpy.mockClear();
 
@@ -41,7 +45,10 @@ describe("Files", () => {
       const nestedResult = await filesInstance.getFileURLSigned(`${baseURL}${nestedPath}`);
 
       expect(doRequestSpy).toHaveBeenCalledTimes(1);
-      expect(doRequestSpy).toHaveBeenCalledWith({ ...requestBase, path: nestedPath });
+      expect(doRequestSpy).toHaveBeenCalledWith({
+        ...requestBase,
+        path: nestedPath,
+      });
       expect(nestedResult).toEqual(successResponse);
     });
 
@@ -52,7 +59,10 @@ describe("Files", () => {
       const rootResult = await filesInstance.getFileURLSigned(`${baseURL}${rootPath}`);
 
       expect(doRequestSpy).toHaveBeenCalledTimes(1);
-      expect(doRequestSpy).toHaveBeenCalledWith({ ...requestBase, path: rootPath });
+      expect(doRequestSpy).toHaveBeenCalledWith({
+        ...requestBase,
+        path: rootPath,
+      });
       expect(rootResult).toEqual(successResponse);
       doRequestSpy.mockClear();
 
@@ -60,7 +70,10 @@ describe("Files", () => {
       const nestedResult = await filesInstance.getFileURLSigned(`${baseURL}${nestedPath}`);
 
       expect(doRequestSpy).toHaveBeenCalledTimes(1);
-      expect(doRequestSpy).toHaveBeenCalledWith({ ...requestBase, path: nestedPath });
+      expect(doRequestSpy).toHaveBeenCalledWith({
+        ...requestBase,
+        path: nestedPath,
+      });
       expect(nestedResult).toEqual(successResponse);
     });
 
@@ -71,7 +84,10 @@ describe("Files", () => {
       const rootResult = await filesInstance.getFileURLSigned(`${baseURL}${rootPath}`);
 
       expect(doRequestSpy).toHaveBeenCalledTimes(1);
-      expect(doRequestSpy).toHaveBeenCalledWith({ ...requestBase, path: rootPath });
+      expect(doRequestSpy).toHaveBeenCalledWith({
+        ...requestBase,
+        path: rootPath,
+      });
       expect(rootResult).toEqual(successResponse);
       doRequestSpy.mockClear();
 
@@ -79,16 +95,23 @@ describe("Files", () => {
       const nestedResult = await filesInstance.getFileURLSigned(`${baseURL}${nestedPath}`);
 
       expect(doRequestSpy).toHaveBeenCalledTimes(1);
-      expect(doRequestSpy).toHaveBeenCalledWith({ ...requestBase, path: nestedPath });
+      expect(doRequestSpy).toHaveBeenCalledWith({
+        ...requestBase,
+        path: nestedPath,
+      });
       expect(nestedResult).toEqual(successResponse);
     });
 
     it("returns error for invalid protocols", async () => {
       const filePath = "/file/my-test-file.txt";
 
-      expect(filesInstance.getFileURLSigned(`mailto:test@tago.io${filePath}`)).rejects.toMatch(/invalid protocol/);
-      expect(filesInstance.getFileURLSigned(`mailto:test@tago.io${filePath}`)).rejects.toMatch(/invalid protocol/);
-      expect(filesInstance.getFileURLSigned(`ftp://ftp.tago.io${filePath}`)).rejects.toMatch(/invalid protocol/);
+      await expect(filesInstance.getFileURLSigned(`mailto:test@tago.io${filePath}`)).rejects.toMatch(
+        /invalid protocol/
+      );
+      await expect(filesInstance.getFileURLSigned(`mailto:test@tago.io${filePath}`)).rejects.toMatch(
+        /invalid protocol/
+      );
+      await expect(filesInstance.getFileURLSigned(`ftp://ftp.tago.io${filePath}`)).rejects.toMatch(/invalid protocol/);
 
       expect(doRequestSpy).not.toHaveBeenCalled();
     });
@@ -96,23 +119,25 @@ describe("Files", () => {
     it("returns error for URLs without the proper files path", async () => {
       const baseURL = "https://api.tago.io";
 
-      expect(filesInstance.getFileURLSigned(`${baseURL}`)).rejects.toMatch(/invalid path/);
-      expect(filesInstance.getFileURLSigned(`${baseURL}/`)).rejects.toMatch(/invalid path/);
-      expect(filesInstance.getFileURLSigned(`${baseURL}/file`)).rejects.toMatch(/invalid path/);
-      expect(filesInstance.getFileURLSigned(`${baseURL}/file.txt`)).rejects.toMatch(/invalid path/);
-      expect(filesInstance.getFileURLSigned(`${baseURL}/FILE/something.txt`)).rejects.toMatch(/invalid path/);
-      expect(filesInstance.getFileURLSigned(`${baseURL}/test/file/something.txt`)).rejects.toMatch(/invalid path/);
-      expect(filesInstance.getFileURLSigned(`${baseURL}/files/something.txt`)).rejects.toMatch(/invalid path/);
+      await expect(filesInstance.getFileURLSigned(`${baseURL}`)).rejects.toMatch(/invalid path/);
+      await expect(filesInstance.getFileURLSigned(`${baseURL}/`)).rejects.toMatch(/invalid path/);
+      await expect(filesInstance.getFileURLSigned(`${baseURL}/file`)).rejects.toMatch(/invalid path/);
+      await expect(filesInstance.getFileURLSigned(`${baseURL}/file.txt`)).rejects.toMatch(/invalid path/);
+      await expect(filesInstance.getFileURLSigned(`${baseURL}/FILE/something.txt`)).rejects.toMatch(/invalid path/);
+      await expect(filesInstance.getFileURLSigned(`${baseURL}/test/file/something.txt`)).rejects.toMatch(
+        /invalid path/
+      );
+      await expect(filesInstance.getFileURLSigned(`${baseURL}/files/something.txt`)).rejects.toMatch(/invalid path/);
 
-      expect(filesInstance.getFileURLSigned("https://file")).rejects.toMatch(/invalid path/);
-      expect(filesInstance.getFileURLSigned("https://file/test.txt")).rejects.toMatch(/invalid path/);
+      await expect(filesInstance.getFileURLSigned("https://file")).rejects.toMatch(/invalid path/);
+      await expect(filesInstance.getFileURLSigned("https://file/test.txt")).rejects.toMatch(/invalid path/);
 
       expect(doRequestSpy).not.toHaveBeenCalled();
     });
 
     it("returns error for malformed URLs", async () => {
-      expect(filesInstance.getFileURLSigned("https:/")).rejects.toMatch(/not a valid URL/);
-      expect(filesInstance.getFileURLSigned("https://")).rejects.toMatch(/not a valid URL/);
+      await expect(filesInstance.getFileURLSigned("https:/")).rejects.toMatch(/not a valid URL/);
+      await expect(filesInstance.getFileURLSigned("https://")).rejects.toMatch(/not a valid URL/);
 
       expect(doRequestSpy).not.toHaveBeenCalled();
     });

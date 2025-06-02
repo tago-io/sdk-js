@@ -6,14 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "include": [
-      "**/*.ts",
-      "**/*.tsx",
-      "**/*.js",
-      "**/*.jsx",
-      "**/*.mjs",
-      "**/*.cjs"
-    ],
+    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs"],
     "ignore": [
       "examples/**",
       "lib/**",
@@ -57,11 +50,7 @@
   },
   "overrides": [
     {
-      "include": [
-        "**/__tests__/**/*.ts",
-        "**/*.test.ts",
-        "**/*.local.ts"
-      ],
+      "include": ["**/__tests__/**/*.ts", "**/*.test.ts", "**/*.local.ts"],
       "linter": {
         "rules": {
           "correctness": {
