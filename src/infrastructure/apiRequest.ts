@@ -108,7 +108,7 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
 
       // Add body for non-GET requests
       if (requestConfig.data && requestConfig.method && requestConfig.method.toUpperCase() !== "GET") {
-        if (typeof requestConfig.data === "string") {
+        if (typeof requestConfig.data === "string" || requestConfig.data instanceof FormData) {
           fetchOptions.body = requestConfig.data;
         } else {
           fetchOptions.body = JSON.stringify(requestConfig.data);
