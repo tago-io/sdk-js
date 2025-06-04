@@ -50,10 +50,7 @@ interface doRequestParams {
  * @param uri URI
  * @param requestObj doRequestParams
  */
-function mountRequestConfig(
-  uri: string,
-  requestObj: doRequestParams,
-): RequestConfig {
+function mountRequestConfig(uri: string, requestObj: doRequestParams): RequestConfig {
   const requestConfig: RequestConfig = {
     url: `${uri}${requestObj.path}`,
     method: requestObj.method,
@@ -114,7 +111,7 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
 
   protected static async doRequestAnonymous<TR>(
     requestObj: doRequestParams,
-    region?: Regions | RegionsObj,
+    region?: Regions | RegionsObj
   ): Promise<TR> {
     const apiURI = regions(region)?.api;
     if (!apiURI) {
