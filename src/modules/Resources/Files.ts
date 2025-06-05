@@ -311,7 +311,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
       formData.append("field_id", fieldID);
     }
 
-    if (action === "start") {
+    if (action === "start" && options.contentType) {
       formData.append("contentType", options.contentType);
     }
 
@@ -466,16 +466,15 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * @example
    * If receive an error "Authorization Denied", check policy **File** / **Upload** in Access Management.
    * ```typescript
-   * const fileBuffer = Buffer.from("file content");
-   * const fileBlob = new Blob([fileBuffer]);
-   * const result = await Resources.files.uploadFile(fileBlob, "/uploads/myfile.txt", {
+   * const file = Buffer.from("file content");
+   * const result = await Resources.files.uploadFile(file, "/uploads/myfile.txt", {
    *   chunkSize: 5 * 1024 * 1024, // 5MB chunks
    *   onProgress: (progress) => console.log(`Upload progress: ${progress}%`)
    * });
    * console.log(result.file); // https://api.tago.io/file/.../uploads/myfile.txt
    * ```
    */
-  public async uploadFile(file: Blob, filename: string, options?: UploadOptions) {
+  public async uploadFile(file: Blob | Buffer, filename: string, options?: UploadOptions) {
     const MB = 2 ** 20;
 
     let cancelled = false;
@@ -490,7 +489,8 @@ class Files extends TagoIOModule<GenericModuleParams> {
     const uploadID = await this.createMultipartUpload(filename, options);
 
     const bytesPerChunk = options?.chunkSize || 7 * MB;
-    const chunkAmount = Math.floor(file.size / bytesPerChunk) + 1;
+    const fileBlob = file instanceof Blob ? file : new Blob([file]);
+    const chunkAmount = Math.floor(fileBlob.size / bytesPerChunk) + 1;
     const partsPerTime = 3;
 
     if (chunkAmount > 1 && bytesPerChunk < 5 * MB) {
@@ -506,8 +506,8 @@ class Files extends TagoIOModule<GenericModuleParams> {
 
     this.isCanceled(cancelled);
 
-    while (offsetStart < file.size) {
-      const sliced = file.slice(offsetStart, offsetEnd);
+    while (offsetStart < fileBlob.size) {
+      const sliced = fileBlob.slice(offsetStart, offsetEnd);
 
       while (promises.length >= partsPerTime) {
         this.isCanceled(cancelled);
