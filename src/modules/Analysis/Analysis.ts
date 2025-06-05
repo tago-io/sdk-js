@@ -114,12 +114,6 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
       method: "GET",
     }).catch((_): undefined => undefined);
 
-    setInterval(() => {
-      if (sse.OPEN === sse.readyState) {
-        sse.dispatchEvent(new Event("keep-alive"));
-      }
-    }, 15000); // 15 seconds
-
     if (!analysis) {
       console.error("¬ Error :: Analysis not found or not active.");
       return;
@@ -133,6 +127,12 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
       { channel: "analysis_trigger" },
       { token: this.params.token, region: this.params.region }
     );
+
+    setInterval(() => {
+      if (sse.OPEN === sse.readyState) {
+        sse.dispatchEvent(new Event("keep-alive"));
+      }
+    }, 15000); // 15 seconds
 
     const tokenEnd = this.params.token.slice(-5);
 
