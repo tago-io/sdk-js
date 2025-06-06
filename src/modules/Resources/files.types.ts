@@ -1,4 +1,4 @@
-import { GenericID } from "../../types";
+import type { GenericID } from "../../types";
 
 interface FileQuery {
   path?: string;
@@ -81,4 +81,4 @@ type UploadOptions = {
   blueprint_devices?: { origin: GenericID; id: GenericID; bucket?: GenericID }[];
 };
 
-export { FileQuery, FileListInfo, Base64File, MoveFiles, FilesPermission, UploadOptions, CopyFiles };
+export type { FileQuery, FileListInfo, Base64File, MoveFiles, FilesPermission, UploadOptions, CopyFiles };

@@ -73,8 +73,8 @@ describe("Cylinder widget - migration suite", () => {
     expect(newStructure2.display.number_format.show_thousand).toBeTruthy();
 
     // everything undefined
-    delete newDisplay.vars_format;
-    delete newDisplay.numberformat;
+    newDisplay.vars_format = undefined;
+    newDisplay.numberformat = undefined;
 
     const newStructure3 = convert({ ...oldWidget, display: newDisplay });
     expect(newStructure3.display.number_format.decimals).toEqual(-1);
@@ -96,8 +96,8 @@ describe("Cylinder widget - migration suite", () => {
     expect(newStructure.display.range.maximum).toEqual(125);
     expect(newStructure.display.range.minimum).toEqual(15);
 
-    delete newDisplay.maximum;
-    delete newDisplay.minimum;
+    newDisplay.maximum = undefined;
+    newDisplay.minimum = undefined;
     newStructure = convert({ ...oldWidget, display: newDisplay });
     expect(newStructure.display.range.type).toEqual("minmax");
     expect(newStructure.display.range.maximum).toEqual(100);
@@ -130,7 +130,7 @@ describe("Cylinder widget - migration suite", () => {
       unit: "F",
     };
 
-    delete newDisplay.vars_formula;
+    newDisplay.vars_formula = undefined;
     let newStructure = convert({ ...oldWidget, display: newDisplay });
     expect(newStructure.display.formula.enable).toBeFalsy();
     expect(newStructure.display.formula.fixed_unit).toBe(newDisplay.unit);
@@ -151,8 +151,8 @@ describe("Cylinder widget - migration suite", () => {
   it("correctly identifies when header_buttons or help is undefined", () => {
     // Testing when is just row or column deleted
     const copyOfOld1 = Object.assign({ ...oldWidget }, {});
-    delete copyOfOld1.display.header_buttons;
-    delete copyOfOld1.display.help;
+    copyOfOld1.display.header_buttons = undefined;
+    copyOfOld1.display.help = undefined;
 
     const newStructure1 = convert(copyOfOld1);
     expect(newStructure1.display).not.toBeFalsy();

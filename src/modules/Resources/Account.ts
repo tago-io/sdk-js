@@ -1,8 +1,8 @@
-import { GenericToken } from "../../common/common.types";
-import TagoIOModule, { doRequestParams, GenericModuleParams } from "../../common/TagoIOModule";
-import { Regions, RegionsObj } from "../../regions";
+import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericToken } from "../../common/common.types";
+import type { Regions, RegionsObj } from "../../regions";
 import dateParser from "../Utils/dateParser";
-import {
+import type {
   AccountCreateInfo,
   AccountInfo,
   LoginCredentials,
@@ -163,7 +163,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
    */
   public async passwordChange(password: string): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/account/passwordreset`,
+      path: "/account/passwordreset",
       method: "POST",
       body: {
         password,
@@ -185,7 +185,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
    */
   public static async create(createParams: AccountCreateInfo, region?: Regions | RegionsObj): Promise<string> {
     const params: doRequestParams = {
-      path: `/account`,
+      path: "/account",
       method: "POST",
       body: createParams,
     };
@@ -253,7 +253,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
     region?: Regions | RegionsObj
   ): Promise<string> {
     const params: doRequestParams = {
-      path: `/account/login/otp`,
+      path: "/account/login/otp",
       method: "POST",
       body: { ...credentials, otp_type: typeOTP },
     };

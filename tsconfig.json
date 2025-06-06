@@ -13,8 +13,19 @@
     "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "lib": ["ES2020", "DOM"]
+    "skipLibCheck": true,
+    "lib": [
+      "ES2020",
+      "DOM"
+    ],
+    "types": [
+      "vitest/globals"
+    ]
   },
-  "include": ["src/**/*"],
-  "exclude": ["src/**/*.test.*", "lib"]
+  "include": [
+    "src",
+  ],
+  "exclude": [
+    "lib",
+  ]
 }

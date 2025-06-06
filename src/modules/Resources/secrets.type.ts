@@ -1,4 +1,4 @@
-import { GenericID, Query, TagsObj } from "../../common/common.types";
+import type { GenericID, Query, TagsObj } from "../../common/common.types";
 
 type SecretsValue = {
   value: string;
@@ -19,4 +19,4 @@ type SecretsEdit = Partial<Pick<SecretsInfo, "tags"> & SecretsValue>;
 
 type SecretsQuery = Query<SecretsInfo, "key">;
 
-export { SecretsInfo, SecretsCreate, SecretsEdit, SecretsQuery };
+export type { SecretsInfo, SecretsCreate, SecretsEdit, SecretsQuery };

@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old TILE to new TILE
 // ? ====================================================================================
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 import { removeHttpFromURL } from "./common";
 
 export function convert(oldWidget: any): WidgetInfo {

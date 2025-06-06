@@ -1,0 +1,103 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs"],
+    "ignore": [
+      "examples/**",
+      "lib/**",
+      "docs/**",
+      "node_modules/**",
+      "build/**",
+      "out/**",
+      "coverage/**",
+      ".cache/**",
+      "*.tgz",
+      "*.local.*",
+      "src/infrastructure/envParams.json"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120,
+    "lineEnding": "lf"
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noExplicitAny": "warn"
+      },
+      "style": {
+        "noUnusedTemplateLiteral": "error",
+        "useConst": "error"
+      },
+      "correctness": {
+        "noUnusedVariables": "error"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "include": ["**/__tests__/**/*.ts", "**/*.test.ts", "**/*.local.ts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off"
+          },
+          "suspicious": {
+            "noExplicitAny": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": [
+        "src/modules/Migration/**/*.ts",
+        "src/modules/Utils/router/**/*.ts",
+        "src/modules/Resources/*.types.ts",
+        "src/common/**/*.ts",
+        "src/infrastructure/**/*.ts",
+        "src/modules/Analysis/**/*.ts",
+        "src/modules/Utils/sendDownlink.ts",
+        "src/modules/Utils/updateMultipleDropdown.ts",
+        "src/modules/Dictionary/**/*.ts",
+        "src/modules/Network/**/*.ts",
+        "src/modules/Resources/**/*.ts",
+        "src/modules/Services/**/*.ts",
+        "src/modules/RunUser/**/*.ts"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noExplicitAny": "off"
+          },
+          "complexity": {
+            "noBannedTypes": "off"
+          }
+        }
+      }
+    }
+  ],
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "trailingCommas": "es5",
+      "semicolons": "always",
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "quoteProperties": "asNeeded"
+    }
+  }
+}

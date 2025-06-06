@@ -1,11 +1,11 @@
-function JSONParseSafe(jsonString: string, defaultValue: any = {}) {
+function JSONParseSafe(jsonString: string, defaultValue: unknown = {}) {
   if (!jsonString) {
     return defaultValue;
   }
 
   try {
     return JSON.parse(jsonString);
-  } catch (error) {
+  } catch (_error) {
     return defaultValue;
   }
 }

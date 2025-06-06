@@ -1,5 +1,5 @@
-import { Data, DataCreate, DataEdit, GenericID, GenericToken, TagsObj } from "../../common/common.types";
-import { Regions, RegionsObj } from "../../regions";
+import type { Data, DataCreate, DataEdit, GenericID, GenericToken, TagsObj } from "../../common/common.types";
+import type { Regions, RegionsObj } from "../../regions";
 
 interface DeviceItem {
   id: GenericID;
@@ -9,7 +9,7 @@ interface DeviceItem {
     name: string;
   };
   name: string;
-  description: string | void;
+  description: string | undefined;
   visible: boolean;
   active: boolean;
   last_output: Date | null;
@@ -38,7 +38,7 @@ interface DeviceConstructorParams {
 type DataToSend = DataCreate;
 type DataToEdit = DataEdit;
 
-type valuesTypes = string | number | boolean | void;
+type valuesTypes = string | number | boolean | undefined;
 
 interface DataQueryBase {
   /**
@@ -175,7 +175,7 @@ type ListResponse = DeviceItem[];
 
 type DataQueryNumberResponse = Pick<Data, "time"> & { value: number };
 
-export {
+export type {
   DeviceConstructorParams,
   DeviceItem,
   DataToSend,

@@ -1,9 +1,8 @@
-import FormData from "form-data";
-import { GenericID } from "../../common/common.types";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID } from "../../common/common.types";
 import sleep from "../../common/sleep";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
-import {
+import type {
   Base64File,
   CopyFiles,
   FileListInfo,
@@ -12,6 +11,23 @@ import {
   MoveFiles,
   UploadOptions,
 } from "./files.types";
+
+type BuildFormDataOptions = {
+  filename: string;
+  isPublic: boolean | undefined;
+  fieldID: string | undefined;
+} & (
+  | {
+      action: "start";
+      contentType: string;
+    }
+  | {
+      action: "upload";
+      uploadID: string;
+      fileBlob: Blob;
+      part: number;
+    }
+);
 
 class Files extends TagoIOModule<GenericModuleParams> {
   /**
@@ -278,26 +294,61 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
+   * @description Build the `FormData` object to be used in multipart form uploads.
+   */
+  private buildFormData(options: BuildFormDataOptions): FormData {
+    const { action, filename, isPublic, fieldID } = options;
+    const formData = new FormData();
+
+    formData.append("multipart_action", action);
+    formData.append("filename", filename);
+
+    if (isPublic !== undefined) {
+      formData.append("public", JSON.stringify(isPublic));
+    }
+
+    if (fieldID) {
+      formData.append("field_id", fieldID);
+    }
+
+    if (action === "start" && options.contentType) {
+      formData.append("contentType", options.contentType);
+    }
+
+    if (action === "upload") {
+      formData.append("upload_id", options.uploadID);
+      formData.append("part", String(options.part));
+      formData.append("file", options.fileBlob, filename);
+    }
+
+    return formData;
+  }
+
+  /**
    * @description Creates a multipart upload instance
    */
   private async createMultipartUpload(filename: string, options?: UploadOptions) {
-    const { dashboard, widget, fieldId, isPublic, contentType } = options || {};
+    const { dashboard, widget, fieldId: fieldID, isPublic, contentType } = options || {};
 
-    const path = dashboard && widget ? `/data/files/${dashboard}/${widget}` : `/files`;
+    const path = dashboard && widget ? `/data/files/${dashboard}/${widget}` : "/files";
+
+    const formData = this.buildFormData({
+      action: "start",
+      filename,
+      fieldID,
+      isPublic,
+      contentType,
+    });
 
     const result = await this.doRequest<any>({
       path,
       method: "POST",
       params: {
-        ...(options?.blueprint_devices?.length > 0 && { blueprint_devices: options.blueprint_devices }),
+        ...(options?.blueprint_devices?.length > 0 && {
+          blueprint_devices: options.blueprint_devices,
+        }),
       },
-      body: {
-        multipart_action: "start",
-        filename,
-        public: options?.isPublic,
-        contentType,
-        ...(fieldId && { field_id: fieldId }),
-      },
+      body: formData,
     });
 
     return result;
@@ -306,47 +357,36 @@ class Files extends TagoIOModule<GenericModuleParams> {
   /**
    * @description Uploads a single part to TagoIO
    */
-  async _uploadPart(
-    filename: string,
-    uploadID: string,
-    partNumber: number,
-    blob: Buffer | Blob,
-    options?: UploadOptions
-  ) {
-    const { fieldId } = options || {};
+  async _uploadPart(filename: string, uploadID: string, part: number, fileBlob: Blob, options?: UploadOptions) {
+    const { fieldId: fieldID, isPublic } = options || {};
     const path =
-      options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
+      options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : "/files";
 
-    const form = new FormData();
-    form.append("filename", filename);
-    form.append("upload_id", uploadID);
-    form.append("part", String(partNumber));
-    form.append("file", blob, filename);
-    form.append("multipart_action", "upload");
-
-    if (fieldId) {
-      form.append("field_id", fieldId);
-    }
-
-    let headers: any = { "Content-Type": "multipart/form-data" };
-    if (form.getHeaders) {
-      headers = form.getHeaders();
-    }
+    const formData = this.buildFormData({
+      action: "upload",
+      filename,
+      fieldID,
+      isPublic,
+      uploadID,
+      fileBlob,
+      part,
+    });
 
     const result = await this.doRequest<{ ETag: string }>({
       path,
       method: "POST",
       params: {
-        ...(options?.blueprint_devices?.length > 0 && { blueprint_devices: options.blueprint_devices }),
+        ...(options?.blueprint_devices?.length > 0 && {
+          blueprint_devices: options.blueprint_devices,
+        }),
       },
-      body: form,
-      maxContentLength: Infinity,
-      headers,
+      body: formData,
+      maxContentLength: Number.POSITIVE_INFINITY,
     });
 
     return {
       ETag: result.ETag,
-      PartNumber: partNumber,
+      PartNumber: part,
     };
   }
 
@@ -355,13 +395,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * It will try to upload for 'opts.maxTriesForEachChunk' and fail
    * if it couldn't upload after those many tries.
    */
-  async _addToQueue(
-    filename: string,
-    uploadID: GenericID,
-    partNumber: number,
-    blob: Buffer | Blob,
-    options?: UploadOptions
-  ) {
+  async _addToQueue(filename: string, uploadID: GenericID, partNumber: number, blob: Blob, options?: UploadOptions) {
     const maxTries = options?.maxTriesForEachChunk || 5;
     const timeout = options?.timeoutForEachFailedChunk || 2000;
 
@@ -392,29 +426,30 @@ class Files extends TagoIOModule<GenericModuleParams> {
   async _completeMultipartUpload(
     filename: string,
     uploadID: string,
-    parts: { ETag: String; PartNumber: number }[],
+    parts: { ETag: string; PartNumber: number }[],
     options?: UploadOptions
   ) {
-    const { fieldId } = options || {};
+    const { fieldId: fieldID, isPublic } = options || {};
     const path =
-      options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : `/files`;
+      options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : "/files";
 
     const partsOrdered = parts.sort((a, b) => a.PartNumber - b.PartNumber);
-
-    const headers = { "Content-Type": "multipart/form-data" };
 
     const result = await this.doRequest<{ file: string }>({
       path,
       method: "POST",
       params: {
-        ...(options?.blueprint_devices?.length > 0 && { blueprint_devices: options.blueprint_devices }),
+        ...(options?.blueprint_devices?.length > 0 && {
+          blueprint_devices: options.blueprint_devices,
+        }),
       },
       body: {
         multipart_action: "end",
-        upload_id: uploadID,
         filename,
+        field_id: fieldID,
+        public: isPublic,
+        upload_id: uploadID,
         parts: partsOrdered,
-        ...(fieldId && { field_id: fieldId }),
       },
     });
 
@@ -439,8 +474,8 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * console.log(result.file); // https://api.tago.io/file/.../uploads/myfile.txt
    * ```
    */
-  public async uploadFile(file: Buffer | Blob, filename: string, options?: UploadOptions) {
-    const MB = Math.pow(2, 20);
+  public async uploadFile(file: Blob | Buffer, filename: string, options?: UploadOptions) {
+    const MB = 2 ** 20;
 
     let cancelled = false;
     if (options?.onCancelToken) {
@@ -454,8 +489,8 @@ class Files extends TagoIOModule<GenericModuleParams> {
     const uploadID = await this.createMultipartUpload(filename, options);
 
     const bytesPerChunk = options?.chunkSize || 7 * MB;
-    const fileSize = file instanceof Buffer ? file.length : file.size;
-    const chunkAmount = Math.floor(fileSize / bytesPerChunk) + 1;
+    const fileBlob = file instanceof Blob ? file : new Blob([file]);
+    const chunkAmount = Math.floor(fileBlob.size / bytesPerChunk) + 1;
     const partsPerTime = 3;
 
     if (chunkAmount > 1 && bytesPerChunk < 5 * MB) {
@@ -471,8 +506,8 @@ class Files extends TagoIOModule<GenericModuleParams> {
 
     this.isCanceled(cancelled);
 
-    while (offsetStart < fileSize) {
-      const sliced = file.slice(offsetStart, offsetEnd);
+    while (offsetStart < fileBlob.size) {
+      const sliced = fileBlob.slice(offsetStart, offsetEnd);
 
       while (promises.length >= partsPerTime) {
         this.isCanceled(cancelled);

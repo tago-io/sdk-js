@@ -4,7 +4,6 @@
   "entryPoints": ["./src/modules.ts"],
   "entryPointStrategy": "resolve",
   "out": "docs",
-  "gaID": "UA-57075518-5",
   "exclude": ["./src/common/Cache.ts", "./src/modules/Migration/Migration.ts", "./src/infrastructure/apiSSE.ts"],
   "excludePrivate": true,
   "excludeProtected": true,
@@ -13,6 +12,6 @@
   "githubPages": true,
   "hideGenerator": true,
   "cleanOutputDir": true,
-  "plugin": ["typedoc-plugin-missing-exports", "typedoc-plugin-extras"],
+  "plugin": ["typedoc-plugin-missing-exports"],
   "favicon": "assets/favicon.png"
 }

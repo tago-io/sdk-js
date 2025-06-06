@@ -3,7 +3,7 @@
 //     Migration of old ANGULAR to new ANGULAR.
 // ? ====================================================================================
 
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 import convertFormula from "./common/convertFormula";
 import convertRange from "./common/convertRange";
 

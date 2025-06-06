@@ -1,5 +1,3 @@
-import { GenericID, Query } from "../../common/common.types";
-
 interface QRCodeFormat {
   type: string;
   schema_id: string;
@@ -27,4 +25,4 @@ interface DownlinkOptions {
   confirmed?: boolean;
 }
 
-export { QRCodeFormat, UploadFileOptions, DownlinkOptions };
+export type { QRCodeFormat, UploadFileOptions, DownlinkOptions };

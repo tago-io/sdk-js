@@ -1,4 +1,4 @@
-import { GenericID, Query, TagsObj } from "../../common/common.types";
+import type { GenericID, Query, TagsObj } from "../../common/common.types";
 
 type EntityFieldType = "uuid" | "string" | "int" | "float" | "json" | "timestamp" | "text" | "boolean";
 
@@ -17,7 +17,7 @@ type EntityFieldDelete = {
   action: "delete";
 };
 
-type EntitySchema = Record<string, EntityFieldCreate | EntityFieldRename | EntityFieldDelete | {}>;
+type EntitySchema = Record<string, EntityFieldCreate | EntityFieldRename | EntityFieldDelete | Record<string, any>>;
 
 type EntityIndex = Record<
   string,
@@ -74,7 +74,7 @@ type EntityUnknownData = {
   [field: string]: any;
 };
 
-export {
+export type {
   EntityIndex,
   EntitySchema,
   EntityFieldType,

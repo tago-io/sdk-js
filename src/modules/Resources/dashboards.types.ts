@@ -1,5 +1,5 @@
-import { Data, ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
-import { BucketDeviceInfo } from "./buckets.types";
+import type { Data, ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
+import type { BucketDeviceInfo } from "./buckets.types";
 
 interface Arrangement {
   widget_id: string;
@@ -31,7 +31,7 @@ interface DashboardInfo extends DashboardCreateInfo {
   background: any;
   type: string;
   blueprint_device_behavior: "more_than_one" | "always";
-  blueprint_selector_behavior: void | "open" | "closed" | "always_open" | "always_closed";
+  blueprint_selector_behavior: undefined | "open" | "closed" | "always_open" | "always_closed";
   blueprint_devices: [
     {
       conditions: [{ key: string; value: string }];
@@ -162,7 +162,7 @@ type widgetOverwrite = {
   [key in widgetOverwriteOptions]: any;
 };
 
-export {
+export type {
   DashboardQuery,
   PublicKeyResponse,
   DevicesRelated,

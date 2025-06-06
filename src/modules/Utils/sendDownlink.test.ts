@@ -1,15 +1,18 @@
-import { AxiosError } from "axios";
 import { handleDownlinkError } from "./sendDownlink";
 
+interface DownlinkError {
+  response?: {
+    status: number;
+    data: any;
+  };
+  message?: string;
+}
+
 describe("Error Handling", () => {
-  test("Default Axios Error", async () => {
-    const error: AxiosError = {
-      response: { data: null, status: 400, config: {} as any, headers: {}, statusText: "" },
+  test("Default Error", async () => {
+    const error: DownlinkError = {
+      response: { data: null, status: 400 },
       message: "",
-      config: {} as any,
-      name: "",
-      toJSON: () => null,
-      isAxiosError: false,
     };
 
     await handleDownlinkError(error).catch((message) => {
@@ -17,14 +20,10 @@ describe("Error Handling", () => {
     });
   });
 
-  test("Undefined Axios Error", async () => {
-    const error: AxiosError = {
-      response: { data: undefined, status: 400, config: {} as any, headers: {}, statusText: "" },
+  test("Undefined Error", async () => {
+    const error: DownlinkError = {
+      response: { data: undefined, status: 400 },
       message: "",
-      config: {} as any,
-      name: "",
-      toJSON: () => null,
-      isAxiosError: false,
     };
 
     await handleDownlinkError(error).catch((message) => {
@@ -33,13 +32,9 @@ describe("Error Handling", () => {
   });
 
   test("Authorization error", async () => {
-    const error: AxiosError = {
-      response: { data: "Authorization is missing", status: 400, config: {} as any, headers: {}, statusText: "" },
+    const error: DownlinkError = {
+      response: { data: "Authorization is missing", status: 400 },
       message: "",
-      config: {} as any,
-      name: "",
-      toJSON: () => null,
-      isAxiosError: false,
     };
 
     await handleDownlinkError(error).catch((message) => {
@@ -48,13 +43,9 @@ describe("Error Handling", () => {
   });
 
   test("String error", async () => {
-    const error: AxiosError = {
-      response: { data: "test", status: 400, config: {} as any, headers: {}, statusText: "" },
+    const error: DownlinkError = {
+      response: { data: "test", status: 400 },
       message: "",
-      config: {} as any,
-      name: "",
-      toJSON: () => null,
-      isAxiosError: false,
     };
 
     await handleDownlinkError(error).catch((message) => {
@@ -63,13 +54,9 @@ describe("Error Handling", () => {
   });
 
   test("JSON Error", async () => {
-    const error: AxiosError = {
-      response: { data: { param: "value" }, status: 400, config: {} as any, headers: {}, statusText: "" },
+    const error: DownlinkError = {
+      response: { data: { param: "value" }, status: 400 },
       message: "",
-      config: {} as any,
-      name: "",
-      toJSON: () => null,
-      isAxiosError: false,
     };
 
     await handleDownlinkError(error).catch((message) => {
@@ -78,13 +65,9 @@ describe("Error Handling", () => {
   });
 
   test("Number Error", async () => {
-    const error: AxiosError = {
-      response: { data: 20, status: 400, config: {} as any, headers: {}, statusText: "" },
+    const error: DownlinkError = {
+      response: { data: 20, status: 400 },
       message: "",
-      config: {} as any,
-      name: "",
-      toJSON: () => null,
-      isAxiosError: false,
     };
 
     await handleDownlinkError(error).catch((message) => {

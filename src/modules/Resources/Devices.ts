@@ -1,3 +1,5 @@
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import { chunk } from "../../common/chunk";
 import type {
   Data,
   DataCreate,
@@ -7,9 +9,7 @@ import type {
   TokenCreateResponse,
   TokenData,
 } from "../../common/common.types";
-import { chunk } from "../../common/chunk";
 import sleep from "../../common/sleep";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
 import dateParser from "../Utils/dateParser";
 
 import type { DataQuery, DataQueryStreaming, OptionsStreaming } from "../Device/device.types";
@@ -94,8 +94,8 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
     // API will divide the poolingRecordQty by the number of variables
     const amount: number = Math.ceil(poolingRecordQty);
-    let page: number = 0;
-    let stop: boolean = false;
+    let page = 0;
+    let stop = false;
 
     while (!stop) {
       await sleep(poolingTime);
@@ -261,7 +261,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * console.log(params); // [ { id: 'params-id-123', key: 'config-key', value: 'config-value', sent: false } ]
    * ```
    */
-  public async paramList(deviceID: GenericID, sentStatus?: Boolean): Promise<Required<ConfigurationParams>[]> {
+  public async paramList(deviceID: GenericID, sentStatus?: boolean): Promise<Required<ConfigurationParams>[]> {
     const result = await this.doRequest<Required<ConfigurationParams>[]>({
       path: `/device/${deviceID}/params`,
       method: "GET",
@@ -347,7 +347,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    */
   public async tokenCreate(deviceID: GenericID, tokenParams: TokenData): Promise<TokenCreateResponse> {
     let result = await this.doRequest<TokenCreateResponse>({
-      path: `/device/token`,
+      path: "/device/token",
       method: "POST",
       body: { device: deviceID, ...tokenParams },
     });
@@ -416,7 +416,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    */
   public async getDeviceData(deviceId: GenericID, queryParams?: DataQuery): Promise<Data[]> {
     if (queryParams?.query === "default") {
-      delete queryParams.query;
+      queryParams.query = undefined;
     }
 
     let result = await this.doRequest<Data[] | number>({
@@ -468,7 +468,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     const variableQty = Array.isArray(params?.variables) ? params.variables.length : 1;
     const qty: number = Math.ceil(poolingRecordQty / variableQty);
     let skip: number = initialSkip;
-    let stop: boolean = false;
+    let stop = false;
 
     while (!stop) {
       await sleep(poolingTime);

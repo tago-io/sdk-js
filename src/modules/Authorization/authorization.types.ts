@@ -1,4 +1,4 @@
-import { PermissionOption, ExpireTimeOption, GenericID } from "../../common/common.types";
+import type { ExpireTimeOption, GenericID, PermissionOption } from "../../common/common.types";
 
 interface AuthorizationInfo {
   name: string;
@@ -13,4 +13,4 @@ interface AuthorizationInfo {
   created_by: string | null;
 }
 
-export { AuthorizationInfo };
+export type { AuthorizationInfo };

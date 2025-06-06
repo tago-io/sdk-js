@@ -1,26 +1,26 @@
 import { generateWidgetItemId } from "./common";
 export enum InputFormField {
-  "Text" = "text",
-  "Address" = "address",
-  "Barcode" = "barcode",
-  "Calendar" = "calendar",
+  Text = "text",
+  Address = "address",
+  Barcode = "barcode",
+  Calendar = "calendar",
   "Capture user" = "user",
-  "Checkbox" = "checkbox",
+  Checkbox = "checkbox",
   "Clock Set" = "clock-set",
-  "Device" = "device",
-  "Dropdown" = "dropdown",
+  Device = "device",
+  Dropdown = "dropdown",
   "Dropdown Multiple" = "dropdown-multi",
-  "Email" = "email",
+  Email = "email",
   "File Upload" = "upload",
   "Filtered variables" = "filtered",
-  "Hidden" = "hidden",
+  Hidden = "hidden",
   "Image / Video Select" = "image-select",
   "Incremental Step" = "incremental-step",
-  "Number" = "number",
-  "Password" = "password",
+  Number = "number",
+  Password = "password",
   "QR Code" = "qrcode",
-  "Radio" = "radio",
-  "Validation" = "validation",
+  Radio = "radio",
+  Validation = "validation",
 }
 
 function convertDefaultValue(useCurrentValue: string): string {
@@ -31,7 +31,7 @@ function convertDefaultValue(useCurrentValue: string): string {
   return defaultValue;
 }
 
-export function convertSubmitButton(oldDisplay: any, runAnalysis: string): Object {
+export function convertSubmitButton(oldDisplay: any, runAnalysis: string): Record<string, any> {
   return {
     analysis: runAnalysis || "",
     clear_form: false,

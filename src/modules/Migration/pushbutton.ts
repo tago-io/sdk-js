@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old PUSH BUTTON to new PUSH BUTTON
 // ? ====================================================================================
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 
 function convertState(oldState: any) {
   const newState = {
@@ -10,7 +10,7 @@ function convertState(oldState: any) {
     type: oldState?.type || "text",
     color: oldState?.text_color || "",
   };
-  delete newState.text_color;
+  newState.text_color = undefined;
 
   return newState;
 }

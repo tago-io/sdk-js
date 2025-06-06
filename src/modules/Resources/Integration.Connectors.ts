@@ -1,7 +1,7 @@
-import { GenericID } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID } from "../../common/common.types";
 import dateParser from "../Utils/dateParser";
-import { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery } from "./integration.connectors.types";
+import type { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery } from "./integration.connectors.types";
 
 class Connectors extends TagoIOModule<GenericModuleParams> {
   /**
@@ -84,7 +84,7 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
    */
   public async create(connectorObj: ConnectorCreateInfo): Promise<{ connector: GenericID }> {
     const result = await this.doRequest<{ connector: GenericID }>({
-      path: `/integration/connector/`,
+      path: "/integration/connector/",
       method: "POST",
       body: {
         ...connectorObj,

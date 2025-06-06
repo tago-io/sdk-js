@@ -1,8 +1,8 @@
-import { GenericID, GenericToken } from "../../common/common.types";
-import TagoIOModule, { ConnectorModuleParams } from "../../common/TagoIOModule";
-import { ConfigurationParams } from "../Resources/devices.types";
+import TagoIOModule, { type ConnectorModuleParams } from "../../common/TagoIOModule";
+import type { GenericID, GenericToken } from "../../common/common.types";
+import type { ConfigurationParams } from "../Resources/devices.types";
 import dateParser from "../Utils/dateParser";
-import { INetworkInfo, NetworkDeviceListQuery, NetworkDeviceListQueryInfo } from "./network.types";
+import type { INetworkInfo, NetworkDeviceListQuery, NetworkDeviceListQueryInfo } from "./network.types";
 
 class Network extends TagoIOModule<ConnectorModuleParams> {
   /**

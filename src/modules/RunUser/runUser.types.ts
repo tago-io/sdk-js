@@ -1,5 +1,5 @@
-import { ExpireTimeOption, GenericID, GenericToken } from "../../common/common.types";
-import { OTPType } from "../Resources/account.types";
+import type { ExpireTimeOption, GenericID, GenericToken } from "../../common/common.types";
+import type { OTPType } from "../Resources/account.types";
 
 interface UserOptions {
   decimal_separator?: string;
@@ -63,7 +63,7 @@ interface RunNotificationInfo {
   buttons_autodisable: boolean;
 }
 
-export {
+export type {
   RunUserInfo,
   RunUserCreateInfo,
   RunUserCreate,

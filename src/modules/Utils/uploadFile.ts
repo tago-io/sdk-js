@@ -1,8 +1,8 @@
-import path from "path";
+import path from "node:path";
 
 import Account from "../Resources/AccountDeprecated";
 import Resources from "../Resources/Resources";
-import { UploadFileOptions } from "./utils.types";
+import type { UploadFileOptions } from "./utils.types";
 
 type FileURL = string;
 

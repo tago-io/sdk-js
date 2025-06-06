@@ -2,12 +2,12 @@
 // * What is this file?
 //     Migration of old INPUT CONTROL to new INPUT CONTROL
 // ? ====================================================================================
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 import { generateWidgetItemId } from "./common";
 
 enum EInputControlFieldType {
-  "Switch" = "switch",
-  "Text" = "text",
+  Switch = "switch",
+  Text = "text",
 }
 
 export function convert(oldWidget: any): WidgetInfo {

@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old CYLINDER to new CYLINDER
 // ? ====================================================================================
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 import { convertFormula, convertRange } from "./common";
 
 export function convert(oldWidget: any): WidgetInfo {

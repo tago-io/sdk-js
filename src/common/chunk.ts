@@ -7,7 +7,7 @@ function chunk<T>(array: T[], size: number): T[][] {
   }
 
   if (typeof size !== "number" || size < 1) {
-    return array.map(() => []);
+    return array.map((): T[] => []);
   }
 
   const chunked_arr: T[][] = [];

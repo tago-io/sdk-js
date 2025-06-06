@@ -1,4 +1,4 @@
-import { ExpireTimeOption, GenericID } from "../../common/common.types";
+import type { ExpireTimeOption, GenericID } from "../../common/common.types";
 
 interface PlanSetInfo {
   plan: string;
@@ -60,4 +60,4 @@ interface CurrentPrices {
   addons: { name: string; price: number }[];
 }
 
-export { PlanSetInfo, PlanInfo, ProfileLimit, Discount, Summary, Price, CurrentPrices };
+export type { PlanSetInfo, PlanInfo, ProfileLimit, Discount, Summary, Price, CurrentPrices };

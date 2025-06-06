@@ -1,4 +1,4 @@
-import { GenericID } from "../../common/common.types";
+import type { GenericID } from "../../common/common.types";
 
 interface PaymentInfo {
   status: boolean;
@@ -34,4 +34,4 @@ interface PaymentInfo {
   ];
 }
 
-export { PaymentInfo };
+export type { PaymentInfo };
