@@ -1,6 +1,5 @@
 import { http, HttpResponse, delay } from "msw";
 import { setupServer } from "msw/node";
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { RequestConfig } from "../common/common.types";
 import config from "../config";
 import apiRequest from "./apiRequest";
