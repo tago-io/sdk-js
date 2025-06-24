@@ -30,7 +30,7 @@
     "format": "biome format --write .",
     "check": "biome check --write .",
     "test": "vitest",
-    "monacoTypes": "dts-bundle-generator -o docs/tago-io.sdk.d.ts src/modules.ts",
+    "monacoTypes": "dts-bundle-generator --project tsconfig.monaco.json -o docs/tago-io.sdk.d.ts src/modules.ts",
     "docs": "typedoc",
     "link": "yalc publish"
   },
