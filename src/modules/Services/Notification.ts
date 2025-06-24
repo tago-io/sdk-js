@@ -1,6 +1,5 @@
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { GenericID } from "../../common/common.types";
-import { NotificationCreate } from "../Resources/notifications.types";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { NotificationCreate } from "../Resources/notifications.types";
 
 class Notification extends TagoIOModule<GenericModuleParams> {
   /**

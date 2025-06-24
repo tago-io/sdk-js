@@ -1,4 +1,4 @@
-import { GenericID } from "../../types";
+import type { GenericID } from "../../types";
 
 /**
  * Token used on TagoIO, string with 34 characters
@@ -13,4 +13,4 @@ type TokenCreateResponse = {
   additional_parameters?: string;
 };
 
-export { GenericToken, TokenCreateResponse };
+export type { GenericToken, TokenCreateResponse };

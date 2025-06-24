@@ -1,5 +1,5 @@
-import { GenericID } from "../../common/common.types";
-import { ProfileListInfo } from "./profile.types";
+import type { GenericID } from "../../common/common.types";
+import type { ProfileListInfo } from "./profile.types";
 
 interface AccountCreateInfo {
   /** Name of the account */
@@ -84,4 +84,4 @@ interface TokenCreateInfo {
   name: string;
 }
 
-export { AccountInfo, AccountCreateInfo, LoginResponse, TokenCreateInfo, OTPType, LoginCredentials };
+export type { AccountInfo, AccountCreateInfo, LoginResponse, TokenCreateInfo, OTPType, LoginCredentials };

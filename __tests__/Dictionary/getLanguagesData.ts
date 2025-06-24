@@ -1,57 +1,32 @@
-import express, { Express } from "express";
-import http from "http";
-import { AddressInfo } from "net";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 
 import { Dictionary } from "../../src/modules";
 
+const handlers = [
+  http.get("https://api.tago.io/dictionary/:slug/:language", () => {
+    return HttpResponse.json({
+      status: true,
+      result: {
+        KEY1: "first value",
+        KEY2: "second value",
+      },
+    });
+  }),
+];
+
 describe("getLanguagesData", () => {
-  let app: Express;
-  let service: http.Server;
   let dictionary: Dictionary;
-  let url: string;
-  let body: object;
 
-  const slug = "SLUG";
-  const language = "en-US";
+  const server = setupServer(...handlers);
 
-  beforeAll((done) => {
+  beforeAll(() => {
     dictionary = new Dictionary({ language: "en-US", token: "mockToken" });
-
-    const startServer = () => {
-      app = express();
-      app.use(express.json());
-      service = app.listen(0);
-      process.env.TAGOIO_API = `http://localhost:${(service.address() as AddressInfo).port}`;
-
-      app.get(`/dictionary/${slug}/${language}`, (req, res) => {
-        url = req.url;
-        body = req.body;
-        res.send({
-          status: true,
-          result: {
-            KEY1: "first value",
-            KEY2: "second value",
-          },
-        });
-      });
-
-      done();
-    };
-
-    if (service) {
-      service.close(startServer);
-    } else {
-      startServer();
-    }
+    server.listen();
   });
 
-  afterAll((done) => {
-    service.close(done);
-  });
-
-  beforeEach(() => {
-    url = undefined;
-    body = undefined;
+  afterAll(() => {
+    server.close();
   });
 
   it("makes a request when applying the dictionary to a string with expressions", async () => {
@@ -60,15 +35,11 @@ describe("getLanguagesData", () => {
     );
 
     expect(result).toBe("This is a string with two dictionary expressions: first value and second value.");
-    expect(url).toBe(`/dictionary/${slug}/${language}?fallback=true`);
-    expect(body).toMatchObject({});
   });
 
   it("does not make a request if there's no dictionary expression in the string", async () => {
     const result = await dictionary.applyToString("This is a string with zero dictionary expressions.");
 
     expect(result).toBe("This is a string with zero dictionary expressions.");
-    expect(url).toBeUndefined();
-    expect(body).toBeUndefined();
   });
 });

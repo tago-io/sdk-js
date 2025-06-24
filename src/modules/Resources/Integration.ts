@@ -1,4 +1,4 @@
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
 import Connectors from "./Integration.Connectors";
 import Networks from "./Integration.Networks";
 

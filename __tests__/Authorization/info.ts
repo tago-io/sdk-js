@@ -1,67 +1,52 @@
-import express, { Express } from "express";
-import http from "http";
-import { Authorization } from "../../src/modules";
-import { AddressInfo } from "net";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 
-jest.setTimeout(3000);
+import { Authorization } from "../../src/modules";
+
+const handlers = [
+  http.get("https://api.tago.io/info", ({ request }) => {
+    const url = new URL(request.url);
+
+    let id = "test-id";
+    if (url.searchParams.get("details") === "true") {
+      id = "test-id-with-details";
+    }
+
+    return HttpResponse.json({
+      status: true,
+      result: {
+        id,
+      },
+    });
+  }),
+];
 
 describe("Authorization class", () => {
-  let app: Express;
-  let service: http.Server;
-  beforeEach((done) => {
-    const startServer = () => {
-      app = express();
-      app.use(express.json());
-      service = app.listen(0);
-      process.env.TAGOIO_API = `http://localhost:${(service.address() as AddressInfo).port}`;
-      done();
-    };
+  const server = setupServer(...handlers);
 
-    if (service) {
-      service.close(startServer);
-    } else {
-      startServer();
-    }
+  beforeAll(() => {
+    server.listen();
   });
 
-  afterAll((done) => {
-    service.close(done);
+  afterAll(() => {
+    server.close();
   });
 
   test("info", async () => {
-    let url: string;
-    let body: object;
-    let query: object;
-    app.get("/info", (req, res) => {
-      url = req.path;
-      body = req.body;
-      query = req.query;
-      res.send({ status: true, result: { id: "test" } });
-    });
-
-    const authorization = new Authorization({ token: "test", region: "env" });
+    const authorization = new Authorization({ token: "test", region: "us-e1" });
     const result = await authorization.info();
 
-    expect(result).toMatchObject({ id: "test" });
-    expect(url).toBe("/info");
-    expect(query).toMatchObject({});
-    expect(body).toMatchObject({});
+    expect(result).toMatchObject({ id: "test-id" });
   });
 
   test("info with details", async () => {
-    let url: string;
-    let body: object;
-    let query: object;
-    app.get("/info", (req, res) => {
-      url = req.url;
-      body = req.body;
-      query = req.query;
-      res.send({ status: true, result: { id: "test" } });
+    const authorization = new Authorization({
+      token: "test",
+      region: "us-e1",
+      details: true,
     });
+    const result = await authorization.info();
 
-    const authorization = new Authorization({ token: "test", region: "env", details: true });
-    await authorization.info();
-
-    expect(query).toMatchObject({ details: "true" });
+    expect(result).toMatchObject({ id: "test-id-with-details" });
   });
 });

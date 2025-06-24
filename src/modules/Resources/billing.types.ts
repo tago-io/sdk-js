@@ -1,4 +1,4 @@
-import { GenericID } from "../../common/common.types";
+import type { GenericID } from "../../common/common.types";
 
 type BillingPlan = "free" | "starter" | "scale";
 

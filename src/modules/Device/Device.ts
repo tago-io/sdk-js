@@ -1,10 +1,10 @@
-import { chunk } from "../../common/chunk";
-import { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
-import sleep from "../../common/sleep";
 import TagoIOModule from "../../common/TagoIOModule";
-import { ConfigurationParams } from "../Resources/devices.types";
+import { chunk } from "../../common/chunk";
+import type { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
+import sleep from "../../common/sleep";
+import type { ConfigurationParams } from "../Resources/devices.types";
 import dateParser from "../Utils/dateParser";
-import {
+import type {
   DataQuery,
   DataQueryAggregate,
   DataQueryDefault,
@@ -55,12 +55,12 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * ```
    */
   public async sendData(data: DataCreate | DataCreate[]): Promise<string> {
-    data = Array.isArray(data) ? data : [data];
+    const normalizedData = Array.isArray(data) ? data : [data];
 
     const result = await this.doRequest<string>({
       path: "/data",
       method: "POST",
-      body: data,
+      body: normalizedData,
     });
 
     return result;
@@ -86,7 +86,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
   public async getData(queryParams?: DataQueryFirstLast): Promise<Data[]>;
   public async getData(queryParams?: DataQuery): Promise<Data[] | DataQueryNumberResponse[]> {
     if (queryParams?.query === "default") {
-      delete queryParams.query;
+      queryParams.query = undefined;
     }
 
     let result = await this.doRequest<Data[] | number>({
@@ -127,12 +127,12 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * @returns Success message with the amount of data items updated.
    */
   public async editData(data: DataEdit | DataEdit[]): Promise<string> {
-    data = Array.isArray(data) ? data : [data];
+    const normalizedData = Array.isArray(data) ? data : [data];
 
     const result = await this.doRequest<string>({
       path: "/data",
       method: "PUT",
-      body: data,
+      body: normalizedData,
     });
 
     return result;
@@ -153,18 +153,19 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * ```
    */
   public async deleteData(queryParams?: DataQuery): Promise<string> {
-    if (!queryParams) {
-      queryParams = { query: "last_item" };
+    let normalizedQueryParams = queryParams;
+    if (!normalizedQueryParams) {
+      normalizedQueryParams = { query: "last_item" };
     }
 
-    if (queryParams?.query === "default") {
-      delete queryParams.query;
+    if (normalizedQueryParams?.query === "default") {
+      normalizedQueryParams.query = undefined;
     }
 
     const result = await this.doRequest<string>({
       path: "/data",
       method: "DELETE",
-      params: queryParams,
+      params: normalizedQueryParams,
     });
 
     return result;
@@ -249,8 +250,8 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     }
 
     const qty: number = Math.ceil(poolingRecordQty);
-    let skip: number = 0;
-    let stop: boolean = false;
+    let skip = 0;
+    let stop = false;
 
     while (!stop) {
       await sleep(poolingTime);

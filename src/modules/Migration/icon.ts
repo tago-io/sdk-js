@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old ICON to new ICON
 // ? ====================================================================================
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 import convertFormula from "./common/convertFormula";
 
 const layoutMatrix = [
@@ -104,7 +104,7 @@ export function convert(oldWidget: any): WidgetInfo {
    * Remove the _position property
    */
   newStructure.display.variables = variables.map((e) => {
-    delete e._position;
+    e._position = undefined;
     return e;
   });
 

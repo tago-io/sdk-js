@@ -1,18 +1,24 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-
 import Account from "../Resources/AccountDeprecated";
 import Resources from "../Resources/Resources";
-import { DownlinkOptions } from "./utils.types";
+import type { DownlinkOptions } from "./utils.types";
+
+interface DownlinkError {
+  response?: {
+    status: number;
+    data: any;
+  };
+  message?: string;
+}
 
 /**
  * Handles the message presented to the user when API response 4xx or 5xx
- * @param {AxiosError} error error object from Axios
+ * @param {DownlinkError} error error object from fetch
  */
-async function handleDownlinkError(error: AxiosError): Promise<AxiosResponse<any, any>> {
+async function handleDownlinkError(error: DownlinkError): Promise<any> {
   if (typeof error.response?.data === "string" && error.response?.data.includes("Authorization is missing")) {
     throw "Additional parameter is missing with in the TagoIO Authorization used for this device";
   }
-  throw `Downlink failed with status ${error.response.status}: ${JSON.stringify(error.response.data)}`;
+  throw `Downlink failed with status ${error.response?.status}: ${JSON.stringify(error.response?.data)}`;
 }
 
 /**
@@ -88,9 +94,29 @@ async function sendDownlink(resource: Account | Resources, device_id: string, dn
     confirmed: dn_options.confirmed,
   };
 
-  const result = await axios.post(`https://${network.middleware_endpoint}/downlink`, data).catch(handleDownlinkError);
+  try {
+    const response = await fetch(`https://${network.middleware_endpoint}/downlink`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
-  return `Downlink accepted with status ${result.status}`;
+    if (!response.ok) {
+      const errorData = await response.json();
+      await handleDownlinkError({
+        response: {
+          status: response.status,
+          data: errorData,
+        },
+      });
+    }
+
+    return `Downlink accepted with status ${response.status}`;
+  } catch (error: any) {
+    await handleDownlinkError(error);
+  }
 }
 
 export default sendDownlink;

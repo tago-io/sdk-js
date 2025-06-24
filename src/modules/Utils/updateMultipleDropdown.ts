@@ -1,4 +1,4 @@
-import Device from "../Device/Device";
+import type Device from "../Device/Device";
 
 /**
  * Go through variables used in Multiple Dropdown variables and remove a specified value.
@@ -12,7 +12,7 @@ async function updateMultipleDropdown(device: Device, variables: string | string
 
   const data_list = await device.getData({ variables, qty: 999 });
 
-  data_list.forEach((item) => {
+  for (const item of data_list) {
     let sentValues = item.metadata?.sentValues as { value: string; label: string }[];
     let new_data_value = (item.value as string).split(";");
 
@@ -33,7 +33,7 @@ async function updateMultipleDropdown(device: Device, variables: string | string
       device.deleteData({ ids: item.id }).catch((e) => console.error(e));
       device.sendData(new_item).catch((e) => console.error(e));
     }
-  });
+  }
 }
 
 export default updateMultipleDropdown;

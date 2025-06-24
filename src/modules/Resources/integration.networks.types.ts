@@ -1,4 +1,4 @@
-import { GenericID, GenericToken, Query } from "../../common/common.types";
+import type { GenericID, GenericToken, Query } from "../../common/common.types";
 
 interface IDeviceParameters {
   name?: string;
@@ -86,4 +86,4 @@ type NetworkQuery = Query<
   | "updated_at"
 >;
 
-export { NetworkInfo, NetworkCreateInfo, NetworkTokenInfo, NetworkQuery, NetworkTokenCreateResponse };
+export type { NetworkInfo, NetworkCreateInfo, NetworkTokenInfo, NetworkQuery, NetworkTokenCreateResponse };

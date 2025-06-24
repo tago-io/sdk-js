@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old IMAGE MARKER to new IMAGE MARKER
 // ? ====================================================================================
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 import { convertFormula } from "./common";
 
 export function convertLayerData(widget: any, oldWidgetData: any) {
@@ -26,7 +26,7 @@ export function convertLayerData(widget: any, oldWidgetData: any) {
       x?.data?.origin === layerVariable?.origin?.id &&
       x?.data?.variables?.[0] === layerVariable?.variable
     ) {
-      for (const y of x?.result) {
+      for (const y of x?.result || []) {
         const oldFixedPos = y?.metadata?.fixed_position || {};
         const keysFixedPos = Object.keys(oldFixedPos);
         const newFixedPos = { ...oldFixedPos };

@@ -1,5 +1,5 @@
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
-import { EmailBase, EmailHTML, EmailRawText, EmailWithTemplate } from "./Email";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { EmailBase, EmailHTML, EmailRawText, EmailWithTemplate } from "./Email";
 
 interface SendgridCredentials {
   sendgrid_api_key: string;

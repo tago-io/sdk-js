@@ -1,4 +1,4 @@
-import { GenericID, Conditionals, TagsObj, Query, ExpireTimeOption } from "../../common/common.types";
+import type { Conditionals, ExpireTimeOption, GenericID, Query, TagsObj } from "../../common/common.types";
 
 type ActionType =
   | "condition"
@@ -50,7 +50,7 @@ type ActionTypeParams =
       type: "mqtt";
     }
   | {
-      headers: {};
+      headers: Record<string, any>;
       type: "post";
       url: string;
     };
@@ -146,4 +146,4 @@ interface MQTTResourceAction {
 
 type ActionQuery = Query<ActionInfo, "name" | "active" | "last_triggered" | "created_at" | "updated_at">;
 
-export { ActionInfo, ActionCreateInfo, ActionQuery, MQTTResourceAction };
+export type { ActionInfo, ActionCreateInfo, ActionQuery, MQTTResourceAction };

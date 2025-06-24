@@ -1,4 +1,4 @@
-import { Regions, RegionsObj } from "../../regions";
+import type { Regions, RegionsObj } from "../../regions";
 
 type analysisFunction = (context: any, data: any) => any;
 
@@ -40,4 +40,4 @@ interface TagoContext {
   log: (...args: any[]) => void;
 }
 
-export { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment, TagoContext };
+export type { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment, TagoContext };

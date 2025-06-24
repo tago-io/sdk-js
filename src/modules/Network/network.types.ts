@@ -1,5 +1,5 @@
-import { Query } from "../../common/common.types";
-import { DeviceItem } from "../Device/device.types";
+import type { Query } from "../../common/common.types";
+import type { DeviceItem } from "../Device/device.types";
 
 interface IDeviceParameters {
   name?: string;
@@ -44,4 +44,4 @@ interface NetworkDeviceListQueryInfo extends DeviceItem {
   token: string;
 }
 
-export { INetworkInfo, NetworkDeviceListQuery, NetworkDeviceListQueryInfo };
+export type { INetworkInfo, NetworkDeviceListQuery, NetworkDeviceListQueryInfo };

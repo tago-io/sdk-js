@@ -112,10 +112,10 @@ describe("Compose widget - migration suite", () => {
            * invalid icon condition
            */
           return !hasValidColor;
-        } else {
-          return true; // The icon condition is not equal.
         }
-      } else if (e.color_conditions?.[0]) {
+        return true; // The icon condition is not equal.
+      }
+      if (e.color_conditions?.[0]) {
         return true; // The icon condition is not equal.
       }
       return false; // The icon condition is equal
@@ -210,8 +210,8 @@ describe("Compose widget - migration suite", () => {
   it("correctly identifies when header_buttons or help is undefined", () => {
     // Testing when is just row or column deleted
     const copyOfOld1 = Object.assign({ ...oldWidget }, {});
-    delete copyOfOld1.display.header_buttons;
-    delete copyOfOld1.display.help;
+    copyOfOld1.display.header_buttons = undefined;
+    copyOfOld1.display.help = undefined;
 
     const newStructure1 = convert(copyOfOld1);
     expect(newStructure1.display).not.toBeFalsy();

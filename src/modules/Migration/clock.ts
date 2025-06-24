@@ -3,7 +3,7 @@
 //     Migration of old CLOCK to new CLOCK.
 // ? ====================================================================================
 
-import { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types";
 
 /**
  * Takes the OLD widget and returns the NEW structure.

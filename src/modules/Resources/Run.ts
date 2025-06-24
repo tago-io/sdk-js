@@ -1,21 +1,21 @@
-import { GenericID, RecursivePartial } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { GenericID, RecursivePartial } from "../../common/common.types";
 import dateParser from "../Utils/dateParser";
-import { NotificationCreate, NotificationInfo } from "./notifications.types";
-import {
-  LoginResponseRun,
-  RunInfo,
-  UserCreateInfo,
-  UserInfo,
-  UserQuery,
-  LoginAsUserOptions,
-  RunSAMLInfo,
-  RunSAMLEditInfo,
+import type { NotificationCreate, NotificationInfo } from "./notifications.types";
+import type {
   CustomDomainCreate,
   CustomDomainInfo,
   CustomDomainResponse,
+  LoginAsUserOptions,
+  LoginResponseRun,
+  RunInfo,
+  RunSAMLEditInfo,
+  RunSAMLInfo,
+  UserCreateInfo,
   UserCreateResponse,
+  UserInfo,
   UserListItem,
+  UserQuery,
 } from "./run.types";
 
 class Run extends TagoIOModule<GenericModuleParams> {
@@ -143,7 +143,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    */
   public async userCreate(data: UserCreateInfo): Promise<UserCreateResponse> {
     const result = await this.doRequest<UserCreateResponse>({
-      path: `/run/users`,
+      path: "/run/users",
       method: "POST",
       body: data,
     });
@@ -229,7 +229,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    */
   public async emailTest(data: { subject: string; body: string }): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/run/email_test`,
+      path: "/run/email_test",
       method: "POST",
       body: data,
     });
@@ -272,7 +272,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    */
   public async notificationCreate(userID: GenericID, data: NotificationCreate): Promise<{ id: GenericID }> {
     const result = await this.doRequest<{ id: GenericID }>({
-      path: `/run/notification/`,
+      path: "/run/notification/",
       method: "POST",
       body: {
         run_user: userID,

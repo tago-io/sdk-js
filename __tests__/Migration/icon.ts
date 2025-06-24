@@ -63,8 +63,8 @@ describe("Icon widget - migration suite", () => {
   it("correctly identifies when column or row is undefined", () => {
     // Testing when is just row or column deleted
     const copyOfOld1 = Object.assign({ ...oldWidget }, {});
-    delete copyOfOld1.display.layout["originIdtemperature4"].row;
-    delete copyOfOld1.display.layout["originIdtemperature2"].column;
+    copyOfOld1.display.layout.originIdtemperature4.row = undefined;
+    copyOfOld1.display.layout.originIdtemperature2.column = undefined;
 
     const newStructure1 = convert(copyOfOld1);
     expect(newStructure1.display).not.toBeFalsy();
@@ -74,8 +74,8 @@ describe("Icon widget - migration suite", () => {
 
     // Test when is both row and column deleted
     const copyOfOld2 = Object.assign({ ...oldWidget }, {});
-    delete copyOfOld1.display.layout["originIdtemperature4"].row;
-    delete copyOfOld1.display.layout["originIdtemperature4"].column;
+    copyOfOld1.display.layout.originIdtemperature4.row = undefined;
+    copyOfOld1.display.layout.originIdtemperature4.column = undefined;
 
     const newStructure2 = convert(copyOfOld2);
     expect(newStructure2.display).not.toBeFalsy();
@@ -90,8 +90,8 @@ describe("Icon widget - migration suite", () => {
   it("correctly identifies when header_buttons or help is undefined", () => {
     // Testing when is just row or column deleted
     const copyOfOld1 = Object.assign({ ...oldWidget }, {});
-    delete copyOfOld1.display.header_buttons;
-    delete copyOfOld1.display.help;
+    copyOfOld1.display.header_buttons = undefined;
+    copyOfOld1.display.help = undefined;
 
     const newStructure1 = convert(copyOfOld1);
     expect(newStructure1.display).not.toBeFalsy();

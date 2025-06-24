@@ -1,7 +1,5 @@
-import { GenericID } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
 import type {
-  BillingAddOn,
   BillingCoupon,
   BillingEditInformation,
   BillingEditResourceAllocation,
@@ -22,7 +20,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async getSubscription(): Promise<BillingSubscription> {
     const result = await this.doRequest<BillingSubscription>({
-      path: `/account/subscription`,
+      path: "/account/subscription",
       method: "GET",
     });
 
@@ -43,7 +41,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async editSubscription(subscription: BillingEditSubscription): Promise<void> {
     const result = await this.doRequest<void>({
-      path: `/account/subscription`,
+      path: "/account/subscription",
       method: "POST",
       body: subscription,
     });
@@ -60,7 +58,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async getSubscriptionSchedule(): Promise<BillingSchedule> {
     const result = await this.doRequest<BillingSchedule>({
-      path: `/account/subscription/schedule`,
+      path: "/account/subscription/schedule",
       method: "GET",
     });
 
@@ -72,7 +70,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async getPrices(): Promise<BillingPrices> {
     const result = await this.doRequest<BillingPrices>({
-      path: `/pricing`,
+      path: "/pricing",
       method: "GET",
     });
 
@@ -84,7 +82,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async getProratedPrices(): Promise<BillingPrices> {
     const result = await this.doRequest<BillingPrices>({
-      path: `/pricing/prorated`,
+      path: "/pricing/prorated",
       method: "GET",
     });
 
@@ -97,7 +95,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async getPaymentMethod(): Promise<BillingPaymentMethod> {
     const result = await this.doRequest<BillingPaymentMethod>({
-      path: `/account/payment_method`,
+      path: "/account/payment_method",
       method: "GET",
     });
 
@@ -115,7 +113,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async editPaymentMethod(stripeCardToken: string): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/account/payment_method`,
+      path: "/account/payment_method",
       method: "POST",
       body: { token: stripeCardToken },
     });
@@ -135,7 +133,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async removePaymentMethod(): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/account/payment_method`,
+      path: "/account/payment_method",
       method: "DELETE",
     });
 
@@ -147,7 +145,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async getBillingInformation(): Promise<BillingInformation> {
     const result = await this.doRequest<BillingInformation>({
-      path: `/account/billing`,
+      path: "/account/billing",
       method: "GET",
     });
 
@@ -161,7 +159,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async editBillingInformation(billingInformation: BillingEditInformation): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/account/billing`,
+      path: "/account/billing",
       method: "PUT",
       body: billingInformation,
     });
@@ -174,7 +172,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async getAllocation(): Promise<BillingResourceAllocation> {
     const result = await this.doRequest<BillingResourceAllocation>({
-      path: `/account/allocation`,
+      path: "/account/allocation",
       method: "GET",
     });
 
@@ -200,7 +198,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async editAllocation(allocation: BillingEditResourceAllocation): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/account/allocation`,
+      path: "/account/allocation",
       method: "POST",
       body: allocation,
     });
@@ -225,7 +223,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
     lastId?: string;
   }): Promise<BillingPaymentHistoryEntry[]> {
     const result = await this.doRequest<BillingPaymentHistoryEntry[]>({
-      path: `/account/payment_history`,
+      path: "/account/payment_history",
       method: "GET",
       params: {
         amount: queryObj?.amount ?? 10,
@@ -245,7 +243,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async getSubscriptionSummary(): Promise<BillingSubscriptionSummary | undefined> {
     const result = await this.doRequest<BillingSubscriptionSummary | undefined>({
-      path: `/account/subscription/summary`,
+      path: "/account/subscription/summary",
       method: "GET",
     });
 
@@ -279,7 +277,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async cancelDowngrade(): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/account/subscription/schedule`,
+      path: "/account/subscription/schedule",
       method: "DELETE",
     });
 
@@ -299,7 +297,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async retryLastPayment(): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/account/subscription/pending/retry`,
+      path: "/account/subscription/pending/retry",
       method: "POST",
     });
 
@@ -317,7 +315,7 @@ class Billing extends TagoIOModule<GenericModuleParams> {
    */
   public async cancelLastOperation(): Promise<string> {
     const result = await this.doRequest<string>({
-      path: `/account/subscription/pending/cancel`,
+      path: "/account/subscription/pending/cancel",
       method: "POST",
     });
 

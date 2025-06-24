@@ -1,7 +1,7 @@
-import { ListTokenQuery, TokenData, TokenDataList } from "../../common/common.types";
-import TagoIOModule, { GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import type { ListTokenQuery, TokenData, TokenDataList } from "../../common/common.types";
 import dateParser from "../Utils/dateParser";
-import { TokenCreateResponse, GenericToken } from "./ServiceAuthorization.types";
+import type { GenericToken, TokenCreateResponse } from "./ServiceAuthorization.types";
 
 class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   /**
@@ -22,7 +22,7 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    */
   public async tokenList(query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
     let result = await this.doRequest<Partial<TokenDataList>[]>({
-      path: `/serviceauth`,
+      path: "/serviceauth",
       method: "GET",
       params: {
         page: query?.page || 1,
@@ -55,7 +55,7 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    */
   public async tokenCreate(tokenParams: TokenData): Promise<TokenCreateResponse> {
     const result = await this.doRequest<TokenCreateResponse>({
-      path: `/serviceauth`,
+      path: "/serviceauth",
       method: "POST",
       body: tokenParams,
     });
