@@ -16,6 +16,11 @@ type TriggerGeofenceValueType = {
   coordinates?: number[][];
 };
 
+type ContentVariables = {
+  name: string;
+  value: string;
+};
+
 type ActionTypeParams =
   | {
       script: GenericID[];
@@ -53,6 +58,45 @@ type ActionTypeParams =
       headers: Record<string, any>;
       type: "post";
       url: string;
+    }
+  | {
+      type: "sms-twilio";
+      message: string;
+      to: string;
+      from: string;
+      twilio_sid: GenericID;
+      twilio_token: GenericID;
+    }
+  | {
+      type: "whatsapp-twilio";
+      message: string;
+      to: string;
+      from: string;
+      twilio_sid: GenericID;
+      twilio_token: GenericID;
+      content_variables: ContentVariables[];
+      content_sid: GenericID;
+    }
+  | {
+      type: "email-sendgrid";
+      from: string;
+      message: string;
+      subject: string;
+      to: string;
+      sendgrid_api_key: GenericID;
+    }
+  | {
+      type: "email-smtp";
+      from: string;
+      message: string;
+      subject: string;
+      to: string;
+      smtp_secret: GenericID;
+    }
+  | {
+      type: "queue-sqs";
+      sqs_secret: GenericID;
+      batch_enabled: boolean;
     };
 
 type ActionTriggerType =
