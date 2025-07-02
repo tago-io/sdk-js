@@ -66,8 +66,12 @@ export function withTimeout(fetchFunction: typeof fetch, timeout: number): typeo
     } else {
       // Fallback for older Node.js versions
       const controller = new AbortController();
-      setTimeout(() => controller.abort(), timeout);
-      timeoutSignal = controller.signal;
+      const timerId = setTimeout(() => controller.abort(), timeout);
+      try {
+        timeoutSignal = controller.signal;
+      } finally {
+        clearTimeout(timerId);
+      }
     }
 
     const signal = providedSignal ? AbortSignal.any([providedSignal, timeoutSignal]) : timeoutSignal;
