@@ -27,15 +27,19 @@ export class HttpError extends Error {
  * Throws HttpError if response is not ok
  */
 export async function throwIfHttpError(responseOrPromise: Response | Promise<Response>): Promise<Response> {
+  let response: Response;
+
   if (!(responseOrPromise instanceof Response)) {
-    responseOrPromise = await responseOrPromise;
+    response = await responseOrPromise;
+  } else {
+    response = responseOrPromise;
   }
 
-  if (!responseOrPromise.ok) {
-    throw new HttpError(responseOrPromise);
+  if (!response.ok) {
+    throw new HttpError(response);
   }
 
-  return responseOrPromise;
+  return response;
 }
 
 /**
