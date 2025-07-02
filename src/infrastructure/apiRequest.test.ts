@@ -1,4 +1,4 @@
-import { HttpError } from "fetch-extras";
+import { HttpError } from "./fetchUtils";
 import qs from "qs";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
