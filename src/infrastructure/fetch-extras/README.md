@@ -35,7 +35,3 @@ This internal implementation provides the same core functionality as `fetch-extr
 ### Usage
 
 The implementation is automatically used by the SDK's infrastructure layer and maintains the same API as the original `fetch-extras` package, ensuring seamless integration without breaking existing code.
-
-### Migration Notes
-
-If you were previously using `fetch-extras` directly, you can now use this internal implementation through the SDK's infrastructure layer, which provides the same functionality without ESM compatibility concerns.
