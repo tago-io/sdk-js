@@ -18,7 +18,8 @@
       ".cache/**",
       "*.tgz",
       "*.local.*",
-      "src/infrastructure/envParams.json"
+      "src/infrastructure/envParams.json",
+      "src/infrastructure/fetch-extras/**"
     ]
   },
   "formatter": {

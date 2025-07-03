@@ -1,4 +1,4 @@
-import { HttpError, withHttpError, withTimeout } from "fetch-extras";
+import { HttpError, withHttpError, withTimeout } from "./fetch-extras/index.js";
 import qs from "qs";
 import { addCache, getCache } from "../common/Cache";
 import { addRequestInProgress, isRequestInProgress, removeRequestInProgress } from "../common/RequestInProgress";

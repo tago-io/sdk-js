@@ -1,0 +1,50 @@
+/**
+ * CommonJS-compatible fetch utilities to replace fetch-extras
+ * This maintains backward compatibility while avoiding ESM-only dependencies
+ *
+ * Original implementation: https://github.com/sindresorhus/fetch-extras
+ * This is a CommonJS-compatible version of the fetch-extras functionality
+ * to avoid ESM-only dependency issues while maintaining full API compatibility.
+ */
+
+export class HttpError extends Error {
+	constructor(response) {
+		const status = `${response.status} ${response.statusText}`.trim();
+		const reason = status ? `status code ${status}` : 'an unknown error';
+
+		super(`Request failed with ${reason}: ${response.url}`);
+		Error.captureStackTrace?.(this, this.constructor);
+
+		this.name = 'HttpError';
+		this.code = 'ERR_HTTP_RESPONSE_NOT_OK';
+		this.response = response;
+	}
+}
+
+export async function throwIfHttpError(responseOrPromise) {
+	if (!(responseOrPromise instanceof Response)) {
+		responseOrPromise = await responseOrPromise;
+	}
+
+	if (!responseOrPromise.ok) {
+		throw new HttpError(responseOrPromise);
+	}
+
+	return responseOrPromise;
+}
+
+export function withHttpError(fetchFunction) {
+	return async (urlOrRequest, options = {}) => {
+		const response = await fetchFunction(urlOrRequest, options);
+		return throwIfHttpError(response);
+	};
+}
+
+export function withTimeout(fetchFunction, timeout) {
+	return async (urlOrRequest, options = {}) => {
+		const providedSignal = options.signal ?? (urlOrRequest instanceof Request && urlOrRequest.signal);
+		const timeoutSignal = AbortSignal.timeout(timeout);
+		const signal = providedSignal ? AbortSignal.any([providedSignal, timeoutSignal]) : timeoutSignal;
+		return fetchFunction(urlOrRequest, {...options, signal});
+	};
+}
