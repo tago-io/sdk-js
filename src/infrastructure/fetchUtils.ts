@@ -1,6 +1,10 @@
 /**
  * CommonJS-compatible fetch utilities to replace fetch-extras
  * This maintains backward compatibility while avoiding ESM-only dependencies
+ *
+ * Original implementation: https://github.com/sindresorhus/fetch-extras
+ * This is a CommonJS-compatible reimplementation of the fetch-extras functionality
+ * to avoid ESM-only dependency issues while maintaining full API compatibility.
  */
 
 export class HttpError extends Error {
