@@ -45,5 +45,5 @@ class AnalysisRouter {
   }
 }
 
-export { RouterConstructor };
+export type { RouterConstructor };
 export default AnalysisRouter;
