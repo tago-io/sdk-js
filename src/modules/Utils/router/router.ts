@@ -1,5 +1,5 @@
 import Account from "../../Resources/AccountDeprecated";
-import { RouterConstructor } from "./router.types";
+import type { RouterConstructor } from "./router.types";
 import RouterService from "./service";
 class AnalysisRouter {
   services: RouterService[] = [];
