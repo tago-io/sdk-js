@@ -37,7 +37,11 @@ async function handleDownlinkError(error: DownlinkError): Promise<any> {
  * @requires Network Access permission for the Analysis
  * @returns
  */
-async function sendDownlink(resource: Account | Resources, device_id: string, dn_options: DownlinkOptions): Promise<string> {
+async function sendDownlink(
+  resource: Account | Resources,
+  device_id: string,
+  dn_options: DownlinkOptions
+): Promise<string> {
   if (!(resource instanceof Account) && !(resource instanceof Resources)) {
     throw "The parameter 'resource' must be an instance of a TagoIO Resource.";
   }

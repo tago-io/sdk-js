@@ -55,7 +55,7 @@ export function convert(oldWidget: any): WidgetInfo {
   return newStructure;
 }
 
-export function isOldStructure(widget: any) {
+export function isOldStructure(widget: any): any {
   const isOld = !!(
     widget?.display?.gauge_label ||
     widget?.display?.minimum ||

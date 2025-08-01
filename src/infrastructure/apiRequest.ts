@@ -1,4 +1,3 @@
-import { HttpError, withHttpError, withTimeout } from "./fetchUtils";
 import qs from "qs";
 import { addCache, getCache } from "../common/Cache";
 import { addRequestInProgress, isRequestInProgress, removeRequestInProgress } from "../common/RequestInProgress";
@@ -6,6 +5,7 @@ import type { RequestConfig } from "../common/common.types";
 import sleep from "../common/sleep";
 import config from "../config";
 import envParams from "./envParams.json";
+import { HttpError, withHttpError, withTimeout } from "./fetchUtils";
 import isBrowser from "./isBrowser";
 
 interface ResponseData {

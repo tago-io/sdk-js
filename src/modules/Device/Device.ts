@@ -240,7 +240,10 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * }
    * ```
    */
-  public async *getDataStreaming(params?: DataQueryStreaming, options?: OptionsStreaming): AsyncGenerator<Data[], void, unknown> {
+  public async *getDataStreaming(
+    params?: DataQueryStreaming,
+    options?: OptionsStreaming
+  ): AsyncGenerator<Data[], void, unknown> {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
     const poolingTime = options?.poolingTime || 1000; // 1 seg
     const neverStop = options?.neverStop || false;

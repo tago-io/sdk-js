@@ -206,7 +206,7 @@ function createEditObject(formField: any) {
   return edit;
 }
 
-export function isOldStructure(widget: any) {
+export function isOldStructure(widget: any): any {
   const isOld = !!(
     widget?.display?.vars_labels ||
     widget?.display?.vars_format ||

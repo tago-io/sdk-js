@@ -79,44 +79,44 @@ export function convertVisualField(field: any): any {
 /**
  * Convert text fields to new widget format
  */
-export function convertFieldText(field: any) {
+export function convertFieldText(field: any): any {
   return {
     ...convertVisualField(field),
     default_value: convertDefaultValue(field?.use_current_value),
     fixed_value: field?.default,
     type: InputFormField.Text,
-  };
+  } as any;
 }
 
 /**
  * Convert address fields to new widget format
  */
-export function convertFieldAddress(field: any, showMap?: any) {
+export function convertFieldAddress(field: any, showMap?: any): any {
   return {
     ...convertVisualField(field),
     default_value: convertDefaultValue(field?.use_current_value),
     fixed_value: field?.default,
     show_map: !!showMap,
     type: InputFormField.Address,
-  };
+  } as any;
 }
 
 /**
  * Convert barcode fields to new widget format
  */
-export function convertFieldBarCode(field: any) {
+export function convertFieldBarCode(field: any): any {
   return {
     ...convertVisualField(field),
     default_value: convertDefaultValue(field?.use_current_value),
     fixed_value: field?.default,
     type: InputFormField.Barcode,
-  };
+  } as any;
 }
 
 /**
  * Convert calendar fields to new widget format
  */
-export function convertFieldCalendar(field: any) {
+export function convertFieldCalendar(field: any): any {
   return {
     ...convertVisualField(field),
     allow_time: !!field?.allow_time_select,
@@ -124,25 +124,25 @@ export function convertFieldCalendar(field: any) {
     fixed_value: field?.default,
     show_end_date: field?.hide_end_date ?? true,
     type: InputFormField.Calendar,
-  };
+  } as any;
 }
 
 /**
  * Convert calendar fields to new widget format
  */
-export function convertFieldCheckbox(field: any) {
+export function convertFieldCheckbox(field: any): any {
   return {
     ...convertVisualField(field),
     default_value: convertDefaultValue(field?.use_current_value),
     fixed_value: field?.default,
     type: InputFormField.Checkbox,
-  };
+  } as any;
 }
 
 /**
  * Convert clock set fields to new widget format
  */
-export function convertFieldClockSet(field: any) {
+export function convertFieldClockSet(field: any): any {
   return {
     ...convertVisualField(field),
     default_value: convertDefaultValue(field?.use_current_value),
@@ -153,25 +153,25 @@ export function convertFieldClockSet(field: any) {
     minimum: field?.minimum,
     step_value: field?.increment,
     type: InputFormField["Clock Set"],
-  };
+  } as any;
 }
 
 /**
  * Convert device fields to new widget format
  */
-export function convertFieldDevice(field: any) {
+export function convertFieldDevice(field: any): any {
   return {
     ...convertVisualField(field),
     default_value: convertDefaultValue(field?.use_current_value),
     fixed_value: field?.default,
     type: InputFormField.Device,
-  };
+  } as any;
 }
 
 /**
  * Convert dropdown field to new widget format
  */
-export function convertFieldDropdown(field: any) {
+export function convertFieldDropdown(field: any): any {
   return {
     ...convertVisualField(field),
     options: (field?.options || []).map((e: any) => ({
@@ -186,49 +186,49 @@ export function convertFieldDropdown(field: any) {
       origin: field?.use_variable?.origin?.id || field?.use_variable?.origin,
       variable: field?.use_variable?.variable,
     },
-  };
+  } as any;
 }
 
 /**
  * Convert dropdown multiples field to new widget format
  */
-export function convertFieldDropdownMultiple(field: any) {
+export function convertFieldDropdownMultiple(field: any): any {
   return {
     ...convertFieldDropdown(field),
     type: InputFormField["Dropdown Multiple"],
-  };
+  } as any;
 }
 
 /**
  * Convert email field to new widget format
  */
-export function convertFieldEmail(field: any) {
+export function convertFieldEmail(field: any): any {
   return {
     ...convertVisualField(field),
     amount: "single",
     default_value: convertDefaultValue(field?.use_current_value),
     fixed_value: field?.default,
     type: InputFormField.Email,
-  };
+  } as any;
 }
 
 /**
  * Convert file upload field to new widget format
  */
-export function convertFieldFileUpload(field: any) {
+export function convertFieldFileUpload(field: any): any {
   return {
     ...convertVisualField(field),
     maximum_files: field?.max_files || 1,
     path: field?.path || "",
     type: InputFormField["File Upload"],
     use_mobile_camera: !!field?.use_camera,
-  };
+  } as any;
 }
 
 /**
  * Convert filtered variables field to new widget format
  */
-export function convertFieldFilteredVariables(field: any) {
+export function convertFieldFilteredVariables(field: any): any {
   const useValuesFromVariable = {
     origin: field?.use_variable?.origin?.id || field?.use_variable?.origin,
     variable: field?.use_variable?.variable,
@@ -240,25 +240,25 @@ export function convertFieldFilteredVariables(field: any) {
     filter_origin: field?.filter_origin,
     type: InputFormField["Filtered variables"],
     use_values_from_variable: { ...useValuesFromVariable },
-  };
+  } as any;
 }
 
 /**
  * Convert hidden field to new widget format
  */
-export function convertFieldHidden(field: any) {
+export function convertFieldHidden(field: any): any {
   return {
     ...convertFormField(field),
     fixed_value: field?.value,
     type: InputFormField.Hidden,
     unit: field?.unit || "",
-  };
+  } as any;
 }
 
 /**
  * Convert Image / Video select field to new widget format
  */
-export function convertFieldImageVideoSelect(field: any) {
+export function convertFieldImageVideoSelect(field: any): any {
   return {
     ...convertVisualField(field),
     allow_multiple: !!field?.allow_multiple,
@@ -277,13 +277,13 @@ export function convertFieldImageVideoSelect(field: any) {
       origin: field?.use_variable?.origin?.id || field?.use_variable?.origin,
       variable: field?.variable,
     },
-  };
+  } as any;
 }
 
 /**
  * Convert Incremental steps field for new widget format
  */
-export function convertFieldIncrementalSteps(field: any) {
+export function convertFieldIncrementalSteps(field: any): any {
   return {
     ...convertVisualField(field),
     default_value: convertDefaultValue(field?.use_current_value),
@@ -292,13 +292,13 @@ export function convertFieldIncrementalSteps(field: any) {
     minimum: field?.minimum || 0,
     step_value: field?.increment || 1,
     type: InputFormField["Incremental Step"],
-  };
+  } as any;
 }
 
 /**
  * Convert Number field to new widget format
  */
-export function convertFieldNumber(field: any) {
+export function convertFieldNumber(field: any): any {
   return {
     ...convertVisualField(field),
     decimals: field?.decimals === "-1" ? "auto" : field?.decimals,
@@ -306,36 +306,36 @@ export function convertFieldNumber(field: any) {
     fixed_value: field?.default,
     show_thousand_separator: !!field?.show_thousand,
     type: InputFormField.Number,
-  };
+  } as any;
 }
 
 /**
  * Convert Password field to new widget format
  */
-export function convertFieldPassword(field: any) {
+export function convertFieldPassword(field: any): any {
   return {
     ...convertVisualField(field),
     fixed_value: field?.use_current_value !== "current_value" ? field?.default : "",
     type: InputFormField.Password,
-  };
+  } as any;
 }
 
 /**
  * Convert QR Code field to new widget format
  */
-export function convertFieldQrCode(field: any) {
+export function convertFieldQrCode(field: any): any {
   return {
     ...convertVisualField(field),
     default_value: convertDefaultValue(field?.use_current_value),
     fixed_value: field?.default,
     type: InputFormField["QR Code"],
-  };
+  } as any;
 }
 
 /**
  * Convert Radio field to new widget format
  */
-export function convertFieldRadio(field: any) {
+export function convertFieldRadio(field: any): any {
   return {
     ...convertVisualField(field),
     options: (field?.options || []).map((e: any) => ({
@@ -345,37 +345,37 @@ export function convertFieldRadio(field: any) {
       ...(e?.is_default ? { default: e?.is_default } : {}),
     })),
     type: InputFormField.Radio,
-  };
+  } as any;
 }
 
 /**
  * Convert Validation field to new widget format
  */
-export function convertFieldValidation(field: any) {
+export function convertFieldValidation(field: any): any {
   return {
     ...convertFormField(field),
     fade_out: !field?.validation_message?.always_show,
     keep_last_validation: false,
     show_markdown: false,
     type: InputFormField.Validation,
-  };
+  } as any;
 }
 
 /**
  * Convert Capture user field to new widget format
  */
-export function convertFieldCaptureUser(field: any) {
+export function convertFieldCaptureUser(field: any): any {
   return {
     ...convertFormField(field),
     field: field?.field || "",
     type: InputFormField["Capture user"],
-  };
+  } as any;
 }
 
 /**
  * Convert fields
  */
-export function convertField(field: any, showMap?: any) {
+export function convertField(field: any, showMap?: any): any {
   const { fieldtype } = field;
   switch (fieldtype) {
     case "text":

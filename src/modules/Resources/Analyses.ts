@@ -22,7 +22,9 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * console.log(list); // [ { id: 'analysis-id-123', name: 'Analysis Test', ...} ]
    * ```
    */
-  public async list<T extends AnalysisQuery>(queryObj?: T): Promise<AnalysisListItem<T["fields"] extends AnalysisQuery["fields"] ? T["fields"][number] : "id" | "name">[]> {
+  public async list<T extends AnalysisQuery>(
+    queryObj?: T
+  ): Promise<AnalysisListItem<T["fields"] extends AnalysisQuery["fields"] ? T["fields"][number] : "id" | "name">[]> {
     let result = await this.doRequest<
       AnalysisListItem<T["fields"] extends AnalysisQuery["fields"] ? T["fields"][number] : "id" | "name">[]
     >({

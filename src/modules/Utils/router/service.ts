@@ -117,7 +117,9 @@ class RouterService {
    * Return true if action_when is the same
    * Information is available if Analysis is triggered by an action.
    */
-  public whenActionWhen(action_when: "create" | "update" | "delete" | "mqtt_connect" | "mqtt_disconnect"): RouterService {
+  public whenActionWhen(
+    action_when: "create" | "update" | "delete" | "mqtt_connect" | "mqtt_disconnect"
+  ): RouterService {
     this.addFunc((_scope: any, environment: any) => environment._action_when === action_when);
     return this;
   }
@@ -159,7 +161,7 @@ class RouterService {
    * @param router_params
    * @returns
    */
-  public runService(router_params: RouterConstructor): void {
+  public runService(router_params: RouterConstructor): any {
     return this.serviceFunction(router_params);
   }
 

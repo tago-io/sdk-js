@@ -137,7 +137,8 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     const tokenEnd = this.params.token.slice(-5);
 
     sse.addEventListener("message", (event) => {
-      const data = JSONParseSafe(event?.data, {})?.payload;
+      const parsed = JSONParseSafe(event?.data, {}) as { payload?: any };
+      const data = parsed?.payload;
 
       if (!data) {
         // console.log("Invalid data", event.data);

@@ -7,7 +7,11 @@ import type Device from "../Device/Device";
  * @param variables variables inside the device to be verified.
  * @param value value to be removed.
  */
-async function updateMultipleDropdown(device: Device, variables: string | string[], values: string | string[]): Promise<void> {
+async function updateMultipleDropdown(
+  device: Device,
+  variables: string | string[],
+  values: string | string[]
+): Promise<void> {
   const fixed_values = Array.isArray(values) ? values : [values];
 
   const data_list = await device.getData({ variables, qty: 999 });

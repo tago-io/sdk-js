@@ -1,6 +1,6 @@
-import { HttpError } from "./fetchUtils";
 import qs from "qs";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { HttpError } from "./fetchUtils";
 
 // We'll test the helper functions by importing the module and accessing internals
 // Since these are internal functions, we'll need to test them through the main function

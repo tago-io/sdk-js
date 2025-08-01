@@ -1,7 +1,7 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
 import type { GenericID } from "../../common/common.types";
 import Devices from "./Devices";
-import type { DeviceQuery } from "./devices.types";
+import type { DeviceInfo, DeviceListItem, DeviceQuery } from "./devices.types";
 
 /**
  * @deprecated Use `Resources.devices` instead.
@@ -28,7 +28,9 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * console.log(list);
    * ```
    */
-  public async list<T extends DeviceQuery>(queryObj?: T): Promise<DeviceListItem<T["fields"] extends DeviceQuery["fields"] ? T["fields"][number] : "id" | "name">[]> {
+  public async list<T extends DeviceQuery>(
+    queryObj?: T
+  ): Promise<DeviceListItem<T["fields"] extends DeviceQuery["fields"] ? T["fields"][number] : "id" | "name">[]> {
     return await this.devices.list(queryObj);
   }
 

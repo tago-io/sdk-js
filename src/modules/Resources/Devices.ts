@@ -48,7 +48,9 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * console.log(list); // [ { id: '123', name: 'Device #1' ...}, { id: '456', name: 'Device #2' ...} ]
    * ```
    */
-  public async list<T extends DeviceQuery>(queryObj?: T): Promise<DeviceListItem<T["fields"] extends DeviceQuery["fields"] ? T["fields"][number] : "id" | "name">[]> {
+  public async list<T extends DeviceQuery>(
+    queryObj?: T
+  ): Promise<DeviceListItem<T["fields"] extends DeviceQuery["fields"] ? T["fields"][number] : "id" | "name">[]> {
     let result = await this.doRequest<
       DeviceListItem<T["fields"] extends DeviceQuery["fields"] ? T["fields"][number] : "id" | "name">[]
     >({
@@ -84,7 +86,10 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * }
    * ```
    */
-  public async *listStreaming(queryObj?: Omit<DeviceQuery, "page" | "amount">, options?: OptionsStreaming): AsyncGenerator<DeviceListItem[], void, unknown> {
+  public async *listStreaming(
+    queryObj?: Omit<DeviceQuery, "page" | "amount">,
+    options?: OptionsStreaming
+  ): AsyncGenerator<DeviceListItem[], void, unknown> {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
     const poolingTime = options?.poolingTime || 500; // 500 ms
 
@@ -308,7 +313,14 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * console.log(tokens); // [ { name: 'Default', token: 'token-id-123', expire_time: 'never' } ]
    * ```
    */
-  public async tokenList<T extends ListDeviceTokenQuery>(deviceID: GenericID, queryObj?: T): Promise<DeviceTokenDataList<T["fields"] extends ListDeviceTokenQuery["fields"] ? T["fields"][number] : "token" | "name" | "permission">[]> {
+  public async tokenList<T extends ListDeviceTokenQuery>(
+    deviceID: GenericID,
+    queryObj?: T
+  ): Promise<
+    DeviceTokenDataList<
+      T["fields"] extends ListDeviceTokenQuery["fields"] ? T["fields"][number] : "token" | "name" | "permission"
+    >[]
+  > {
     let result = await this.doRequest<
       DeviceTokenDataList<
         T["fields"] extends ListDeviceTokenQuery["fields"] ? T["fields"][number] : "token" | "name" | "permission"
@@ -454,7 +466,11 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    * }
    * ```
    */
-  public async *getDeviceDataStreaming(deviceId: GenericID, params?: DataQueryStreaming, options?: OptionsStreaming): AsyncGenerator<Data[], void, unknown> {
+  public async *getDeviceDataStreaming(
+    deviceId: GenericID,
+    params?: DataQueryStreaming,
+    options?: OptionsStreaming
+  ): AsyncGenerator<Data[], void, unknown> {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
     const poolingTime = options?.poolingTime || 1000; // 1 sec
     const neverStop = options?.neverStop || false;

@@ -42,7 +42,10 @@ function formatChannel(configuration: OpenSSEConfig) {
   return channel;
 }
 
-async function openSSEListening(channels: OpenSSEConfig | OpenSSEConfig[], options: GenericModuleParams): Promise<EventSource> {
+async function openSSEListening(
+  channels: OpenSSEConfig | OpenSSEConfig[],
+  options: GenericModuleParams
+): Promise<EventSource> {
   let channelsParam = "";
   if (Array.isArray(channels)) {
     channelsParam = channels.map((channel) => formatChannel(channel)).join(",");
