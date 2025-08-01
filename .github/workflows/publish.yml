@@ -1,12 +1,12 @@
-name: Publish to NPM
+name: Publish to NPM & JSR
 
 on:
   release:
     types: [published]
 
 jobs:
-  build:
-    name: "Build and Deploy"
+  publish-npm:
+    name: "Publish to NPM"
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -21,10 +21,20 @@ jobs:
       - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-jsr:
+    name: "Publish to JSR"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: npx jsr publish
   docs:
     name: "Build Docs/Types and Deploy"
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [publish-npm]
     steps:
       - uses: actions/checkout@v4
         with:
