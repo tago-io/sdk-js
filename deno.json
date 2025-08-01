@@ -1,6 +1,6 @@
 {
   "name": "@tago-io/sdk",
-  "version": "12.1.2",
+  "version": "12.1.3",
   "description": "TagoIO SDK for JavaScript in the browser and Node.js",
   "license": "Apache-2.0",
   "repository": "https://github.com/tago-io/sdk-js.git",
