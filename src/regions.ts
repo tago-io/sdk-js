@@ -98,7 +98,7 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
  * Analysis.use(myAnalysis, { region: "us-e1" });
  * ```
  */
-function setRuntimeRegion(region: RegionsObj) {
+function setRuntimeRegion(region: RegionsObj): void {
   runtimeRegion = region;
 }
 

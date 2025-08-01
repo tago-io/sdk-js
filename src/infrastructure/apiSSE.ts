@@ -3,7 +3,7 @@ import regions from "../regions";
 
 const channelsWithID = ["analysis_console", "device_inspector", "device_data", "entity_data", "ui_dashboard"] as const;
 const channelsWithoutID = ["analysis_trigger", "notification", "ui"] as const;
-const channels = [...channelsWithID, ...channelsWithoutID] as const;
+const channels: readonly string[] = [...channelsWithID, ...channelsWithoutID] as const;
 
 type ChannelWithID = (typeof channelsWithID)[number];
 type ChannelWithoutID = (typeof channelsWithoutID)[number];
@@ -42,7 +42,7 @@ function formatChannel(configuration: OpenSSEConfig) {
   return channel;
 }
 
-async function openSSEListening(channels: OpenSSEConfig | OpenSSEConfig[], options: GenericModuleParams) {
+async function openSSEListening(channels: OpenSSEConfig | OpenSSEConfig[], options: GenericModuleParams): Promise<EventSource> {
   let channelsParam = "";
   if (Array.isArray(channels)) {
     channelsParam = channels.map((channel) => formatChannel(channel)).join(",");

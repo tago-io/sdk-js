@@ -17,71 +17,71 @@ class Services extends TagoIOModule<GenericModuleParams> {
     super({ token: process.env.T_ANALYSIS_TOKEN, ...params });
   }
 
-  public console = new ConsoleService(this.params);
-  static get console() {
+  public console: ConsoleService = new ConsoleService(this.params);
+  static get console(): ConsoleService {
     return new Services().console;
   }
 
-  public sms = new SMS(this.params);
-  static get sms() {
+  public sms: SMS = new SMS(this.params);
+  static get sms(): SMS {
     return new Services().sms;
   }
 
-  public email = new Email(this.params);
-  static get email() {
+  public email: Email = new Email(this.params);
+  static get email(): Email {
     return new Services().email;
   }
 
-  public twilio = new Twilio(this.params);
-  static get twilio() {
+  public twilio: Twilio = new Twilio(this.params);
+  static get twilio(): Twilio {
     return new Services().twilio;
   }
 
-  public smtp = new SMTP(this.params);
-  static get smtp() {
+  public smtp: SMTP = new SMTP(this.params);
+  static get smtp(): SMTP {
     return new Services().smtp;
   }
 
-  public aws_sqs = new AWSSQS(this.params);
-  static get aws_sqs() {
+  public aws_sqs: AWSSQS = new AWSSQS(this.params);
+  static get aws_sqs(): AWSSQS {
     return new Services().aws_sqs;
   }
 
-  public sendgrid = new Sendgrid(this.params);
-  static get sendgrid() {
+  public sendgrid: Sendgrid = new Sendgrid(this.params);
+  static get sendgrid(): Sendgrid {
     return new Services().sendgrid;
   }
 
-  public twilio_whatsapp = new TwilioWhatsapp(this.params);
-  static get twilio_whatsapp() {
+  public twilio_whatsapp: TwilioWhatsapp = new TwilioWhatsapp(this.params);
+  static get twilio_whatsapp(): TwilioWhatsapp {
     return new Services().twilio_whatsapp;
   }
 
   /** @internal @deprecated renamed to .mqtt (lowercase) */
-  public MQTT = new MQTT(this.params);
-  public mqtt = new MQTT(this.params);
-  static get mqtt() {
+  public MQTT: MQTT = new MQTT(this.params);
+  public mqtt: MQTT = new MQTT(this.params);
+  static get mqtt(): MQTT {
     return new Services().mqtt;
   }
 
   /** @internal @deprecated renamed to .notification (lowercase)  */
-  public Notification = new Notification(this.params);
-  public notification = new Notification(this.params);
-  static get notification() {
+  public Notification: Notification = new Notification(this.params);
+  public notification: Notification = new Notification(this.params);
+  static get notification(): Notification {
     return new Services().notification;
   }
 
   /** @internal @deprecated renamed to .attachment (lowercase) */
-  public Attachment = new Attachment(this.params);
-  public attachment = new Attachment(this.params);
-  static get attachment() {
+  public Attachment: Attachment = new Attachment(this.params);
+  public attachment: Attachment = new Attachment(this.params);
+  static get attachment(): Attachment {
     return new Services().attachment;
   }
 
   /** @internal @deprecated renamed to .pdf (lowercase) */
-  public PDF = new PDFService(this.params);
-  public pdf = new PDFService(this.params);
-  static get pdf() {
+  public PDF: PDFService = new PDFService(this.params);
+  public pdf: PDFService = new PDFService(this.params);
+  static get pdf(): PDFService {
     return new Services().pdf;
   }
 }

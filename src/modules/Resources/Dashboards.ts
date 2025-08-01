@@ -263,7 +263,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public widgets = new Widgets(this.params);
+  public widgets: Widgets = new Widgets(this.params);
 }
 
 export default Dashboards;

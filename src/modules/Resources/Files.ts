@@ -357,7 +357,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   /**
    * @description Uploads a single part to TagoIO
    */
-  async _uploadPart(filename: string, uploadID: string, part: number, fileBlob: Blob, options?: UploadOptions) {
+  async _uploadPart(filename: string, uploadID: string, part: number, fileBlob: Blob, options?: UploadOptions): Promise<{ ETag: string; PartNumber: number }> {
     const { fieldId: fieldID, isPublic } = options || {};
     const path =
       options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : "/files";
@@ -395,7 +395,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * It will try to upload for 'opts.maxTriesForEachChunk' and fail
    * if it couldn't upload after those many tries.
    */
-  async _addToQueue(filename: string, uploadID: GenericID, partNumber: number, blob: Blob, options?: UploadOptions) {
+  async _addToQueue(filename: string, uploadID: GenericID, partNumber: number, blob: Blob, options?: UploadOptions): Promise<{ ETag: string; PartNumber: number }> {
     const maxTries = options?.maxTriesForEachChunk || 5;
     const timeout = options?.timeoutForEachFailedChunk || 2000;
 
@@ -428,7 +428,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
     uploadID: string,
     parts: { ETag: string; PartNumber: number }[],
     options?: UploadOptions
-  ) {
+  ): Promise<{ file: string }> {
     const { fieldId: fieldID, isPublic } = options || {};
     const path =
       options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : "/files";
@@ -474,7 +474,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * console.log(result.file); // https://api.tago.io/file/.../uploads/myfile.txt
    * ```
    */
-  public async uploadFile(file: Blob | Buffer, filename: string, options?: UploadOptions) {
+  public async uploadFile(file: Blob | Buffer, filename: string, options?: UploadOptions): Promise<{ file: string }> {
     const MB = 2 ** 20;
 
     let cancelled = false;

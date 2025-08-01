@@ -6,8 +6,22 @@
   "homepage": "https://tago.io",
   "license": "Apache-2.0",
   "repository": "tago-io/sdk-js.git",
-  "main": "./lib/modules.js",
+  "type": "module",
+  "main": "./lib/modules.cjs",
+  "module": "./lib/modules.js",
   "types": "./lib/modules.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/modules.d.ts",
+        "default": "./lib/modules.js"
+      },
+      "require": {
+        "types": "./lib/modules.d.cts",
+        "default": "./lib/modules.cjs"
+      }
+    }
+  },
   "private": false,
   "keywords": [
     "tago",
@@ -25,7 +39,10 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "rm -rf ./lib; node updateEnv.js; tsc",
+    "build": "rm -rf ./lib; node updateEnv.cjs; tsdown",
+    "publish:npm": "npm publish",
+    "publish:jsr": "deno publish",
+    "publish:all": "npm run publish:npm && npm run publish:jsr",
     "linter": "biome lint .",
     "format": "biome format --write .",
     "check": "biome check --write .",
@@ -41,6 +58,7 @@
     "@types/qs": "6.14.0",
     "dts-bundle-generator": "9.5.1",
     "msw": "2.8.7",
+    "tsdown": "0.13.0",
     "typedoc": "0.28.1",
     "typedoc-plugin-missing-exports": "4.0.0",
     "typescript": "5.8.3",

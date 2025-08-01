@@ -1,4 +1,4 @@
-function JSONParseSafe(jsonString: string, defaultValue: unknown = {}) {
+function JSONParseSafe(jsonString: string, defaultValue: unknown = {}): unknown {
   if (!jsonString) {
     return defaultValue;
   }

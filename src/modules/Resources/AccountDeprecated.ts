@@ -31,83 +31,83 @@ class AccountDeprecated extends Account {
   /**
    * @deprecated moved to Resources.actions
    */
-  public actions = new Actions(this.params);
+  public actions: Actions = new Actions(this.params);
   /**
    * @deprecated moved to Resources.analysis
    */
-  public analysis = new Analyses(this.params);
+  public analysis: Analyses = new Analyses(this.params);
   /**
    * @deprecated moved to Resources.buckets
    */
-  public buckets = new Buckets(this.params);
+  public buckets: Buckets = new Buckets(this.params);
   /**
    * @deprecated moved to Resources.files
    */
-  public files = new Files(this.params);
+  public files: Files = new Files(this.params);
   /**
    * @deprecated moved to Resources.dashboards
    */
-  public dashboards = new Dashboards(this.params);
+  public dashboards: Dashboards = new Dashboards(this.params);
   /**
    * @deprecated moved to Resources.devices
    */
-  public devices = new Devices(this.params);
+  public devices: Devices = new Devices(this.params);
   /**
    * @deprecated moved to Resources.dictionaries
    */
-  public dictionaries = new Dictionaries(this.params);
+  public dictionaries: Dictionaries = new Dictionaries(this.params);
   /**
    * @deprecated moved to Resources.billing
    */
-  public billing = new Billing(this.params);
+  public billing: Billing = new Billing(this.params);
   /**
    * @deprecated moved to Resources.notifications
    */
-  public notifications = new Notifications(this.params);
+  public notifications: Notifications = new Notifications(this.params);
   /**
    * @deprecated moved to Resources.tags
    */
-  public tags = new Tags(this.params);
+  public tags: Tags = new Tags(this.params);
   /**
    * @deprecated moved to Resources.paymentMethods
    */
-  public paymentMethods = new PaymentMethods(this.params);
+  public paymentMethods: PaymentMethods = new PaymentMethods(this.params);
   /**
    * @deprecated moved to Resources.plan
    */
-  public plan = new Plan(this.params);
+  public plan: Plan = new Plan(this.params);
   /**
    * @deprecated moved to Resources.paymentHistory
    */
-  public paymentHistory = new PaymentHistory(this.params);
+  public paymentHistory: PaymentHistory = new PaymentHistory(this.params);
   /**
    * @deprecated moved to Resources.integration
    */
-  public integration = new Integration(this.params);
+  public integration: Integration = new Integration(this.params);
   /**
    * @deprecated moved to Resources.template
    */
-  public template = new Template(this.params);
+  public template: Template = new Template(this.params);
   /**
    * @deprecated moved to Resources.accessManagement
    */
-  public accessManagement = new Access(this.params);
+  public accessManagement: Access = new Access(this.params);
   /**
    * @deprecated moved to Resources.run
    */
-  public run = new Run(this.params);
+  public run: Run = new Run(this.params);
   /**
    * @deprecated moved to Resources.serviceAuthorization
    */
-  public ServiceAuthorization = new ServiceAuthorization(this.params);
+  public ServiceAuthorization: ServiceAuthorization = new ServiceAuthorization(this.params);
   /**
    * @deprecated moved to Resources.profiles
    */
-  public profiles = new Profile(this.params);
+  public profiles: Profile = new Profile(this.params);
   /**
    * @deprecated moved to Resources.tagocores
    */
-  public tagocores = new TagoCores(this.params);
+  public tagocores: TagoCores = new TagoCores(this.params);
 }
 
 export default AccountDeprecated;

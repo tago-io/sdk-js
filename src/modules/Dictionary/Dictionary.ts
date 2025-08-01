@@ -34,7 +34,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * @param language Language.
    * @param dictionary ID or Slug.
    */
-  public async getLanguagesData(dictionary: string, language = this.language): Promise<LanguageData> {
+  public async getLanguagesData(dictionary: string, language: string = this.language): Promise<LanguageData> {
     if (!language || !dictionary) {
       throw new Error("Missing parameters");
     }

@@ -14,7 +14,7 @@ function clearCacheTTL() {
   }
 }
 
-function addCache(requestConfig: RequestConfig, obj: any, ttlMS = 5000) {
+function addCache(requestConfig: RequestConfig, obj: any, ttlMS = 5000): void {
   clearCacheTTL();
   cacheObj.set([generateRequestID(requestConfig), Date.now() + ttlMS], obj);
 }
@@ -32,7 +32,7 @@ function getCache(requestConfig: RequestConfig): any {
   return undefined;
 }
 
-function clearCache() {
+function clearCache(): void {
   cacheObj.clear();
 }
 

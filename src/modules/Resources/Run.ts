@@ -81,7 +81,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * console.log(result); // [ { id: 'user-id-123', name: 'John Doe', email: 'example@email.com' } ]
    * ```
    */
-  public async listUsers<T extends UserQuery>(query: T) {
+  public async listUsers<T extends UserQuery>(query: T): Promise<UserListItem<T["fields"] extends UserQuery["fields"] ? T["fields"][number] : "id" | "name">[]> {
     let result = await this.doRequest<
       UserListItem<T["fields"] extends UserQuery["fields"] ? T["fields"][number] : "id" | "name">[]
     >({

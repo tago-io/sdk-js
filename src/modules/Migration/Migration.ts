@@ -48,7 +48,7 @@ import { convert as convertVideo, isOldStructure as isOldStructureVideo } from "
 import { convert as convertVuMeter, isOldStructure as isOldStructureVuMeter } from "./vumeter";
 
 class Migration extends TagoIOModule<any> {
-  public static convertImagerMarkerData(widget: any, widgetData: any) {
+  public static convertImagerMarkerData(widget: any, widgetData: any): any[] {
     return convertLayerData(widget, widgetData);
   }
   /**

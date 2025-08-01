@@ -54,7 +54,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
    * console.log(result); // { id: 'network-id-123', name: 'Network Test', profile: 'profile-id-123' }
    * ```
    */
-  public async info(networkID: GenericID, fields = ["id", "name"]): Promise<NetworkInfo> {
+  public async info(networkID: GenericID, fields: string[] = ["id", "name"]): Promise<NetworkInfo> {
     const result = await this.doRequest<NetworkInfo>({
       path: `/integration/network/${networkID}`,
       method: "GET",

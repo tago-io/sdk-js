@@ -28,118 +28,118 @@ class Resources extends TagoIOModule<GenericModuleParams> {
     super({ token: process.env.T_ANALYSIS_TOKEN, ...params });
   }
 
-  public account = new Account(this.params);
-  static get account() {
+  public account: Account = new Account(this.params);
+  static get account(): Account {
     return new Resources().account;
   }
 
-  public actions = new Actions(this.params);
-  static get actions() {
+  public actions: Actions = new Actions(this.params);
+  static get actions(): Actions {
     return new Resources().actions;
   }
 
-  public analysis = new Analyses(this.params);
-  static get analysis() {
+  public analysis: Analyses = new Analyses(this.params);
+  static get analysis(): Analyses {
     return new Resources().analysis;
   }
 
-  public buckets = new Buckets(this.params);
-  static get buckets() {
+  public buckets: Buckets = new Buckets(this.params);
+  static get buckets(): Buckets {
     return new Resources().buckets;
   }
 
-  public files = new Files(this.params);
-  static get files() {
+  public files: Files = new Files(this.params);
+  static get files(): Files {
     return new Resources().files;
   }
 
-  public dashboards = new Dashboards(this.params);
-  static get dashboards() {
+  public dashboards: Dashboards = new Dashboards(this.params);
+  static get dashboards(): Dashboards {
     return new Resources().dashboards;
   }
 
-  public devices = new Devices(this.params);
-  static get devices() {
+  public devices: Devices = new Devices(this.params);
+  static get devices(): Devices {
     return new Resources().devices;
   }
 
-  public dictionaries = new Dictionaries(this.params);
-  static get dictionaries() {
+  public dictionaries: Dictionaries = new Dictionaries(this.params);
+  static get dictionaries(): Dictionaries {
     return new Resources().dictionaries;
   }
 
-  public billing = new Billing(this.params);
-  static get billing() {
+  public billing: Billing = new Billing(this.params);
+  static get billing(): Billing {
     return new Resources().billing;
   }
 
-  public notifications = new Notifications(this.params);
-  static get notifications() {
+  public notifications: Notifications = new Notifications(this.params);
+  static get notifications(): Notifications {
     return new Resources().notifications;
   }
 
-  public tags = new Tags(this.params);
-  static get tags() {
+  public tags: Tags = new Tags(this.params);
+  static get tags(): Tags {
     return new Resources().tags;
   }
 
-  public paymentMethods = new PaymentMethods(this.params);
-  static get paymentMethods() {
+  public paymentMethods: PaymentMethods = new PaymentMethods(this.params);
+  static get paymentMethods(): PaymentMethods {
     return new Resources().paymentMethods;
   }
 
-  public plan = new Plan(this.params);
-  static get plan() {
+  public plan: Plan = new Plan(this.params);
+  static get plan(): Plan {
     return new Resources().plan;
   }
 
-  public paymentHistory = new PaymentHistory(this.params);
-  static get paymentHistory() {
+  public paymentHistory: PaymentHistory = new PaymentHistory(this.params);
+  static get paymentHistory(): PaymentHistory {
     return new Resources().paymentHistory;
   }
 
-  public integration = new Integration(this.params);
-  static get integration() {
+  public integration: Integration = new Integration(this.params);
+  static get integration(): Integration {
     return new Resources().integration;
   }
 
-  public template = new Template(this.params);
-  static get template() {
+  public template: Template = new Template(this.params);
+  static get template(): Template {
     return new Resources().template;
   }
 
-  public accessManagement = new Access(this.params);
-  static get accessManagement() {
+  public accessManagement: Access = new Access(this.params);
+  static get accessManagement(): Access {
     return new Resources().accessManagement;
   }
 
-  public run = new Run(this.params);
-  static get run() {
+  public run: Run = new Run(this.params);
+  static get run(): Run {
     return new Resources().run;
   }
 
-  public serviceAuthorization = new ServiceAuthorization(this.params);
-  static get serviceAuthorization() {
+  public serviceAuthorization: ServiceAuthorization = new ServiceAuthorization(this.params);
+  static get serviceAuthorization(): ServiceAuthorization {
     return new Resources().serviceAuthorization;
   }
 
-  public profiles = new Profile(this.params);
-  static get profiles() {
+  public profiles: Profile = new Profile(this.params);
+  static get profiles(): Profile {
     return new Resources().profiles;
   }
 
-  public tagocores = new TagoCores(this.params);
-  static get tagocores() {
+  public tagocores: TagoCores = new TagoCores(this.params);
+  static get tagocores(): TagoCores {
     return new Resources().tagocores;
   }
 
-  public secrets = new Secrets(this.params);
-  static get secrets() {
+  public secrets: Secrets = new Secrets(this.params);
+  static get secrets(): Secrets {
     return new Resources().secrets;
   }
 
-  public entities = new Entities(this.params);
-  static get entities() {
+  public entities: Entities = new Entities(this.params);
+  static get entities(): Entities {
     return new Resources().entities;
   }
 }

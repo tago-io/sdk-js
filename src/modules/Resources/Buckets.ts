@@ -8,7 +8,7 @@ import type { DeviceQuery } from "./devices.types";
  */
 
 class Buckets extends TagoIOModule<GenericModuleParams> {
-  public devices = new Devices(this.params);
+  public devices: Devices = new Devices(this.params);
 
   /**
    * @description Lists all devices from your application with pagination.
@@ -28,7 +28,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * console.log(list);
    * ```
    */
-  public async list<T extends DeviceQuery>(queryObj?: T) {
+  public async list<T extends DeviceQuery>(queryObj?: T): Promise<DeviceListItem<T["fields"] extends DeviceQuery["fields"] ? T["fields"][number] : "id" | "name">[]> {
     return await this.devices.list(queryObj);
   }
 
@@ -45,7 +45,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * console.log(deviceInfo);
    * ```
    */
-  public async info(deviceID: GenericID) {
+  public async info(deviceID: GenericID): Promise<DeviceInfo> {
     return await this.devices.info(deviceID);
   }
 
@@ -60,7 +60,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * console.log(amount);
    * ```
    */
-  public async amount(deviceID: GenericID) {
+  public async amount(deviceID: GenericID): Promise<number> {
     return await this.devices.amount(deviceID);
   }
 }

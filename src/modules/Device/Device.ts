@@ -240,7 +240,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * }
    * ```
    */
-  public async *getDataStreaming(params?: DataQueryStreaming, options?: OptionsStreaming) {
+  public async *getDataStreaming(params?: DataQueryStreaming, options?: OptionsStreaming): AsyncGenerator<Data[], void, unknown> {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
     const poolingTime = options?.poolingTime || 1000; // 1 seg
     const neverStop = options?.neverStop || false;
@@ -301,7 +301,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    *   });
    * ```
    */
-  public async sendDataStreaming(data: DataCreate[], options: Omit<OptionsStreaming, "neverStop">) {
+  public async sendDataStreaming(data: DataCreate[], options: Omit<OptionsStreaming, "neverStop">): Promise<string> {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
     const poolingTime = options?.poolingTime || 1000; // 1 seg
 

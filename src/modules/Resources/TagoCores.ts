@@ -167,7 +167,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * console.log(devices);
    * ```
    */
-  public async standaloneDeviceList<T extends DeviceQuery>(tagoCoreID: GenericID, queryObj?: T) {
+  public async standaloneDeviceList<T extends DeviceQuery>(tagoCoreID: GenericID, queryObj?: T): Promise<DeviceListItem<"id" | "name" | T["fields"][number]>[]> {
     let result = await this.doRequest<DeviceListItem<"id" | "name" | T["fields"][number]>[]>({
       path: "/device",
       method: "GET",

@@ -1,5 +1,5 @@
 import Account from "../../Resources/AccountDeprecated";
-import { RouterConstructor } from "./router.types";
+import type { RouterConstructor } from "./router.types";
 import RouterService from "./service";
 class AnalysisRouter {
   services: RouterService[] = [];
@@ -18,7 +18,7 @@ class AnalysisRouter {
     }
   }
 
-  public register(func: (parameters: RouterConstructor) => any) {
+  public register(func: (parameters: RouterConstructor) => any): RouterService {
     const service = new RouterService(func);
     this.services.push(service);
 
@@ -30,7 +30,7 @@ class AnalysisRouter {
    * and send all parameter provided to the final function.
    * @returns json with status and services that run
    */
-  public async exec() {
+  public async exec(): Promise<{ status: boolean; services: string[] }> {
     const my_list: string[] = [];
     for (const service of this.services) {
       if (!service.verifyConditionsTrue(this.params.scope, this.params.environment)) {
@@ -45,5 +45,5 @@ class AnalysisRouter {
   }
 }
 
-export { RouterConstructor };
+export type { RouterConstructor };
 export default AnalysisRouter;

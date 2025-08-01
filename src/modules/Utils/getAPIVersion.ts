@@ -14,4 +14,5 @@ class GetAPIVersion extends TagoIOModule<GenericModuleParams> {
   }
 }
 
-export default GetAPIVersion.getVersion;
+const getVersion: typeof GetAPIVersion.getVersion = GetAPIVersion.getVersion;
+export default getVersion;

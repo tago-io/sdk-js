@@ -23,7 +23,7 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     }
   }
 
-  public start() {
+  public start(): void {
     if (this.started) {
       return;
     }
@@ -158,7 +158,7 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     });
   }
 
-  public static use(analysis: analysisFunction, params?: AnalysisConstructorParams) {
+  public static use(analysis: analysisFunction, params?: AnalysisConstructorParams): Analysis {
     if (!process.env.T_ANALYSIS_TOKEN && params?.token) {
       process.env.T_ANALYSIS_TOKEN = params.token;
     }
