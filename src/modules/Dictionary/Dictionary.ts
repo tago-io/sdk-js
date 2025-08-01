@@ -13,8 +13,8 @@ import type {
 // Regular expressions that are used for parsing the strings:
 // - SPLIT is used to split the string into normal words/phrases and expressions
 // - MATCH is used to extract the parts that compose an expression
-const RE_SPLIT_EXPRESSION = /(#[A-Z0-9]+\.[A-Z0-9_]+(?:,(?:[^,#"]+|"[^"]+")+)*#)/;
-const RE_MATCH_EXPRESSION = /#([A-Z0-9]+)\.([A-Z0-9_]+(?:,(?:[^,#"]+|"[^"]+")+)*)#/;
+const RE_SPLIT_EXPRESSION = /(#[A-Z0-9]+\.[A-Z0-9_]+(?:,[^#]*)?#)/;
+const RE_MATCH_EXPRESSION = /#([A-Z0-9]+)\.([A-Z0-9_]+(?:,[^#]*)?)#/;
 
 /**
  * Multi-language support for TagoIO applications
@@ -191,8 +191,12 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
     // Get the dictionary value string for the expression to substitute the arguments into it
     resolvedString = await this.getValueFromKey(language, dictionary, key);
     params?.forEach((substitution, index) => {
-      const subRegexp = new RegExp(`\\$${index}`, "g");
-      resolvedString = resolvedString.replace(subRegexp, substitution);
+      // Safely escape the index and limit to reasonable range to prevent ReDoS
+      if (index >= 0 && index < 100) {
+        const escapedIndex = String(index).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const subRegexp = new RegExp(`\\$${escapedIndex}`, "g");
+        resolvedString = resolvedString.replace(subRegexp, substitution);
+      }
     });
 
     return resolvedString;
