@@ -1,4 +1,3 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import { chunk } from "../../common/chunk.ts";
 import type {
   Data,
@@ -10,9 +9,9 @@ import type {
   TokenData,
 } from "../../common/common.types.ts";
 import sleep from "../../common/sleep.ts";
-import dateParser from "../Utils/dateParser.ts";
-
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type { DataQuery, DataQueryStreaming, OptionsStreaming } from "../Device/device.types.ts";
+import dateParser from "../Utils/dateParser.ts";
 import type {
   ConfigurationParams,
   DeviceChunkCopyResponse,
@@ -30,6 +29,7 @@ import type {
   DeviceTokenDataList,
   ListDeviceTokenQuery,
 } from "./devices.types.ts";
+
 class Devices extends TagoIOModule<GenericModuleParams> {
   /**
    * Lists all devices from your application with pagination support.

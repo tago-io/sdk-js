@@ -1,4 +1,3 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type {
   Authenticator,
   GenericID,
@@ -8,6 +7,7 @@ import type {
   TokenData,
   TokenDataList,
 } from "../../common/common.types.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import dateParser from "../Utils/dateParser.ts";
 import type { BillingAddOn } from "./billing.types.ts";
 

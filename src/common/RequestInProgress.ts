@@ -1,5 +1,5 @@
-import { generateRequestID } from "./HashGenerator.ts";
 import type { RequestConfig } from "./common.types.ts";
+import { generateRequestID } from "./HashGenerator.ts";
 
 /** Set to track ongoing requests by ID to prevent duplicates */
 const requestsInProgress = new Set<number>();

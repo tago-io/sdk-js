@@ -1,6 +1,6 @@
 import Account from "../Resources/AccountDeprecated.ts";
-import Resources from "../Resources/Resources.ts";
 import type { ConfigurationParams } from "../Resources/devices.types.ts";
+import Resources from "../Resources/Resources.ts";
 import type { DownlinkOptions } from "./utils.types.ts";
 
 interface DownlinkError {

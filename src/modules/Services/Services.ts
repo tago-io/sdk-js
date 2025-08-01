@@ -1,14 +1,14 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import AWSSQS from "./AWS-SQS.ts";
 import Attachment from "./Attachment.ts";
+import AWSSQS from "./AWS-SQS.ts";
 import ConsoleService from "./Console.ts";
 import Email from "./Email.ts";
 import MQTT from "./MQTT.ts";
 import Notification from "./Notification.ts";
 import PDFService from "./PDF.ts";
+import Sendgrid from "./Sendgrid.ts";
 import SMS from "./SMS.ts";
 import SMTP from "./SMTP.ts";
-import Sendgrid from "./Sendgrid.ts";
 import TwilioWhatsapp from "./Twilio-Whatsapp.ts";
 import Twilio from "./Twillio.ts";
 

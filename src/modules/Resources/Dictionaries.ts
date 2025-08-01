@@ -1,7 +1,7 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type { GenericID } from "../../common/common.types.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import { Cache } from "../../modules.ts";
 import dateParser from "../Utils/dateParser.ts";
-
 import type {
   DictionaryCreateInfo,
   DictionaryInfo,
@@ -10,8 +10,6 @@ import type {
   LanguageEditData,
   LanguageInfoQuery,
 } from "./dictionaries.types.ts";
-
-import { Cache } from "../../modules.ts";
 
 class Dictionaries extends TagoIOModule<GenericModuleParams> {
   /**

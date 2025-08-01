@@ -1,5 +1,5 @@
-import { generateRequestID } from "./HashGenerator.ts";
 import type { RequestConfig } from "./common.types.ts";
+import { generateRequestID } from "./HashGenerator.ts";
 
 /** Request ID type for cache keys */
 type requestID = number;

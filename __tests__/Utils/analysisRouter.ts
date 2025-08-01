@@ -1,7 +1,7 @@
 import type { Data } from "../../src/common/common.types.ts";
-import { Account, Device } from "../../src/modules.ts";
 import AnalysisRouter, { type RouterConstructor } from "../../src/modules/Utils/router/router.ts";
 import type { DeviceListScope } from "../../src/modules/Utils/router/router.types.ts";
+import { Account, Device } from "../../src/modules.ts";
 
 const func = async () => {
   return true;

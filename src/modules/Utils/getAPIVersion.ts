@@ -1,4 +1,4 @@
-import TagoIOModule, { type GenericModuleParams, type doRequestParams } from "../../common/TagoIOModule.ts";
+import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type { Regions, RegionsObj } from "../../regions.ts";
 
 /**

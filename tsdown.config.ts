@@ -13,5 +13,5 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   target: "es2020",
-  external: ["nanoid", "papaparse", "qs", "eventsource"],
+  external: ["papaparse", "qs", "eventsource"],
 });

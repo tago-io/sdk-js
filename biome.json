@@ -1,23 +1,28 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.1.3/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true
   },
   "files": {
-    "include": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs"],
-    "ignore": [
-      "examples/**",
-      "lib/**",
-      "docs/**",
-      "node_modules/**",
-      "build/**",
-      "out/**",
-      "coverage/**",
-      ".cache/**",
-      "*.tgz",
-      "*.local.*"
+    "includes": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.mjs",
+      "**/*.cjs",
+      "!**/examples/**",
+      "!**/lib/**",
+      "!**/docs/**",
+      "!**/node_modules/**",
+      "!**/build/**",
+      "!**/out/**",
+      "!**/coverage/**",
+      "!**/.cache/**",
+      "!**/*.tgz",
+      "!**/*.local.*"
     ]
   },
   "formatter": {
@@ -28,9 +33,7 @@
     "lineWidth": 120,
     "lineEnding": "lf"
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
@@ -50,7 +53,7 @@
   },
   "overrides": [
     {
-      "include": ["**/__tests__/**/*.ts", "**/*.test.ts", "**/*.local.ts"],
+      "includes": ["**/__tests__/**/*.ts", "**/*.test.ts", "**/*.local.ts"],
       "linter": {
         "rules": {
           "correctness": {
@@ -63,20 +66,20 @@
       }
     },
     {
-      "include": [
-        "src/modules/Migration/**/*.ts",
-        "src/modules/Utils/router/**/*.ts",
-        "src/modules/Resources/*.types.ts",
-        "src/common/**/*.ts",
-        "src/infrastructure/**/*.ts",
-        "src/modules/Analysis/**/*.ts",
-        "src/modules/Utils/sendDownlink.ts",
-        "src/modules/Utils/updateMultipleDropdown.ts",
-        "src/modules/Dictionary/**/*.ts",
-        "src/modules/Network/**/*.ts",
-        "src/modules/Resources/**/*.ts",
-        "src/modules/Services/**/*.ts",
-        "src/modules/RunUser/**/*.ts"
+      "includes": [
+        "**/src/modules/Migration/**/*.ts",
+        "**/src/modules/Utils/router/**/*.ts",
+        "**/src/modules/Resources/**/*.types.ts",
+        "**/src/common/**/*.ts",
+        "**/src/infrastructure/**/*.ts",
+        "**/src/modules/Analysis/**/*.ts",
+        "**/src/modules/Utils/sendDownlink.ts",
+        "**/src/modules/Utils/updateMultipleDropdown.ts",
+        "**/src/modules/Dictionary/**/*.ts",
+        "**/src/modules/Network/**/*.ts",
+        "**/src/modules/Resources/**/*.ts",
+        "**/src/modules/Services/**/*.ts",
+        "**/src/modules/RunUser/**/*.ts"
       ],
       "linter": {
         "rules": {

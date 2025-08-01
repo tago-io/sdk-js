@@ -1,19 +1,18 @@
-import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type { GenericID, GenericToken } from "../../common/common.types.ts";
+import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type { Regions, RegionsObj } from "../../regions.ts";
 import type { OTPType } from "../Resources/account.types.ts";
 import type { NotificationInfo, NotificationQuery } from "../Resources/notifications.types.ts";
 import dateParser from "../Utils/dateParser.ts";
-import SDB from "./SDB.ts";
-import {
-  type RunUserCreate,
-  type RunUserCreateInfo,
-  type RunUserCredentials,
-  type RunUserInfo,
-  type RunUserLogin,
-  type RunUserLoginResponse,
-  RunNotificationInfo as _RunNotificationInfo,
+import type {
+  RunUserCreate,
+  RunUserCreateInfo,
+  RunUserCredentials,
+  RunUserInfo,
+  RunUserLogin,
+  RunUserLoginResponse,
 } from "./runUser.types.ts";
+import SDB from "./SDB.ts";
 
 /**
  * End-user runtime context for TagoIO Run applications
