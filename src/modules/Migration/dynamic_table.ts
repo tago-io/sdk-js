@@ -4,7 +4,7 @@
 // ? ====================================================================================
 
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import { convertFormula, convertInterval } from "./common";
+import { convertFormula, convertInterval } from "./common/index.ts";
 
 export const dynamicTableConfig = {
   cellFilterHeight: 56, // height of cell with a filter in it

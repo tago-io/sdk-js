@@ -1,4 +1,4 @@
-import { generateWidgetItemId } from "./common";
+import { generateWidgetItemId } from "./common/index.ts";
 export enum InputFormField {
   Text = "text",
   Address = "address",

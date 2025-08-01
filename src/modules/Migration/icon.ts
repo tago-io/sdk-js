@@ -3,7 +3,7 @@
 //     Migration of old ICON to new ICON
 // ? ====================================================================================
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import convertFormula from "./common/convertFormula";
+import convertFormula from "./common/convertFormula.ts";
 
 const layoutMatrix = [
   [1, 2, 3],

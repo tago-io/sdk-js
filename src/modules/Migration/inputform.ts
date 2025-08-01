@@ -3,8 +3,8 @@
 //     Migration of old INPUT FORM to new INPUT FORM
 // ? ====================================================================================
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import { generateWidgetItemId } from "./common";
-import { convertField, convertSubmitButton } from "./convertFields";
+import { generateWidgetItemId } from "./common/index.ts";
+import { convertField, convertSubmitButton } from "./convertFields.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};

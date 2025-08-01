@@ -1,6 +1,6 @@
 import qs from "qs";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { HttpError } from "./fetchUtils";
+import { HttpError } from "./fetchUtils.ts";
 
 // We'll test the helper functions by importing the module and accessing internals
 // Since these are internal functions, we'll need to test them through the main function
@@ -14,10 +14,8 @@ vi.mock("../config", () => ({
   },
 }));
 
-vi.mock("./envParams.json", () => ({
-  default: {
-    version: "11.3.10",
-  },
+vi.mock("./envParams.ts", () => ({
+  version: "11.3.10",
 }));
 
 vi.mock("./isBrowser", () => ({
@@ -39,7 +37,7 @@ vi.mock("../common/sleep", () => ({
   default: vi.fn(() => Promise.resolve()),
 }));
 
-import isBrowser from "./isBrowser";
+import isBrowser from "./isBrowser.ts";
 
 describe("apiRequest Helper Functions", () => {
   beforeEach(() => {

@@ -2,7 +2,7 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import type { MockInstance } from "vitest";
 
-import Files from "./Files";
+import Files from "./Files.ts";
 
 const DEFAULT_FILENAME = "test.txt";
 const DEFAULT_UPLOAD_ID = "SOME_UPLOAD_ID";

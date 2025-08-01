@@ -1,4 +1,4 @@
-import Account from "../Resources/AccountDeprecated";
+import Account from "../Resources/AccountDeprecated.ts";
 
 /**
  *

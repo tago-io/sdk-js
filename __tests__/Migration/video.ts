@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/video";
+import { convert, isOldStructure } from "../../src/modules/Migration/video.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.videoStructure;

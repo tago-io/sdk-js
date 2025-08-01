@@ -1,4 +1,4 @@
-import type Device from "../Device/Device";
+import type Device from "../Device/Device.ts";
 
 /**
  * Go through variables used in Multiple Dropdown variables and remove a specified value.

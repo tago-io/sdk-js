@@ -3,7 +3,7 @@
 //     Migration of old IMAGE MARKER to new IMAGE MARKER
 // ? ====================================================================================
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import { convertFormula } from "./common";
+import { convertFormula } from "./common/index.ts";
 
 export function convertLayerData(widget: any, oldWidgetData: any): any {
   const fields = [];

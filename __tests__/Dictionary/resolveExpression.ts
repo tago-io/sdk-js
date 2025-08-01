@@ -1,7 +1,7 @@
 import type { MockInstance } from "vitest";
-import { Dictionary } from "../../src/modules";
+import { Dictionary } from "../../src/modules.ts";
 
-import { enUS, ptBR } from "./__mocks__/dictionaries";
+import { enUS, ptBR } from "./__mocks__/dictionaries.ts";
 
 describe("resolveExpression", () => {
   let dictionary: Dictionary;

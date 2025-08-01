@@ -1,5 +1,5 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import dateParser from "../Utils/dateParser";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import dateParser from "../Utils/dateParser.ts";
 
 import type { GenericID } from "../../common/common.types";
 import type { EntityCreateInfo, EntityData, EntityDataQuery, EntityInfo } from "./entities.types";

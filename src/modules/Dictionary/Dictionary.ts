@@ -1,6 +1,6 @@
 import * as Papa from "papaparse";
 
-import TagoIOModule from "../../common/TagoIOModule";
+import TagoIOModule from "../../common/TagoIOModule.ts";
 import type { LanguageData } from "../Resources/dictionaries.types";
 import type {
   IApplyToStringOptions,

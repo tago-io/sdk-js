@@ -3,7 +3,7 @@
 //     Migration of old DIAL to new DIAL.
 // ? ====================================================================================
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import { convertFormula, convertRange } from "./common";
+import { convertFormula, convertRange } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};

@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/linechart";
+import { convert, isOldStructure } from "../../src/modules/Migration/linechart.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.linechartStructure;

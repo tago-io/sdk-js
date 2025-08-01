@@ -1,9 +1,9 @@
-import TagoIOModule from "../../common/TagoIOModule";
-import { chunk } from "../../common/chunk";
+import TagoIOModule from "../../common/TagoIOModule.ts";
+import { chunk } from "../../common/chunk.ts";
 import type { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
-import sleep from "../../common/sleep";
+import sleep from "../../common/sleep.ts";
 import type { ConfigurationParams } from "../Resources/devices.types";
-import dateParser from "../Utils/dateParser";
+import dateParser from "../Utils/dateParser.ts";
 import type {
   DataQuery,
   DataQueryAggregate,

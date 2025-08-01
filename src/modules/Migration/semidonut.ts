@@ -3,7 +3,7 @@
 //     Migration of old SEMIDONUT to new SEMIDONUT
 // ? ====================================================================================
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import { chartColors } from "./common";
+import { chartColors } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};

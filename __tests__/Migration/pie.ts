@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/pie";
+import { convert, isOldStructure } from "../../src/modules/Migration/pie.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.pieStructure;

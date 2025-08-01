@@ -17,8 +17,7 @@
       "coverage/**",
       ".cache/**",
       "*.tgz",
-      "*.local.*",
-      "src/infrastructure/envParams.json"
+      "*.local.*"
     ]
   },
   "formatter": {
@@ -36,15 +35,16 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "correctness": {
+        "useImportExtensions": "error",
+        "noUnusedVariables": "error"
+      },
       "suspicious": {
         "noExplicitAny": "warn"
       },
       "style": {
         "noUnusedTemplateLiteral": "error",
         "useConst": "error"
-      },
-      "correctness": {
-        "noUnusedVariables": "error"
       }
     }
   },

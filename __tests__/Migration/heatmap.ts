@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/heatmap";
+import { convert, isOldStructure } from "../../src/modules/Migration/heatmap.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.heatmapStructure;

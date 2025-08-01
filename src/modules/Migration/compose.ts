@@ -3,7 +3,7 @@
 //     Migration of old COMPOSE to new COMPOSE
 // ? ====================================================================================
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import { removeHttpFromURL } from "./common/";
+import { removeHttpFromURL } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};

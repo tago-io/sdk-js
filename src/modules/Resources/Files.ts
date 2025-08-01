@@ -1,7 +1,7 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type { GenericID } from "../../common/common.types";
-import sleep from "../../common/sleep";
-import dateParser from "../Utils/dateParser";
+import sleep from "../../common/sleep.ts";
+import dateParser from "../Utils/dateParser.ts";
 import type {
   Base64File,
   CopyFiles,

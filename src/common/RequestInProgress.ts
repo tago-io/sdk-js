@@ -1,4 +1,4 @@
-import { generateRequestID } from "./HashGenerator";
+import { generateRequestID } from "./HashGenerator.ts";
 import type { RequestConfig } from "./common.types";
 
 const requestsInProgress = new Set<number>();

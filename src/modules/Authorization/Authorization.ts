@@ -1,5 +1,5 @@
-import TagoIOModule, { type AuthorizationModuleParams } from "../../common/TagoIOModule";
-import dateParser from "../Utils/dateParser";
+import TagoIOModule, { type AuthorizationModuleParams } from "../../common/TagoIOModule.ts";
+import dateParser from "../Utils/dateParser.ts";
 import type { AuthorizationInfo } from "./authorization.types";
 
 class Authorization extends TagoIOModule<AuthorizationModuleParams> {

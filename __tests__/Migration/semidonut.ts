@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/semidonut";
+import { convert, isOldStructure } from "../../src/modules/Migration/semidonut.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.semidonutStructure;

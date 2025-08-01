@@ -1,4 +1,4 @@
-import removeHttpFromURL from "../../src/modules/Migration/common/removeHttpFromURL";
+import removeHttpFromURL from "../../src/modules/Migration/common/removeHttpFromURL.ts";
 
 describe("removeHttpFromURL - migration suite", () => {
   it("removes HTTP(s) from URLs correctly", () => {

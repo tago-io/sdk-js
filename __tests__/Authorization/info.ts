@@ -1,7 +1,7 @@
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 
-import { Authorization } from "../../src/modules";
+import { Authorization } from "../../src/modules.ts";
 
 const handlers = [
   http.get("https://api.tago.io/info", ({ request }) => {

@@ -1,7 +1,7 @@
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 
-import { Utils } from "../../src/modules";
+import { Utils } from "../../src/modules.ts";
 
 const handlers = [
   http.get("https://api.tago.io/status", () => {

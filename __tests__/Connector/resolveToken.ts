@@ -1,7 +1,7 @@
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 
-import { Network } from "../../src/modules";
+import { Network } from "../../src/modules.ts";
 
 const handlers = [
   http.get("https://api.tago.io/integration/network/resolve/:serial_number", ({ request }) => {

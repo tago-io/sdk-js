@@ -1,5 +1,5 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import { chunk } from "../../common/chunk";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import { chunk } from "../../common/chunk.ts";
 import type {
   Data,
   DataCreate,
@@ -9,8 +9,8 @@ import type {
   TokenCreateResponse,
   TokenData,
 } from "../../common/common.types";
-import sleep from "../../common/sleep";
-import dateParser from "../Utils/dateParser";
+import sleep from "../../common/sleep.ts";
+import dateParser from "../Utils/dateParser.ts";
 
 import type { DataQuery, DataQueryStreaming, OptionsStreaming } from "../Device/device.types";
 import type {

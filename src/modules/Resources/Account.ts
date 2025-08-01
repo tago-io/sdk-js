@@ -1,7 +1,7 @@
-import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type { GenericToken } from "../../common/common.types";
-import type { Regions, RegionsObj } from "../../regions";
-import dateParser from "../Utils/dateParser";
+import type { Regions, RegionsObj } from "../../regions.ts";
+import dateParser from "../Utils/dateParser.ts";
 import type {
   AccountCreateInfo,
   AccountInfo,

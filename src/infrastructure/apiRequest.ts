@@ -1,12 +1,12 @@
 import qs from "qs";
-import { addCache, getCache } from "../common/Cache";
-import { addRequestInProgress, isRequestInProgress, removeRequestInProgress } from "../common/RequestInProgress";
+import { addCache, getCache } from "../common/Cache.ts";
+import { addRequestInProgress, isRequestInProgress, removeRequestInProgress } from "../common/RequestInProgress.ts";
 import type { RequestConfig } from "../common/common.types";
-import sleep from "../common/sleep";
-import config from "../config";
-import envParams from "./envParams.json";
-import { HttpError, withHttpError, withTimeout } from "./fetchUtils";
-import isBrowser from "./isBrowser";
+import sleep from "../common/sleep.ts";
+import config from "../config.ts";
+import { version } from "./envParams.ts";
+import { HttpError, withHttpError, withTimeout } from "./fetchUtils.ts";
+import isBrowser from "./isBrowser.ts";
 
 interface ResponseData {
   data: any;
@@ -72,7 +72,7 @@ function prepareHeaders(requestHeaders: Record<string, string> = {}): Record<str
 
     headers = {
       ...headers,
-      "User-Agent": `TagoIO-SDK|JS|${envParams.version} ${banner}`,
+      "User-Agent": `TagoIO-SDK|JS|${version} ${banner}`,
     };
   }
 

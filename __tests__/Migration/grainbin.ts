@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/grainbin";
+import { convert, isOldStructure } from "../../src/modules/Migration/grainbin.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.grainbin;

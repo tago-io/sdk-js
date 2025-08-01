@@ -1,8 +1,8 @@
-import { JSONParseSafe } from "../../common/JSONParseSafe";
-import TagoIOModule from "../../common/TagoIOModule";
-import { openSSEListening } from "../../infrastructure/apiSSE";
-import getRegionObj, { setRuntimeRegion } from "../../regions";
-import ConsoleService from "../Services/Console";
+import { JSONParseSafe } from "../../common/JSONParseSafe.ts";
+import TagoIOModule from "../../common/TagoIOModule.ts";
+import { openSSEListening } from "../../infrastructure/apiSSE.ts";
+import getRegionObj, { setRuntimeRegion } from "../../regions.ts";
+import ConsoleService from "../Services/Console.ts";
 import type { AnalysisConstructorParams, AnalysisEnvironment, analysisFunction } from "./analysis.types";
 
 /**

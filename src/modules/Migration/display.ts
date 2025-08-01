@@ -3,7 +3,7 @@
 //     Migration of old DISPLAY to new DISPLAY
 // ? ====================================================================================
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import convertFormula from "./common/convertFormula";
+import convertFormula from "./common/convertFormula.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};

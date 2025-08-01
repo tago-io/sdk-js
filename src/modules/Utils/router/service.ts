@@ -1,4 +1,4 @@
-import type { RouterConstructor } from "./router";
+import type { RouterConstructor } from "./router.ts";
 
 class RouterService {
   private serviceFunction: (...args: any[]) => any;

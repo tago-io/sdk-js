@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/card";
+import { convert, isOldStructure } from "../../src/modules/Migration/card.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.cardStructure;

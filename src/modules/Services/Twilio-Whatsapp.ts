@@ -1,5 +1,5 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { AttachmentOptions } from "./Email";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import type { AttachmentOptions } from "./Email.ts";
 
 interface TwilioWhatsappData {
   /** Number to send Whatsapp message, Example: +5599999999999 */

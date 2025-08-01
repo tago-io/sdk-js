@@ -1,4 +1,4 @@
-import type { OTPType } from "../types";
+import type { OTPType } from "../types.ts";
 
 /**
  * Request configuration interface for API requests (replaces AxiosRequestConfig)

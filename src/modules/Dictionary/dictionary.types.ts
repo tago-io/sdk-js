@@ -1,5 +1,5 @@
-import type { GenericModuleParams } from "../../common/TagoIOModule";
-import type { Regions, RegionsObj } from "../../regions";
+import type { GenericModuleParams } from "../../common/TagoIOModule.ts";
+import type { Regions, RegionsObj } from "../../regions.ts";
 
 interface IDictionaryModuleParams extends GenericModuleParams {
   token: string;

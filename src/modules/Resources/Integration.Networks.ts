@@ -1,4 +1,4 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type { GenericID, GenericToken, ListTokenQuery, TokenData } from "../../common/common.types";
 import type {
   NetworkCreateInfo,

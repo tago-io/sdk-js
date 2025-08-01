@@ -1,4 +1,4 @@
-import type { GenericID } from "../../types";
+import type { GenericID } from "../../types.ts";
 
 interface FileQuery {
   path?: string;

@@ -1,6 +1,6 @@
 import type { TagoContext } from "../../Analysis/analysis.types";
-import type Device from "../../Device/Device";
-import type Account from "../../Resources/AccountDeprecated";
+import type Device from "../../Device/Device.ts";
+import type Account from "../../Resources/AccountDeprecated.ts";
 import type { UserCreateInfo } from "../../Resources/run.types";
 
 /**

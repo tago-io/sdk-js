@@ -3,7 +3,7 @@
 //     Migration of old MAP to new MAP
 // ? ====================================================================================
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import { convertFormula, convertInterval } from "./common/";
+import { convertFormula, convertInterval } from "./common/index.ts";
 
 function isValidMode(mode: string): boolean {
   return mode === "basic" || mode === "dark" || mode === "light" || mode === "sattelite";

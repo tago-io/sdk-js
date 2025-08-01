@@ -3,7 +3,7 @@
 //     Migration of old STATIC TABLE to new STATIC TABLE
 // ? ====================================================================================
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import { convertFormula, generateWidgetItemId } from "./common";
+import { convertFormula, generateWidgetItemId } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};

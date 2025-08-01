@@ -3,7 +3,7 @@
 //     Migration of old CARD to new CARD.
 // ? ====================================================================================
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import { removeHttpFromURL } from "./common/";
+import { removeHttpFromURL } from "./common/index.ts";
 
 function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};

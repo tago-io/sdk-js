@@ -1,5 +1,5 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import dateParser from "../Utils/dateParser";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import dateParser from "../Utils/dateParser.ts";
 import type { CurrentPrices, PlanInfo, PlanSetInfo } from "./plan.types";
 
 class Plan extends TagoIOModule<GenericModuleParams> {

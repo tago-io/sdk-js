@@ -1,6 +1,6 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type { GenericID } from "../../common/common.types";
-import dateParser from "../Utils/dateParser";
+import dateParser from "../Utils/dateParser.ts";
 import type { DeviceInfo, DeviceListItem, DeviceQuery } from "./devices.types";
 import type { TagoCoreInfo, TagoCoreListInfo, TagoCoreQuery } from "./tagocore.types";
 

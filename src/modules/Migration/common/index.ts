@@ -1,10 +1,10 @@
-import chartColors from "./chartColors";
-import convertDownsample from "./convertDownsample";
-import convertFormula from "./convertFormula";
-import convertInterval from "./convertInterval";
-import convertRange from "./convertRange";
-import generateWidgetItemId from "./generateWidgetItemId";
-import removeHttpFromURL from "./removeHttpFromURL";
+import chartColors from "./chartColors.ts";
+import convertDownsample from "./convertDownsample.ts";
+import convertFormula from "./convertFormula.ts";
+import convertInterval from "./convertInterval.ts";
+import convertRange from "./convertRange.ts";
+import generateWidgetItemId from "./generateWidgetItemId.ts";
+import removeHttpFromURL from "./removeHttpFromURL.ts";
 
 export {
   chartColors,

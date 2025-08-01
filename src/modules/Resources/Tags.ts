@@ -1,4 +1,4 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 
 type TagTypes = "bucket" | "device" | "dashboard" | "action" | "analysis" | "tcore" | "run_users" | "secrets";
 

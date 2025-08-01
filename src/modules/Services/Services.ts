@@ -1,16 +1,16 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import AWSSQS from "./AWS-SQS";
-import Attachment from "./Attachment";
-import ConsoleService from "./Console";
-import Email from "./Email";
-import MQTT from "./MQTT";
-import Notification from "./Notification";
-import PDFService from "./PDF";
-import SMS from "./SMS";
-import SMTP from "./SMTP";
-import Sendgrid from "./Sendgrid";
-import TwilioWhatsapp from "./Twilio-Whatsapp";
-import Twilio from "./Twillio";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import AWSSQS from "./AWS-SQS.ts";
+import Attachment from "./Attachment.ts";
+import ConsoleService from "./Console.ts";
+import Email from "./Email.ts";
+import MQTT from "./MQTT.ts";
+import Notification from "./Notification.ts";
+import PDFService from "./PDF.ts";
+import SMS from "./SMS.ts";
+import SMTP from "./SMTP.ts";
+import Sendgrid from "./Sendgrid.ts";
+import TwilioWhatsapp from "./Twilio-Whatsapp.ts";
+import Twilio from "./Twillio.ts";
 
 class Services extends TagoIOModule<GenericModuleParams> {
   constructor(params?: GenericModuleParams) {

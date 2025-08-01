@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/imagemarker";
+import { convert, isOldStructure } from "../../src/modules/Migration/imagemarker.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.imagemarkerStructure;

@@ -1,6 +1,6 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { GenericID } from "../../types";
-import dateParser from "../Utils/dateParser";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import type { GenericID } from "../../types.ts";
+import dateParser from "../Utils/dateParser.ts";
 import type { SecretsCreate, SecretsEdit, SecretsInfo, SecretsQuery } from "./secrets.type";
 
 class Secrets extends TagoIOModule<GenericModuleParams> {

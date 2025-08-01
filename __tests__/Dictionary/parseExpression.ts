@@ -1,4 +1,4 @@
-import { Dictionary } from "../../src/modules";
+import { Dictionary } from "../../src/modules.ts";
 
 describe("parseExpression", () => {
   let dictionary: Dictionary;

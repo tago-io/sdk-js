@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/keypad";
+import { convert, isOldStructure } from "../../src/modules/Migration/keypad.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.keypadStructure;

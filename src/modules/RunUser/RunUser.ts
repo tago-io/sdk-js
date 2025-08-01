@@ -1,10 +1,10 @@
-import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type { GenericID, GenericToken } from "../../common/common.types";
-import type { Regions, RegionsObj } from "../../regions";
+import type { Regions, RegionsObj } from "../../regions.ts";
 import type { OTPType } from "../Resources/account.types";
 import type { NotificationInfo, NotificationQuery } from "../Resources/notifications.types";
-import dateParser from "../Utils/dateParser";
-import SDB from "./SDB";
+import dateParser from "../Utils/dateParser.ts";
+import SDB from "./SDB.ts";
 import {
   type RunUserCreate,
   type RunUserCreateInfo,

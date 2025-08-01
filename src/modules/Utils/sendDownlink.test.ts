@@ -1,4 +1,4 @@
-import { handleDownlinkError } from "./sendDownlink";
+import { handleDownlinkError } from "./sendDownlink.ts";
 
 interface DownlinkError {
   response?: {

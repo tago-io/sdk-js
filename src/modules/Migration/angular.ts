@@ -4,8 +4,8 @@
 // ? ====================================================================================
 
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import convertFormula from "./common/convertFormula";
-import convertRange from "./common/convertRange";
+import convertFormula from "./common/convertFormula.ts";
+import convertRange from "./common/convertRange.ts";
 
 /**
  * Takes the OLD widget and returns the NEW structure.

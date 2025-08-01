@@ -3,7 +3,7 @@
 //     Migration of old INPUT CONTROL to new INPUT CONTROL
 // ? ====================================================================================
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import { generateWidgetItemId } from "./common";
+import { generateWidgetItemId } from "./common/index.ts";
 
 enum EInputControlFieldType {
   Switch = "switch",

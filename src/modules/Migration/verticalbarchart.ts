@@ -4,7 +4,7 @@
 // ? ====================================================================================
 
 import type { WidgetInfo } from "../Resources/dashboards.types";
-import { chartColors, convertDownsample, convertFormula, convertInterval } from "./common";
+import { chartColors, convertDownsample, convertFormula, convertInterval } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};

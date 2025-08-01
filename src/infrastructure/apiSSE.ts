@@ -1,5 +1,5 @@
-import type { GenericModuleParams } from "../common/TagoIOModule";
-import regions from "../regions";
+import type { GenericModuleParams } from "../common/TagoIOModule.ts";
+import regions from "../regions.ts";
 
 const channelsWithID = ["analysis_console", "device_inspector", "device_data", "entity_data", "ui_dashboard"] as const;
 const channelsWithoutID = ["analysis_trigger", "notification", "ui"] as const;
