@@ -12,6 +12,11 @@ import type {
   UploadOptions,
 } from "./files.types.ts";
 
+// Deno compatibility: Define a simple Buffer type
+type BufferLike = Uint8Array & {
+  constructor: any;
+};
+
 type BuildFormDataOptions = {
   filename: string;
   isPublic: boolean | undefined;
@@ -486,7 +491,11 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * console.log(result.file); // https://api.tago.io/file/.../uploads/myfile.txt
    * ```
    */
-  public async uploadFile(file: Blob | Buffer, filename: string, options?: UploadOptions): Promise<{ file: string }> {
+  public async uploadFile(
+    file: Blob | BufferLike,
+    filename: string,
+    options?: UploadOptions
+  ): Promise<{ file: string }> {
     const MB = 2 ** 20;
 
     let cancelled = false;

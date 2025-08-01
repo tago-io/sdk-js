@@ -1,7 +1,7 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type { ExpireTimeOption, GenericID } from "../../common/common.types.ts";
 import dateParser from "../Utils/dateParser.ts";
-import Widgets from "./Dashboard.Widgets";
+import Widgets from "./Dashboard.Widgets.ts";
 import type {
   AnalysisRelated,
   DashboardCreateInfo,

@@ -29,5 +29,12 @@
       "**/__tests__/",
       "**/__mocks__/"
     ]
+  },
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "lib": [
+      "ES2020",
+      "DOM"
+    ]
   }
 }
