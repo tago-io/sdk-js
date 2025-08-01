@@ -1,5 +1,5 @@
-import type { Query } from "../../common/common.types";
-import type { DeviceItem } from "../Device/device.types";
+import type { Query } from "../../common/common.types.ts";
+import type { DeviceItem } from "../Device/device.types.ts";
 
 interface IDeviceParameters {
   name?: string;

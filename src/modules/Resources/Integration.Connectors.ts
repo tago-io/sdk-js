@@ -1,7 +1,7 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericID } from "../../common/common.types";
+import type { GenericID } from "../../common/common.types.ts";
 import dateParser from "../Utils/dateParser.ts";
-import type { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery } from "./integration.connectors.types";
+import type { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery } from "./integration.connectors.types.ts";
 
 class Connectors extends TagoIOModule<GenericModuleParams> {
   /**

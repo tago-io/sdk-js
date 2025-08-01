@@ -1,7 +1,7 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericID } from "../../common/common.types";
+import type { GenericID } from "../../common/common.types.ts";
 import Devices from "./Devices.ts";
-import type { DeviceInfo, DeviceListItem, DeviceQuery } from "./devices.types";
+import type { DeviceInfo, DeviceListItem, DeviceQuery } from "./devices.types.ts";
 
 /**
  * @deprecated Use `Resources.devices` instead.

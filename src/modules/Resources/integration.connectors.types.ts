@@ -1,4 +1,4 @@
-import { type GenericID, type Query, TokenData as _TokenData } from "../../common/common.types";
+import { type GenericID, type Query, TokenData as _TokenData } from "../../common/common.types.ts";
 
 interface IDeviceParameters {
   name?: string;

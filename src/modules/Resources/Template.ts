@@ -1,5 +1,5 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericID } from "../../common/common.types";
+import type { GenericID } from "../../common/common.types.ts";
 import dateParser from "../Utils/dateParser.ts";
 import type {
   TemplateInstallAnalysis,
@@ -8,7 +8,7 @@ import type {
   TemplateObj,
   TemplateObjAnalysis,
   TemplateObjDashboard,
-} from "./template.types";
+} from "./template.types.ts";
 
 type TemplateInstallParams = TemplateInstallDashboard | TemplateInstallAnalysis;
 

@@ -1,5 +1,5 @@
 import { generateRequestID } from "./HashGenerator.ts";
-import type { RequestConfig } from "./common.types";
+import type { RequestConfig } from "./common.types.ts";
 
 type requestID = number;
 type expireTimestamp = number;

@@ -1,4 +1,4 @@
-import type { Base64, ExpireTimeOption, GenericID, Query, RunTypeOptions, TagsObj } from "../../common/common.types";
+import type { Base64, ExpireTimeOption, GenericID, Query, RunTypeOptions, TagsObj } from "../../common/common.types.ts";
 
 interface ScriptFile {
   name: string;

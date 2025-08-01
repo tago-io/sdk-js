@@ -1,4 +1,4 @@
-import type { RequestConfig } from "./common.types";
+import type { RequestConfig } from "./common.types.ts";
 
 function hashGenerator(obj: any): number {
   const objString = JSON.stringify(obj);

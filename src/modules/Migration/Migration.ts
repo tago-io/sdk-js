@@ -1,5 +1,5 @@
 import TagoIOModule from "../../common/TagoIOModule.ts";
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import { convert as convertAngular, isOldStructure as isOldStructureAngular } from "./angular.ts";
 import { convert as convertAreaChart, isOldStructure as isOldStructureAreaChart } from "./areachart.ts";
 import { convert as convertCard, isOldStructure as isOldStructureCard } from "./card.ts";

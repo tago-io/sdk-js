@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old IMAGE MARKER to new IMAGE MARKER
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import { convertFormula } from "./common/index.ts";
 
 export function convertLayerData(widget: any, oldWidgetData: any): any {

@@ -1,14 +1,14 @@
 import * as Papa from "papaparse";
 
 import TagoIOModule from "../../common/TagoIOModule.ts";
-import type { LanguageData } from "../Resources/dictionaries.types";
+import type { LanguageData } from "../Resources/dictionaries.types.ts";
 import type {
   IApplyToStringOptions,
   IDictionaryModuleParams,
   IDictionaryModuleParamsAnonymous,
   IParsedExpression,
   IResolveExpressionParams,
-} from "./dictionary.types";
+} from "./dictionary.types.ts";
 
 // Regular expressions that are used for parsing the strings:
 // - SPLIT is used to split the string into normal words/phrases and expressions

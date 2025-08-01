@@ -3,7 +3,7 @@ import TagoIOModule from "../../common/TagoIOModule.ts";
 import { openSSEListening } from "../../infrastructure/apiSSE.ts";
 import getRegionObj, { setRuntimeRegion } from "../../regions.ts";
 import ConsoleService from "../Services/Console.ts";
-import type { AnalysisConstructorParams, AnalysisEnvironment, analysisFunction } from "./analysis.types";
+import type { AnalysisConstructorParams, AnalysisEnvironment, analysisFunction } from "./analysis.types.ts";
 
 /**
  * This class is used to instance an analysis

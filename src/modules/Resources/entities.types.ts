@@ -1,4 +1,4 @@
-import type { GenericID, Query, TagsObj } from "../../common/common.types";
+import type { GenericID, Query, TagsObj } from "../../common/common.types.ts";
 
 type EntityFieldType = "uuid" | "string" | "int" | "float" | "json" | "timestamp" | "text" | "boolean";
 

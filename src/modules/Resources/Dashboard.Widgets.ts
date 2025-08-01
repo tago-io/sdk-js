@@ -1,5 +1,5 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericID, GenericIDPair, GenericToken } from "../../common/common.types";
+import type { GenericID, GenericIDPair, GenericToken } from "../../common/common.types.ts";
 import type {
   EditDataModel,
   EditDeviceResource,
@@ -7,7 +7,7 @@ import type {
   GetDataModel,
   PostDataModel,
   WidgetInfo,
-} from "./dashboards.types";
+} from "./dashboards.types.ts";
 
 class Widgets extends TagoIOModule<GenericModuleParams> {
   /**

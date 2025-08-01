@@ -1,5 +1,5 @@
-import type { GenericID } from "../../common/common.types";
-import type { BillingService } from "./billing.types";
+import type { GenericID } from "../../common/common.types.ts";
+import type { BillingService } from "./billing.types.ts";
 
 interface ProfileListInfo {
   id: GenericID;

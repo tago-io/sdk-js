@@ -1,6 +1,6 @@
 import apiRequest from "../infrastructure/apiRequest.ts";
 import regions, { type Regions, type RegionsObj } from "../regions.ts";
-import type { GenericID, RefType, RequestConfig } from "./common.types";
+import type { GenericID, RefType, RequestConfig } from "./common.types.ts";
 
 interface GenericModuleParams {
   token?: string;

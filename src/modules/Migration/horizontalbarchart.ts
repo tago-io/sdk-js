@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old HORIZONTAL BAR CHART to new HORIZONTAL BAR CHART
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import { chartColors, convertDownsample, convertFormula, convertInterval } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {

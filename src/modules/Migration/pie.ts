@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old PIE to new PIE
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import { chartColors } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {

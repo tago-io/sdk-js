@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old ICON to new ICON
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import convertFormula from "./common/convertFormula.ts";
 
 const layoutMatrix = [

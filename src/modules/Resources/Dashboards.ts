@@ -1,5 +1,5 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { ExpireTimeOption, GenericID } from "../../common/common.types";
+import type { ExpireTimeOption, GenericID } from "../../common/common.types.ts";
 import dateParser from "../Utils/dateParser.ts";
 import Widgets from "./Dashboard.Widgets";
 import type {
@@ -9,7 +9,7 @@ import type {
   DashboardQuery,
   DevicesRelated,
   PublicKeyResponse,
-} from "./dashboards.types";
+} from "./dashboards.types.ts";
 
 class Dashboards extends TagoIOModule<GenericModuleParams> {
   /**

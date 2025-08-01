@@ -1,5 +1,5 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericID } from "../../common/common.types";
+import type { GenericID } from "../../common/common.types.ts";
 
 interface MQTTData {
   /** Topic of the message */

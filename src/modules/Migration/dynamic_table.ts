@@ -3,7 +3,7 @@
 //     Migration of old DYNAMIC_TABLE to new DYNAMIC_TABLE
 // ? ====================================================================================
 
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import { convertFormula, convertInterval } from "./common/index.ts";
 
 export const dynamicTableConfig = {

@@ -1,5 +1,5 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericID } from "../../common/common.types";
+import type { GenericID } from "../../common/common.types.ts";
 import dateParser from "../Utils/dateParser.ts";
 
 import type {
@@ -9,7 +9,7 @@ import type {
   LanguageData,
   LanguageEditData,
   LanguageInfoQuery,
-} from "./dictionaries.types";
+} from "./dictionaries.types.ts";
 
 import { Cache } from "../../modules.ts";
 

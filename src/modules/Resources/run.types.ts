@@ -1,4 +1,4 @@
-import type { ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
+import type { ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types.ts";
 
 interface RunInfo {
   profile: GenericID;

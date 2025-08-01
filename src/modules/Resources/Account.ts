@@ -1,5 +1,5 @@
 import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericToken } from "../../common/common.types";
+import type { GenericToken } from "../../common/common.types.ts";
 import type { Regions, RegionsObj } from "../../regions.ts";
 import dateParser from "../Utils/dateParser.ts";
 import type {
@@ -9,7 +9,7 @@ import type {
   LoginResponse,
   OTPType,
   TokenCreateInfo,
-} from "./account.types";
+} from "./account.types.ts";
 
 class Account extends TagoIOModule<GenericModuleParams> {
   /**

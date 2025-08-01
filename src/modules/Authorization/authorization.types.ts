@@ -1,4 +1,4 @@
-import type { ExpireTimeOption, GenericID, PermissionOption } from "../../common/common.types";
+import type { ExpireTimeOption, GenericID, PermissionOption } from "../../common/common.types.ts";
 
 interface AuthorizationInfo {
   name: string;

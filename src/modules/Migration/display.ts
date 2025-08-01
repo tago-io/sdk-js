@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old DISPLAY to new DISPLAY
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import convertFormula from "./common/convertFormula.ts";
 
 export function convert(oldWidget: any): WidgetInfo {

@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old INPUT FORM to new INPUT FORM
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import { generateWidgetItemId } from "./common/index.ts";
 import { convertField, convertSubmitButton } from "./convertFields.ts";
 

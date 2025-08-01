@@ -1,5 +1,5 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { PaymentInfo } from "./paymentHistory.types";
+import type { PaymentInfo } from "./paymentHistory.types.ts";
 
 class PaymentHistory extends TagoIOModule<GenericModuleParams> {
   /**

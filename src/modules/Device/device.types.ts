@@ -1,4 +1,4 @@
-import type { Data, DataCreate, DataEdit, GenericID, GenericToken, TagsObj } from "../../common/common.types";
+import type { Data, DataCreate, DataEdit, GenericID, GenericToken, TagsObj } from "../../common/common.types.ts";
 import type { Regions, RegionsObj } from "../../regions.ts";
 
 interface DeviceItem {

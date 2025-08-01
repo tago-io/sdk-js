@@ -1,7 +1,7 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericID } from "../../common/common.types";
+import type { GenericID } from "../../common/common.types.ts";
 import dateParser from "../Utils/dateParser.ts";
-import type { ActionCreateInfo, ActionInfo, ActionQuery } from "./actions.types";
+import type { ActionCreateInfo, ActionInfo, ActionQuery } from "./actions.types.ts";
 
 class Actions extends TagoIOModule<GenericModuleParams> {
   /**

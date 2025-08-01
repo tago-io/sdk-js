@@ -1,4 +1,4 @@
-import type { AnalysisEnvironment } from "../Analysis/analysis.types";
+import type { AnalysisEnvironment } from "../Analysis/analysis.types.ts";
 
 /**
  * Convert Environment Array to Object

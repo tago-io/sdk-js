@@ -5,8 +5,8 @@ import type {
   PermissionOption,
   Query,
   TagsObj,
-} from "../../common/common.types";
-import type { DataStorageType } from "./buckets.types";
+} from "../../common/common.types.ts";
+import type { DataStorageType } from "./buckets.types.ts";
 
 interface DeviceQuery
   extends Query<DeviceInfo, "name" | "visible" | "active" | "last_input" | "created_at" | "updated_at"> {

@@ -1,1 +1,1 @@
-export * as Router from "./router.types";
+export * as Router from "./router.types.ts";

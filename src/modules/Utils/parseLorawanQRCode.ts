@@ -1,4 +1,4 @@
-import type { QRCodeFormat } from "./utils.types";
+import type { QRCodeFormat } from "./utils.types.ts";
 
 /**
  * Parse a LoRaWAN QR Code string to JSON format.

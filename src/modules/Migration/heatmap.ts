@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old HEAT MAP to new HEAT MAP
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};

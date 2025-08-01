@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old COMPOSE to new COMPOSE
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import { removeHttpFromURL } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {

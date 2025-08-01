@@ -2,7 +2,7 @@ import path from "node:path";
 
 import Account from "../Resources/AccountDeprecated.ts";
 import Resources from "../Resources/Resources.ts";
-import type { UploadFileOptions } from "./utils.types";
+import type { UploadFileOptions } from "./utils.types.ts";
 
 type FileURL = string;
 

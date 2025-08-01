@@ -1,8 +1,8 @@
 import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericID, GenericToken } from "../../common/common.types";
+import type { GenericID, GenericToken } from "../../common/common.types.ts";
 import type { Regions, RegionsObj } from "../../regions.ts";
-import type { OTPType } from "../Resources/account.types";
-import type { NotificationInfo, NotificationQuery } from "../Resources/notifications.types";
+import type { OTPType } from "../Resources/account.types.ts";
+import type { NotificationInfo, NotificationQuery } from "../Resources/notifications.types.ts";
 import dateParser from "../Utils/dateParser.ts";
 import SDB from "./SDB.ts";
 import {
@@ -13,7 +13,7 @@ import {
   type RunUserLogin,
   type RunUserLoginResponse,
   RunNotificationInfo as _RunNotificationInfo,
-} from "./runUser.types";
+} from "./runUser.types.ts";
 
 class RunUser extends TagoIOModule<GenericModuleParams> {
   /**

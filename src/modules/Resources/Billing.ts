@@ -12,7 +12,7 @@ import type {
   BillingSchedule,
   BillingSubscription,
   BillingSubscriptionSummary,
-} from "./billing.types";
+} from "./billing.types.ts";
 
 class Billing extends TagoIOModule<GenericModuleParams> {
   /**

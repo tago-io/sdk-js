@@ -1,7 +1,13 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericID, GenericToken } from "../../common/common.types";
+import type { GenericID, GenericToken } from "../../common/common.types.ts";
 import dateParser from "../Utils/dateParser.ts";
-import type { AnalysisCreateInfo, AnalysisInfo, AnalysisListItem, AnalysisQuery, ScriptFile } from "./analysis.types";
+import type {
+  AnalysisCreateInfo,
+  AnalysisInfo,
+  AnalysisListItem,
+  AnalysisQuery,
+  ScriptFile,
+} from "./analysis.types.ts";
 
 class Analyses extends TagoIOModule<GenericModuleParams> {
   /**

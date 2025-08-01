@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old INPUT CONTROL to new INPUT CONTROL
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import { generateWidgetItemId } from "./common/index.ts";
 
 enum EInputControlFieldType {

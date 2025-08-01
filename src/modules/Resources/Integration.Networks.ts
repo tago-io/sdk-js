@@ -1,12 +1,12 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericID, GenericToken, ListTokenQuery, TokenData } from "../../common/common.types";
+import type { GenericID, GenericToken, ListTokenQuery, TokenData } from "../../common/common.types.ts";
 import type {
   NetworkCreateInfo,
   NetworkInfo,
   NetworkQuery,
   NetworkTokenCreateResponse,
   NetworkTokenInfo,
-} from "./integration.networks.types";
+} from "./integration.networks.types.ts";
 
 class Networks extends TagoIOModule<GenericModuleParams> {
   /**

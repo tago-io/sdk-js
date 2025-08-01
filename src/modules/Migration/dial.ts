@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old DIAL to new DIAL.
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import { convertFormula, convertRange } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {

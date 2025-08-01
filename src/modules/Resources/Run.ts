@@ -1,7 +1,7 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericID, RecursivePartial } from "../../common/common.types";
+import type { GenericID, RecursivePartial } from "../../common/common.types.ts";
 import dateParser from "../Utils/dateParser.ts";
-import type { NotificationCreate, NotificationInfo } from "./notifications.types";
+import type { NotificationCreate, NotificationInfo } from "./notifications.types.ts";
 import type {
   CustomDomainCreate,
   CustomDomainInfo,
@@ -16,7 +16,7 @@ import type {
   UserInfo,
   UserListItem,
   UserQuery,
-} from "./run.types";
+} from "./run.types.ts";
 
 class Run extends TagoIOModule<GenericModuleParams> {
   /**

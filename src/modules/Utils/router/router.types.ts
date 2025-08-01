@@ -1,7 +1,7 @@
-import type { TagoContext } from "../../Analysis/analysis.types";
+import type { TagoContext } from "../../Analysis/analysis.types.ts";
 import type Device from "../../Device/Device.ts";
 import type Account from "../../Resources/AccountDeprecated.ts";
-import type { UserCreateInfo } from "../../Resources/run.types";
+import type { UserCreateInfo } from "../../Resources/run.types.ts";
 
 /**
  * User List scope to be used in your analysis

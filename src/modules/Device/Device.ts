@@ -1,8 +1,8 @@
 import TagoIOModule from "../../common/TagoIOModule.ts";
 import { chunk } from "../../common/chunk.ts";
-import type { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
+import type { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types.ts";
 import sleep from "../../common/sleep.ts";
-import type { ConfigurationParams } from "../Resources/devices.types";
+import type { ConfigurationParams } from "../Resources/devices.types.ts";
 import dateParser from "../Utils/dateParser.ts";
 import type {
   DataQuery,
@@ -15,7 +15,7 @@ import type {
   DeviceConstructorParams,
   DeviceItem,
   OptionsStreaming,
-} from "./device.types";
+} from "./device.types.ts";
 
 class Device extends TagoIOModule<DeviceConstructorParams> {
   /**

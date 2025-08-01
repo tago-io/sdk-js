@@ -7,9 +7,9 @@ import type {
   TokenCreateResponse,
   TokenData,
   TokenDataList,
-} from "../../common/common.types";
+} from "../../common/common.types.ts";
 import dateParser from "../Utils/dateParser.ts";
-import type { BillingAddOn } from "./billing.types";
+import type { BillingAddOn } from "./billing.types.ts";
 
 import type {
   AddonInfo,
@@ -21,7 +21,7 @@ import type {
   ProfileTeam,
   StatisticsDate,
   UsageStatistic,
-} from "./profile.types";
+} from "./profile.types.ts";
 
 class Profile extends TagoIOModule<GenericModuleParams> {
   /**

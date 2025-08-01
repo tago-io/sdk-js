@@ -1,5 +1,5 @@
 import Account from "../../Resources/AccountDeprecated.ts";
-import type { RouterConstructor } from "./router.types";
+import type { RouterConstructor } from "./router.types.ts";
 import RouterService from "./service.ts";
 class AnalysisRouter {
   services: RouterService[] = [];

@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old STATIC TABLE to new STATIC TABLE
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import { convertFormula, generateWidgetItemId } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {

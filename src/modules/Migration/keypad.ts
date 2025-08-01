@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old KEYPAD to new KEYPAD
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};

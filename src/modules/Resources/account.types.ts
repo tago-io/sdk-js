@@ -1,5 +1,5 @@
-import type { GenericID } from "../../common/common.types";
-import type { ProfileListInfo } from "./profile.types";
+import type { GenericID } from "../../common/common.types.ts";
+import type { ProfileListInfo } from "./profile.types.ts";
 
 interface AccountCreateInfo {
   /** Name of the account */

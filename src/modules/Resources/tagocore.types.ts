@@ -1,4 +1,4 @@
-import type { GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
+import type { GenericID, GenericToken, Query, TagsObj } from "../../common/common.types.ts";
 
 interface TagoCoreComputerUsage {
   total: number;

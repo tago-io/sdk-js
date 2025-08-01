@@ -1,5 +1,5 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
-import type { GenericID } from "../../common/common.types";
+import type { GenericID } from "../../common/common.types.ts";
 import sleep from "../../common/sleep.ts";
 import dateParser from "../Utils/dateParser.ts";
 import type {
@@ -10,7 +10,7 @@ import type {
   FilesPermission,
   MoveFiles,
   UploadOptions,
-} from "./files.types";
+} from "./files.types.ts";
 
 type BuildFormDataOptions = {
   filename: string;

@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old MAP to new MAP
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 import { convertFormula, convertInterval } from "./common/index.ts";
 
 function isValidMode(mode: string): boolean {

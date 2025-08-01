@@ -1,7 +1,7 @@
 import qs from "qs";
 import { addCache, getCache } from "../common/Cache.ts";
 import { addRequestInProgress, isRequestInProgress, removeRequestInProgress } from "../common/RequestInProgress.ts";
-import type { RequestConfig } from "../common/common.types";
+import type { RequestConfig } from "../common/common.types.ts";
 import sleep from "../common/sleep.ts";
 import config from "../config.ts";
 import { version } from "./envParams.ts";
