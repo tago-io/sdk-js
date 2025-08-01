@@ -195,7 +195,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * is undefined.
    *
    * @param rawString String with words and/or expressions.
-   * @param options Object containing options for the dictionary, including the language.
+   * @param _options Object containing options for the dictionary, including the language.
    *
    * @example
    * ```

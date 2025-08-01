@@ -10,7 +10,7 @@ import type {
 
 class Networks extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Lists all networks from the application with pagination support.
+   * Lists all networks from the application with pagination support.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/125-network-integration} Network Integration
    *
@@ -43,7 +43,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific network.
+   * Retrieves detailed information about a specific network.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/125-network-integration} Network Integration
    *
@@ -67,7 +67,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new network in the application.
+   * Creates a new network in the application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/468-creating-a-network-integration} Creating a Network Integration
    *
@@ -94,7 +94,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Modifies an existing network's properties.
+   * Modifies an existing network's properties.
    *
    *
    * @example
@@ -117,7 +117,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Lists all tokens for a network with pagination support.
+   * Lists all tokens for a network with pagination support.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/468-creating-a-network-integration#Tokens_and_getting_the_devices} Tokens and Getting the Devices
    *
@@ -148,7 +148,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new token for a network.
+   * Creates a new token for a network.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/468-creating-a-network-integration#Tokens_and_getting_the_devices} Tokens and Getting the Devices
    *
@@ -173,7 +173,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes a network token.
+   * Deletes a network token.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/468-creating-a-network-integration#Tokens_and_getting_the_devices} Tokens and Getting the Devices
    *
@@ -194,7 +194,7 @@ class Networks extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes a network from the application.
+   * Deletes a network from the application.
    *
    * @example
    * If receive an error "Authorization Denied", check policy in Access Management.

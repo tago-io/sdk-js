@@ -13,7 +13,7 @@ import type {
 
 class Account extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Gets all account information.
+   * Gets all account information.
    *
    * @example
    * If receive an error "Authorization Denied", check policy **Account** / **Access Account Information** in Access Management.
@@ -36,7 +36,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Edit account.
+   * Edit account.
    *
    * @example
    * ```typescript
@@ -56,7 +56,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Delete account.
+   * Delete account.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/210-deleting-your-account} Deleting Your Account
    *
@@ -77,7 +77,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Generates and retrieves a new token for the account.
+   * Generates and retrieves a new token for the account.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/495-account-token} Account Token
    *
@@ -104,7 +104,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieve list of profiles for login and do Login.
+   * Retrieve list of profiles for login and do Login.
    *
    * @example
    * ```typescript
@@ -126,7 +126,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Send password recover email.
+   * Send password recover email.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/209-resetting-my-password} Resetting My Password
    *
@@ -149,7 +149,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Change account password.
+   * Change account password.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/209-resetting-my-password} Resetting My Password
    * TODO: not working
@@ -174,7 +174,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Create new TagoIO account.
+   * Create new TagoIO account.
    *
    * @example
    * ```typescript
@@ -196,7 +196,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Re-send confirmation account email.
+   * Re-send confirmation account email.
    *
    * @example
    * ```typescript
@@ -217,7 +217,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Confirm account creation.
+   * Confirm account creation.
    *
    * @example
    * ```typescript
@@ -238,7 +238,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Request the PIN Code for a given OTP Type.
+   * Request the PIN Code for a given OTP Type.
    *
    * @example
    * ```typescript
@@ -264,7 +264,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Enable OTP for a given OTP Type.
+   * Enable OTP for a given OTP Type.
    * You will be requested to confirm the operation with a pin code.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-factor Authentication (2FA)
@@ -288,7 +288,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Disable OTP for a given OTP Type.
+   * Disable OTP for a given OTP Type.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-factor Authentication (2FA)
    *
@@ -310,7 +310,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Confirm OTP enabling process for a given OTP Type.
+   * Confirm OTP enabling process for a given OTP Type.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-factor Authentication (2FA)
    *
@@ -334,7 +334,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Accept a team member invitation to become a profile's team member.
+   * Accept a team member invitation to become a profile's team member.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/106-sharing-your-profile} for Team Management - Sharing your profile
    *
@@ -358,7 +358,7 @@ class Account extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Decline a team member invitation to become a profile's team member.
+   * Decline a team member invitation to become a profile's team member.
    *
    * @example
    * ```typescript

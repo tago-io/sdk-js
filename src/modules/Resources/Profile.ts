@@ -25,7 +25,7 @@ import type {
 
 class Profile extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Retrieves a list of all profiles associated with the current account.
+   * Retrieves a list of all profiles associated with the current account.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/198-profiles} Profiles
    *
@@ -46,7 +46,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific profile using its ID or 'current' for the active profile.
+   * Retrieves detailed information about a specific profile using its ID or 'current' for the active profile.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/198-profiles} Profiles
    *
@@ -71,7 +71,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves a summary of the profile's usage and statistics.
+   * Retrieves a summary of the profile's usage and statistics.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/198-profiles} Profiles
    *
@@ -95,7 +95,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new profile with the specified name and optional resource allocation settings.
+   * Creates a new profile with the specified name and optional resource allocation settings.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/198-profiles#Adding_Profiles} Adding Profiles
    *
@@ -126,7 +126,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates profile information with the provided data.
+   * Updates profile information with the provided data.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/198-profiles#Renaming_your_Profiles} Renaming your Profiles
    *
@@ -148,7 +148,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Permanently removes a profile from the account.
+   * Permanently removes a profile from the account.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-Factor Authentication (2FA)
    *
@@ -171,7 +171,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves usage statistics for a profile within a specified time period.
+   * Retrieves usage statistics for a profile within a specified time period.
    *
    * Usage statistics are cumulative: if a service was not used in a time period,
    * the statistics for that time period will not be in the object.
@@ -202,7 +202,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new audit log query for tracking profile activities.
+   * Creates a new audit log query for tracking profile activities.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/audit-log} Audit Log
    *
@@ -228,7 +228,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves audit log entries using a previously created query.
+   * Retrieves audit log entries using a previously created query.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/audit-log} Audit Log
    *
@@ -250,7 +250,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves a list of all add-ons associated with the profile.
+   * Retrieves a list of all add-ons associated with the profile.
    *
    * @deprecated This route is deprecated.
    */
@@ -264,7 +264,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates the add-on configuration for a profile.
+   * Updates the add-on configuration for a profile.
    *
    * @deprecated This route is deprecated.
    */
@@ -279,7 +279,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates service configuration and resource limits for a profile.
+   * Updates service configuration and resource limits for a profile.
    */
   public async serviceEdit(profileID: GenericID, serviceObj: object): Promise<string> {
     const result = await this.doRequest<string>({
@@ -292,7 +292,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Transfers the current authentication token to another profile.
+   * Transfers the current authentication token to another profile.
    *
    * @example
    * ```typescript
@@ -311,7 +311,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves a list of all tokens associated with a specific profile.
+   * Retrieves a list of all tokens associated with a specific profile.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/495-account-token} Account Token
    *
@@ -345,7 +345,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new authentication token for the specified profile.
+   * Creates a new authentication token for the specified profile.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/495-account-token} Account Token
    * @see {@link https://help.tago.io/portal/en/kb/articles/526-two-factor-authentication} Two-Factor Authentication (2FA)
@@ -376,7 +376,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Revokes and removes an authentication token from the profile.
+   * Revokes and removes an authentication token from the profile.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/495-account-token} Account Token
    *
@@ -397,7 +397,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes an add-on from the profile at the end of the current billing cycle.
+   * Removes an add-on from the profile at the end of the current billing cycle.
    *
    * @deprecated This route is deprecated.
    */
@@ -411,7 +411,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Adds a new team member to the profile using their email address.
+   * Adds a new team member to the profile using their email address.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/106-sharing-your-profile} Team Management - Sharing your Profile
    *
@@ -435,7 +435,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves a list of all team members that have access to the specified profile.
+   * Retrieves a list of all team members that have access to the specified profile.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/106-sharing-your-profile} Team Management - Sharing your Profile
    *
@@ -456,7 +456,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes a team member from the profile.
+   * Removes a team member from the profile.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/106-sharing-your-profile} Team Management - Sharing your Profile
    *

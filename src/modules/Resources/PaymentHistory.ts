@@ -3,7 +3,7 @@ import type { PaymentInfo } from "./paymentHistory.types";
 
 class PaymentHistory extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Retrieves the payment transaction history for the current account, including all past payments and their details.
+   * Retrieves the payment transaction history for the current account, including all past payments and their details.
    *
    * @example
    * If receive an error "Authorization Denied", check policy in Access Management.

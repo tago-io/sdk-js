@@ -32,7 +32,7 @@ import type {
 } from "./devices.types";
 class Devices extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Lists all devices from your application with pagination support.
+   * Lists all devices from your application with pagination support.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices} Devices
    *
@@ -74,7 +74,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Gets a streaming list of devices from the application.
+   * Gets a streaming list of devices from the application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices} Devices
    *
@@ -119,7 +119,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new device in your application.
+   * Creates a new device in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices#Adding_devices} Adding Devices
    *
@@ -148,7 +148,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Modifies properties of an existing device.
+   * Modifies properties of an existing device.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices#Managing_and_customizing_your_device} Managing and Customizing Your Device
    *
@@ -173,7 +173,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes a device from your application.
+   * Deletes a device from your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices} Devices
    *
@@ -194,7 +194,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific device.
+   * Retrieves detailed information about a specific device.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/3-devices} Devices
    *
@@ -217,7 +217,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates or updates device parameters.
+   * Creates or updates device parameters.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/configuration-parameters-for-devices} Configuration Parameters for Devices
    *
@@ -255,7 +255,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Lists all parameters for a device.
+   * Lists all parameters for a device.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/configuration-parameters-for-devices} Configuration Parameters for Devices
    *
@@ -277,7 +277,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes a parameter from a device.
+   * Removes a parameter from a device.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/configuration-parameters-for-devices} Configuration Parameters for Devices
    *
@@ -298,7 +298,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Lists all tokens for a device with pagination support.
+   * Lists all tokens for a device with pagination support.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/4-device-token} Device Token
    *
@@ -343,7 +343,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new token for a device.
+   * Creates a new token for a device.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/4-device-token} Device Token
    *
@@ -370,7 +370,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes a device token.
+   * Deletes a device token.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/4-device-token} Device Token
    *
@@ -391,7 +391,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Gets the amount of data stored in a device.
+   * Gets the amount of data stored in a device.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Amount_of_data_records} Amount of data records
    *
@@ -412,7 +412,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves data from all variables in the device.
+   * Retrieves data from all variables in the device.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/device-data} Device data management
    *
@@ -453,7 +453,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves data from device using streaming approach.
+   * Retrieves data from device using streaming approach.
    *
    * @experimental
    * @see {@link https://help.tago.io/portal/en/kb/articles/device-data} Device data management
@@ -507,7 +507,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes all data from a device.
+   * Removes all data from a device.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Emptying_your_Device_Data} Emptying your Device Data
    *
@@ -528,7 +528,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Sends data to a device.
+   * Sends data to a device.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/95-device-emulator} Device Emulator
    *
@@ -555,7 +555,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Streams data to a device in chunks.
+   * Streams data to a device in chunks.
    *
    * @experimental
    * @see {@link https://help.tago.io/portal/en/kb/articles/95-device-emulator} Device Emulator
@@ -597,7 +597,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Edit data records in a **mutable** device using the profile token and device ID.
+   * Edit data records in a **mutable** device using the profile token and device ID.
    *
    * The `updatedData` can be a single data record or an array of records to be updated,
    * each of the records must have the `id` of the record and the fields to be updated.
@@ -626,7 +626,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Delete data records in a **mutable** device using the profile token and device ID.
+   * Delete data records in a **mutable** device using the profile token and device ID.
    *
    * See the example to understand how to use this method properly to have full control on what to delete.
    *
@@ -654,7 +654,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves chunk information from a immutable device.
+   * Retrieves chunk information from a immutable device.
    *
    * @experimental
    * @see {@link https://help.tago.io/portal/en/kb/articles/chunk-management} Chunk Management
@@ -676,7 +676,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes a chunk from a immutable device.
+   * Deletes a chunk from a immutable device.
    *
    * @experimental
    * @see {@link https://help.tago.io/portal/en/kb/articles/chunk-management#Delete_chunks} Delete chunks
@@ -715,7 +715,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Schedule to export the mutable Device's data to TagoIO Files.
+   * Schedule to export the mutable Device's data to TagoIO Files.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/55-data-export} Data Export
    *
@@ -749,7 +749,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Restores data to a device from a CSV file in TagoIO Files.
+   * Restores data to a device from a CSV file in TagoIO Files.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/device-data#Importing} Importing
    *

@@ -4,7 +4,7 @@ import type { CurrentPrices, PlanInfo, PlanSetInfo } from "./plan.types";
 
 class Plan extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Sets the active plan and configures service limits for the account, including SMS, email, data records, device requests and analysis quotas.
+   * Sets the active plan and configures service limits for the account, including SMS, email, data records, device requests and analysis quotas.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/207-upgrading-plans-services} Upgrading Plans & Services
    *
@@ -33,7 +33,7 @@ class Plan extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves information about the currently active plan and its associated services.
+   * Retrieves information about the currently active plan and its associated services.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/114-account-plans} Account Plans
    *
@@ -56,7 +56,7 @@ class Plan extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves the current pricing information for all available services.
+   * Retrieves the current pricing information for all available services.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/114-account-plans} Account Plans
    *

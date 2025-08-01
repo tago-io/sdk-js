@@ -5,7 +5,7 @@ import type { NotificationCreate, NotificationInfo, NotificationQuery } from "./
 
 class Notifications extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Retrieves all notifications from the application with optional filtering.
+   * Retrieves all notifications from the application with optional filtering.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/11-notification} Notification
    *
@@ -29,7 +29,7 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Marks one or multiple notifications as read.
+   * Marks one or multiple notifications as read.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/11-notification} Notification
    *
@@ -59,7 +59,7 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Marks one or multiple notifications as unread.
+   * Marks one or multiple notifications as unread.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/11-notification} Notification
    *
@@ -89,7 +89,7 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Marks all notifications in the application as read.
+   * Marks all notifications in the application as read.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/11-notification} Notification
    *
@@ -110,7 +110,7 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Records when a notification button is pressed by the user.
+   * Records when a notification button is pressed by the user.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/11-notification} Notification
    *
@@ -131,7 +131,7 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new notification in the system.
+   * Creates a new notification in the system.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/11-notification} Notification
    *
@@ -153,7 +153,7 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Permanently deletes a notification from the system.
+   * Permanently deletes a notification from the system.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/11-notification} Notification
    *
@@ -174,8 +174,8 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Registers a mobile device for push notifications.
-   * @note **This is used internally for mobile applications**
+   * Registers a mobile device for push notifications.
+   * @remarks **This is used internally for mobile applications**
    */
   public async registerDevice(deviceToken: GenericToken, platform: "ios" | "android"): Promise<string> {
     const result = await this.doRequest<string>({
@@ -191,8 +191,8 @@ class Notifications extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes a mobile device from push notification service.
-   * @note **This is used internally for mobile applications**
+   * Removes a mobile device from push notification service.
+   * @remarks **This is used internally for mobile applications**
    */
   public async unRegisterDevice(deviceToken: GenericToken): Promise<string> {
     const result = await this.doRequest<string>({

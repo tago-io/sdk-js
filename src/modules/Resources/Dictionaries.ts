@@ -15,7 +15,7 @@ import { Cache } from "../../modules";
 
 class Dictionaries extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Lists all dictionaries from your application with pagination support.
+   * Lists all dictionaries from your application with pagination support.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
    *
@@ -50,7 +50,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new dictionary in your application.
+   * Creates a new dictionary in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
@@ -75,7 +75,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Modifies an existing dictionary's properties.
+   * Modifies an existing dictionary's properties.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
@@ -99,7 +99,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes a dictionary from your application.
+   * Deletes a dictionary from your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
@@ -122,7 +122,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific dictionary.
+   * Retrieves detailed information about a specific dictionary.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
    *
@@ -144,7 +144,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Edits a language's content in a dictionary.
+   * Edits a language's content in a dictionary.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
@@ -171,7 +171,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes a language from a dictionary.
+   * Removes a language from a dictionary.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/489-using-dictionaries-multi-language} Using Dictionaries (Multi-Language)
    *
@@ -194,7 +194,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves language-specific content from a dictionary by ID.
+   * Retrieves language-specific content from a dictionary by ID.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
    *
@@ -226,7 +226,7 @@ class Dictionaries extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves language-specific content from a dictionary by its slug.
+   * Retrieves language-specific content from a dictionary by its slug.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/487-dictionaries} Dictionaries
    *

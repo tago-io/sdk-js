@@ -5,7 +5,7 @@ import type { AnalysisCreateInfo, AnalysisInfo, AnalysisListItem, AnalysisQuery,
 
 class Analyses extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Lists all analyses from the application with pagination support.
+   * Lists all analyses from the application with pagination support.
    * Use this to retrieve and manage analyses in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
@@ -45,7 +45,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new analysis in your application.
+   * Creates a new analysis in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/120-creating-analysis} Creating Analysis
    *
@@ -73,7 +73,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Modifies an existing analysis.
+   * Modifies an existing analysis.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -100,7 +100,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes an analysis from your application.
+   * Deletes an analysis from your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -121,7 +121,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific analysis.
+   * Retrieves detailed information about a specific analysis.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -144,7 +144,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Executes an analysis with optional scope parameters.
+   * Executes an analysis with optional scope parameters.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -168,8 +168,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Generates a new token for the analysis.
-   * @note **This is only allowed when the analysis is running in external mode.**
+   * Generates a new token for the analysis.
+   * @remarks **This is only allowed when the analysis is running in external mode.**
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -190,7 +190,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Uploads a script file to an analysis.
+   * Uploads a script file to an analysis.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -220,7 +220,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Gets a download URL for the analysis script.
+   * Gets a download URL for the analysis script.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *

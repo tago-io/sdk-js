@@ -8,8 +8,7 @@ type FileURL = string;
 
 /**
  * Upload a file and return it's URL.
- * @requires Profile Access for the Analysis
- * @requires Files Access for the Analysis
+ * @remarks Requires Profile Access and Files Access for the Analysis
  */
 async function uploadFile(resource: Account | Resources, options: UploadFileOptions): Promise<FileURL> {
   if (!(resource instanceof Account) && !(resource instanceof Resources)) {

@@ -31,7 +31,7 @@ type BuildFormDataOptions = {
 
 class Files extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Lists all files in the application with pagination support.
+   * Lists all files in the application with pagination support.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    *
@@ -62,7 +62,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Uploads base64 encoded files to TagoIO storage.
+   * Uploads base64 encoded files to TagoIO storage.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
@@ -88,7 +88,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Moves or renames files in TagoIO storage.
+   * Moves or renames files in TagoIO storage.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
@@ -115,7 +115,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Copies files in TagoIO files.
+   * Copies files in TagoIO files.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
@@ -141,7 +141,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes files or folders from TagoIO storage.
+   * Deletes files or folders from TagoIO storage.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
@@ -167,7 +167,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Checks if a file is public or private.
+   * Checks if a file is public or private.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
@@ -192,7 +192,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Changes visibility settings for multiple files.
+   * Changes visibility settings for multiple files.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
@@ -238,7 +238,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Gets a signed URL with temporary authentication token.
+   * Gets a signed URL with temporary authentication token.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
@@ -265,7 +265,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Gets the MD5 hash of a file with authentication for private files.
+   * Gets the MD5 hash of a file with authentication for private files.
    * This hash can be used to verify file integrity.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
@@ -294,7 +294,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Build the `FormData` object to be used in multipart form uploads.
+   * Build the `FormData` object to be used in multipart form uploads.
    */
   private buildFormData(options: BuildFormDataOptions): FormData {
     const { action, filename, isPublic, fieldID } = options;
@@ -325,7 +325,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a multipart upload instance
+   * Creates a multipart upload instance
    */
   private async createMultipartUpload(filename: string, options?: UploadOptions) {
     const { dashboard, widget, fieldId: fieldID, isPublic, contentType } = options || {};
@@ -355,7 +355,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Uploads a single part to TagoIO
+   * Uploads a single part to TagoIO
    */
   async _uploadPart(
     filename: string,
@@ -397,7 +397,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Adds an upload to the queue.
+   * Adds an upload to the queue.
    * It will try to upload for 'opts.maxTriesForEachChunk' and fail
    * if it couldn't upload after those many tries.
    */
@@ -433,7 +433,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Finishes a multipart upload instance
+   * Finishes a multipart upload instance
    */
   async _completeMultipartUpload(
     filename: string,
@@ -469,7 +469,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Uploads a single file to TagoIO using multipart upload.
+   * Uploads a single file to TagoIO using multipart upload.
    * The file is divided into chunks and uploaded in parallel for better performance.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
@@ -590,7 +590,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Throw a error if is cancelled
+   * Throw a error if is cancelled
    */
   private isCanceled(cancelled: boolean) {
     if (cancelled) {

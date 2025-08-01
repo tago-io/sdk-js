@@ -47,9 +47,8 @@ class Network extends TagoIOModule<ConnectorModuleParams> {
    * @param options.topic The topic to publish to
    * @param options.message The message to publish (optional)
    * @param options.qos Quality of Service level (optional)
-   * @param options.bucket The bucket to publish to (optional)
    * @param options.retain Whether to retain the message (optional)
-   * @param options.device The device to publish to (optional)
+   * @param options.device The device to publish to
    * @returns A promise that resolves when the message is published
    */
   public async publishToRelay(options: {

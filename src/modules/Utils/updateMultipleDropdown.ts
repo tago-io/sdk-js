@@ -5,7 +5,7 @@ import type Device from "../Device/Device";
  * Then updates the variables.
  * @param device TagoIO Device instanced class.
  * @param variables variables inside the device to be verified.
- * @param value value to be removed.
+ * @param values values to be removed.
  */
 async function updateMultipleDropdown(
   device: Device,

@@ -48,10 +48,6 @@ class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
    * For enhanced security, it's strongly recommended to store these credentials
    * using TagoIO Secrets rather than hardcoding them.
    *
-   * @see {@link https://www.twilio.com/console} for Twilio account management
-   * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} for TagoIO Secrets usage
-   *
-   * @remarks
    * Supported media types:
    * Images: JPG, JPEG, PNG, WEBP*
    * Audio: OGG**, AMR, 3GP, AAC, MPEG
@@ -59,6 +55,9 @@ class TwilioWhatsapp extends TagoIOModule<GenericModuleParams> {
    * Video: MP4 (with H.264 video codec and AAC audio)
    * Contacts: vCard (.vcf)
    * The maximum size limit is 16MB. Please note that the size limit for images is only 5 MB
+   *
+   * @see {@link https://www.twilio.com/console} for Twilio account management
+   * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} for TagoIO Secrets usage
    *
    * @example
    * ```typescript

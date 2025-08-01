@@ -31,10 +31,7 @@ async function handleDownlinkError(error: DownlinkError): Promise<any> {
  * @param {String} dn_options.payload hexadecimal payload to be sent to the device.
  * @param {Number} [dn_options.port] port to be used for the downlink. Default is 1.
  * @param {Boolean} [dn_options.confirmed] confirmed status, default is false.
- * @requires Device Token Access permission for the Analysis
- * @requires Device Info Access permission for the Analysis
- * @requires Device Configuration Parameters Access permission for the Analysis
- * @requires Network Access permission for the Analysis
+ * @remarks Requires Device Token Access, Device Info Access, Device Configuration Parameters Access, and Network Access permissions for the Analysis
  * @returns
  */
 async function sendDownlink(

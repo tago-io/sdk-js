@@ -11,7 +11,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   public devices: Devices = new Devices(this.params);
 
   /**
-   * @description Lists all devices from your application with pagination.
+   * Lists all devices from your application with pagination.
    *
    * @deprecated Use `Resources.devices.list()` instead
    *
@@ -35,7 +35,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific device.
+   * Retrieves detailed information about a specific device.
    *
    * @deprecated Use `Resources.devices.info()` instead
    *
@@ -52,7 +52,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Gets the amount of data stored for a device.
+   * Gets the amount of data stored for a device.
    *
    * @example
    * If receive an error "Authorization Denied", check policy **Device** / **Access** in Access Management.

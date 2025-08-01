@@ -4,7 +4,7 @@ type TagTypes = "bucket" | "device" | "dashboard" | "action" | "analysis" | "tco
 
 class Tags extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Retrieves all available tag keys for a specific resource type in the account.
+   * Retrieves all available tag keys for a specific resource type in the account.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/tags} Tags System
    *

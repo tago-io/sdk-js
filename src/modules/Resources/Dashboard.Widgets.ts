@@ -11,7 +11,7 @@ import type {
 
 class Widgets extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Creates a new widget for a specified dashboard with the given configuration.
+   * Creates a new widget for a specified dashboard with the given configuration.
    *
    * @example
    * If receive an error "Authorization Denied", check policy **Dashboard** / **Create and Edit** in Access Management.
@@ -53,7 +53,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates an existing widget's configuration on a dashboard.
+   * Updates an existing widget's configuration on a dashboard.
    *
    * @example
    * If receive an error "Authorization Denied", check policy **Dashboard** / **Edit** in Access Management.
@@ -75,7 +75,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Permanently removes a widget from a dashboard.
+   * Permanently removes a widget from a dashboard.
    *
    * @example
    * If receive an error "Authorization Denied", check policy **Dashboard** / **Delete and Edit** in Access Management.
@@ -98,7 +98,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific widget.
+   * Retrieves detailed information about a specific widget.
    *
    * @example
    * If receive an error "Authorization Denied", check policy **Dashboard** / **Access** in Access Management.
@@ -117,7 +117,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves data or resource list for a specific widget based on the given parameters.
+   * Retrieves data or resource list for a specific widget based on the given parameters.
    *
    * @example
    * ```typescript
@@ -141,7 +141,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Sends new data values to be displayed in the widget.
+   * Sends new data values to be displayed in the widget.
    *
    * @example
    * ```typescript
@@ -174,7 +174,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates existing data values for a specific widget.
+   * Updates existing data values for a specific widget.
    *
    * @example
    * ```typescript
@@ -206,7 +206,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes multiple data items from the widget by pairs of data ID and resource ID.
+   * Removes multiple data items from the widget by pairs of data ID and resource ID.
    *
    * @example
    * ```typescript
@@ -235,7 +235,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates resource values associated with the widget.
+   * Updates resource values associated with the widget.
    */
   public async editResource(
     dashboardID: GenericID,
@@ -256,7 +256,7 @@ class Widgets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Generates a new authentication token for embedding a widget. Each call regenerates the token.
+   * Generates a new authentication token for embedding a widget. Each call regenerates the token.
    *
    * @example
    * ```typescript

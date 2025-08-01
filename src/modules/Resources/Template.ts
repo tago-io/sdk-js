@@ -14,7 +14,7 @@ type TemplateInstallParams = TemplateInstallDashboard | TemplateInstallAnalysis;
 
 class Template extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Creates a new template from a dashboard or analysis configuration.
+   * Creates a new template from a dashboard or analysis configuration.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/518-distributing-dashboards} Distributing Dashboards
    *
@@ -39,7 +39,7 @@ class Template extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Installs a template into the account, creating either a dashboard or analysis from the template configuration.
+   * Installs a template into the account, creating either a dashboard or analysis from the template configuration.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/518-distributing-dashboards} Distributing Dashboards
    *
@@ -64,7 +64,7 @@ class Template extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific template.
+   * Retrieves detailed information about a specific template.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/518-distributing-dashboards} Distributing Dashboards
    *

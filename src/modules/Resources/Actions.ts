@@ -5,7 +5,7 @@ import type { ActionCreateInfo, ActionInfo, ActionQuery } from "./actions.types"
 
 class Actions extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Lists all actions from the application with pagination support.
+   * Lists all actions from the application with pagination support.
    * Use this to retrieve and manage actions in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
@@ -41,7 +41,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new action in your application.
+   * Creates a new action in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
@@ -71,7 +71,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Modifies an existing action.
+   * Modifies an existing action.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
@@ -96,7 +96,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes an action from your application.
+   * Deletes an action from your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
@@ -117,7 +117,7 @@ class Actions extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific action.
+   * Retrieves detailed information about a specific action.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/actions} Actions
    *
