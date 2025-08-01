@@ -38,6 +38,11 @@
  * const devices = await resources.devices.list();
  * ```
  *
+ * @example Type imports
+ * ```ts
+ * import type { DeviceListScope, UserListScope, Data, DeviceInfo } from "@tago-io/sdk";
+ * ```
+ *
  * @module
  */
 
@@ -54,6 +59,7 @@ export { default as Migration } from "./modules/Migration/Migration.ts";
 
 export * as Utils from "./modules/Utils/Utils.ts";
 export * as Cache from "./common/Cache.ts";
-export * as Types from "./types.ts";
 
 export * as SSE from "./infrastructure/apiSSE.ts";
+
+export type * from "./types.ts";
