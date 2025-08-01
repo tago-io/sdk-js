@@ -4,6 +4,26 @@ import type { ConfigurationParams } from "../Resources/devices.types.ts";
 import dateParser from "../Utils/dateParser.ts";
 import type { INetworkInfo, NetworkDeviceListQuery, NetworkDeviceListQueryInfo } from "./network.types.ts";
 
+/**
+ * Network connector operations
+ *
+ * This class provides functionality for managing network connectors in TagoIO,
+ * including device management, data processing, and network-specific operations.
+ * Used primarily for building custom network integrations and connectors.
+ *
+ * @example Basic network usage
+ * ```ts
+ * import { Network } from "@tago-io/sdk";
+ *
+ * const network = new Network({
+ *   token: "your-connector-token",
+ *   details: { connector_id: "connector-id" }
+ * });
+ *
+ * const info = await network.info();
+ * const devices = await network.deviceList();
+ * ```
+ */
 class Network extends TagoIOModule<ConnectorModuleParams> {
   /**
    * Get information about the current network

@@ -2,6 +2,26 @@ import TagoIOModule, { type AuthorizationModuleParams } from "../../common/TagoI
 import dateParser from "../Utils/dateParser.ts";
 import type { AuthorizationInfo } from "./authorization.types.ts";
 
+/**
+ * Authorization utilities for TagoIO
+ *
+ * This class provides functionality for managing and validating authorization
+ * tokens and permissions within the TagoIO platform. Used for authorization
+ * validation and token information retrieval.
+ *
+ * @example Basic authorization info
+ * ```ts
+ * import { Authorization } from "@tago-io/sdk";
+ *
+ * const auth = new Authorization({
+ *   token: "your-auth-token",
+ *   details: { id: "auth-id" }
+ * });
+ *
+ * const info = await auth.info();
+ * console.log(info.permissions);
+ * ```
+ */
 class Authorization extends TagoIOModule<AuthorizationModuleParams> {
   /**
    * Get information about the current Authorization

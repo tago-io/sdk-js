@@ -15,6 +15,43 @@ import {
   RunNotificationInfo as _RunNotificationInfo,
 } from "./runUser.types.ts";
 
+/**
+ * End-user runtime context for TagoIO Run applications
+ *
+ * This class provides functionality for managing end-users in TagoIO Run applications,
+ * including user authentication, profile management, and user-specific data operations.
+ * Used primarily in customer-facing applications built with TagoIO Run.
+ *
+ * @example User authentication
+ * ```ts
+ * import { RunUser } from "@tago-io/sdk";
+ *
+ * const runUser = new RunUser({ token: "your-run-token" });
+ *
+ * // User login
+ * const loginResult = await runUser.login({
+ *   email: "user@example.com",
+ *   password: "userpassword"
+ * });
+ *
+ * // Get user info
+ * const userInfo = await runUser.info();
+ * ```
+ *
+ * @example User management
+ * ```ts
+ * // Create a new user
+ * const newUser = await runUser.create({
+ *   email: "newuser@example.com",
+ *   password: "securepassword",
+ *   name: "New User"
+ * });
+ *
+ * // Access user-specific database
+ * const sdb = runUser.sdb;
+ * await sdb.set("user_preference", "dark_mode");
+ * ```
+ */
 class RunUser extends TagoIOModule<GenericModuleParams> {
   /**
    * Get Run user info

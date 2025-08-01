@@ -23,6 +23,48 @@ import TagoCores from "./TagoCores.ts";
 import Tags from "./Tags.ts";
 import Template from "./Template.ts";
 
+/**
+ * Main API resource manager for TagoIO
+ *
+ * This class provides access to all TagoIO API resources including devices, analyses,
+ * dashboards, users, billing, and more. It serves as the central hub for managing
+ * your TagoIO account and resources using your account token.
+ *
+ * @example Basic usage
+ * ```ts
+ * import { Resources } from "@tago-io/sdk";
+ *
+ * const resources = new Resources({ token: "your-account-token" });
+ *
+ * // List all devices
+ * const devices = await resources.devices.list();
+ *
+ * // Create a new device
+ * const newDevice = await resources.devices.create({
+ *   name: "My Device",
+ *   connector: "my-connector-id"
+ * });
+ * ```
+ *
+ * @example Static methods for quick access
+ * ```ts
+ * // Using static methods for one-off operations
+ * const devices = await Resources.devices.list();
+ * const account = await Resources.account.info();
+ * ```
+ *
+ * @example Resource management
+ * ```ts
+ * const resources = new Resources({ token: "account-token" });
+ *
+ * // Manage dashboards
+ * const dashboards = await resources.dashboards.list();
+ *
+ * // Manage users and access
+ * const profile = await resources.profile.info();
+ * const billing = await resources.billing.getUsageQuota();
+ * ```
+ */
 class Resources extends TagoIOModule<GenericModuleParams> {
   constructor(params?: GenericModuleParams) {
     super({ token: process.env.T_ANALYSIS_TOKEN, ...params });

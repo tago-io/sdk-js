@@ -18,6 +18,39 @@ import {
 } from "./horizontalbarchart.ts";
 import { convert as convertIcon, isOldStructure as isOldStructureIcon } from "./icon.ts";
 import { convert as convertImage, isOldStructure as isOldStructureImage } from "./image.ts";
+
+/**
+ * Dashboard widget migration utilities
+ *
+ * This class provides functionality for migrating legacy dashboard widgets to
+ * new formats and structures. Handles conversion of old widget configurations
+ * to modern widget specifications across all widget types.
+ *
+ * @example Basic migration
+ * ```ts
+ * import { Migration } from "@tago-io/sdk";
+ *
+ * const migration = new Migration();
+ *
+ * // Check if widget needs migration
+ * const needsMigration = migration.isOldStructure(oldWidget);
+ *
+ * // Convert old widget to new format
+ * if (needsMigration) {
+ *   const newWidget = migration.convert(oldWidget);
+ * }
+ * ```
+ *
+ * @example Batch migration
+ * ```ts
+ * const widgets = await dashboard.getWidgets();
+ * const migratedWidgets = widgets.map(widget => {
+ *   return migration.isOldStructure(widget)
+ *     ? migration.convert(widget)
+ *     : widget;
+ * });
+ * ```
+ */
 import {
   convert as convertImageMarker,
   convertLayerData,

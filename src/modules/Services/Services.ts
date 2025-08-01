@@ -12,6 +12,50 @@ import Sendgrid from "./Sendgrid.ts";
 import TwilioWhatsapp from "./Twilio-Whatsapp.ts";
 import Twilio from "./Twillio.ts";
 
+/**
+ * Service abstractions for external integrations
+ *
+ * This class provides convenient interfaces for integrating with external services
+ * commonly used in IoT applications, including messaging, notifications, file handling,
+ * and third-party platforms. All services are configured with your analysis token.
+ *
+ * @example SMS notifications
+ * ```ts
+ * import { Services } from "@tago-io/sdk";
+ *
+ * const services = new Services({ token: "your-analysis-token" });
+ *
+ * await services.sms.send({
+ *   to: "+1234567890",
+ *   message: "Alert: Temperature threshold exceeded!"
+ * });
+ * ```
+ *
+ * @example Email with attachments
+ * ```ts
+ * await services.email.send({
+ *   to: "user@example.com",
+ *   subject: "IoT Report",
+ *   message: "Please find the report attached.",
+ *   attachment: services.attachment.create(pdfBuffer, "report.pdf")
+ * });
+ * ```
+ *
+ * @example Console logging (for analysis debugging)
+ * ```ts
+ * services.console.log("Processing data...");
+ * services.console.error("Failed to connect to sensor");
+ * ```
+ *
+ * @example Static methods for quick access
+ * ```ts
+ * // Using static methods for one-off operations
+ * await Services.notification.send({
+ *   message: "System alert",
+ *   title: "IoT Alert"
+ * });
+ * ```
+ */
 class Services extends TagoIOModule<GenericModuleParams> {
   constructor(params?: GenericModuleParams) {
     super({ token: process.env.T_ANALYSIS_TOKEN, ...params });

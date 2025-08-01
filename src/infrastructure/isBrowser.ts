@@ -1,3 +1,8 @@
+/**
+ * Checks if the current runtime environment is a browser
+ * Detects Node.js, Deno, and other non-browser environments
+ * @returns True if running in a browser environment, false otherwise
+ */
 function checkIfItBrowser(): boolean {
   let isBrowser = true;
 

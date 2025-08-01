@@ -17,6 +17,42 @@ import type {
   OptionsStreaming,
 } from "./device.types.ts";
 
+/**
+ * Device class for IoT device operations
+ *
+ * This class provides comprehensive functionality for managing IoT devices, including
+ * sending and retrieving data, streaming real-time data, and managing device configurations.
+ * Each device instance requires a valid device token for authentication.
+ *
+ * @example Basic usage
+ * ```ts
+ * import { Device } from "@tago-io/sdk";
+ *
+ * const device = new Device({ token: "your-device-token" });
+ *
+ * // Send data to device
+ * await device.sendData({
+ *   variable: "temperature",
+ *   value: 25.6,
+ *   unit: "°C",
+ *   time: new Date()
+ * });
+ *
+ * // Get data from device
+ * const data = await device.getData({
+ *   variables: ["temperature"],
+ *   qty: 10
+ * });
+ * ```
+ *
+ * @example Data streaming
+ * ```ts
+ * // Stream real-time data
+ * for await (const chunk of device.getDataStreaming({ variables: ["sensor1"] })) {
+ *   console.log("New data:", chunk);
+ * }
+ * ```
+ */
 class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
    * Get information about the current device

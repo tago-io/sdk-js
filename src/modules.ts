@@ -1,3 +1,46 @@
+/**
+ * TagoIO SDK for JavaScript/TypeScript
+ *
+ * A comprehensive SDK for interacting with the TagoIO IoT platform. This module provides
+ * classes and utilities for device management, data streaming, analysis execution, and
+ * API resource management.
+ *
+ * @example Basic device usage
+ * ```ts
+ * import { Device } from "@tago-io/sdk";
+ *
+ * const device = new Device({ token: "your-device-token" });
+ *
+ * // Send data to your device
+ * await device.sendData({
+ *   variable: "temperature",
+ *   value: 25.6,
+ *   unit: "°C"
+ * });
+ *
+ * // Get data from your device
+ * const data = await device.getData({ variables: ["temperature"], qty: 10 });
+ * ```
+ *
+ * @example Analysis context usage
+ * ```ts
+ * import { Analysis } from "@tago-io/sdk";
+ *
+ * const analysis = new Analysis({ token: "your-analysis-token" });
+ * const environment = await analysis.getEnvironment();
+ * ```
+ *
+ * @example API resources usage
+ * ```ts
+ * import { Resources } from "@tago-io/sdk";
+ *
+ * const resources = new Resources({ token: "your-account-token" });
+ * const devices = await resources.devices.list();
+ * ```
+ *
+ * @module
+ */
+
 export { default as Device } from "./modules/Device/Device.ts";
 export { default as Analysis } from "./modules/Analysis/Analysis.ts";
 export { default as Account } from "./modules/Resources/AccountDeprecated.ts";

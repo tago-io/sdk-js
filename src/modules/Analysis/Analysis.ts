@@ -6,9 +6,46 @@ import ConsoleService from "../Services/Console.ts";
 import type { AnalysisConstructorParams, AnalysisEnvironment, analysisFunction } from "./analysis.types.ts";
 
 /**
- * This class is used to instance an analysis
+ * Analysis execution context for TagoIO
  *
- * It's can run locally or on TagoIO.
+ * This class provides the runtime environment for executing analysis scripts in TagoIO.
+ * It manages environment variables, console outputs, and analysis execution lifecycle.
+ * Analyses can run locally for development or in the TagoIO cloud platform.
+ *
+ * @example Basic analysis usage
+ * ```ts
+ * import { Analysis } from "@tago-io/sdk";
+ *
+ * const analysis = new Analysis(async (context, scope) => {
+ *   // Get analysis environment variables
+ *   const environment = await context.getEnvironment();
+ *
+ *   // Use console service for logging
+ *   context.console.log("Analysis started");
+ *
+ *   // Your analysis logic here
+ *   console.log("Processing data...");
+ * }, { token: "your-analysis-token" });
+ * ```
+ *
+ * @example Environment variables
+ * ```ts
+ * const analysis = new Analysis(async (context) => {
+ *   const env = await context.getEnvironment();
+ *   const apiKey = env.find(e => e.key === "API_KEY")?.value;
+ * });
+ * ```
+ *
+ * @example Manual start control
+ * ```ts
+ * const analysis = new Analysis(myAnalysisFunction, {
+ *   token: "token",
+ *   autostart: false
+ * });
+ *
+ * // Start analysis manually
+ * analysis.start();
+ * ```
  */
 class Analysis extends TagoIOModule<AnalysisConstructorParams> {
   private analysis: analysisFunction;

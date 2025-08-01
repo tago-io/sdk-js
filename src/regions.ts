@@ -3,12 +3,21 @@
  */
 // let noRegionWarning = false;
 
+/**
+ * Region configuration object interface
+ */
 interface RegionsObj {
+  /** API endpoint URL */
   api: string;
+  /** Realtime endpoint URL (optional) */
   realtime?: string;
+  /** Server-sent events endpoint URL */
   sse: string;
 }
 
+/**
+ * Supported TagoIO regions
+ */
 type Regions = "us-e1" | "eu-w1" | "env";
 
 /**
@@ -28,6 +37,7 @@ const regionsDefinition = {
   env: undefined as undefined, // ? process object should be on trycatch.
 };
 
+/** Runtime region cache */
 let runtimeRegion: RegionsObj | undefined;
 
 /**

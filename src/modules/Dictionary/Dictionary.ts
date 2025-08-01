@@ -16,6 +16,41 @@ import type {
 const RE_SPLIT_EXPRESSION = /(#[A-Z0-9]+\.[A-Z0-9_]+(?:,(?:[^,#"]+|\"[^\"]+\")+)*#)/;
 const RE_MATCH_EXPRESSION = /#([A-Z0-9]+)\.([A-Z0-9_]+(?:,(?:[^,#"]+|\"[^\"]+\")+)*)#/;
 
+/**
+ * Multi-language support for TagoIO applications
+ *
+ * This class provides internationalization (i18n) functionality for TagoIO applications,
+ * allowing you to manage translations and apply language-specific content dynamically.
+ * Supports expression parsing, language switching, and translation management.
+ *
+ * @example Basic dictionary usage
+ * ```ts
+ * import { Dictionary } from "@tago-io/sdk";
+ *
+ * const dictionary = new Dictionary({
+ *   token: "your-token",
+ *   language: "en"
+ * });
+ *
+ * // Apply translations to a string
+ * const translated = await dictionary.applyToString(
+ *   "Welcome #DICT.GREETING#!",
+ *   { language: "pt" }
+ * );
+ * ```
+ *
+ * @example Expression parsing
+ * ```ts
+ * // Parse translation expressions
+ * const expressions = dictionary.getExpressionsFromString("#DICT.HELLO# #DICT.WORLD#");
+ *
+ * // Resolve specific expression
+ * const value = await dictionary.resolveExpression({
+ *   expression: { scope: "DICT", key: "HELLO" },
+ *   language: "es"
+ * });
+ * ```
+ */
 class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
   public language: string;
   public runURL?: string;
