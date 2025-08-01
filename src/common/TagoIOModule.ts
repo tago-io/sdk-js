@@ -99,6 +99,9 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
     }
 
     const requestConfig = mountRequestConfig(apiURI, requestObj);
+    if (!this.params.token) {
+      throw new Error("Token is required but not provided");
+    }
     requestConfig.headers = {
       token: this.params.token,
       ...requestConfig.headers,

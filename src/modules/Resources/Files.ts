@@ -342,16 +342,17 @@ class Files extends TagoIOModule<GenericModuleParams> {
       filename,
       fieldID,
       isPublic,
-      contentType,
+      contentType: contentType || "application/octet-stream",
     });
 
     const result = await this.doRequest<any>({
       path,
       method: "POST",
       params: {
-        ...(options?.blueprint_devices?.length > 0 && {
-          blueprint_devices: options.blueprint_devices,
-        }),
+        ...(options?.blueprint_devices &&
+          options.blueprint_devices.length > 0 && {
+            blueprint_devices: options.blueprint_devices,
+          }),
       },
       body: formData,
     });
@@ -387,9 +388,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
       path,
       method: "POST",
       params: {
-        ...(options?.blueprint_devices?.length > 0 && {
-          blueprint_devices: options.blueprint_devices,
-        }),
+        ...(options?.blueprint_devices &&
+          options.blueprint_devices.length > 0 && {
+            blueprint_devices: options.blueprint_devices,
+          }),
       },
       body: formData,
       maxContentLength: Number.POSITIVE_INFINITY,
@@ -423,18 +425,22 @@ class Files extends TagoIOModule<GenericModuleParams> {
         const result = await this._uploadPart(filename, uploadID, partNumber, blob, options);
         return result;
       } catch (ex) {
+        const error = ex as Error;
         if (isLimitError(ex)) {
-          throw ex.message;
+          throw error.message;
         }
 
         await sleep(timeout);
 
         tries += 1;
         if (tries >= maxTries) {
-          throw new Error(`Could not upload part number ${partNumber}: ${ex.message}`);
+          throw new Error(`Could not upload part number ${partNumber}: ${error.message}`);
         }
       }
     }
+
+    // This should never be reached due to the while loop logic, but TypeScript requires a return
+    throw new Error(`Failed to upload part ${partNumber} after ${maxTries} attempts`);
   }
 
   /**
@@ -456,9 +462,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
       path,
       method: "POST",
       params: {
-        ...(options?.blueprint_devices?.length > 0 && {
-          blueprint_devices: options.blueprint_devices,
-        }),
+        ...(options?.blueprint_devices &&
+          options.blueprint_devices.length > 0 && {
+            blueprint_devices: options.blueprint_devices,
+          }),
       },
       body: {
         multipart_action: "end",
@@ -586,8 +593,9 @@ class Files extends TagoIOModule<GenericModuleParams> {
       try {
         return await this._completeMultipartUpload(filename, uploadID, parts, options);
       } catch (ex) {
+        const error = ex as Error;
         if (isLimitError(ex)) {
-          throw ex.message;
+          throw error.message;
         }
 
         await sleep(1000);
@@ -596,6 +604,8 @@ class Files extends TagoIOModule<GenericModuleParams> {
         }
       }
     }
+
+    throw new Error("Failed to complete multipart upload after retries");
   }
 
   /**

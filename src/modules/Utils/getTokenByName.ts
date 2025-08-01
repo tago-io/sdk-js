@@ -7,7 +7,7 @@ import Account from "../Resources/AccountDeprecated.ts";
  * @param names Array of names of the token, if null will return the first token found
  * @deprecated Use the Resources.devices.tokenList method instead
  */
-async function getTokenByName(account: Account, deviceID: string, names?: string[] | string): Promise<string> {
+async function getTokenByName(account: Account, deviceID: string, names?: string[] | string): Promise<string | null> {
   if (!(account instanceof Account)) {
     throw "Account parameter must be an instance of TagoIO Account.";
   }
@@ -18,18 +18,18 @@ async function getTokenByName(account: Account, deviceID: string, names?: string
   }
 
   if (!names || !names.length) {
-    return tokens[0]?.token;
+    return tokens[0]?.token || null;
   }
 
   const namesArray = Array.isArray(names) ? names : [names];
 
-  const token = tokens.find((t) => namesArray.some((n) => t.name.includes(n)));
+  const token = tokens.find((t) => t.name && namesArray.some((n) => t.name?.includes(n)));
 
   if (!token) {
     throw `Can't find Token for ${deviceID} in ${namesArray.join(", ")}`;
   }
 
-  return token.token;
+  return token.token || null;
 }
 
 export default getTokenByName;

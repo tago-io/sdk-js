@@ -1,5 +1,6 @@
 import Account from "../Resources/AccountDeprecated.ts";
 import Resources from "../Resources/Resources.ts";
+import type { ConfigurationParams } from "../Resources/devices.types.ts";
 import type { DownlinkOptions } from "./utils.types.ts";
 
 interface DownlinkError {
@@ -69,23 +70,23 @@ async function sendDownlink(
 
   // Set the parameters for the device. Some NS like Everynet need this.
   const params = await resource.devices.paramList(device_id);
-  let downlink_param = params.find((x) => x.key === "downlink");
-  downlink_param = {
-    id: downlink_param ? downlink_param.id : null,
+  const downlink_param = params.find((x) => x.key === "downlink");
+  const downlink_params: Partial<ConfigurationParams> = {
     key: "downlink",
     value: String(dn_options.payload),
     sent: false,
+    ...(downlink_param && { id: downlink_param.id }),
   };
 
-  let port_param = params.find((x) => x.key === "port");
-  port_param = {
-    id: port_param ? port_param.id : null,
+  const port_param = params.find((x) => x.key === "port");
+  const port_params: Partial<ConfigurationParams> = {
     key: "port",
     value: String(dn_options.port),
     sent: false,
+    ...(port_param && { id: port_param.id }),
   };
 
-  await resource.devices.paramSet(device_id, [downlink_param, port_param]);
+  await resource.devices.paramSet(device_id, [downlink_params, port_params]);
 
   const data = {
     device: token.serie_number,
@@ -117,6 +118,7 @@ async function sendDownlink(
     return `Downlink accepted with status ${response.status}`;
   } catch (error: any) {
     await handleDownlinkError(error);
+    throw error;
   }
 }
 

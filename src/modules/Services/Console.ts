@@ -7,7 +7,7 @@ class ConsoleService extends TagoIOModule<GenericModuleParams> {
    * @param time Date of message
    */
   public async log(message: string, time?: Date): Promise<string> {
-    const timestamp = new Date(time).getTime();
+    const timestamp = new Date(time || Date.now()).getTime();
 
     const result = await this.doRequest<string>({
       path: "/analysis/services/console/send",

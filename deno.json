@@ -1,6 +1,6 @@
 {
   "name": "@tago-io/sdk",
-  "version": "12.1.0",
+  "version": "12.1.2",
   "description": "TagoIO SDK for JavaScript in the browser and Node.js",
   "license": "Apache-2.0",
   "repository": "https://github.com/tago-io/sdk-js.git",
@@ -18,6 +18,9 @@
     "tago-io"
   ],
   "exports": "./src/modules.ts",
+  "imports": {
+    "eventsource": "./src/stubs/eventsource-stub.ts"
+  },
   "publish": {
     "include": [
       "src/",

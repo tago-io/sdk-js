@@ -50,7 +50,7 @@ interface DeviceListScope {
   [key: string]: string | any;
 
   /** old parameter key will include a json with the old values of the parameters */
-  old?: { name?: string; [key: string]: string };
+  old?: { name?: string; [key: string]: string | undefined };
 }
 
 /**

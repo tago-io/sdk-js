@@ -79,7 +79,7 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
       throw "Invalid Env";
     }
 
-    return { api, realtime, sse };
+    return { api: api || "", realtime: realtime || "", sse: sse || "" };
   } catch (_) {
     // if (!noRegionWarning) {
     //   console.info("> TagoIO-SDK: No region or env defined, using fallback as usa-1.");

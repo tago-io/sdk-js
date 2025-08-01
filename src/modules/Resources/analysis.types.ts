@@ -46,6 +46,10 @@ interface AnalysisInfo extends AnalysisCreateInfo {
 }
 
 type AnalysisQuery = Query<AnalysisInfo, "name" | "active" | "run_on" | "last_run" | "created_at" | "updated_at">;
-type AnalysisListItem<T extends AnalysisQuery["fields"][number] = null> = Pick<AnalysisInfo, T> & Partial<AnalysisInfo>;
+type AnalysisListItem<
+  T extends AnalysisQuery["fields"] extends readonly (keyof any)[]
+    ? AnalysisQuery["fields"][number]
+    : keyof AnalysisInfo = keyof AnalysisInfo,
+> = Pick<AnalysisInfo, T> & Partial<AnalysisInfo>;
 
 export type { AnalysisInfo, AnalysisCreateInfo, ScriptFile, AnalysisQuery, AnalysisListItem };

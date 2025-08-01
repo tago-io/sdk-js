@@ -223,7 +223,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       params: filterObj || {},
     });
 
-    result.events = result?.events.map((data) => dateParser(data, ["date"]));
+    result.events = result?.events?.map((data) => dateParser(data, ["date"]));
     return result;
   }
 
@@ -245,7 +245,7 @@ class Profile extends TagoIOModule<GenericModuleParams> {
       method: "GET",
     });
 
-    result.events = result?.events.map((data) => dateParser(data, ["date"]));
+    result.events = result?.events?.map((data) => dateParser(data, ["date"]));
     return result;
   }
 

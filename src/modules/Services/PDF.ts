@@ -96,7 +96,7 @@ class PDFService extends TagoIOModule<GenericModuleParams> {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          token: this.params.token,
+          token: this.params.token || "",
         },
         body: JSON.stringify(params),
       });

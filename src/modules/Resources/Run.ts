@@ -83,9 +83,23 @@ class Run extends TagoIOModule<GenericModuleParams> {
    */
   public async listUsers<T extends UserQuery>(
     query: T
-  ): Promise<UserListItem<T["fields"] extends UserQuery["fields"] ? T["fields"][number] : "id" | "name">[]> {
+  ): Promise<
+    UserListItem<
+      T["fields"] extends UserQuery["fields"]
+        ? T["fields"] extends readonly (keyof any)[]
+          ? T["fields"][number]
+          : never
+        : "id" | "name"
+    >[]
+  > {
     let result = await this.doRequest<
-      UserListItem<T["fields"] extends UserQuery["fields"] ? T["fields"][number] : "id" | "name">[]
+      UserListItem<
+        T["fields"] extends UserQuery["fields"]
+          ? T["fields"] extends readonly (keyof any)[]
+            ? T["fields"][number]
+            : never
+          : "id" | "name"
+      >[]
     >({
       path: "/run/users",
       method: "GET",

@@ -30,9 +30,23 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    */
   public async list<T extends AnalysisQuery>(
     queryObj?: T
-  ): Promise<AnalysisListItem<T["fields"] extends AnalysisQuery["fields"] ? T["fields"][number] : "id" | "name">[]> {
+  ): Promise<
+    AnalysisListItem<
+      T["fields"] extends AnalysisQuery["fields"]
+        ? T["fields"] extends readonly (keyof any)[]
+          ? T["fields"][number]
+          : "id" | "name"
+        : "id" | "name"
+    >[]
+  > {
     let result = await this.doRequest<
-      AnalysisListItem<T["fields"] extends AnalysisQuery["fields"] ? T["fields"][number] : "id" | "name">[]
+      AnalysisListItem<
+        T["fields"] extends AnalysisQuery["fields"]
+          ? T["fields"] extends readonly (keyof any)[]
+            ? T["fields"][number]
+            : "id" | "name"
+          : "id" | "name"
+      >[]
     >({
       path: "/analysis/",
       method: "GET",

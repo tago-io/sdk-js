@@ -135,11 +135,11 @@ interface ConfigurationParams {
 
 type DeviceCreateResponse = { device_id: GenericID; bucket_id: GenericID; token: GenericToken };
 
-type DeviceListItem<T extends DeviceQuery["fields"][number] = "id"> = Pick<
-  Omit<DeviceInfo, "bucket"> & { bucket: GenericID },
-  "id" | "name" | "tags" | T
-> &
-  Partial<DeviceInfo>;
+type DeviceListItem<
+  T extends DeviceQuery["fields"] extends readonly (keyof any)[]
+    ? DeviceQuery["fields"][number]
+    : keyof DeviceInfo = keyof DeviceInfo,
+> = Pick<Omit<DeviceInfo, "bucket"> & { bucket: GenericID }, "id" | "name" | "tags" | T> & Partial<DeviceInfo>;
 
 // "id" | "name" | "tags" |
 interface DeviceTokenData {
@@ -156,8 +156,11 @@ interface DeviceTokenData {
 interface ListDeviceTokenQuery
   extends Query<DeviceTokenDataList, "name" | "permission" | "serie_number" | "last_authorization" | "created_at"> {}
 
-type DeviceTokenDataList<T extends ListDeviceTokenQuery["fields"][number] = null> = Pick<DeviceTokenData, T> &
-  Partial<DeviceTokenData>;
+type DeviceTokenDataList<
+  T extends ListDeviceTokenQuery["fields"] extends readonly (keyof any)[]
+    ? ListDeviceTokenQuery["fields"][number]
+    : keyof DeviceTokenData = keyof DeviceTokenData,
+> = Pick<DeviceTokenData, T> & Partial<DeviceTokenData>;
 
 interface DeviceChunkData {
   amount: number | null;

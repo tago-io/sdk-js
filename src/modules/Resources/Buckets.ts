@@ -30,7 +30,15 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    */
   public async list<T extends DeviceQuery>(
     queryObj?: T
-  ): Promise<DeviceListItem<T["fields"] extends DeviceQuery["fields"] ? T["fields"][number] : "id" | "name">[]> {
+  ): Promise<
+    DeviceListItem<
+      T["fields"] extends DeviceQuery["fields"]
+        ? T["fields"] extends readonly (keyof any)[]
+          ? T["fields"][number]
+          : "id" | "name"
+        : "id" | "name"
+    >[]
+  > {
     return await this.devices.list(queryObj);
   }
 

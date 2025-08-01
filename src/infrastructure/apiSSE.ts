@@ -24,12 +24,12 @@ function isChannelWithID(params: OpenSSEConfig): params is OpenSSEWithID {
 }
 
 async function loadEventSourceLib(): Promise<typeof EventSource> {
+  // Use native EventSource if available (browser, Deno)
   if (globalThis.EventSource) {
     return globalThis.EventSource;
   }
 
-  // @ts-expect-error EventSource types from DOMLib
-  return import("eventsource").then((x) => x?.EventSource || x);
+  return import("eventsource").then((x) => (x?.EventSource || x) as any);
 }
 
 function formatChannel(configuration: OpenSSEConfig) {
@@ -53,7 +53,15 @@ async function openSSEListening(
     channelsParam = formatChannel(channels);
   }
 
-  const url = new URL(regions(options.region).sse);
+  const regionData = regions(options.region);
+  if (!regionData?.sse) {
+    throw new Error("Invalid region configuration: missing SSE endpoint");
+  }
+  if (!options.token) {
+    throw new Error("Token is required for SSE connection");
+  }
+
+  const url = new URL(regionData.sse);
   url.pathname = "/events";
   url.searchParams.set("channels", channelsParam);
   url.searchParams.set("token", options.token);

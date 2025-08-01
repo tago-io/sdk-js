@@ -81,11 +81,11 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     const context = {
       log: console.log,
       token: process.env.T_ANALYSIS_TOKEN,
-      environment: JSONParseSafe(process.env.T_ANALYSIS_ENV, []),
+      environment: JSONParseSafe(process.env.T_ANALYSIS_ENV || "[]", []),
       analysis_id: process.env.T_ANALYSIS_ID,
     };
 
-    const data = JSONParseSafe(process.env.T_ANALYSIS_DATA, []);
+    const data = JSONParseSafe(process.env.T_ANALYSIS_DATA || "[]", []);
 
     this.analysis(context, data);
   }
@@ -171,6 +171,9 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
       }
     }, 15000); // 15 seconds
 
+    if (!this.params.token) {
+      throw new Error("Token is required for analysis");
+    }
     const tokenEnd = this.params.token.slice(-5);
 
     sse.addEventListener("message", (event) => {

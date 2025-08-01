@@ -50,9 +50,23 @@ class Devices extends TagoIOModule<GenericModuleParams> {
    */
   public async list<T extends DeviceQuery>(
     queryObj?: T
-  ): Promise<DeviceListItem<T["fields"] extends DeviceQuery["fields"] ? T["fields"][number] : "id" | "name">[]> {
+  ): Promise<
+    DeviceListItem<
+      T["fields"] extends DeviceQuery["fields"]
+        ? T["fields"] extends readonly (keyof any)[]
+          ? T["fields"][number]
+          : "id" | "name"
+        : "id" | "name"
+    >[]
+  > {
     let result = await this.doRequest<
-      DeviceListItem<T["fields"] extends DeviceQuery["fields"] ? T["fields"][number] : "id" | "name">[]
+      DeviceListItem<
+        T["fields"] extends DeviceQuery["fields"]
+          ? T["fields"] extends readonly (keyof any)[]
+            ? T["fields"][number]
+            : "id" | "name"
+          : "id" | "name"
+      >[]
     >({
       path: "/device",
       method: "GET",
@@ -114,7 +128,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
 
       stop = foundDevices.length < amount;
 
-      yield foundDevices;
+      yield foundDevices as DeviceListItem[];
     }
   }
 
@@ -318,12 +332,20 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     queryObj?: T
   ): Promise<
     DeviceTokenDataList<
-      T["fields"] extends ListDeviceTokenQuery["fields"] ? T["fields"][number] : "token" | "name" | "permission"
+      T["fields"] extends ListDeviceTokenQuery["fields"]
+        ? T["fields"] extends readonly (keyof any)[]
+          ? T["fields"][number]
+          : "token" | "name" | "permission"
+        : "token" | "name" | "permission"
     >[]
   > {
     let result = await this.doRequest<
       DeviceTokenDataList<
-        T["fields"] extends ListDeviceTokenQuery["fields"] ? T["fields"][number] : "token" | "name" | "permission"
+        T["fields"] extends ListDeviceTokenQuery["fields"]
+          ? T["fields"] extends readonly (keyof any)[]
+            ? T["fields"][number]
+            : "token" | "name" | "permission"
+          : "token" | "name" | "permission"
       >[]
     >({
       path: `/device/token/${deviceID}`,

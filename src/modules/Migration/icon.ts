@@ -104,7 +104,7 @@ export function convert(oldWidget: any): WidgetInfo {
    * Remove the _position property
    */
   newStructure.display.variables = variables.map((e) => {
-    e._position = undefined;
+    (e as any)._position = undefined;
     return e;
   });
 

@@ -69,7 +69,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * @param language Language.
    * @param dictionary ID or Slug.
    */
-  public async getLanguagesData(dictionary: string, language: string = this.language): Promise<LanguageData> {
+  public async getLanguagesData(dictionary: string, language: string = this.language): Promise<LanguageData | null> {
     if (!language || !dictionary) {
       throw new Error("Missing parameters");
     }
@@ -143,7 +143,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * const value = dictionary.parseExpression("#TAGORUN.WELCOME_TEXT,Hello");
    * ```
    */
-  public parseExpression(expression: string): IParsedExpression {
+  public parseExpression(expression: string): IParsedExpression | null {
     const splitExpression = expression.match(RE_MATCH_EXPRESSION);
     if (!splitExpression) {
       return null;
@@ -190,7 +190,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
 
     // Get the dictionary value string for the expression to substitute the arguments into it
     resolvedString = await this.getValueFromKey(language, dictionary, key);
-    params.forEach((substitution, index) => {
+    params?.forEach((substitution, index) => {
       const subRegexp = new RegExp(`\\$${index}`, "g");
       resolvedString = resolvedString.replace(subRegexp, substitution);
     });
@@ -215,7 +215,8 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
 
     const expressions = tokens
       .filter((token) => RE_SPLIT_EXPRESSION.test(token))
-      .map((expression) => this.parseExpression(expression));
+      .map((expression) => this.parseExpression(expression))
+      .filter((expr): expr is IParsedExpression => expr !== null);
 
     return expressions;
   }
@@ -272,7 +273,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
       return token;
     });
 
-    let resultString: string;
+    let resultString = "";
     await Promise.all(substitutedPromises).then((resolvedValues) => {
       resultString = resolvedValues.join("");
     });

@@ -170,8 +170,12 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   public async standaloneDeviceList<T extends DeviceQuery>(
     tagoCoreID: GenericID,
     queryObj?: T
-  ): Promise<DeviceListItem<"id" | "name" | T["fields"][number]>[]> {
-    let result = await this.doRequest<DeviceListItem<"id" | "name" | T["fields"][number]>[]>({
+  ): Promise<
+    DeviceListItem<"id" | "name" | (T["fields"] extends readonly (keyof any)[] ? T["fields"][number] : never)>[]
+  > {
+    let result = await this.doRequest<
+      DeviceListItem<"id" | "name" | (T["fields"] extends readonly (keyof any)[] ? T["fields"][number] : never)>[]
+    >({
       path: "/device",
       method: "GET",
       params: {

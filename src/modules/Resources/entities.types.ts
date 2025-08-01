@@ -47,8 +47,11 @@ interface EntityQuery
   resolveConnectorName?: boolean;
 }
 
-type EntityListItem<T extends EntityQuery["fields"][number] = "id"> = Pick<EntityInfo, "id" | "name" | "tags" | T> &
-  Partial<EntityInfo>;
+type EntityListItem<
+  T extends EntityQuery["fields"] extends readonly (keyof any)[]
+    ? EntityQuery["fields"][number]
+    : keyof EntityInfo = "id",
+> = Pick<EntityInfo, "id" | "name" | "tags" | T> & Partial<EntityInfo>;
 
 type EntityDataQuery = {
   /** Filters to narrow down the requests from the API. */

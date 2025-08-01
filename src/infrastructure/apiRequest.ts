@@ -82,7 +82,7 @@ function prepareHeaders(requestHeaders: Record<string, string> = {}): Record<str
 /**
  * Builds the full URL with query parameters
  */
-function buildUrl(baseUrl: string, params?: Record<string, any>): string {
+function buildUrl(baseUrl: string | undefined, params?: Record<string, any>): string {
   let url = baseUrl || "";
 
   if (params) {
