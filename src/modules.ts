@@ -59,8 +59,7 @@ export { default as Resources } from "./modules/Resources/Resources.ts";
 export { default as RunUser } from "./modules/RunUser/RunUser.ts";
 export { default as Services } from "./modules/Services/Services.ts";
 export * as Utils from "./modules/Utils/Utils.ts";
-
-export { regionsDefinition } from "./regions.ts";
 export type { Regions, RegionsObj } from "./regions.ts";
+export { regionsDefinition } from "./regions.ts";
 
 export type * from "./types.ts";
