@@ -52,4 +52,52 @@ type AnalysisListItem<
     : keyof AnalysisInfo = keyof AnalysisInfo,
 > = Pick<AnalysisInfo, T> & Partial<AnalysisInfo>;
 
-export type { AnalysisInfo, AnalysisCreateInfo, ScriptFile, AnalysisQuery, AnalysisListItem };
+/**
+ * Available runtime environments for snippets
+ */
+type SnippetRuntime = "node-legacy" | "python-legacy" | "python-2025-08-01" | "deno-2025-08-01";
+
+/**
+ * Individual snippet metadata
+ */
+interface SnippetItem {
+  /** Unique identifier for the snippet */
+  id: string;
+  /** Human-readable title */
+  title: string;
+  /** Description of what the snippet does */
+  description: string;
+  /** Programming language (typescript, javascript, python) */
+  language: string;
+  /** Array of tags for categorization */
+  tags: string[];
+  /** Filename of the snippet */
+  filename: string;
+  /** Full path to the file in the runtime directory */
+  file_path: string;
+}
+
+/**
+ * API response containing all snippets metadata for a runtime
+ */
+interface SnippetsListResponse {
+  /** Runtime environment identifier */
+  runtime: SnippetRuntime;
+  /** Schema version for the API response format */
+  schema_version: number;
+  /** ISO timestamp when the response was generated */
+  generated_at: string;
+  /** Array of all available snippets for this runtime */
+  snippets: SnippetItem[];
+}
+
+export type {
+  AnalysisInfo,
+  AnalysisCreateInfo,
+  ScriptFile,
+  AnalysisQuery,
+  AnalysisListItem,
+  SnippetRuntime,
+  SnippetItem,
+  SnippetsListResponse,
+};

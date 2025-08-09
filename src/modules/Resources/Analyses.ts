@@ -1,5 +1,6 @@
 import type { GenericID, GenericToken } from "../../common/common.types.ts";
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import { withTimeout } from "../../infrastructure/fetchUtils.ts";
 import dateParser from "../Utils/dateParser.ts";
 import type {
   AnalysisCreateInfo,
@@ -7,7 +8,14 @@ import type {
   AnalysisListItem,
   AnalysisQuery,
   ScriptFile,
+  SnippetRuntime,
+  SnippetsListResponse,
 } from "./analysis.types.ts";
+
+/**
+ * Base URL for TagoIO analysis snippets repository
+ */
+const SNIPPETS_BASE_URL = "https://snippets.tago.io";
 
 class Analyses extends TagoIOModule<GenericModuleParams> {
   /**
@@ -267,6 +275,80 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
     result = dateParser(result, ["expire_at"]);
 
     return result;
+  }
+
+  /**
+   * Get all available snippets for a specific runtime environment.
+   * Fetches analysis code snippets from the public TagoIO snippets repository.
+   *
+   * @param runtime - The runtime environment to get snippets for
+   * @returns Promise resolving to the snippets metadata
+   *
+   * @example
+   * ```typescript
+   * const denoSnippets = await Resources.analysis.listSnippets("deno-2025-08-01");
+   *
+   * // Print all snippet titles
+   * denoSnippets.snippets.forEach(snippet => {
+   *   console.log(`${snippet.title}: ${snippet.description}`);
+   * });
+   * ```
+   */
+  public async listSnippets(runtime: SnippetRuntime): Promise<SnippetsListResponse> {
+    const url = `${SNIPPETS_BASE_URL}/${runtime}.json`;
+    const enhancedFetch = withTimeout(fetch, 10000);
+
+    const response = await enhancedFetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "*/*",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch snippets: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data as SnippetsListResponse;
+  }
+
+  /**
+   * Get the raw source code content of a specific snippet file.
+   * Fetches the actual code content from the TagoIO snippets repository.
+   *
+   * @param runtime - The runtime environment the snippet belongs to
+   * @param filename - The filename of the snippet to retrieve
+   * @returns Promise resolving to the raw file content as string
+   *
+   * @example
+   * ```typescript
+   * // Get TypeScript code for console example
+   * const code = await Resources.analysis.getSnippetFile("deno-2025-08-01", "console.ts");
+   * console.log(code);
+   *
+   * // Get Python code for data processing
+   * const pythonCode = await Resources.analysis.getSnippetFile("python-2025-08-01", "avg-min-max.py");
+   * console.log(pythonCode);
+   * ```
+   */
+  public async getSnippetFile(runtime: SnippetRuntime, filename: string): Promise<string> {
+    const url = `${SNIPPETS_BASE_URL}/${runtime}/${filename}`;
+    const enhancedFetch = withTimeout(fetch, 10000);
+
+    const response = await enhancedFetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "*/*",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch snippet file: ${response.status} ${response.statusText}`);
+    }
+
+    const content = await response.text();
+    return content;
   }
 }
 
