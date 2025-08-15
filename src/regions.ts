@@ -4,16 +4,29 @@
 // let noRegionWarning = false;
 
 /**
- * Region configuration object interface
+ * Region configuration object interface (flat, mutually exclusive)
+ * A region is either:
+ * - API/SSE pair (no tdeploy), or
+ * - TDeploy (no api/sse)
  */
-interface RegionsObj {
+interface RegionsObjApi {
   /** API endpoint URL */
   api: string;
   /** Server-sent events endpoint URL */
   sse: string;
-  /** TagoIO Deploy Project ID (optional) */
-  tdeploy?: string;
+  /** Disallow tdeploy when api/sse present */
+  tdeploy?: never;
 }
+
+interface RegionsObjTDeploy {
+  /** TagoIO Deploy Project ID */
+  tdeploy: string;
+  /** Disallow api/sse when tdeploy present */
+  api?: never;
+  sse?: never;
+}
+
+type RegionsObj = RegionsObjApi | RegionsObjTDeploy;
 
 /**
  * Supported TagoIO regions
@@ -24,7 +37,7 @@ type Regions = "us-e1" | "eu-w1" | "env";
  * Object of Regions Definition
  * @internal
  */
-const regionsDefinition = {
+const regionsDefinition: Record<string, RegionsObjApi | undefined> = {
   "us-e1": {
     api: "https://api.tago.io",
     sse: "https://sse.tago.io/events",
@@ -34,7 +47,7 @@ const regionsDefinition = {
     sse: "https://sse.eu-w1.tago.io/events",
   },
   env: undefined as undefined, // ? process object should be on trycatch.
-};
+} as const;
 
 /** Runtime region cache */
 let runtimeRegion: RegionsObj | undefined;
@@ -69,7 +82,9 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
         : undefined;
 
   if (value) {
-    return value;
+    // value can be a RegionsObjApi from regionsDefinition or a RegionsObj
+    // from the object branch; both are compatible with RegionsObj
+    return value as RegionsObj;
   }
 
   if (runtimeRegion) {
@@ -95,7 +110,7 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
     //   noRegionWarning = true;
     // }
 
-    return regionsDefinition["us-e1"];
+    return regionsDefinition["us-e1"] as RegionsObj;
   }
 }
 
