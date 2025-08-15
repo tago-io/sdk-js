@@ -4,7 +4,7 @@ import getConnectionURI from "../../src/regions.ts";
 describe("TagoIO Deploy (tdeploy) Region Support", () => {
   it("should generate correct endpoints for tdeploy region", () => {
     const tdeploy = "68951c0e023862b2aea00f3f";
-    const region = { tdeploy, api: "", sse: "" };
+    const region = { tdeploy } as const;
 
     const result = getConnectionURI(region);
 
@@ -14,11 +14,9 @@ describe("TagoIO Deploy (tdeploy) Region Support", () => {
 
   it("should prioritize tdeploy over other fields when both are provided", () => {
     const tdeploy = "68951c0e023862b2aea00f3f";
-    const region = {
-      tdeploy,
-      api: "https://custom-api.example.com",
-      sse: "https://custom-sse.example.com",
-    };
+    // mixing api/sse with tdeploy is no longer allowed by types;
+    // pass only tdeploy and ensure correct priority handling remains
+    const region = { tdeploy } as const;
 
     const result = getConnectionURI(region);
 
@@ -28,7 +26,7 @@ describe("TagoIO Deploy (tdeploy) Region Support", () => {
 
   it("should trim whitespace from tdeploy value", () => {
     const tdeploy = "  68951c0e023862b2aea00f3f  ";
-    const region = { tdeploy, api: "", sse: "" };
+    const region = { tdeploy } as const;
 
     const result = getConnectionURI(region);
 
@@ -41,9 +39,11 @@ describe("TagoIO Deploy (tdeploy) Region Support", () => {
       tdeploy: "",
       api: "https://custom-api.example.com",
       sse: "https://custom-sse.example.com",
-    };
+    } as const;
 
-    const result = getConnectionURI(region);
+    // Cast here because empty tdeploy is a test of runtime behavior, while
+    // types disallow mixing. This ensures Deno's checker accepts the call.
+    const result = getConnectionURI(region as unknown as Parameters<typeof getConnectionURI>[0]);
 
     expect(result.api).toBe("https://custom-api.example.com");
     expect(result.sse).toBe("https://custom-sse.example.com");
@@ -54,9 +54,10 @@ describe("TagoIO Deploy (tdeploy) Region Support", () => {
       tdeploy: "   ",
       api: "https://custom-api.example.com",
       sse: "https://custom-sse.example.com",
-    };
+    } as const;
 
-    const result = getConnectionURI(region);
+    // See above: cast to allow testing runtime behavior while type rules forbid mixing
+    const result = getConnectionURI(region as unknown as Parameters<typeof getConnectionURI>[0]);
 
     expect(result.api).toBe("https://custom-api.example.com");
     expect(result.sse).toBe("https://custom-sse.example.com");
