@@ -9,10 +9,10 @@
 interface RegionsObj {
   /** API endpoint URL */
   api: string;
-  /** Realtime endpoint URL (optional) */
-  realtime?: string;
   /** Server-sent events endpoint URL */
   sse: string;
+  /** TagoIO Deploy Project ID (optional) */
+  tdeploy?: string;
 }
 
 /**
@@ -27,7 +27,6 @@ type Regions = "us-e1" | "eu-w1" | "env";
 const regionsDefinition = {
   "us-e1": {
     api: "https://api.tago.io",
-    realtime: "https://realtime.tago.io",
     sse: "https://sse.tago.io/events",
   },
   "eu-w1": {
@@ -46,6 +45,17 @@ let runtimeRegion: RegionsObj | undefined;
  * @param region Region
  */
 function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
+  // Handle tdeploy in RegionsObj - takes precedence
+  if (region && typeof region === "object" && "tdeploy" in region && region.tdeploy) {
+    const tdeploy = region.tdeploy.trim();
+    if (tdeploy) {
+      return {
+        api: `https://api.${tdeploy}.tagoio.net`,
+        sse: `https://sse.${tdeploy}.tagoio.net/events`,
+      };
+    }
+  }
+
   let normalizedRegion = region;
   if (typeof normalizedRegion === "string" && (normalizedRegion as string) === "usa-1") {
     normalizedRegion = "us-e1";
@@ -72,14 +82,13 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
 
   try {
     const api = process.env.TAGOIO_API;
-    const realtime = process.env.TAGOIO_REALTIME;
     const sse = process.env.TAGOIO_SSE;
 
     if (!api && region !== "env") {
       throw "Invalid Env";
     }
 
-    return { api: api || "", realtime: realtime || "", sse: sse || "" };
+    return { api: api || "", sse: sse || "" };
   } catch (_) {
     // if (!noRegionWarning) {
     //   console.info("> TagoIO-SDK: No region or env defined, using fallback as usa-1.");
