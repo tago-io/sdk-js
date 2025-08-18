@@ -286,7 +286,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *
    * @example
    * ```typescript
-   * const denoSnippets = await Resources.analysis.listSnippets("deno-2025-08-01");
+   * const denoSnippets = await Resources.analysis.listSnippets("deno-rt2025");
    *
    * // Print all snippet titles
    * denoSnippets.snippets.forEach(snippet => {
@@ -324,11 +324,11 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * @example
    * ```typescript
    * // Get TypeScript code for console example
-   * const code = await Resources.analysis.getSnippetFile("deno-2025-08-01", "console.ts");
+   * const code = await Resources.analysis.getSnippetFile("deno-rt2025", "console.ts");
    * console.log(code);
    *
    * // Get Python code for data processing
-   * const pythonCode = await Resources.analysis.getSnippetFile("python-2025-08-01", "avg-min-max.py");
+   * const pythonCode = await Resources.analysis.getSnippetFile("python-rt2025", "avg-min-max.py");
    * console.log(pythonCode);
    * ```
    */
