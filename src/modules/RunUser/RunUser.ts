@@ -1,20 +1,56 @@
-import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule";
-import type { GenericID, GenericToken } from "../../common/common.types";
-import type { Regions, RegionsObj } from "../../regions";
-import type { OTPType } from "../Resources/account.types";
-import type { NotificationInfo, NotificationQuery } from "../Resources/notifications.types";
-import dateParser from "../Utils/dateParser";
-import SDB from "./SDB";
-import {
-  type RunUserCreate,
-  type RunUserCreateInfo,
-  type RunUserCredentials,
-  type RunUserInfo,
-  type RunUserLogin,
-  type RunUserLoginResponse,
-  RunNotificationInfo as _RunNotificationInfo,
-} from "./runUser.types";
+import type { GenericID, GenericToken } from "../../common/common.types.ts";
+import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import type { Regions, RegionsObj } from "../../regions.ts";
+import type { OTPType } from "../Resources/account.types.ts";
+import type { NotificationInfo, NotificationQuery } from "../Resources/notifications.types.ts";
+import dateParser from "../Utils/dateParser.ts";
+import type {
+  RunUserCreate,
+  RunUserCreateInfo,
+  RunUserCredentials,
+  RunUserInfo,
+  RunUserLogin,
+  RunUserLoginResponse,
+} from "./runUser.types.ts";
+import SDB from "./SDB.ts";
 
+/**
+ * End-user runtime context for TagoIO Run applications
+ *
+ * This class provides functionality for managing end-users in TagoIO Run applications,
+ * including user authentication, profile management, and user-specific data operations.
+ * Used primarily in customer-facing applications built with TagoIO Run.
+ *
+ * @example User authentication
+ * ```ts
+ * import { RunUser } from "@tago-io/sdk";
+ *
+ * const runUser = new RunUser({ token: "your-run-token" });
+ *
+ * // User login
+ * const loginResult = await runUser.login({
+ *   email: "user@example.com",
+ *   password: "userpassword"
+ * });
+ *
+ * // Get user info
+ * const userInfo = await runUser.info();
+ * ```
+ *
+ * @example User management
+ * ```ts
+ * // Create a new user
+ * const newUser = await runUser.create({
+ *   email: "newuser@example.com",
+ *   password: "securepassword",
+ *   name: "New User"
+ * });
+ *
+ * // Access user-specific database
+ * const sdb = runUser.sdb;
+ * await sdb.set("user_preference", "dark_mode");
+ * ```
+ */
 class RunUser extends TagoIOModule<GenericModuleParams> {
   /**
    * Get Run user info
@@ -330,7 +366,7 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public SDB = new SDB(this.params);
+  public SDB: SDB = new SDB(this.params);
 }
 
 export default RunUser;

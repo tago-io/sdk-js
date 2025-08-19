@@ -1,4 +1,4 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 
 class SDB extends TagoIOModule<GenericModuleParams> {
   /**

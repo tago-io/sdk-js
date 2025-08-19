@@ -1,7 +1,7 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { GenericID } from "../../common/common.types";
-import sleep from "../../common/sleep";
-import dateParser from "../Utils/dateParser";
+import type { GenericID } from "../../common/common.types.ts";
+import sleep from "../../common/sleep.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import dateParser from "../Utils/dateParser.ts";
 import type {
   Base64File,
   CopyFiles,
@@ -10,7 +10,12 @@ import type {
   FilesPermission,
   MoveFiles,
   UploadOptions,
-} from "./files.types";
+} from "./files.types.ts";
+
+// Deno compatibility: Define a simple Buffer type
+type BufferLike = Uint8Array & {
+  constructor: any;
+};
 
 type BuildFormDataOptions = {
   filename: string;
@@ -31,7 +36,7 @@ type BuildFormDataOptions = {
 
 class Files extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Lists all files in the application with pagination support.
+   * Lists all files in the application with pagination support.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    *
@@ -62,7 +67,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Uploads base64 encoded files to TagoIO storage.
+   * Uploads base64 encoded files to TagoIO storage.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
    *
@@ -88,7 +93,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Moves or renames files in TagoIO storage.
+   * Moves or renames files in TagoIO storage.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
@@ -115,7 +120,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Copies files in TagoIO files.
+   * Copies files in TagoIO files.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
@@ -141,7 +146,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes files or folders from TagoIO storage.
+   * Deletes files or folders from TagoIO storage.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
@@ -167,7 +172,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Checks if a file is public or private.
+   * Checks if a file is public or private.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
@@ -192,7 +197,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Changes visibility settings for multiple files.
+   * Changes visibility settings for multiple files.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
@@ -238,7 +243,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Gets a signed URL with temporary authentication token.
+   * Gets a signed URL with temporary authentication token.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
    * @see {@link https://help.tago.io/portal/en/kb/articles/140-uploading-files} Uploading Files
@@ -265,7 +270,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Gets the MD5 hash of a file with authentication for private files.
+   * Gets the MD5 hash of a file with authentication for private files.
    * This hash can be used to verify file integrity.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
@@ -294,7 +299,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Build the `FormData` object to be used in multipart form uploads.
+   * Build the `FormData` object to be used in multipart form uploads.
    */
   private buildFormData(options: BuildFormDataOptions): FormData {
     const { action, filename, isPublic, fieldID } = options;
@@ -325,7 +330,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a multipart upload instance
+   * Creates a multipart upload instance
    */
   private async createMultipartUpload(filename: string, options?: UploadOptions) {
     const { dashboard, widget, fieldId: fieldID, isPublic, contentType } = options || {};
@@ -337,16 +342,17 @@ class Files extends TagoIOModule<GenericModuleParams> {
       filename,
       fieldID,
       isPublic,
-      contentType,
+      contentType: contentType || "application/octet-stream",
     });
 
     const result = await this.doRequest<any>({
       path,
       method: "POST",
       params: {
-        ...(options?.blueprint_devices?.length > 0 && {
-          blueprint_devices: options.blueprint_devices,
-        }),
+        ...(options?.blueprint_devices &&
+          options.blueprint_devices.length > 0 && {
+            blueprint_devices: options.blueprint_devices,
+          }),
       },
       body: formData,
     });
@@ -355,9 +361,15 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Uploads a single part to TagoIO
+   * Uploads a single part to TagoIO
    */
-  async _uploadPart(filename: string, uploadID: string, part: number, fileBlob: Blob, options?: UploadOptions) {
+  async _uploadPart(
+    filename: string,
+    uploadID: string,
+    part: number,
+    fileBlob: Blob,
+    options?: UploadOptions
+  ): Promise<{ ETag: string; PartNumber: number }> {
     const { fieldId: fieldID, isPublic } = options || {};
     const path =
       options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : "/files";
@@ -376,9 +388,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
       path,
       method: "POST",
       params: {
-        ...(options?.blueprint_devices?.length > 0 && {
-          blueprint_devices: options.blueprint_devices,
-        }),
+        ...(options?.blueprint_devices &&
+          options.blueprint_devices.length > 0 && {
+            blueprint_devices: options.blueprint_devices,
+          }),
       },
       body: formData,
       maxContentLength: Number.POSITIVE_INFINITY,
@@ -391,11 +404,17 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Adds an upload to the queue.
+   * Adds an upload to the queue.
    * It will try to upload for 'opts.maxTriesForEachChunk' and fail
    * if it couldn't upload after those many tries.
    */
-  async _addToQueue(filename: string, uploadID: GenericID, partNumber: number, blob: Blob, options?: UploadOptions) {
+  async _addToQueue(
+    filename: string,
+    uploadID: GenericID,
+    partNumber: number,
+    blob: Blob,
+    options?: UploadOptions
+  ): Promise<{ ETag: string; PartNumber: number }> {
     const maxTries = options?.maxTriesForEachChunk || 5;
     const timeout = options?.timeoutForEachFailedChunk || 2000;
 
@@ -406,29 +425,33 @@ class Files extends TagoIOModule<GenericModuleParams> {
         const result = await this._uploadPart(filename, uploadID, partNumber, blob, options);
         return result;
       } catch (ex) {
+        const error = ex as Error;
         if (isLimitError(ex)) {
-          throw ex.message;
+          throw error.message;
         }
 
         await sleep(timeout);
 
         tries += 1;
         if (tries >= maxTries) {
-          throw new Error(`Could not upload part number ${partNumber}: ${ex.message}`);
+          throw new Error(`Could not upload part number ${partNumber}: ${error.message}`);
         }
       }
     }
+
+    // This should never be reached due to the while loop logic, but TypeScript requires a return
+    throw new Error(`Failed to upload part ${partNumber} after ${maxTries} attempts`);
   }
 
   /**
-   * @description Finishes a multipart upload instance
+   * Finishes a multipart upload instance
    */
   async _completeMultipartUpload(
     filename: string,
     uploadID: string,
     parts: { ETag: string; PartNumber: number }[],
     options?: UploadOptions
-  ) {
+  ): Promise<{ file: string }> {
     const { fieldId: fieldID, isPublic } = options || {};
     const path =
       options?.dashboard && options?.widget ? `/data/files/${options.dashboard}/${options.widget}` : "/files";
@@ -439,9 +462,10 @@ class Files extends TagoIOModule<GenericModuleParams> {
       path,
       method: "POST",
       params: {
-        ...(options?.blueprint_devices?.length > 0 && {
-          blueprint_devices: options.blueprint_devices,
-        }),
+        ...(options?.blueprint_devices &&
+          options.blueprint_devices.length > 0 && {
+            blueprint_devices: options.blueprint_devices,
+          }),
       },
       body: {
         multipart_action: "end",
@@ -457,7 +481,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Uploads a single file to TagoIO using multipart upload.
+   * Uploads a single file to TagoIO using multipart upload.
    * The file is divided into chunks and uploaded in parallel for better performance.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/127-files} Files
@@ -474,7 +498,11 @@ class Files extends TagoIOModule<GenericModuleParams> {
    * console.log(result.file); // https://api.tago.io/file/.../uploads/myfile.txt
    * ```
    */
-  public async uploadFile(file: Blob | Buffer, filename: string, options?: UploadOptions) {
+  public async uploadFile(
+    file: Blob | BufferLike,
+    filename: string,
+    options?: UploadOptions
+  ): Promise<{ file: string }> {
     const MB = 2 ** 20;
 
     let cancelled = false;
@@ -565,8 +593,9 @@ class Files extends TagoIOModule<GenericModuleParams> {
       try {
         return await this._completeMultipartUpload(filename, uploadID, parts, options);
       } catch (ex) {
+        const error = ex as Error;
         if (isLimitError(ex)) {
-          throw ex.message;
+          throw error.message;
         }
 
         await sleep(1000);
@@ -575,10 +604,12 @@ class Files extends TagoIOModule<GenericModuleParams> {
         }
       }
     }
+
+    throw new Error("Failed to complete multipart upload after retries");
   }
 
   /**
-   * @description Throw a error if is cancelled
+   * Throw a error if is cancelled
    */
   private isCanceled(cancelled: boolean) {
     if (cancelled) {

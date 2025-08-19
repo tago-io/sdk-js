@@ -1,13 +1,20 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import dateParser from "../Utils/dateParser";
-
-import type { GenericID } from "../../common/common.types";
-import type { EntityCreateInfo, EntityData, EntityDataQuery, EntityInfo } from "./entities.types";
-import type { EntityListItem, EntityQuery, EntitySchema, EntityUnknownData } from "./entities.types";
+import type { GenericID } from "../../common/common.types.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import dateParser from "../Utils/dateParser.ts";
+import type {
+  EntityCreateInfo,
+  EntityData,
+  EntityDataQuery,
+  EntityInfo,
+  EntityListItem,
+  EntityQuery,
+  EntitySchema,
+  EntityUnknownData,
+} from "./entities.types.ts";
 
 class Entities extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Retrieves a paginated list of all entities from the account with filtering and sorting options.
+   * Retrieves a paginated list of all entities from the account with filtering and sorting options.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities} Entities
    *
@@ -42,7 +49,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new entity in the account.
+   * Creates a new entity in the account.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Creating_an_Entity} Creating an Entity
    *
@@ -68,7 +75,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates an existing entity's properties.
+   * Updates an existing entity's properties.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_fields} Managing Fields
    *
@@ -90,7 +97,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Permanently removes an entity from the account.
+   * Permanently removes an entity from the account.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_fields} Managing Fields
    *
@@ -111,7 +118,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific entity.
+   * Retrieves detailed information about a specific entity.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities} Entities
    *
@@ -134,7 +141,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Gets the total amount of data records stored in the entity.
+   * Gets the total amount of data records stored in the entity.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities} Entities
    *
@@ -155,7 +162,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves data records stored in a specific entity with optional filtering parameters.
+   * Retrieves data records stored in a specific entity with optional filtering parameters.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_the_data_in_your_Entity} Managing the data in your Entity
    *
@@ -190,7 +197,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates existing data records in an entity.
+   * Updates existing data records in an entity.
    *
    * The `updatedData` can be a single data record or an array of records to be updated,
    * each of the records must have the `id` of the record and the fields to be updated.
@@ -221,7 +228,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Sends new data records to an entity.
+   * Sends new data records to an entity.
    *
    * The `data` can be a single data record or an array of records to be sent.
    *
@@ -245,7 +252,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Delete data records in a entity using the profile token and entity ID.
+   * Delete data records in a entity using the profile token and entity ID.
    *
    * See the example to understand how to use this method properly to have full control on what to delete.
    *
@@ -270,7 +277,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Modifies the entity schema by adding new fields or managing indexes.
+   * Modifies the entity schema by adding new fields or managing indexes.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Indexing_fields_to_improve_searching_and_sorting} Indexing fields to improve searching and sorting
    *
@@ -312,7 +319,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Renames a field in the entity schema.
+   * Renames a field in the entity schema.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_fields} Managing Fields
    *
@@ -341,7 +348,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates a field's configuration in the entity schema.
+   * Updates a field's configuration in the entity schema.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_fields} Managing Fields
    *
@@ -373,7 +380,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes a field from the entity schema.
+   * Removes a field from the entity schema.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_fields} Managing Fields
    *
@@ -401,7 +408,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes an index from the entity schema.
+   * Removes an index from the entity schema.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Indexing_fields_to_improve_searching_and_sorting} Indexing fields to improve searching and sorting
    *
@@ -429,7 +436,7 @@ class Entities extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes all data records from an entity while preserving its structure and configuration.
+   * Removes all data records from an entity while preserving its structure and configuration.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/entities#Managing_the_data_in_your_Entity} Managing the data in your Entity
    *

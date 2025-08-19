@@ -1,14 +1,51 @@
-import { JSONParseSafe } from "../../common/JSONParseSafe";
-import TagoIOModule from "../../common/TagoIOModule";
-import { openSSEListening } from "../../infrastructure/apiSSE";
-import getRegionObj, { setRuntimeRegion } from "../../regions";
-import ConsoleService from "../Services/Console";
-import type { AnalysisConstructorParams, AnalysisEnvironment, analysisFunction } from "./analysis.types";
+import { JSONParseSafe } from "../../common/JSONParseSafe.ts";
+import TagoIOModule from "../../common/TagoIOModule.ts";
+import { openSSEListening } from "../../infrastructure/apiSSE.ts";
+import getRegionObj, { setRuntimeRegion } from "../../regions.ts";
+import ConsoleService from "../Services/Console.ts";
+import type { AnalysisConstructorParams, AnalysisEnvironment, analysisFunction } from "./analysis.types.ts";
 
 /**
- * This class is used to instance an analysis
+ * Analysis execution context for TagoIO
  *
- * It's can run locally or on TagoIO.
+ * This class provides the runtime environment for executing analysis scripts in TagoIO.
+ * It manages environment variables, console outputs, and analysis execution lifecycle.
+ * Analyses can run locally for development or in the TagoIO cloud platform.
+ *
+ * @example Basic analysis usage
+ * ```ts
+ * import { Analysis } from "@tago-io/sdk";
+ *
+ * const analysis = new Analysis(async (context, scope) => {
+ *   // Get analysis environment variables
+ *   const environment = await context.getEnvironment();
+ *
+ *   // Use console service for logging
+ *   context.console.log("Analysis started");
+ *
+ *   // Your analysis logic here
+ *   console.log("Processing data...");
+ * }, { token: "your-analysis-token" });
+ * ```
+ *
+ * @example Environment variables
+ * ```ts
+ * const analysis = new Analysis(async (context) => {
+ *   const env = await context.getEnvironment();
+ *   const apiKey = env.find(e => e.key === "API_KEY")?.value;
+ * });
+ * ```
+ *
+ * @example Manual start control
+ * ```ts
+ * const analysis = new Analysis(myAnalysisFunction, {
+ *   token: "token",
+ *   autostart: false
+ * });
+ *
+ * // Start analysis manually
+ * analysis.start();
+ * ```
  */
 class Analysis extends TagoIOModule<AnalysisConstructorParams> {
   private analysis: analysisFunction;
@@ -23,7 +60,7 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     }
   }
 
-  public start() {
+  public start(): void {
     if (this.started) {
       return;
     }
@@ -44,11 +81,11 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     const context = {
       log: console.log,
       token: process.env.T_ANALYSIS_TOKEN,
-      environment: JSONParseSafe(process.env.T_ANALYSIS_ENV, []),
+      environment: JSONParseSafe(process.env.T_ANALYSIS_ENV || "[]", []),
       analysis_id: process.env.T_ANALYSIS_ID,
     };
 
-    const data = JSONParseSafe(process.env.T_ANALYSIS_DATA, []);
+    const data = JSONParseSafe(process.env.T_ANALYSIS_DATA || "[]", []);
 
     this.analysis(context, data);
   }
@@ -134,10 +171,14 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
       }
     }, 15000); // 15 seconds
 
+    if (!this.params.token) {
+      throw new Error("Token is required for analysis");
+    }
     const tokenEnd = this.params.token.slice(-5);
 
     sse.addEventListener("message", (event) => {
-      const data = JSONParseSafe(event?.data, {})?.payload;
+      const parsed = JSONParseSafe(event?.data, {}) as { payload?: any };
+      const data = parsed?.payload;
 
       if (!data) {
         // console.log("Invalid data", event.data);
@@ -158,7 +199,7 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     });
   }
 
-  public static use(analysis: analysisFunction, params?: AnalysisConstructorParams) {
+  public static use(analysis: analysisFunction, params?: AnalysisConstructorParams): Analysis {
     if (!process.env.T_ANALYSIS_TOKEN && params?.token) {
       process.env.T_ANALYSIS_TOKEN = params.token;
     }

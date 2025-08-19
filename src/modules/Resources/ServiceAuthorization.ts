@@ -1,11 +1,11 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { ListTokenQuery, TokenData, TokenDataList } from "../../common/common.types";
-import dateParser from "../Utils/dateParser";
-import type { GenericToken, TokenCreateResponse } from "./ServiceAuthorization.types";
+import type { ListTokenQuery, TokenData, TokenDataList } from "../../common/common.types.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import dateParser from "../Utils/dateParser.ts";
+import type { GenericToken, TokenCreateResponse } from "./ServiceAuthorization.types.ts";
 
 class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Retrieves a paginated list of all service authorization tokens with filtering and sorting options.
+   * Retrieves a paginated list of all service authorization tokens with filtering and sorting options.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
    *
@@ -39,7 +39,7 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Generates and retrieves a new service authorization token with specified permissions.
+   * Generates and retrieves a new service authorization token with specified permissions.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
    *
@@ -64,7 +64,7 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Permanently removes a service authorization token.
+   * Permanently removes a service authorization token.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
    *
@@ -85,7 +85,7 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates a service authorization token with an optional verification code.
+   * Updates a service authorization token with an optional verification code.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
    *

@@ -1,5 +1,10 @@
-import type { RequestConfig } from "./common.types";
+import type { RequestConfig } from "./common.types.ts";
 
+/**
+ * Generates a hash number from any object using string conversion and bit manipulation
+ * @param obj Object to hash
+ * @returns Hash number (32-bit integer)
+ */
 function hashGenerator(obj: any): number {
   const objString = JSON.stringify(obj);
 
@@ -19,6 +24,11 @@ function hashGenerator(obj: any): number {
   return hash;
 }
 
+/**
+ * Generates a unique request ID based on request configuration for caching
+ * @param requestConfig Request configuration object
+ * @returns Unique request ID number
+ */
 function generateRequestID(requestConfig: RequestConfig): number {
   const objKey = {
     url: requestConfig.url,

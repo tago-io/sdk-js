@@ -1,5 +1,5 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { GenericID, GenericToken } from "../../common/common.types";
+import type { GenericID, GenericToken } from "../../common/common.types.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 
 interface PaymentMethodCreateInfo {
   name: string;
@@ -24,7 +24,7 @@ interface PaymentMethodListResponse {
 
 class PaymentMethods extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Creates a new payment method for the current account using the provided payment information.
+   * Creates a new payment method for the current account using the provided payment information.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/204-payment-methods} Payment Methods
    * @see {@link https://help.tago.io/portal/en/kb/articles/205-common-billing-issues} Common Billing Issues
@@ -40,7 +40,7 @@ class PaymentMethods extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves all payment methods associated with the current account.
+   * Retrieves all payment methods associated with the current account.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/204-payment-methods} Payment Methods
    * @see {@link https://help.tago.io/portal/en/kb/articles/205-common-billing-issues} Common Billing Issues
@@ -63,7 +63,7 @@ class PaymentMethods extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes a payment method from the account using its ID.
+   * Removes a payment method from the account using its ID.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/204-payment-methods} Payment Methods
    * @see {@link https://help.tago.io/portal/en/kb/articles/205-common-billing-issues} Common Billing Issues

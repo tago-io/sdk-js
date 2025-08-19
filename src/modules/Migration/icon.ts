@@ -2,8 +2,8 @@
 // * What is this file?
 //     Migration of old ICON to new ICON
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
-import convertFormula from "./common/convertFormula";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
+import convertFormula from "./common/convertFormula.ts";
 
 const layoutMatrix = [
   [1, 2, 3],
@@ -104,14 +104,14 @@ export function convert(oldWidget: any): WidgetInfo {
    * Remove the _position property
    */
   newStructure.display.variables = variables.map((e) => {
-    e._position = undefined;
+    (e as any)._position = undefined;
     return e;
   });
 
   return newStructure;
 }
 
-export function isOldStructure(widget: any) {
+export function isOldStructure(widget: any): any {
   const isOld =
     !!(
       widget?.display?.vars_labels ||

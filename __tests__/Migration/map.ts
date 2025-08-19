@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/map";
+import { convert, isOldStructure } from "../../src/modules/Migration/map.ts";
 import * as oldStructure from "./__mocks__/mapOldStructure.json";
 
 const oldWidget = oldStructure.normalStructure;

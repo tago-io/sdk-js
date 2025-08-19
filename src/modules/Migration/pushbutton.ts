@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old PUSH BUTTON to new PUSH BUTTON
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 
 function convertState(oldState: any) {
   const newState = {
@@ -60,7 +60,7 @@ export function convert(oldWidget: any): WidgetInfo {
   return newStructure;
 }
 
-export function isOldStructure(widget: any) {
+export function isOldStructure(widget: any): any {
   const isOld = !!(widget?.display?.vars_labels || widget?.display?.vars_format || widget?.display?.vars_formula);
 
   return isOld;

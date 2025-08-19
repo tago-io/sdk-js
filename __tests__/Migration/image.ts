@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/image";
+import { convert, isOldStructure } from "../../src/modules/Migration/image.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.imageStructure;

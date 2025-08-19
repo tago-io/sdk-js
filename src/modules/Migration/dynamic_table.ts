@@ -3,8 +3,8 @@
 //     Migration of old DYNAMIC_TABLE to new DYNAMIC_TABLE
 // ? ====================================================================================
 
-import type { WidgetInfo } from "../Resources/dashboards.types";
-import { convertFormula, convertInterval } from "./common";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
+import { convertFormula, convertInterval } from "./common/index.ts";
 
 export const dynamicTableConfig = {
   cellFilterHeight: 56, // height of cell with a filter in it
@@ -206,7 +206,7 @@ function createEditObject(formField: any) {
   return edit;
 }
 
-export function isOldStructure(widget: any) {
+export function isOldStructure(widget: any): any {
   const isOld = !!(
     widget?.display?.vars_labels ||
     widget?.display?.vars_format ||

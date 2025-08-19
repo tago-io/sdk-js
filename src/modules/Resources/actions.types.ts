@@ -1,4 +1,4 @@
-import type { Conditionals, ExpireTimeOption, GenericID, Query, TagsObj } from "../../common/common.types";
+import type { Conditionals, ExpireTimeOption, GenericID, Query, TagsObj } from "../../common/common.types.ts";
 
 type ActionType =
   | "condition"

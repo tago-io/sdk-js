@@ -1,9 +1,9 @@
-import type { GenericModuleParams } from "../common/TagoIOModule";
-import regions from "../regions";
+import type { GenericModuleParams } from "../common/TagoIOModule.ts";
+import regions from "../regions.ts";
 
 const channelsWithID = ["analysis_console", "device_inspector", "device_data", "entity_data", "ui_dashboard"] as const;
 const channelsWithoutID = ["analysis_trigger", "notification", "ui"] as const;
-const channels = [...channelsWithID, ...channelsWithoutID] as const;
+const channels: readonly string[] = [...channelsWithID, ...channelsWithoutID] as const;
 
 type ChannelWithID = (typeof channelsWithID)[number];
 type ChannelWithoutID = (typeof channelsWithoutID)[number];
@@ -24,12 +24,12 @@ function isChannelWithID(params: OpenSSEConfig): params is OpenSSEWithID {
 }
 
 async function loadEventSourceLib(): Promise<typeof EventSource> {
+  // Use native EventSource if available (browser, Deno)
   if (globalThis.EventSource) {
     return globalThis.EventSource;
   }
 
-  // @ts-expect-error EventSource types from DOMLib
-  return import("eventsource").then((x) => x?.EventSource || x);
+  return import("eventsource").then((x) => (x?.EventSource || x) as any);
 }
 
 function formatChannel(configuration: OpenSSEConfig) {
@@ -42,7 +42,10 @@ function formatChannel(configuration: OpenSSEConfig) {
   return channel;
 }
 
-async function openSSEListening(channels: OpenSSEConfig | OpenSSEConfig[], options: GenericModuleParams) {
+async function openSSEListening(
+  channels: OpenSSEConfig | OpenSSEConfig[],
+  options: GenericModuleParams
+): Promise<EventSource> {
   let channelsParam = "";
   if (Array.isArray(channels)) {
     channelsParam = channels.map((channel) => formatChannel(channel)).join(",");
@@ -50,7 +53,15 @@ async function openSSEListening(channels: OpenSSEConfig | OpenSSEConfig[], optio
     channelsParam = formatChannel(channels);
   }
 
-  const url = new URL(regions(options.region).sse);
+  const regionData = regions(options.region);
+  if (!regionData?.sse) {
+    throw new Error("Invalid region configuration: missing SSE endpoint");
+  }
+  if (!options.token) {
+    throw new Error("Token is required for SSE connection");
+  }
+
+  const url = new URL(regionData.sse);
   url.pathname = "/events";
   url.searchParams.set("channels", channelsParam);
   url.searchParams.set("token", options.token);

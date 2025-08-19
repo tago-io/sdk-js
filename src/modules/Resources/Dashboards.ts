@@ -1,7 +1,7 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { ExpireTimeOption, GenericID } from "../../common/common.types";
-import dateParser from "../Utils/dateParser";
-import Widgets from "./Dashboard.Widgets";
+import type { ExpireTimeOption, GenericID } from "../../common/common.types.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import dateParser from "../Utils/dateParser.ts";
+import Widgets from "./Dashboard.Widgets.ts";
 import type {
   AnalysisRelated,
   DashboardCreateInfo,
@@ -9,11 +9,11 @@ import type {
   DashboardQuery,
   DevicesRelated,
   PublicKeyResponse,
-} from "./dashboards.types";
+} from "./dashboards.types.ts";
 
 class Dashboards extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Lists all dashboards from your application with pagination support.
+   * Lists all dashboards from your application with pagination support.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
@@ -48,7 +48,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new dashboard in your application.
+   * Creates a new dashboard in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
@@ -75,7 +75,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Modifies an existing dashboard's properties.
+   * Modifies an existing dashboard's properties.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
@@ -102,7 +102,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes a dashboard from the application.
+   * Deletes a dashboard from the application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
@@ -123,7 +123,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific dashboard.
+   * Retrieves detailed information about a specific dashboard.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
@@ -145,7 +145,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a copy of an existing dashboard.
+   * Creates a copy of an existing dashboard.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
@@ -170,7 +170,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Generates a new public access token for the dashboard.
+   * Generates a new public access token for the dashboard.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
@@ -200,7 +200,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Lists all devices associated with the dashboard.
+   * Lists all devices associated with the dashboard.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
@@ -221,7 +221,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Lists all analyses associated with a dashboard.
+   * Lists all analyses associated with a dashboard.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
@@ -242,7 +242,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Executes an analysis from a widget's header button.
+   * Executes an analysis from a widget's header button.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    */
@@ -263,7 +263,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
     return result;
   }
 
-  public widgets = new Widgets(this.params);
+  public widgets: Widgets = new Widgets(this.params);
 }
 
 export default Dashboards;

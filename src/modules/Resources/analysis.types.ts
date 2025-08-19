@@ -1,4 +1,4 @@
-import type { Base64, ExpireTimeOption, GenericID, Query, RunTypeOptions, TagsObj } from "../../common/common.types";
+import type { Base64, ExpireTimeOption, GenericID, Query, RunTypeOptions, TagsObj } from "../../common/common.types.ts";
 
 interface ScriptFile {
   name: string;
@@ -46,6 +46,58 @@ interface AnalysisInfo extends AnalysisCreateInfo {
 }
 
 type AnalysisQuery = Query<AnalysisInfo, "name" | "active" | "run_on" | "last_run" | "created_at" | "updated_at">;
-type AnalysisListItem<T extends AnalysisQuery["fields"][number] = null> = Pick<AnalysisInfo, T> & Partial<AnalysisInfo>;
+type AnalysisListItem<
+  T extends AnalysisQuery["fields"] extends readonly (keyof any)[]
+    ? AnalysisQuery["fields"][number]
+    : keyof AnalysisInfo = keyof AnalysisInfo,
+> = Pick<AnalysisInfo, T> & Partial<AnalysisInfo>;
 
-export type { AnalysisInfo, AnalysisCreateInfo, ScriptFile, AnalysisQuery, AnalysisListItem };
+/**
+ * Available runtime environments for snippets
+ */
+type SnippetRuntime = "node-legacy" | "python-legacy" | "python-rt2025" | "deno-rt2025";
+
+/**
+ * Individual snippet metadata
+ */
+interface SnippetItem {
+  /** Unique identifier for the snippet */
+  id: string;
+  /** Human-readable title */
+  title: string;
+  /** Description of what the snippet does */
+  description: string;
+  /** Programming language (typescript, javascript, python) */
+  language: string;
+  /** Array of tags for categorization */
+  tags: string[];
+  /** Filename of the snippet */
+  filename: string;
+  /** Full path to the file in the runtime directory */
+  file_path: string;
+}
+
+/**
+ * API response containing all snippets metadata for a runtime
+ */
+interface SnippetsListResponse {
+  /** Runtime environment identifier */
+  runtime: SnippetRuntime;
+  /** Schema version for the API response format */
+  schema_version: number;
+  /** ISO timestamp when the response was generated */
+  generated_at: string;
+  /** Array of all available snippets for this runtime */
+  snippets: SnippetItem[];
+}
+
+export type {
+  AnalysisInfo,
+  AnalysisCreateInfo,
+  ScriptFile,
+  AnalysisQuery,
+  AnalysisListItem,
+  SnippetRuntime,
+  SnippetItem,
+  SnippetsListResponse,
+};

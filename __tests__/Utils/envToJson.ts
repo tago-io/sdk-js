@@ -1,4 +1,4 @@
-import envToJson from "../../src/modules/Utils/envToJson";
+import envToJson from "../../src/modules/Utils/envToJson.ts";
 
 describe("TagoIO Env to JSON", () => {
   test("Transform with success", () => {

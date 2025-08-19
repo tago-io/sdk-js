@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/stepbutton";
+import { convert, isOldStructure } from "../../src/modules/Migration/stepbutton.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.stepbuttonStructure;

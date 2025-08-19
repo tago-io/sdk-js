@@ -1,4 +1,4 @@
-import type { GenericID, Query, TagsObj } from "../../common/common.types";
+import type { GenericID, Query, TagsObj } from "../../common/common.types.ts";
 
 interface Permissions {
   effect: "allow" | "deny";

@@ -1,0 +1,43 @@
+{
+  "name": "@tago-io/sdk",
+  "version": "12.1.4",
+  "description": "TagoIO SDK for JavaScript in the browser and Node.js",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/tago-io/sdk-js.git",
+  "homepage": "https://tago.io",
+  "author": "TagoIO Inc.",
+  "keywords": [
+    "tago",
+    "tagoio",
+    "iot",
+    "tago.io",
+    "sdk",
+    "analysis",
+    "device",
+    "tagoio",
+    "tago-io"
+  ],
+  "exports": "./src/modules.ts",
+  "imports": {
+    "eventsource": "./src/stubs/eventsource-stub.ts"
+  },
+  "publish": {
+    "include": [
+      "src/",
+      "README.md",
+      "LICENSE.md"
+    ],
+    "exclude": [
+      "**/*.test.ts",
+      "**/__tests__/",
+      "**/__mocks__/"
+    ]
+  },
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "lib": [
+      "ES2020",
+      "DOM"
+    ]
+  }
+}

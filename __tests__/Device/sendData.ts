@@ -1,7 +1,7 @@
-import { http, HttpResponse } from "msw";
+import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 
-import { Device } from "../../src/modules";
+import { Device } from "../../src/modules.ts";
 
 const handlers = [
   http.post("https://api.tago.io/data", () => {

@@ -1,11 +1,25 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { GenericID, GenericToken } from "../../common/common.types";
-import dateParser from "../Utils/dateParser";
-import type { AnalysisCreateInfo, AnalysisInfo, AnalysisListItem, AnalysisQuery, ScriptFile } from "./analysis.types";
+import type { GenericID, GenericToken } from "../../common/common.types.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import { withTimeout } from "../../infrastructure/fetchUtils.ts";
+import dateParser from "../Utils/dateParser.ts";
+import type {
+  AnalysisCreateInfo,
+  AnalysisInfo,
+  AnalysisListItem,
+  AnalysisQuery,
+  ScriptFile,
+  SnippetRuntime,
+  SnippetsListResponse,
+} from "./analysis.types.ts";
+
+/**
+ * Base URL for TagoIO analysis snippets repository
+ */
+const SNIPPETS_BASE_URL = "https://snippets.tago.io";
 
 class Analyses extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Lists all analyses from the application with pagination support.
+   * Lists all analyses from the application with pagination support.
    * Use this to retrieve and manage analyses in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
@@ -22,9 +36,25 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * console.log(list); // [ { id: 'analysis-id-123', name: 'Analysis Test', ...} ]
    * ```
    */
-  public async list<T extends AnalysisQuery>(queryObj?: T) {
+  public async list<T extends AnalysisQuery>(
+    queryObj?: T
+  ): Promise<
+    AnalysisListItem<
+      T["fields"] extends AnalysisQuery["fields"]
+        ? T["fields"] extends readonly (keyof any)[]
+          ? T["fields"][number]
+          : "id" | "name"
+        : "id" | "name"
+    >[]
+  > {
     let result = await this.doRequest<
-      AnalysisListItem<T["fields"] extends AnalysisQuery["fields"] ? T["fields"][number] : "id" | "name">[]
+      AnalysisListItem<
+        T["fields"] extends AnalysisQuery["fields"]
+          ? T["fields"] extends readonly (keyof any)[]
+            ? T["fields"][number]
+            : "id" | "name"
+          : "id" | "name"
+      >[]
     >({
       path: "/analysis/",
       method: "GET",
@@ -43,7 +73,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new analysis in your application.
+   * Creates a new analysis in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/120-creating-analysis} Creating Analysis
    *
@@ -71,7 +101,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Modifies an existing analysis.
+   * Modifies an existing analysis.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -98,7 +128,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes an analysis from your application.
+   * Deletes an analysis from your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -119,7 +149,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific analysis.
+   * Retrieves detailed information about a specific analysis.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -142,7 +172,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Executes an analysis with optional scope parameters.
+   * Executes an analysis with optional scope parameters.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -166,8 +196,8 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Generates a new token for the analysis.
-   * @note **This is only allowed when the analysis is running in external mode.**
+   * Generates a new token for the analysis.
+   * @remarks **This is only allowed when the analysis is running in external mode.**
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -188,7 +218,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Uploads a script file to an analysis.
+   * Uploads a script file to an analysis.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -218,7 +248,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Gets a download URL for the analysis script.
+   * Gets a download URL for the analysis script.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *
@@ -245,6 +275,80 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
     result = dateParser(result, ["expire_at"]);
 
     return result;
+  }
+
+  /**
+   * Get all available snippets for a specific runtime environment.
+   * Fetches analysis code snippets from the public TagoIO snippets repository.
+   *
+   * @param runtime - The runtime environment to get snippets for
+   * @returns Promise resolving to the snippets metadata
+   *
+   * @example
+   * ```typescript
+   * const denoSnippets = await Resources.analysis.listSnippets("deno-rt2025");
+   *
+   * // Print all snippet titles
+   * denoSnippets.snippets.forEach(snippet => {
+   *   console.log(`${snippet.title}: ${snippet.description}`);
+   * });
+   * ```
+   */
+  public async listSnippets(runtime: SnippetRuntime): Promise<SnippetsListResponse> {
+    const url = `${SNIPPETS_BASE_URL}/${runtime}.json`;
+    const enhancedFetch = withTimeout(fetch, 10000);
+
+    const response = await enhancedFetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "*/*",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch snippets: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data as SnippetsListResponse;
+  }
+
+  /**
+   * Get the raw source code content of a specific snippet file.
+   * Fetches the actual code content from the TagoIO snippets repository.
+   *
+   * @param runtime - The runtime environment the snippet belongs to
+   * @param filename - The filename of the snippet to retrieve
+   * @returns Promise resolving to the raw file content as string
+   *
+   * @example
+   * ```typescript
+   * // Get TypeScript code for console example
+   * const code = await Resources.analysis.getSnippetFile("deno-rt2025", "console.ts");
+   * console.log(code);
+   *
+   * // Get Python code for data processing
+   * const pythonCode = await Resources.analysis.getSnippetFile("python-rt2025", "avg-min-max.py");
+   * console.log(pythonCode);
+   * ```
+   */
+  public async getSnippetFile(runtime: SnippetRuntime, filename: string): Promise<string> {
+    const url = `${SNIPPETS_BASE_URL}/${runtime}/${filename}`;
+    const enhancedFetch = withTimeout(fetch, 10000);
+
+    const response = await enhancedFetch(url, {
+      method: "GET",
+      headers: {
+        Accept: "*/*",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch snippet file: ${response.status} ${response.statusText}`);
+    }
+
+    const content = await response.text();
+    return content;
   }
 }
 

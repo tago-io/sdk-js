@@ -1,7 +1,7 @@
-import { http, HttpResponse } from "msw";
+import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 
-import { Dictionary } from "../../src/modules";
+import { Dictionary } from "../../src/modules.ts";
 
 const handlers = [
   http.get("https://api.tago.io/dictionary/:slug/:language", () => {

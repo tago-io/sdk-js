@@ -1,4 +1,4 @@
-import type { ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
+import type { ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types.ts";
 
 interface RunInfo {
   profile: GenericID;
@@ -399,7 +399,11 @@ type ThemeOption =
   | "auth_form_opacity";
 
 type UserQuery = Query<UserInfo, "name" | "active" | "last_login" | "created_at" | "updated_at">;
-type UserListItem<T extends UserQuery["fields"][number] = null> = Pick<UserInfo, T> & Partial<UserInfo>;
+type UserListItem<
+  T extends UserQuery["fields"] extends readonly (keyof any)[]
+    ? UserQuery["fields"][number]
+    : keyof UserInfo = keyof UserInfo,
+> = Pick<UserInfo, T> & Partial<UserInfo>;
 
 export type {
   RunInfo,

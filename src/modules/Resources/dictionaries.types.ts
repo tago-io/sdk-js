@@ -1,4 +1,4 @@
-import type { GenericID, Query } from "../../common/common.types";
+import type { GenericID, Query } from "../../common/common.types.ts";
 
 interface DictionaryCreateInfo {
   name: string;

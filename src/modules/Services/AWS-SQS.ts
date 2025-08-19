@@ -1,5 +1,5 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { Data } from "../../types";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import type { Data } from "../../types.ts";
 
 interface AWSCredentials {
   /** AWS region, e.g., us-east-1 */

@@ -1,4 +1,4 @@
-import type { GenericID } from "../../common/common.types";
+import type { GenericID } from "../../common/common.types.ts";
 
 interface PaymentInfo {
   status: boolean;

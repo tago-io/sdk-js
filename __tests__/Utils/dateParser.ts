@@ -1,4 +1,4 @@
-import dateParser from "../../src/modules/Utils/dateParser";
+import dateParser from "../../src/modules/Utils/dateParser.ts";
 
 describe("Object parameter date parser", () => {
   test("Should work with data string", () => {

@@ -1,12 +1,12 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { GenericID } from "../../common/common.types";
-import dateParser from "../Utils/dateParser";
-import type { DeviceInfo, DeviceListItem, DeviceQuery } from "./devices.types";
-import type { TagoCoreInfo, TagoCoreListInfo, TagoCoreQuery } from "./tagocore.types";
+import type { GenericID } from "../../common/common.types.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import dateParser from "../Utils/dateParser.ts";
+import type { DeviceInfo, DeviceListItem, DeviceQuery } from "./devices.types.ts";
+import type { TagoCoreInfo, TagoCoreListInfo, TagoCoreQuery } from "./tagocore.types.ts";
 
 class TagoCores extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Retrieves a paginated list of all TagoCores from the application with filtering and sorting options.
+   * Retrieves a paginated list of all TagoCores from the application with filtering and sorting options.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
@@ -42,7 +42,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific TagoCore instance.
+   * Retrieves detailed information about a specific TagoCore instance.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
@@ -64,7 +64,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates configuration and settings for a TagoCore instance.
+   * Updates configuration and settings for a TagoCore instance.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
@@ -86,7 +86,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Generates a new authentication token for a TagoCore instance.
+   * Generates a new authentication token for a TagoCore instance.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
@@ -107,7 +107,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Permanently removes a TagoCore instance and its configurations.
+   * Permanently removes a TagoCore instance and its configurations.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
@@ -128,7 +128,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a device connected to a Standalone TagoCore instance.
+   * Retrieves detailed information about a device connected to a Standalone TagoCore instance.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
@@ -152,7 +152,7 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves a list of all devices connected to a Standalone TagoCore instance.
+   * Retrieves a list of all devices connected to a Standalone TagoCore instance.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/tagocore} TagoCore
    *
@@ -167,8 +167,15 @@ class TagoCores extends TagoIOModule<GenericModuleParams> {
    * console.log(devices);
    * ```
    */
-  public async standaloneDeviceList<T extends DeviceQuery>(tagoCoreID: GenericID, queryObj?: T) {
-    let result = await this.doRequest<DeviceListItem<"id" | "name" | T["fields"][number]>[]>({
+  public async standaloneDeviceList<T extends DeviceQuery>(
+    tagoCoreID: GenericID,
+    queryObj?: T
+  ): Promise<
+    DeviceListItem<"id" | "name" | (T["fields"] extends readonly (keyof any)[] ? T["fields"][number] : never)>[]
+  > {
+    let result = await this.doRequest<
+      DeviceListItem<"id" | "name" | (T["fields"] extends readonly (keyof any)[] ? T["fields"][number] : never)>[]
+    >({
       path: "/device",
       method: "GET",
       params: {

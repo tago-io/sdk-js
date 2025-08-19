@@ -1,11 +1,11 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { GenericID } from "../../common/common.types";
-import dateParser from "../Utils/dateParser";
-import type { AccessCreateInfo, AccessInfo, AccessQuery } from "./access.types";
+import type { GenericID } from "../../common/common.types.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import dateParser from "../Utils/dateParser.ts";
+import type { AccessCreateInfo, AccessInfo, AccessQuery } from "./access.types.ts";
 
 class Access extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Lists all access rules from the application with pagination support.
+   * Lists all access rules from the application with pagination support.
    * Use this to retrieve and manage access policies for your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
@@ -41,7 +41,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new access policy in your application.
+   * Creates a new access policy in your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
@@ -77,7 +77,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Modifies an existing access policy.
+   * Modifies an existing access policy.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
@@ -111,7 +111,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes an access policy from your application.
+   * Removes an access policy from your application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *
@@ -132,7 +132,7 @@ class Access extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific access policy.
+   * Retrieves detailed information about a specific access policy.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/183-access-management} Access Management
    *

@@ -13,7 +13,7 @@ export class HttpError extends Error {
 
   constructor(response: Response) {
     const status = `${response.status} ${response.statusText}`.trim();
-    const reason = status ? `status code ${status}` : 'an unknown error';
+    const reason = status ? `status code ${status}` : "an unknown error";
 
     super(`Request failed with ${reason}: ${response.url}`);
     // Capture stack trace if available (Node.js)
@@ -21,8 +21,8 @@ export class HttpError extends Error {
       Error.captureStackTrace(this, this.constructor);
     }
 
-    this.name = 'HttpError';
-    this.code = 'ERR_HTTP_RESPONSE_NOT_OK';
+    this.name = "HttpError";
+    this.code = "ERR_HTTP_RESPONSE_NOT_OK";
     this.response = response;
   }
 }
@@ -65,7 +65,7 @@ export function withTimeout(fetchFunction: typeof fetch, timeout: number): typeo
 
     // Use AbortSignal.timeout if available (Node.js 18+), otherwise fallback to manual timeout
     let timeoutSignal: AbortSignal;
-    if (typeof AbortSignal.timeout === 'function') {
+    if (typeof AbortSignal.timeout === "function") {
       timeoutSignal = AbortSignal.timeout(timeout);
     } else {
       // Fallback for older Node.js versions

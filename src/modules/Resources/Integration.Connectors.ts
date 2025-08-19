@@ -1,11 +1,11 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { GenericID } from "../../common/common.types";
-import dateParser from "../Utils/dateParser";
-import type { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery } from "./integration.connectors.types";
+import type { GenericID } from "../../common/common.types.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import dateParser from "../Utils/dateParser.ts";
+import type { ConnectorCreateInfo, ConnectorInfo, ConnectorQuery } from "./integration.connectors.types.ts";
 
 class Connectors extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Lists all connectors from the application with pagination support.
+   * Lists all connectors from the application with pagination support.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
@@ -40,7 +40,7 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific connector.
+   * Retrieves detailed information about a specific connector.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
@@ -66,7 +66,7 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new connector in the application.
+   * Creates a new connector in the application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview#Creating_a_connector} Creating a connector
    *
@@ -95,7 +95,7 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Modifies an existing connector's properties.
+   * Modifies an existing connector's properties.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *
@@ -119,7 +119,7 @@ class Connectors extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes a connector from the application.
+   * Deletes a connector from the application.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/466-connector-overview} Connector Overview
    *

@@ -1,4 +1,4 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import type {
   BillingCoupon,
   BillingEditInformation,
@@ -12,7 +12,7 @@ import type {
   BillingSchedule,
   BillingSubscription,
   BillingSubscriptionSummary,
-} from "./billing.types";
+} from "./billing.types.ts";
 
 class Billing extends TagoIOModule<GenericModuleParams> {
   /**

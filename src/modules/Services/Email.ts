@@ -1,4 +1,4 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 
 interface AttachmentOptions {
   /** Archive itself */
@@ -93,7 +93,7 @@ interface EmailWithTemplate {
    * Use this to send emails based on pre-defined templates in TagoRUN
    *
    * @see TemplateOptions
-   * @note When using a template with an attachment, a $URL$ variable is automatically
+   * @remarks When using a template with an attachment, a $URL$ variable is automatically
    *       generated and can be used in the template to reference the attachment
    */
   template?: TemplateOptions;

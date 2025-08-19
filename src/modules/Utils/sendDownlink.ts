@@ -1,6 +1,7 @@
-import Account from "../Resources/AccountDeprecated";
-import Resources from "../Resources/Resources";
-import type { DownlinkOptions } from "./utils.types";
+import Account from "../Resources/AccountDeprecated.ts";
+import type { ConfigurationParams } from "../Resources/devices.types.ts";
+import Resources from "../Resources/Resources.ts";
+import type { DownlinkOptions } from "./utils.types.ts";
 
 interface DownlinkError {
   response?: {
@@ -31,13 +32,14 @@ async function handleDownlinkError(error: DownlinkError): Promise<any> {
  * @param {String} dn_options.payload hexadecimal payload to be sent to the device.
  * @param {Number} [dn_options.port] port to be used for the downlink. Default is 1.
  * @param {Boolean} [dn_options.confirmed] confirmed status, default is false.
- * @requires Device Token Access permission for the Analysis
- * @requires Device Info Access permission for the Analysis
- * @requires Device Configuration Parameters Access permission for the Analysis
- * @requires Network Access permission for the Analysis
+ * @remarks Requires Device Token Access, Device Info Access, Device Configuration Parameters Access, and Network Access permissions for the Analysis
  * @returns
  */
-async function sendDownlink(resource: Account | Resources, device_id: string, dn_options: DownlinkOptions) {
+async function sendDownlink(
+  resource: Account | Resources,
+  device_id: string,
+  dn_options: DownlinkOptions
+): Promise<string> {
   if (!(resource instanceof Account) && !(resource instanceof Resources)) {
     throw "The parameter 'resource' must be an instance of a TagoIO Resource.";
   }
@@ -68,23 +70,23 @@ async function sendDownlink(resource: Account | Resources, device_id: string, dn
 
   // Set the parameters for the device. Some NS like Everynet need this.
   const params = await resource.devices.paramList(device_id);
-  let downlink_param = params.find((x) => x.key === "downlink");
-  downlink_param = {
-    id: downlink_param ? downlink_param.id : null,
+  const downlink_param = params.find((x) => x.key === "downlink");
+  const downlink_params: Partial<ConfigurationParams> = {
     key: "downlink",
     value: String(dn_options.payload),
     sent: false,
+    ...(downlink_param && { id: downlink_param.id }),
   };
 
-  let port_param = params.find((x) => x.key === "port");
-  port_param = {
-    id: port_param ? port_param.id : null,
+  const port_param = params.find((x) => x.key === "port");
+  const port_params: Partial<ConfigurationParams> = {
     key: "port",
     value: String(dn_options.port),
     sent: false,
+    ...(port_param && { id: port_param.id }),
   };
 
-  await resource.devices.paramSet(device_id, [downlink_param, port_param]);
+  await resource.devices.paramSet(device_id, [downlink_params, port_params]);
 
   const data = {
     device: token.serie_number,
@@ -116,6 +118,7 @@ async function sendDownlink(resource: Account | Resources, device_id: string, dn
     return `Downlink accepted with status ${response.status}`;
   } catch (error: any) {
     await handleDownlinkError(error);
+    throw error;
   }
 }
 

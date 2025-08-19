@@ -1,4 +1,4 @@
-import { Utils } from "../../src/modules";
+import { Utils } from "../../src/modules.ts";
 
 const func = async () => {
   return true;

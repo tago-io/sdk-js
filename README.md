@@ -3,12 +3,12 @@
   <img src="https://assets.tago.io/tagoio/sdk.png" width="250px" alt="TagoIO"></img>
 </p>
 
-# TagoIO - SDK for Node.js and Browser
-> TagoIO provides easy connection of electronic devices with external data to driver smarter decisions using contextual analysis.
+# TagoIO - JavaScript SDK
+> TagoIO provides easy connection of electronic devices with external data to drive smarter decisions using contextual analysis. Supports Node.js, Browser, Deno, and Bun environments.
 
 ## Help
 
-TagoIO SDK for JavaScript in the browser and Node.JS.
+Official TagoIO SDK for JavaScript. Works across all major JavaScript runtimes and environments.
 
 | what                  | where                    |
 |-----------------------|--------------------------|
@@ -18,14 +18,24 @@ TagoIO SDK for JavaScript in the browser and Node.JS.
 
 ## Installation
 
+### Node.js & Bun
 ```bash
-$ npm install @tago-io/sdk --save
+npm install @tago-io/sdk
+```
+
+### Deno
+```bash
+deno add @tago-io/sdk
 ```
 
 ## Quick Example
 #### Insert Device Data
-``` javascript
-const { Device } = require("@tago-io/sdk");
+```javascript
+// ESM (recommended)
+import { Device } from "@tago-io/sdk";
+
+// CommonJS
+// const { Device } = require("@tago-io/sdk");
 
 const myDevice = new Device({ token: "00000000-2ec4-11e6-a77d-991b8f63b767" });
 
@@ -53,6 +63,15 @@ async function getMyData() {
 
 // -> See full documentation at: https://js.sdk.tago.io/
 ```
+
+## Runtime Compatibility
+
+| Runtime | ESM | CommonJS | Version |
+|---------|-----|----------|---------|
+| Node.js | ✓   | ✓        | 20+     |
+| Browser | ✓   | -        | Modern  |
+| Deno    | ✓   | -        | 2.0+    |
+| Bun     | ✓   | ✓        | 1.0+    |
 
 ## License
 

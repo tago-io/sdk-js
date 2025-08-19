@@ -1,54 +1,87 @@
-import TagoIOModule from "../../common/TagoIOModule";
-import type { WidgetInfo } from "../Resources/dashboards.types";
-import { convert as convertAngular, isOldStructure as isOldStructureAngular } from "./angular";
-import { convert as convertAreaChart, isOldStructure as isOldStructureAreaChart } from "./areachart";
-import { convert as convertCard, isOldStructure as isOldStructureCard } from "./card";
-import { convert as convertClock, isOldStructure as isOldStructureClock } from "./clock";
-import { convert as convertCompose, isOldStructure as isOldStructureCompose } from "./compose";
-import { convert as convertCustom, isOldStructure as isOldStructureCustom } from "./custom";
-import { convert as convertCylinder, isOldStructure as isOldStructureCylinder } from "./cylinder";
-import { convert as convertDial, isOldStructure as isOldStructureDial } from "./dial";
-import { convert as convertDisplay, isOldStructure as isOldStructureDisplay } from "./display";
-import { convert as convertDynamicTable, isOldStructure as isOldStructureDynamicTable } from "./dynamic_table";
-import { convert as convertGrainBin, isOldStructure as isOldStructureGrainBin } from "./grainbin";
-import { convert as convertHeatMap, isOldStructure as isOldStructureHeatMap } from "./heatmap";
+import TagoIOModule from "../../common/TagoIOModule.ts";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
+import { convert as convertAngular, isOldStructure as isOldStructureAngular } from "./angular.ts";
+import { convert as convertAreaChart, isOldStructure as isOldStructureAreaChart } from "./areachart.ts";
+import { convert as convertCard, isOldStructure as isOldStructureCard } from "./card.ts";
+import { convert as convertClock, isOldStructure as isOldStructureClock } from "./clock.ts";
+import { convert as convertCompose, isOldStructure as isOldStructureCompose } from "./compose.ts";
+import { convert as convertCustom, isOldStructure as isOldStructureCustom } from "./custom.ts";
+import { convert as convertCylinder, isOldStructure as isOldStructureCylinder } from "./cylinder.ts";
+import { convert as convertDial, isOldStructure as isOldStructureDial } from "./dial.ts";
+import { convert as convertDisplay, isOldStructure as isOldStructureDisplay } from "./display.ts";
+import { convert as convertDynamicTable, isOldStructure as isOldStructureDynamicTable } from "./dynamic_table.ts";
+import { convert as convertGrainBin, isOldStructure as isOldStructureGrainBin } from "./grainbin.ts";
+import { convert as convertHeatMap, isOldStructure as isOldStructureHeatMap } from "./heatmap.ts";
 import {
   convert as convertHorizontalBarChart,
   isOldStructure as isOldStructureHorizontalBarChart,
-} from "./horizontalbarchart";
-import { convert as convertIcon, isOldStructure as isOldStructureIcon } from "./icon";
-import { convert as convertImage, isOldStructure as isOldStructureImage } from "./image";
+} from "./horizontalbarchart.ts";
+import { convert as convertIcon, isOldStructure as isOldStructureIcon } from "./icon.ts";
+import { convert as convertImage, isOldStructure as isOldStructureImage } from "./image.ts";
+
+/**
+ * Dashboard widget migration utilities
+ *
+ * This class provides functionality for migrating legacy dashboard widgets to
+ * new formats and structures. Handles conversion of old widget configurations
+ * to modern widget specifications across all widget types.
+ *
+ * @example Basic migration
+ * ```ts
+ * import { Migration } from "@tago-io/sdk";
+ *
+ * const migration = new Migration();
+ *
+ * // Check if widget needs migration
+ * const needsMigration = migration.isOldStructure(oldWidget);
+ *
+ * // Convert old widget to new format
+ * if (needsMigration) {
+ *   const newWidget = migration.convert(oldWidget);
+ * }
+ * ```
+ *
+ * @example Batch migration
+ * ```ts
+ * const widgets = await dashboard.getWidgets();
+ * const migratedWidgets = widgets.map(widget => {
+ *   return migration.isOldStructure(widget)
+ *     ? migration.convert(widget)
+ *     : widget;
+ * });
+ * ```
+ */
 import {
   convert as convertImageMarker,
   convertLayerData,
   isOldStructure as isOldStructureImageMarker,
-} from "./imagemarker";
-import { convert as convertInputControl, isOldStructure as isOldStructureInputControl } from "./inputcontrol";
-import { convert as convertInputForm, isOldStructure as isOldStructureInputForm } from "./inputform";
-import { convert as convertKeypad, isOldStructure as isOldStructureKeypad } from "./keypad";
-import { convert as convertLineChart, isOldStructure as isOldStructureLineChart } from "./linechart";
-import { convert as convertMap, isOldStructure as isOldStructureMap } from "./map";
+} from "./imagemarker.ts";
+import { convert as convertInputControl, isOldStructure as isOldStructureInputControl } from "./inputcontrol.ts";
+import { convert as convertInputForm, isOldStructure as isOldStructureInputForm } from "./inputform.ts";
+import { convert as convertKeypad, isOldStructure as isOldStructureKeypad } from "./keypad.ts";
+import { convert as convertLineChart, isOldStructure as isOldStructureLineChart } from "./linechart.ts";
+import { convert as convertMap, isOldStructure as isOldStructureMap } from "./map.ts";
 import {
   convert as convertMultipleAxisChart,
   isOldStructure as isOldStructureMultipleAxisChart,
-} from "./multipleaxischart";
-import { convert as convertNote, isOldStructure as isOldStructureNote } from "./note";
-import { convert as convertPie, isOldStructure as isOldStructurePie } from "./pie";
-import { convert as convertPushButton, isOldStructure as isOldStructurePushButton } from "./pushbutton";
-import { convert as convertSemiDonut, isOldStructure as isOldStructureSemiDonut } from "./semidonut";
-import { convert as convertSolid, isOldStructure as isOldStructureSolid } from "./solid";
-import { convert as convertStaticTable, isOldStructure as isOldStructureStaticTable } from "./statictable";
-import { convert as convertStepButton, isOldStructure as isOldStructureStepButton } from "./stepbutton";
-import { convert as convertTile, isOldStructure as isOldStructureTile } from "./tile";
+} from "./multipleaxischart.ts";
+import { convert as convertNote, isOldStructure as isOldStructureNote } from "./note.ts";
+import { convert as convertPie, isOldStructure as isOldStructurePie } from "./pie.ts";
+import { convert as convertPushButton, isOldStructure as isOldStructurePushButton } from "./pushbutton.ts";
+import { convert as convertSemiDonut, isOldStructure as isOldStructureSemiDonut } from "./semidonut.ts";
+import { convert as convertSolid, isOldStructure as isOldStructureSolid } from "./solid.ts";
+import { convert as convertStaticTable, isOldStructure as isOldStructureStaticTable } from "./statictable.ts";
+import { convert as convertStepButton, isOldStructure as isOldStructureStepButton } from "./stepbutton.ts";
+import { convert as convertTile, isOldStructure as isOldStructureTile } from "./tile.ts";
 import {
   convert as convertVerticalBarChart,
   isOldStructure as isOldStructureVerticalBarChart,
-} from "./verticalbarchart";
-import { convert as convertVideo, isOldStructure as isOldStructureVideo } from "./video";
-import { convert as convertVuMeter, isOldStructure as isOldStructureVuMeter } from "./vumeter";
+} from "./verticalbarchart.ts";
+import { convert as convertVideo, isOldStructure as isOldStructureVideo } from "./video.ts";
+import { convert as convertVuMeter, isOldStructure as isOldStructureVuMeter } from "./vumeter.ts";
 
 class Migration extends TagoIOModule<any> {
-  public static convertImagerMarkerData(widget: any, widgetData: any) {
+  public static convertImagerMarkerData(widget: any, widgetData: any): any[] {
     return convertLayerData(widget, widgetData);
   }
   /**

@@ -1,4 +1,4 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 
 interface PDFResult {
   status: boolean;
@@ -96,7 +96,7 @@ class PDFService extends TagoIOModule<GenericModuleParams> {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          token: this.params.token,
+          token: this.params.token || "",
         },
         body: JSON.stringify(params),
       });

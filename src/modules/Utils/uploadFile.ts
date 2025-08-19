@@ -1,15 +1,14 @@
 import path from "node:path";
 
-import Account from "../Resources/AccountDeprecated";
-import Resources from "../Resources/Resources";
-import type { UploadFileOptions } from "./utils.types";
+import Account from "../Resources/AccountDeprecated.ts";
+import Resources from "../Resources/Resources.ts";
+import type { UploadFileOptions } from "./utils.types.ts";
 
 type FileURL = string;
 
 /**
  * Upload a file and return it's URL.
- * @requires Profile Access for the Analysis
- * @requires Files Access for the Analysis
+ * @remarks Requires Profile Access and Files Access for the Analysis
  */
 async function uploadFile(resource: Account | Resources, options: UploadFileOptions): Promise<FileURL> {
   if (!(resource instanceof Account) && !(resource instanceof Resources)) {

@@ -1,17 +1,17 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { GenericID } from "../../common/common.types";
-import Devices from "./Devices";
-import type { DeviceQuery } from "./devices.types";
+import type { GenericID } from "../../common/common.types.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import Devices from "./Devices.ts";
+import type { DeviceInfo, DeviceListItem, DeviceQuery } from "./devices.types.ts";
 
 /**
  * @deprecated Use `Resources.devices` instead.
  */
 
 class Buckets extends TagoIOModule<GenericModuleParams> {
-  public devices = new Devices(this.params);
+  public devices: Devices = new Devices(this.params);
 
   /**
-   * @description Lists all devices from your application with pagination.
+   * Lists all devices from your application with pagination.
    *
    * @deprecated Use `Resources.devices.list()` instead
    *
@@ -28,12 +28,22 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * console.log(list);
    * ```
    */
-  public async list<T extends DeviceQuery>(queryObj?: T) {
+  public async list<T extends DeviceQuery>(
+    queryObj?: T
+  ): Promise<
+    DeviceListItem<
+      T["fields"] extends DeviceQuery["fields"]
+        ? T["fields"] extends readonly (keyof any)[]
+          ? T["fields"][number]
+          : "id" | "name"
+        : "id" | "name"
+    >[]
+  > {
     return await this.devices.list(queryObj);
   }
 
   /**
-   * @description Retrieves detailed information about a specific device.
+   * Retrieves detailed information about a specific device.
    *
    * @deprecated Use `Resources.devices.info()` instead
    *
@@ -45,12 +55,12 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * console.log(deviceInfo);
    * ```
    */
-  public async info(deviceID: GenericID) {
+  public async info(deviceID: GenericID): Promise<DeviceInfo> {
     return await this.devices.info(deviceID);
   }
 
   /**
-   * @description Gets the amount of data stored for a device.
+   * Gets the amount of data stored for a device.
    *
    * @example
    * If receive an error "Authorization Denied", check policy **Device** / **Access** in Access Management.
@@ -60,7 +70,7 @@ class Buckets extends TagoIOModule<GenericModuleParams> {
    * console.log(amount);
    * ```
    */
-  public async amount(deviceID: GenericID) {
+  public async amount(deviceID: GenericID): Promise<number> {
     return await this.devices.amount(deviceID);
   }
 }

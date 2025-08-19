@@ -1,10 +1,10 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 
 type TagTypes = "bucket" | "device" | "dashboard" | "action" | "analysis" | "tcore" | "run_users" | "secrets";
 
 class Tags extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Retrieves all available tag keys for a specific resource type in the account.
+   * Retrieves all available tag keys for a specific resource type in the account.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/tags} Tags System
    *

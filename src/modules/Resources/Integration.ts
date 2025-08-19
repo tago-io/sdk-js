@@ -1,11 +1,11 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import Connectors from "./Integration.Connectors";
-import Networks from "./Integration.Networks";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import Connectors from "./Integration.Connectors.ts";
+import Networks from "./Integration.Networks.ts";
 
 class Integration extends TagoIOModule<GenericModuleParams> {
-  public connectors = new Connectors(this.params);
+  public connectors: Connectors = new Connectors(this.params);
 
-  public networks = new Networks(this.params);
+  public networks: Networks = new Networks(this.params);
 }
 
 export default Integration;

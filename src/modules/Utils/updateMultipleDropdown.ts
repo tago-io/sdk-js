@@ -1,13 +1,17 @@
-import type Device from "../Device/Device";
+import type Device from "../Device/Device.ts";
 
 /**
  * Go through variables used in Multiple Dropdown variables and remove a specified value.
  * Then updates the variables.
  * @param device TagoIO Device instanced class.
  * @param variables variables inside the device to be verified.
- * @param value value to be removed.
+ * @param values values to be removed.
  */
-async function updateMultipleDropdown(device: Device, variables: string | string[], values: string | string[]) {
+async function updateMultipleDropdown(
+  device: Device,
+  variables: string | string[],
+  values: string | string[]
+): Promise<void> {
   const fixed_values = Array.isArray(values) ? values : [values];
 
   const data_list = await device.getData({ variables, qty: 999 });

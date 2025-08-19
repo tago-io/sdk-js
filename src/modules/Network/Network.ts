@@ -1,9 +1,29 @@
-import TagoIOModule, { type ConnectorModuleParams } from "../../common/TagoIOModule";
-import type { GenericID, GenericToken } from "../../common/common.types";
-import type { ConfigurationParams } from "../Resources/devices.types";
-import dateParser from "../Utils/dateParser";
-import type { INetworkInfo, NetworkDeviceListQuery, NetworkDeviceListQueryInfo } from "./network.types";
+import type { GenericID, GenericToken } from "../../common/common.types.ts";
+import TagoIOModule, { type ConnectorModuleParams } from "../../common/TagoIOModule.ts";
+import type { ConfigurationParams } from "../Resources/devices.types.ts";
+import dateParser from "../Utils/dateParser.ts";
+import type { INetworkInfo, NetworkDeviceListQuery, NetworkDeviceListQueryInfo } from "./network.types.ts";
 
+/**
+ * Network connector operations
+ *
+ * This class provides functionality for managing network connectors in TagoIO,
+ * including device management, data processing, and network-specific operations.
+ * Used primarily for building custom network integrations and connectors.
+ *
+ * @example Basic network usage
+ * ```ts
+ * import { Network } from "@tago-io/sdk";
+ *
+ * const network = new Network({
+ *   token: "your-connector-token",
+ *   details: { connector_id: "connector-id" }
+ * });
+ *
+ * const info = await network.info();
+ * const devices = await network.deviceList();
+ * ```
+ */
 class Network extends TagoIOModule<ConnectorModuleParams> {
   /**
    * Get information about the current network
@@ -47,9 +67,8 @@ class Network extends TagoIOModule<ConnectorModuleParams> {
    * @param options.topic The topic to publish to
    * @param options.message The message to publish (optional)
    * @param options.qos Quality of Service level (optional)
-   * @param options.bucket The bucket to publish to (optional)
    * @param options.retain Whether to retain the message (optional)
-   * @param options.device The device to publish to (optional)
+   * @param options.device The device to publish to
    * @returns A promise that resolves when the message is published
    */
   public async publishToRelay(options: {

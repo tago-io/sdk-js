@@ -2,8 +2,8 @@
 // * What is this file?
 //     Migration of old DIAL to new DIAL.
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
-import { convertFormula, convertRange } from "./common";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
+import { convertFormula, convertRange } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};
@@ -74,7 +74,7 @@ export function convert(oldWidget: any): WidgetInfo {
   return newStructure;
 }
 
-export function isOldStructure(widget: any) {
+export function isOldStructure(widget: any): any {
   const isOld = !!(
     widget?.display?.vars_labels ||
     widget?.display?.vars_format ||

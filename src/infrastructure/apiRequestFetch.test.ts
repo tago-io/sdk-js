@@ -1,8 +1,8 @@
-import { http, HttpResponse, delay } from "msw";
+import { delay, HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
-import type { RequestConfig } from "../common/common.types";
-import config from "../config";
-import apiRequest from "./apiRequest";
+import type { RequestConfig } from "../common/common.types.ts";
+import config from "../config.ts";
+import apiRequest from "./apiRequest.ts";
 
 // Mock the config to control request attempts and timeout
 vi.mock("../config", () => ({
@@ -13,10 +13,8 @@ vi.mock("../config", () => ({
 }));
 
 // Mock environment params
-vi.mock("./envParams.json", () => ({
-  default: {
-    version: "1.0.0",
-  },
+vi.mock("./envParams.ts", () => ({
+  version: "1.0.0",
 }));
 
 // Mock isBrowser to return false for Node.js environment

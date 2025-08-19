@@ -1,5 +1,5 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { EmailBase, EmailHTML, EmailRawText, EmailWithTemplate } from "./Email";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import type { EmailBase, EmailHTML, EmailRawText, EmailWithTemplate } from "./Email.ts";
 
 type SMTPCredentials = {
   smtp_secret: string | { smtp_server: string; smtp_port: number; username: string; password: string };

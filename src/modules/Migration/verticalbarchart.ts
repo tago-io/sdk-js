@@ -3,8 +3,8 @@
 //     Migration of old VARTICAL BAR CHART to new VERTICAL BAR CHART
 // ? ====================================================================================
 
-import type { WidgetInfo } from "../Resources/dashboards.types";
-import { chartColors, convertDownsample, convertFormula, convertInterval } from "./common";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
+import { chartColors, convertDownsample, convertFormula, convertInterval } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};
@@ -122,7 +122,7 @@ export function convert(oldWidget: any): WidgetInfo {
   return newStructure;
 }
 
-export function isOldStructure(widget: any) {
+export function isOldStructure(widget: any): any {
   const isOld = !!(
     widget?.display?.vars_labels ||
     widget?.display?.vars_format ||

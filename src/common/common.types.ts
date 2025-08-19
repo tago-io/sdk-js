@@ -1,4 +1,4 @@
-import type { OTPType } from "../types";
+import type { OTPType } from "../types.ts";
 
 /**
  * Request configuration interface for API requests (replaces AxiosRequestConfig)
@@ -12,6 +12,9 @@ export interface RequestConfig {
   timeout?: number;
 }
 
+/**
+ * Metadata interface for data enrichment and visualization
+ */
 interface Metadata {
   color?: string;
   x?: string | number;
@@ -37,13 +40,17 @@ interface Metadata {
   [key: string]: any;
 }
 
+/** Latitude coordinate type */
 type Latitude = number;
+/** Longitude coordinate type */
 type Longitude = number;
+/** GeoJSON Point location format */
 type LocationGeoJSON = {
   type: "Point";
   coordinates: [Longitude, Latitude];
 };
 
+/** Latitude/Longitude location format */
 type LocationLatLng = { lat: number; lng: number };
 
 /** Type for the data returned from the API. */

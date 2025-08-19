@@ -3,9 +3,9 @@
 //     Migration of old ANGULAR to new ANGULAR.
 // ? ====================================================================================
 
-import type { WidgetInfo } from "../Resources/dashboards.types";
-import convertFormula from "./common/convertFormula";
-import convertRange from "./common/convertRange";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
+import convertFormula from "./common/convertFormula.ts";
+import convertRange from "./common/convertRange.ts";
 
 /**
  * Takes the OLD widget and returns the NEW structure.

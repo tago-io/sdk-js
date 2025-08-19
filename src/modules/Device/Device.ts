@@ -1,9 +1,9 @@
-import TagoIOModule from "../../common/TagoIOModule";
-import { chunk } from "../../common/chunk";
-import type { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types";
-import sleep from "../../common/sleep";
-import type { ConfigurationParams } from "../Resources/devices.types";
-import dateParser from "../Utils/dateParser";
+import { chunk } from "../../common/chunk.ts";
+import type { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types.ts";
+import sleep from "../../common/sleep.ts";
+import TagoIOModule from "../../common/TagoIOModule.ts";
+import type { ConfigurationParams } from "../Resources/devices.types.ts";
+import dateParser from "../Utils/dateParser.ts";
 import type {
   DataQuery,
   DataQueryAggregate,
@@ -15,8 +15,44 @@ import type {
   DeviceConstructorParams,
   DeviceItem,
   OptionsStreaming,
-} from "./device.types";
+} from "./device.types.ts";
 
+/**
+ * Device class for IoT device operations
+ *
+ * This class provides comprehensive functionality for managing IoT devices, including
+ * sending and retrieving data, streaming real-time data, and managing device configurations.
+ * Each device instance requires a valid device token for authentication.
+ *
+ * @example Basic usage
+ * ```ts
+ * import { Device } from "@tago-io/sdk";
+ *
+ * const device = new Device({ token: "your-device-token" });
+ *
+ * // Send data to device
+ * await device.sendData({
+ *   variable: "temperature",
+ *   value: 25.6,
+ *   unit: "°C",
+ *   time: new Date()
+ * });
+ *
+ * // Get data from device
+ * const data = await device.getData({
+ *   variables: ["temperature"],
+ *   qty: 10
+ * });
+ * ```
+ *
+ * @example Data streaming
+ * ```ts
+ * // Stream real-time data
+ * for await (const chunk of device.getDataStreaming({ variables: ["sensor1"] })) {
+ *   console.log("New data:", chunk);
+ * }
+ * ```
+ */
 class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
    * Get information about the current device
@@ -240,7 +276,10 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    * }
    * ```
    */
-  public async *getDataStreaming(params?: DataQueryStreaming, options?: OptionsStreaming) {
+  public async *getDataStreaming(
+    params?: DataQueryStreaming,
+    options?: OptionsStreaming
+  ): AsyncGenerator<Data[], void, unknown> {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
     const poolingTime = options?.poolingTime || 1000; // 1 seg
     const neverStop = options?.neverStop || false;
@@ -301,7 +340,7 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    *   });
    * ```
    */
-  public async sendDataStreaming(data: DataCreate[], options: Omit<OptionsStreaming, "neverStop">) {
+  public async sendDataStreaming(data: DataCreate[], options: Omit<OptionsStreaming, "neverStop">): Promise<string> {
     const poolingRecordQty = options?.poolingRecordQty || 1000;
     const poolingTime = options?.poolingTime || 1000; // 1 seg
 

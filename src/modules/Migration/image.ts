@@ -2,7 +2,7 @@
 // * What is this file?
 //     Migration of old IMAGE to new IMAGE
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
 
 function convertSource(oldDisplay: any) {
   const { type_image } = oldDisplay;
@@ -64,7 +64,7 @@ export function convert(oldWidget: any): WidgetInfo {
   return newStructure;
 }
 
-export function isOldStructure(widget: any) {
+export function isOldStructure(widget: any): any {
   const isOld = !!(
     widget?.display?.type_media ||
     widget?.display?.type_image ||

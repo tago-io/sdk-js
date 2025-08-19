@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/tile";
+import { convert, isOldStructure } from "../../src/modules/Migration/tile.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.tileStructure;

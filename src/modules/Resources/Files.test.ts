@@ -1,15 +1,13 @@
-import { http, HttpResponse } from "msw";
+import { HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 import type { MockInstance } from "vitest";
 
-import Files from "./Files";
+import Files from "./Files.ts";
 
 const DEFAULT_FILENAME = "test.txt";
 const DEFAULT_UPLOAD_ID = "SOME_UPLOAD_ID";
 
-function createMultipartStartHandler(options?: {
-  uploadID?: string;
-}) {
+function createMultipartStartHandler(options?: { uploadID?: string }) {
   const uploadID = options?.uploadID || DEFAULT_UPLOAD_ID;
 
   return http.post("https://api.tago.io/files", async ({ request }) => {
@@ -39,9 +37,7 @@ function createMultipartStartHandler(options?: {
   });
 }
 
-function createMultipartUploadHandler(options?: {
-  expectedUploadID?: string;
-}) {
+function createMultipartUploadHandler(options?: { expectedUploadID?: string }) {
   const expectedUploadID = options?.expectedUploadID || DEFAULT_UPLOAD_ID;
 
   return http.post("https://api.tago.io/files", async ({ request }) => {

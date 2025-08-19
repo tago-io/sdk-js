@@ -3,8 +3,8 @@
 //     Migration of old AREA CHART to new AREA CHART.
 // ? ====================================================================================
 
-import type { WidgetInfo } from "../Resources/dashboards.types";
-import { chartColors, convertDownsample, convertFormula, convertInterval } from "./common";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
+import { chartColors, convertDownsample, convertFormula, convertInterval } from "./common/index.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};

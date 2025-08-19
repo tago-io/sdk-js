@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/inputcontrol";
+import { convert, isOldStructure } from "../../src/modules/Migration/inputcontrol.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.inputcontrolStructure;

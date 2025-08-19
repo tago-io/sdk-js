@@ -1,4 +1,4 @@
-import type { GenericID } from "../../types";
+import type { GenericID } from "../../types.ts";
 
 /**
  * Token used on TagoIO, string with 34 characters

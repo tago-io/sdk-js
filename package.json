@@ -1,13 +1,27 @@
 {
   "name": "@tago-io/sdk",
-  "version": "12.0.3",
+  "version": "12.1.4",
   "description": "TagoIO SDK for JavaScript in the browser and Node.js",
   "author": "TagoIO Inc.",
   "homepage": "https://tago.io",
   "license": "Apache-2.0",
   "repository": "tago-io/sdk-js.git",
-  "main": "./lib/modules.js",
+  "type": "module",
+  "main": "./lib/modules.cjs",
+  "module": "./lib/modules.js",
   "types": "./lib/modules.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./lib/modules.d.ts",
+        "default": "./lib/modules.js"
+      },
+      "require": {
+        "types": "./lib/modules.d.cts",
+        "default": "./lib/modules.cjs"
+      }
+    }
+  },
   "private": false,
   "keywords": [
     "tago",
@@ -25,7 +39,10 @@
   },
   "scripts": {
     "prepublishOnly": "npm run build",
-    "build": "rm -rf ./lib; node updateEnv.js; tsc",
+    "build": "rm -rf ./lib; node updateEnv.cjs; tsdown",
+    "publish:npm": "npm publish",
+    "publish:jsr": "deno publish",
+    "publish:all": "npm run publish:npm && npm run publish:jsr",
     "linter": "biome lint .",
     "format": "biome format --write .",
     "check": "biome check --write .",
@@ -35,19 +52,20 @@
     "link": "yalc publish"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.1.3",
     "@types/node": "22.15.25",
     "@types/papaparse": "5.3.16",
     "@types/qs": "6.14.0",
     "dts-bundle-generator": "9.5.1",
-    "msw": "2.8.7",
-    "typedoc": "0.28.1",
+    "msw": "2.10.4",
+    "tsdown": "0.13.1",
+    "typedoc": "0.28.9",
     "typedoc-plugin-missing-exports": "4.0.0",
     "typescript": "5.8.3",
-    "vitest": "3.1.4"
+    "vitest": "3.2.4"
   },
   "dependencies": {
-    "nanoid": "3.3.11",
+    "nanoid": "5.1.5",
     "papaparse": "5.5.3",
     "qs": "6.14.0"
   },

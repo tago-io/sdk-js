@@ -1,5 +1,5 @@
-import type { Data, ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types";
-import type { BucketDeviceInfo } from "./buckets.types";
+import type { Data, ExpireTimeOption, GenericID, GenericToken, Query, TagsObj } from "../../common/common.types.ts";
+import type { BucketDeviceInfo } from "./buckets.types.ts";
 
 interface Arrangement {
   widget_id: string;

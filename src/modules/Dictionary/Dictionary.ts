@@ -1,21 +1,62 @@
 import * as Papa from "papaparse";
 
-import TagoIOModule from "../../common/TagoIOModule";
-import type { LanguageData } from "../Resources/dictionaries.types";
+import TagoIOModule from "../../common/TagoIOModule.ts";
+import type { LanguageData } from "../Resources/dictionaries.types.ts";
 import type {
   IApplyToStringOptions,
   IDictionaryModuleParams,
   IDictionaryModuleParamsAnonymous,
   IParsedExpression,
   IResolveExpressionParams,
-} from "./dictionary.types";
+} from "./dictionary.types.ts";
 
-// Regular expressions that are used for parsing the strings:
-// - SPLIT is used to split the string into normal words/phrases and expressions
-// - MATCH is used to extract the parts that compose an expression
-const RE_SPLIT_EXPRESSION = /(#[A-Z0-9]+\.[A-Z0-9_]+(?:,(?:[^,#"]+|\"[^\"]+\")+)*#)/;
-const RE_MATCH_EXPRESSION = /#([A-Z0-9]+)\.([A-Z0-9_]+(?:,(?:[^,#"]+|\"[^\"]+\")+)*)#/;
+// Constants for better maintainability
+const CACHE_TTL = 3600000; // 1 hour in milliseconds
+const MAX_PARAM_INDEX = 100; // Maximum parameter index to prevent abuse
+const EXPRESSION_DELIMITER = "#";
+const DICTIONARY_KEY_SEPARATOR = ".";
+const PARAM_SEPARATOR = ",";
 
+// Regex patterns compiled once for performance
+const DICTIONARY_NAME_PATTERN = /[A-Z0-9_]/;
+const KEY_NAME_PATTERN = /[A-Z0-9_,]/;
+const EXPRESSION_PATTERN = /^#([A-Z0-9]+)\.([A-Z0-9_]+(?:,.*)?)#$/;
+
+/**
+ * Multi-language support for TagoIO applications
+ *
+ * This class provides internationalization (i18n) functionality for TagoIO applications,
+ * allowing you to manage translations and apply language-specific content dynamically.
+ * Supports expression parsing, language switching, and translation management.
+ *
+ * @example Basic dictionary usage
+ * ```ts
+ * import { Dictionary } from "@tago-io/sdk";
+ *
+ * const dictionary = new Dictionary({
+ *   token: "your-token",
+ *   language: "en"
+ * });
+ *
+ * // Apply translations to a string
+ * const translated = await dictionary.applyToString(
+ *   "Welcome #DICT.GREETING#!",
+ *   { language: "pt" }
+ * );
+ * ```
+ *
+ * @example Expression parsing
+ * ```ts
+ * // Parse translation expressions
+ * const expressions = dictionary.getExpressionsFromString("#DICT.HELLO# #DICT.WORLD#");
+ *
+ * // Resolve specific expression
+ * const value = await dictionary.resolveExpression({
+ *   expression: { scope: "DICT", key: "HELLO" },
+ *   language: "es"
+ * });
+ * ```
+ */
 class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
   public language: string;
   public runURL?: string;
@@ -31,35 +72,32 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
   /**
    * Get the language data for a dictionary.
    *
-   * @param language Language.
-   * @param dictionary ID or Slug.
+   * @param dictionary ID or Slug of the dictionary
+   * @param language Language code (defaults to instance language)
+   * @returns Language data or null if not found
+   * @throws Error if parameters are missing
    */
-  public async getLanguagesData(dictionary: string, language = this.language): Promise<LanguageData> {
-    if (!language || !dictionary) {
-      throw new Error("Missing parameters");
+  public async getLanguagesData(dictionary: string, language: string = this.language): Promise<LanguageData | null> {
+    if (!dictionary?.trim()) {
+      throw new Error("Dictionary parameter is required");
+    }
+    if (!language?.trim()) {
+      throw new Error("Language parameter is required");
     }
 
     try {
-      if (!this.runURL) {
-        const response = await this.doRequest<LanguageData>({
-          path: `/dictionary/${dictionary}/${language}`,
-          method: "GET",
-          cacheTTL: 3600000,
-          params: {
-            fallback: true,
-          },
-        });
-        return response;
-      }
-      const response = await TagoIOModule.doRequestAnonymous<LanguageData>(
-        {
-          path: `/dictionary/${this.runURL}/${dictionary}/${language}`,
-          method: "GET",
-          cacheTTL: 3600000,
-        },
-        this.params.region
-      );
-      return response;
+      const requestConfig = {
+        path: this.runURL
+          ? `/dictionary/${this.runURL}/${dictionary}/${language}`
+          : `/dictionary/${dictionary}/${language}`,
+        method: "GET" as const,
+        cacheTTL: CACHE_TTL,
+        ...(this.runURL ? {} : { params: { fallback: true } }),
+      };
+
+      return this.runURL
+        ? await TagoIOModule.doRequestAnonymous<LanguageData>(requestConfig, this.params.region)
+        : await this.doRequest<LanguageData>(requestConfig);
     } catch (_e) {
       return null;
     }
@@ -68,39 +106,96 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
   /**
    * Get value from a key in a specific dictionary for a language.
    *
-   * @param language Name of the language (locale code).
-   * @param dictionary Name of the dictionary.
-   * @param key Name of the key.
+   * @param language Name of the language (locale code)
+   * @param dictionary Name of the dictionary
+   * @param key Name of the key
+   * @returns The translated value or the expression if not found
+   * @throws Error if parameters are missing
    *
    * @example
    * ```
    * const dictionary = new Dictionary({ language: "en-US", token: "my-token" });
-   * const value = dictionary.getValueFromKey("en-US", "TEST", "OK_BUTTON_LABEL");
+   * const value = await dictionary.getValueFromKey("en-US", "TEST", "OK_BUTTON_LABEL");
    * ```
    */
   public async getValueFromKey(language: string, dictionary: string, key: string): Promise<string> {
-    if (!language || !dictionary || !key) {
-      throw new Error("Missing parameters");
+    if (!language?.trim()) {
+      throw new Error("Language parameter is required");
+    }
+    if (!dictionary?.trim()) {
+      throw new Error("Dictionary parameter is required");
+    }
+    if (!key?.trim()) {
+      throw new Error("Key parameter is required");
     }
 
-    // Get the dictionary language data from the profile route or anonymous route (Run)
     const languagesData = await this.getLanguagesData(dictionary, language);
 
-    // Return expression as is if the request fails or either dictionary/key do not exist
-    if (!languagesData || !languagesData[key]) {
-      return `#${dictionary}.${key}#`;
+    // Return expression as is if the request fails or key doesn't exist
+    if (!languagesData || !(key in languagesData)) {
+      return `${EXPRESSION_DELIMITER}${dictionary}${DICTIONARY_KEY_SEPARATOR}${key}${EXPRESSION_DELIMITER}`;
     }
 
     return languagesData[key];
   }
 
   /**
+   * Safely extract a dictionary expression from a string, handling quoted parameters with hashtags.
+   * @private
+   */
+  private extractExpression(text: string, startIndex: number): string | null {
+    if (!text.startsWith(EXPRESSION_DELIMITER, startIndex)) {
+      return null;
+    }
+
+    let i = startIndex + 1;
+    let inQuotes = false;
+    let foundDot = false;
+
+    // Find dictionary.key part
+    while (i < text.length) {
+      const char = text[i];
+      if (char === DICTIONARY_KEY_SEPARATOR) {
+        foundDot = true;
+      } else if (char === PARAM_SEPARATOR && foundDot) {
+        break; // Start of parameters
+      } else if (char === EXPRESSION_DELIMITER && !inQuotes && foundDot) {
+        // End of expression without parameters
+        return text.substring(startIndex, i + 1);
+      } else if (!foundDot && !DICTIONARY_NAME_PATTERN.test(char)) {
+        return null; // Invalid dictionary name
+      } else if (foundDot && !KEY_NAME_PATTERN.test(char)) {
+        return null; // Invalid key name (before parameters)
+      }
+      i++;
+    }
+
+    if (!foundDot) {
+      return null;
+    }
+
+    // Parse parameters if present
+    while (i < text.length) {
+      const char = text[i];
+      if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === EXPRESSION_DELIMITER && !inQuotes) {
+        return text.substring(startIndex, i + 1);
+      }
+      i++;
+    }
+
+    return null; // No closing delimiter
+  }
+
+  /**
    * Parse an expression and extract the names of the dictionary, the key, and
    * any arguments that are passed in the expression.
    *
-   * Returns `null` if the value passed is not parseable by the RegEx.
+   * Returns `null` if the value passed is not parseable
    *
-   * @param expression String expression.
+   * @param expression String expression
+   * @returns Parsed expression or null if invalid
    *
    * @example
    * ```
@@ -108,19 +203,26 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * const value = dictionary.parseExpression("#TAGORUN.WELCOME_TEXT,Hello");
    * ```
    */
-  public parseExpression(expression: string): IParsedExpression {
-    const splitExpression = expression.match(RE_MATCH_EXPRESSION);
-    if (!splitExpression) {
+  public parseExpression(expression: string): IParsedExpression | null {
+    const extractedExpression = this.extractExpression(expression, 0);
+    if (!extractedExpression || extractedExpression !== expression) {
       return null;
     }
 
-    const dictionary = splitExpression[1];
-    const keyWithParams = splitExpression[2];
+    const match = expression.match(EXPRESSION_PATTERN);
+    if (!match) {
+      return null;
+    }
 
-    if (expression.includes(",")) {
+    const dictionary = match[1];
+    const keyWithParams = match[2];
+
+    if (expression.includes(PARAM_SEPARATOR)) {
       const { data } = Papa.parse<string[]>(keyWithParams);
+      if (!data?.[0]) {
+        return null;
+      }
       const [key, ...params] = data[0];
-
       return { dictionary, key, params };
     }
 
@@ -131,19 +233,18 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * Resolve an expression in a language, replacing the parameters in the
    * dictionary value with the arguments passed in the expression.
    *
-   * @param resolveParams Object with the language and the parsed expression (from `parseExpression`).
+   * @param resolveParams Object with the language and the parsed expression
+   * @returns Resolved string with parameters replaced
    *
    * @example
    * ```
    * const dictionary = new Dictionary({ language: "en-US", token: "my-token" });
-   * const value = dictionary.resolveExpression({
+   * const value = await dictionary.resolveExpression({
    *   language: "en-US",
    *   expression: {
    *     dictionary: "TEST",
    *     key: "SOME_KEY",
-   *     params: [
-   *       "first parameter",
-   *     ],
+   *     params: ["first parameter"],
    *   },
    * });
    * ```
@@ -151,14 +252,21 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
   public async resolveExpression(resolveParams: IResolveExpressionParams): Promise<string> {
     const { language, expression } = resolveParams;
     const { dictionary, key, params } = expression;
-    let resolvedString: string;
 
-    // Get the dictionary value string for the expression to substitute the arguments into it
-    resolvedString = await this.getValueFromKey(language, dictionary, key);
-    params.forEach((substitution, index) => {
-      const subRegexp = new RegExp(`\\$${index}`, "g");
-      resolvedString = resolvedString.replace(subRegexp, substitution);
-    });
+    // Get the dictionary value string for the expression
+    let resolvedString = await this.getValueFromKey(language, dictionary, key);
+
+    // Replace parameters if they exist
+    if (params && params.length > 0) {
+      params.forEach((substitution, index) => {
+        // Safely escape the index and limit to reasonable range to prevent ReDoS
+        if (index >= 0 && index < MAX_PARAM_INDEX) {
+          const escapedIndex = String(index).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          const subRegexp = new RegExp(`\\$${escapedIndex}`, "g");
+          resolvedString = resolvedString.replace(subRegexp, substitution);
+        }
+      });
+    }
 
     return resolvedString;
   }
@@ -167,20 +275,36 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * Get all (and only) the expressions in a string and their parameters if applicable,
    * ignoring normal words and phrases.
    *
-   * @param rawString String with words and/or expressions.
+   * @param rawString String with words and/or expressions
+   * @returns Array of parsed expressions found in the string
    *
    * @example
    * ```
    * const dictionary = new Dictionary({ language: "en-US", token: "my-token" });
-   * const expressions = dictionary.getExpressionsFromString("Words are ignored #TEST.DICT_KEY#");
+   * const expressions = await dictionary.getExpressionsFromString("Words are ignored #TEST.DICT_KEY#");
    * ```
    */
   public async getExpressionsFromString(rawString: string): Promise<IParsedExpression[]> {
-    const tokens = rawString.split(RE_SPLIT_EXPRESSION);
+    const expressions: IParsedExpression[] = [];
+    let i = 0;
 
-    const expressions = tokens
-      .filter((token) => RE_SPLIT_EXPRESSION.test(token))
-      .map((expression) => this.parseExpression(expression));
+    while (i < rawString.length) {
+      const hashIndex = rawString.indexOf(EXPRESSION_DELIMITER, i);
+      if (hashIndex === -1) {
+        break;
+      }
+
+      const expression = this.extractExpression(rawString, hashIndex);
+      if (expression) {
+        const parsed = this.parseExpression(expression);
+        if (parsed) {
+          expressions.push(parsed);
+        }
+        i = hashIndex + expression.length;
+      } else {
+        i = hashIndex + 1;
+      }
+    }
 
     return expressions;
   }
@@ -194,55 +318,58 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
    * the raw string with no changes if there are no expressions, and an empty string if `rawString`
    * is undefined.
    *
-   * @param rawString String with words and/or expressions.
-   * @param options Object containing options for the dictionary, including the language.
+   * @param rawString String with words and/or expressions
+   * @param _options Object containing options for the dictionary
+   * @returns Translated string with all expressions replaced
    *
    * @example
    * ```
    * const dictionary = new Dictionary({ language: "en-US", token: "my-token" });
-   * const result = dictionary.applyToString("Words are ignored #TEST.DICT_KEY#");
+   * const result = await dictionary.applyToString("Words are ignored #TEST.DICT_KEY#");
    * ```
    */
   public async applyToString(rawString: string, _options?: IApplyToStringOptions): Promise<string> {
     const { language } = this;
 
-    // Handling undefined strings is not this function's job
+    // Validate inputs
     if (!rawString || !language) {
       return rawString || "";
     }
 
-    // Bail early if there are no variables in the string or if the value passed
-    // is not a string, which can happen when not using TypeScript or passing the
-    // instance to a function without the type
-    if (typeof rawString !== "string" || !rawString.includes("#")) {
+    // Early return for non-string values or strings without expressions
+    if (typeof rawString !== "string" || !rawString.includes(EXPRESSION_DELIMITER)) {
       return rawString;
     }
 
-    const tokenized = rawString.split(RE_SPLIT_EXPRESSION);
+    let result = rawString;
+    let i = 0;
 
-    const substitutedPromises = tokenized.map((token) => {
-      const isExpression = token.startsWith("#") && token.endsWith("#");
-      if (isExpression) {
-        const expression = this.parseExpression(token);
-        if (!expression) {
-          return token;
-        }
-
-        const { dictionary, key, params } = expression;
-
-        return params
-          ? this.resolveExpression({ language, expression })
-          : this.getValueFromKey(language, dictionary, key);
+    while (i < result.length) {
+      const hashIndex = result.indexOf(EXPRESSION_DELIMITER, i);
+      if (hashIndex === -1) {
+        break;
       }
-      return token;
-    });
 
-    let resultString: string;
-    await Promise.all(substitutedPromises).then((resolvedValues) => {
-      resultString = resolvedValues.join("");
-    });
+      const expression = this.extractExpression(result, hashIndex);
+      if (expression) {
+        const parsed = this.parseExpression(expression);
+        if (parsed) {
+          const { dictionary, key, params } = parsed;
+          const replacement = params
+            ? await this.resolveExpression({ language, expression: parsed })
+            : await this.getValueFromKey(language, dictionary, key);
 
-    return resultString;
+          result = result.substring(0, hashIndex) + replacement + result.substring(hashIndex + expression.length);
+          i = hashIndex + replacement.length;
+        } else {
+          i = hashIndex + 1;
+        }
+      } else {
+        i = hashIndex + 1;
+      }
+    }
+
+    return result;
   }
 }
 

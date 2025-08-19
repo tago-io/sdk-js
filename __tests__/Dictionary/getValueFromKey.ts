@@ -1,7 +1,7 @@
 import type { MockInstance } from "vitest";
 
-import { Dictionary } from "../../src/modules";
-import { enUS, ptBR } from "./__mocks__/dictionaries";
+import { Dictionary } from "../../src/modules.ts";
+import { enUS, ptBR } from "./__mocks__/dictionaries.ts";
 
 describe("getValueFromKey", () => {
   let dictionary: Dictionary;

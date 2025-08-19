@@ -1,4 +1,4 @@
-import { convert, isOldStructure } from "../../src/modules/Migration/clock";
+import { convert, isOldStructure } from "../../src/modules/Migration/clock.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.clockStructure;

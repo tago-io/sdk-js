@@ -1,7 +1,7 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { GenericID, RecursivePartial } from "../../common/common.types";
-import dateParser from "../Utils/dateParser";
-import type { NotificationCreate, NotificationInfo } from "./notifications.types";
+import type { GenericID, RecursivePartial } from "../../common/common.types.ts";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import dateParser from "../Utils/dateParser.ts";
+import type { NotificationCreate, NotificationInfo } from "./notifications.types.ts";
 import type {
   CustomDomainCreate,
   CustomDomainInfo,
@@ -16,11 +16,11 @@ import type {
   UserInfo,
   UserListItem,
   UserQuery,
-} from "./run.types";
+} from "./run.types.ts";
 
 class Run extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Retrieves information about the current Run environment configuration.
+   * Retrieves information about the current Run environment configuration.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    * @see {@link https://help.tago.io/portal/en/kb/articles/run-themes} Run Themes
@@ -42,7 +42,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates the Run environment configuration settings.
+   * Updates the Run environment configuration settings.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    * @see {@link https://help.tago.io/portal/en/kb/articles/run-themes} Run Themes
@@ -65,7 +65,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves a paginated list of Run users with customizable fields and filtering options.
+   * Retrieves a paginated list of Run users with customizable fields and filtering options.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
@@ -81,9 +81,25 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * console.log(result); // [ { id: 'user-id-123', name: 'John Doe', email: 'example@email.com' } ]
    * ```
    */
-  public async listUsers<T extends UserQuery>(query: T) {
+  public async listUsers<T extends UserQuery>(
+    query: T
+  ): Promise<
+    UserListItem<
+      T["fields"] extends UserQuery["fields"]
+        ? T["fields"] extends readonly (keyof any)[]
+          ? T["fields"][number]
+          : never
+        : "id" | "name"
+    >[]
+  > {
     let result = await this.doRequest<
-      UserListItem<T["fields"] extends UserQuery["fields"] ? T["fields"][number] : "id" | "name">[]
+      UserListItem<
+        T["fields"] extends UserQuery["fields"]
+          ? T["fields"] extends readonly (keyof any)[]
+            ? T["fields"][number]
+            : never
+          : "id" | "name"
+      >[]
     >({
       path: "/run/users",
       method: "GET",
@@ -102,7 +118,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific Run user.
+   * Retrieves detailed information about a specific Run user.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
@@ -125,7 +141,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new user in the Run environment.
+   * Creates a new user in the Run environment.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
@@ -152,7 +168,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates information for an existing Run user.
+   * Updates information for an existing Run user.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
@@ -175,7 +191,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Permanently deletes a user from the Run environment.
+   * Permanently deletes a user from the Run environment.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
@@ -196,7 +212,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Generates a login token to authenticate as a specific Run user.
+   * Generates a login token to authenticate as a specific Run user.
    *
    * @example
    * If receive an error "Authorization Denied", check policy **Run User** / **Login as user** in Access Management.
@@ -218,7 +234,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Tests the email configuration by sending a test message.
+   * Tests the email configuration by sending a test message.
    *
    * @example
    * ```typescript
@@ -238,7 +254,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves a list of notifications for a specific Run user.
+   * Retrieves a list of notifications for a specific Run user.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/223-notifications-for-users} Notifications for Users
    *
@@ -259,7 +275,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new notification for a Run user.
+   * Creates a new notification for a Run user.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/223-notifications-for-users} Notifications for Users
    *
@@ -284,7 +300,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates an existing notification in the Run environment.
+   * Updates an existing notification in the Run environment.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/223-notifications-for-users} Notifications for Users
    *
@@ -306,7 +322,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Deletes a notification from the Run environment.
+   * Deletes a notification from the Run environment.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/223-notifications-for-users} Notifications for Users
    *
@@ -327,7 +343,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves the SAML Single Sign-On configuration information for the Run environment.
+   * Retrieves the SAML Single Sign-On configuration information for the Run environment.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/492-okta-sso} Okta SSO
    * @see {@link https://help.tago.io/portal/en/kb/articles/491-single-sign-on-sso} Single Sign-On (SSO)
@@ -349,7 +365,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Updates the SAML SSO configuration for the Run environment.
+   * Updates the SAML SSO configuration for the Run environment.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/492-okta-sso} Okta SSO
    * @see {@link https://help.tago.io/portal/en/kb/articles/491-single-sign-on-sso} Single Sign-On (SSO)
@@ -365,7 +381,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a custom domain configuration for the Run environment.
+   * Creates a custom domain configuration for the Run environment.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/custom-domain-configuration} Custom Domain Configuration
    */
@@ -380,7 +396,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves the custom domain configuration for a Run profile.
+   * Retrieves the custom domain configuration for a Run profile.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/custom-domain-configuration} Custom Domain Configuration
    *
@@ -403,7 +419,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Removes the custom domain configuration from a Run profile.
+   * Removes the custom domain configuration from a Run profile.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/custom-domain-configuration} Custom Domain Configuration
    *
@@ -424,7 +440,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Regenerates the custom domain configuration for a Run profile.
+   * Regenerates the custom domain configuration for a Run profile.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/custom-domain-configuration} Custom Domain Configuration
    *

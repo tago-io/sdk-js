@@ -1,7 +1,7 @@
-import type { TagoContext } from "../../Analysis/analysis.types";
-import type Device from "../../Device/Device";
-import type Account from "../../Resources/AccountDeprecated";
-import type { UserCreateInfo } from "../../Resources/run.types";
+import type { TagoContext } from "../../Analysis/analysis.types.ts";
+import type Device from "../../Device/Device.ts";
+import type Account from "../../Resources/AccountDeprecated.ts";
+import type { UserCreateInfo } from "../../Resources/run.types.ts";
 
 /**
  * User List scope to be used in your analysis
@@ -50,7 +50,7 @@ interface DeviceListScope {
   [key: string]: string | any;
 
   /** old parameter key will include a json with the old values of the parameters */
-  old?: { name?: string; [key: string]: string };
+  old?: { name?: string; [key: string]: string | undefined };
 }
 
 /**

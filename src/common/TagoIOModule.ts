@@ -1,6 +1,6 @@
-import apiRequest from "../infrastructure/apiRequest";
-import regions, { type Regions, type RegionsObj } from "../regions";
-import type { GenericID, RefType, RequestConfig } from "./common.types";
+import apiRequest from "../infrastructure/apiRequest.ts";
+import regions, { type Regions, type RegionsObj } from "../regions.ts";
+import type { GenericID, RefType, RequestConfig } from "./common.types.ts";
 
 interface GenericModuleParams {
   token?: string;
@@ -99,6 +99,9 @@ abstract class TagoIOModule<T extends GenericModuleParams> {
     }
 
     const requestConfig = mountRequestConfig(apiURI, requestObj);
+    if (!this.params.token) {
+      throw new Error("Token is required but not provided");
+    }
     requestConfig.headers = {
       token: this.params.token,
       ...requestConfig.headers,

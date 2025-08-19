@@ -1,9 +1,9 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { PaymentInfo } from "./paymentHistory.types";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import type { PaymentInfo } from "./paymentHistory.types.ts";
 
 class PaymentHistory extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Retrieves the payment transaction history for the current account, including all past payments and their details.
+   * Retrieves the payment transaction history for the current account, including all past payments and their details.
    *
    * @example
    * If receive an error "Authorization Denied", check policy in Access Management.

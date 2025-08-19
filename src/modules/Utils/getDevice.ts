@@ -1,6 +1,6 @@
-import Device from "../Device/Device";
-import Account from "../Resources/AccountDeprecated";
-import getTokenByName from "./getTokenByName";
+import Device from "../Device/Device.ts";
+import Account from "../Resources/AccountDeprecated.ts";
+import getTokenByName from "./getTokenByName.ts";
 
 /**
  * Get the TagoIO Device instanced class from a device id

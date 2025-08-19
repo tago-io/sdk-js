@@ -1,5 +1,5 @@
-import { InputFormField } from "../../src/modules/Migration/convertFields";
-import { convert, isOldStructure } from "../../src/modules/Migration/inputform";
+import { InputFormField } from "../../src/modules/Migration/convertFields.ts";
+import { convert, isOldStructure } from "../../src/modules/Migration/inputform.ts";
 import * as oldStructure from "./__mocks__/widgetsOldStructure.json";
 
 const oldWidget = oldStructure.inputformStructure;

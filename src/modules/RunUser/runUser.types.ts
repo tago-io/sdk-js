@@ -1,5 +1,5 @@
-import type { ExpireTimeOption, GenericID, GenericToken } from "../../common/common.types";
-import type { OTPType } from "../Resources/account.types";
+import type { ExpireTimeOption, GenericID, GenericToken } from "../../common/common.types.ts";
+import type { OTPType } from "../Resources/account.types.ts";
 
 interface UserOptions {
   decimal_separator?: string;

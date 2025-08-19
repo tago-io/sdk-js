@@ -1,11 +1,11 @@
-import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule";
-import type { GenericID } from "../../types";
-import dateParser from "../Utils/dateParser";
-import type { SecretsCreate, SecretsEdit, SecretsInfo, SecretsQuery } from "./secrets.type";
+import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import type { GenericID } from "../../types.ts";
+import dateParser from "../Utils/dateParser.ts";
+import type { SecretsCreate, SecretsEdit, SecretsInfo, SecretsQuery } from "./secrets.type.ts";
 
 class Secrets extends TagoIOModule<GenericModuleParams> {
   /**
-   * @description Retrieves a paginated list of all secrets stored in the profile with filtering and sorting options.
+   * Retrieves a paginated list of all secrets stored in the profile with filtering and sorting options.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} Secrets
    *
@@ -37,7 +37,7 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Retrieves detailed information about a specific secret using its ID.
+   * Retrieves detailed information about a specific secret using its ID.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} Secrets
    *
@@ -60,7 +60,7 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Creates a new secret in the profile with the specified key and value.
+   * Creates a new secret in the profile with the specified key and value.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/secrets#Creating_a_Secret} Creating a Secret
    *
@@ -87,7 +87,7 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Modifies the properties of an existing secret.
+   * Modifies the properties of an existing secret.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} Secrets
    *
@@ -114,7 +114,7 @@ class Secrets extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * @description Permanently removes a secret from the profile.
+   * Permanently removes a secret from the profile.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/secrets} Secrets
    *

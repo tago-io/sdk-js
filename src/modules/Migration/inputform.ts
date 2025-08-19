@@ -2,9 +2,9 @@
 // * What is this file?
 //     Migration of old INPUT FORM to new INPUT FORM
 // ? ====================================================================================
-import type { WidgetInfo } from "../Resources/dashboards.types";
-import { generateWidgetItemId } from "./common";
-import { convertField, convertSubmitButton } from "./convertFields";
+import type { WidgetInfo } from "../Resources/dashboards.types.ts";
+import { generateWidgetItemId } from "./common/index.ts";
+import { convertField, convertSubmitButton } from "./convertFields.ts";
 
 export function convert(oldWidget: any): WidgetInfo {
   const oldDisplay = oldWidget.display || {};
@@ -80,7 +80,7 @@ export function convert(oldWidget: any): WidgetInfo {
   return newStructure;
 }
 
-export function isOldStructure(widget: any) {
+export function isOldStructure(widget: any): any {
   const isOld = !!(
     !widget?.display?.buttons ||
     widget?.display?.form ||

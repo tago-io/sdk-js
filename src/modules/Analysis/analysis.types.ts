@@ -1,4 +1,4 @@
-import type { Regions, RegionsObj } from "../../regions";
+import type { Regions, RegionsObj } from "../../regions.ts";
 
 type analysisFunction = (context: any, data: any) => any;
 
