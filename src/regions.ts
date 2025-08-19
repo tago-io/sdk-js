@@ -4,16 +4,29 @@
 // let noRegionWarning = false;
 
 /**
- * Region configuration object interface
+ * Region configuration object interface (flat, mutually exclusive)
+ * A region is either:
+ * - API/SSE pair (no tdeploy), or
+ * - TDeploy (no api/sse)
  */
-interface RegionsObj {
+interface RegionsObjApi {
   /** API endpoint URL */
   api: string;
-  /** Realtime endpoint URL (optional) */
-  realtime?: string;
   /** Server-sent events endpoint URL */
   sse: string;
+  /** Disallow tdeploy when api/sse present */
+  tdeploy?: never;
 }
+
+interface RegionsObjTDeploy {
+  /** TagoIO Deploy Project ID */
+  tdeploy: string;
+  /** Disallow api/sse when tdeploy present */
+  api?: never;
+  sse?: never;
+}
+
+type RegionsObj = RegionsObjApi | RegionsObjTDeploy;
 
 /**
  * Supported TagoIO regions
@@ -24,10 +37,9 @@ type Regions = "us-e1" | "eu-w1" | "env";
  * Object of Regions Definition
  * @internal
  */
-const regionsDefinition = {
+const regionsDefinition: Record<string, RegionsObjApi | undefined> = {
   "us-e1": {
     api: "https://api.tago.io",
-    realtime: "https://realtime.tago.io",
     sse: "https://sse.tago.io/events",
   },
   "eu-w1": {
@@ -35,7 +47,7 @@ const regionsDefinition = {
     sse: "https://sse.eu-w1.tago.io/events",
   },
   env: undefined as undefined, // ? process object should be on trycatch.
-};
+} as const;
 
 /** Runtime region cache */
 let runtimeRegion: RegionsObj | undefined;
@@ -46,6 +58,17 @@ let runtimeRegion: RegionsObj | undefined;
  * @param region Region
  */
 function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
+  // Handle tdeploy in RegionsObj - takes precedence
+  if (region && typeof region === "object" && "tdeploy" in region && region.tdeploy) {
+    const tdeploy = region.tdeploy.trim();
+    if (tdeploy) {
+      return {
+        api: `https://api.${tdeploy}.tagoio.net`,
+        sse: `https://sse.${tdeploy}.tagoio.net/events`,
+      };
+    }
+  }
+
   let normalizedRegion = region;
   if (typeof normalizedRegion === "string" && (normalizedRegion as string) === "usa-1") {
     normalizedRegion = "us-e1";
@@ -59,7 +82,9 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
         : undefined;
 
   if (value) {
-    return value;
+    // value can be a RegionsObjApi from regionsDefinition or a RegionsObj
+    // from the object branch; both are compatible with RegionsObj
+    return value as RegionsObj;
   }
 
   if (runtimeRegion) {
@@ -72,21 +97,20 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
 
   try {
     const api = process.env.TAGOIO_API;
-    const realtime = process.env.TAGOIO_REALTIME;
     const sse = process.env.TAGOIO_SSE;
 
     if (!api && region !== "env") {
       throw "Invalid Env";
     }
 
-    return { api: api || "", realtime: realtime || "", sse: sse || "" };
+    return { api: api || "", sse: sse || "" };
   } catch (_) {
     // if (!noRegionWarning) {
     //   console.info("> TagoIO-SDK: No region or env defined, using fallback as usa-1.");
     //   noRegionWarning = true;
     // }
 
-    return regionsDefinition["us-e1"];
+    return regionsDefinition["us-e1"] as RegionsObj;
   }
 }
 

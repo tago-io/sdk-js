@@ -55,7 +55,7 @@ type AnalysisListItem<
 /**
  * Available runtime environments for snippets
  */
-type SnippetRuntime = "node-legacy" | "python-legacy" | "python-2025-08-01" | "deno-2025-08-01";
+type SnippetRuntime = "node-legacy" | "python-legacy" | "python-rt2025" | "deno-rt2025";
 
 /**
  * Individual snippet metadata
