@@ -497,6 +497,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     const poolingTime = options?.poolingTime || 1000; // 1 sec
     const neverStop = options?.neverStop || false;
     const initialSkip = options?.initialSkip || 0;
+    const paramOrdination = params?.ordination || "ascending";
 
     if (poolingRecordQty > 10000) {
       throw new Error("The maximum of poolingRecordQty is 10000");
@@ -516,7 +517,7 @@ class Devices extends TagoIOModule<GenericModuleParams> {
         qty,
         skip,
         query: "default",
-        ordination: "ascending",
+        ordination: paramOrdination,
       });
       skip += data.length;
 

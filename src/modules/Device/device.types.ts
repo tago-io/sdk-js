@@ -145,7 +145,7 @@ type DataQuery =
   | DataQueryAggregate
   | DataQueryConditional;
 
-type DataQueryStreaming = Omit<DataQueryDefault, "qty" | "skip" | "query" | "ordination">;
+type DataQueryStreaming = Omit<DataQueryDefault, "qty" | "skip" | "query">;
 
 interface OptionsStreaming {
   /**
