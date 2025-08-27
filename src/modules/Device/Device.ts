@@ -2,6 +2,8 @@ import { chunk } from "../../common/chunk.ts";
 import type { Data, DataCreate, DataEdit, GenericID } from "../../common/common.types.ts";
 import sleep from "../../common/sleep.ts";
 import TagoIOModule from "../../common/TagoIOModule.ts";
+import { SNIPPETS_BASE_URL } from "../../config.ts";
+import { withTimeout } from "../../infrastructure/fetchUtils.ts";
 import type { ConfigurationParams } from "../Resources/devices.types.ts";
 import dateParser from "../Utils/dateParser.ts";
 import type {
@@ -15,6 +17,8 @@ import type {
   DeviceConstructorParams,
   DeviceItem,
   OptionsStreaming,
+  PayloadParserRuntime,
+  PayloadParserSnippetsListResponse,
 } from "./device.types.ts";
 
 /**
@@ -53,6 +57,7 @@ import type {
  * }
  * ```
  */
+
 class Device extends TagoIOModule<DeviceConstructorParams> {
   /**
    * Get information about the current device
@@ -356,6 +361,64 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     }
 
     return `${data.length} Data added.`;
+  }
+
+  /**
+   * Get all available payload parser snippets for the JavaScript runtime.
+   * Fetches payload parser code snippets from the public TagoIO snippets repository.
+   *
+   * @returns Promise resolving to the snippets metadata
+   *
+   * @example
+   * ```typescript
+   * const parsers = await device.listPayloadParserSnippets();
+   * parsers.snippets.forEach(s => console.log(s.title));
+   * ```
+   */
+  public async listPayloadParserSnippets(runtime: PayloadParserRuntime): Promise<PayloadParserSnippetsListResponse> {
+    const url = `${SNIPPETS_BASE_URL}/payload-parser/${runtime}.json`;
+    const enhancedFetch = withTimeout(fetch, 10000);
+
+    const response = await enhancedFetch(url, {
+      method: "GET",
+      headers: { Accept: "*/*" },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch payload parser snippets: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data as PayloadParserSnippetsListResponse;
+  }
+
+  /**
+   * Get the raw source code of a payload parser snippet file.
+   *
+   * @param filename - The filename of the snippet to retrieve (e.g., "lorawan-hexadecimal-parser.js")
+   * @returns Promise resolving to the raw file content as string
+   *
+   * @example
+   * ```typescript
+   * const code = await device.getPayloadParserSnippetFile("javascript", "lorawan-hexadecimal-parser.js");
+   * console.log(code);
+   * ```
+   */
+  public async getPayloadParserSnippetFile(runtime: PayloadParserRuntime, filename: string): Promise<string> {
+    const url = `${SNIPPETS_BASE_URL}/payload-parser/${runtime}/${filename}`;
+    const enhancedFetch = withTimeout(fetch, 10000);
+
+    const response = await enhancedFetch(url, {
+      method: "GET",
+      headers: { Accept: "*/*" },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch payload parser snippet file: ${response.status} ${response.statusText}`);
+    }
+
+    const content = await response.text();
+    return content;
   }
 }
 
