@@ -300,7 +300,13 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
     while (!stop) {
       await sleep(poolingTime);
 
-      const data = await this.getData({ ...params, qty, skip, query: "default", ordination: "ascending" });
+      const data = await this.getData({
+        ...params,
+        qty,
+        skip,
+        query: "default",
+        ordination: "ascending",
+      });
       skip += data.length;
 
       if (!neverStop) {
@@ -371,11 +377,13 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    *
    * @example
    * ```typescript
-   * const parsers = await device.listPayloadParserSnippets();
+   * const parsers = await Device.listPayloadParserSnippets();
    * parsers.snippets.forEach(s => console.log(s.title));
    * ```
    */
-  public async listPayloadParserSnippets(runtime: PayloadParserRuntime): Promise<PayloadParserSnippetsListResponse> {
+  public static async listPayloadParserSnippets(
+    runtime: PayloadParserRuntime
+  ): Promise<PayloadParserSnippetsListResponse> {
     const url = `${SNIPPETS_BASE_URL}/payload-parser/${runtime}.json`;
     const enhancedFetch = withTimeout(fetch, 10000);
 
@@ -400,11 +408,11 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
    *
    * @example
    * ```typescript
-   * const code = await device.getPayloadParserSnippetFile("javascript", "lorawan-hexadecimal-parser.js");
+   * const code = await Device.getPayloadParserSnippetFile("javascript", "lorawan-hexadecimal-parser.js");
    * console.log(code);
    * ```
    */
-  public async getPayloadParserSnippetFile(runtime: PayloadParserRuntime, filename: string): Promise<string> {
+  public static async getPayloadParserSnippetFile(runtime: PayloadParserRuntime, filename: string): Promise<string> {
     const url = `${SNIPPETS_BASE_URL}/payload-parser/${runtime}/${filename}`;
     const enhancedFetch = withTimeout(fetch, 10000);
 
