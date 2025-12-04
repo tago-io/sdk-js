@@ -10,7 +10,6 @@ vi.mock("../config", () => ({
   default: {
     requestAttempts: 3,
     requestTimeout: 1000,
-    requestRetryDelays: [2000, 5000, 7000, 15000, 30000],
   },
 }));
 
@@ -56,7 +55,6 @@ describe("apiRequestFetch", () => {
     // Reset config for each test
     config.requestAttempts = 3;
     config.requestTimeout = 1000;
-    config.requestRetryDelays = [2000, 5000, 7000, 15000, 30000];
   });
 
   afterEach(() => {
@@ -838,7 +836,7 @@ describe("apiRequestFetch", () => {
       expect(attemptCount).toBe(3);
     });
 
-    it("should use exponential backoff delays reaching 7s on third retry", async () => {
+    it("should use exponential backoff delays with 2^n formula capped at 30s", async () => {
       config.requestAttempts = 5;
       let attemptCount = 0;
 
@@ -866,10 +864,11 @@ describe("apiRequestFetch", () => {
 
       expect(attemptCount).toBe(4);
 
+      // Verify exponential backoff: 1.5s, 3s, 6s (2^n formula)
       expect(sleep).toHaveBeenCalledTimes(3);
-      expect(sleep).toHaveBeenNthCalledWith(1, 2000); // 2s delay after 1st failure
-      expect(sleep).toHaveBeenNthCalledWith(2, 5000); // 5s delay after 2nd failure
-      expect(sleep).toHaveBeenNthCalledWith(3, 7000); // 7s delay after 3rd failure
+      expect(sleep).toHaveBeenNthCalledWith(1, 1500); // 1.5s delay after 1st failure (1500 * 2^0)
+      expect(sleep).toHaveBeenNthCalledWith(2, 3000); // 3s delay after 2nd failure (1500 * 2^1)
+      expect(sleep).toHaveBeenNthCalledWith(3, 6000); // 6s delay after 3rd failure (1500 * 2^2)
     });
   });
 
