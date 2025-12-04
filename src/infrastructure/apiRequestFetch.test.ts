@@ -1,6 +1,7 @@
 import { delay, HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 import type { RequestConfig } from "../common/common.types.ts";
+import sleep from "../common/sleep.ts";
 import config from "../config.ts";
 import apiRequest from "./apiRequest.ts";
 
@@ -833,6 +834,41 @@ describe("apiRequestFetch", () => {
       const result = await apiRequest(requestConfig);
       expect(result).toEqual({ success: "on-last-attempt" });
       expect(attemptCount).toBe(3);
+    });
+
+    it("should use exponential backoff delays with 2^n formula capped at 30s", async () => {
+      config.requestAttempts = 5;
+      let attemptCount = 0;
+
+      server.use(
+        http.get(`${BASE_URL}/exponential-backoff`, () => {
+          attemptCount++;
+          if (attemptCount <= 3) {
+            return HttpResponse.error();
+          }
+          return HttpResponse.json({
+            status: true,
+            result: { data: "success" },
+          });
+        })
+      );
+
+      const requestConfig: RequestConfig = {
+        url: `${BASE_URL}/exponential-backoff`,
+        method: "GET",
+      };
+
+      const result = await apiRequest(requestConfig);
+
+      expect(result).toEqual({ data: "success" });
+
+      expect(attemptCount).toBe(4);
+
+      // Verify exponential backoff: 1.5s, 3s, 6s (2^n formula)
+      expect(sleep).toHaveBeenCalledTimes(3);
+      expect(sleep).toHaveBeenNthCalledWith(1, 1500); // 1.5s delay after 1st failure (1500 * 2^0)
+      expect(sleep).toHaveBeenNthCalledWith(2, 3000); // 3s delay after 2nd failure (1500 * 2^1)
+      expect(sleep).toHaveBeenNthCalledWith(3, 6000); // 6s delay after 3rd failure (1500 * 2^2)
     });
   });
 

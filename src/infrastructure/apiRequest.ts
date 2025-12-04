@@ -351,9 +351,11 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
       break;
     }
 
-    // Wait before retry (except on last attempt)
+    // ? Wait before retry with exponential backoff
     if (i < config.requestAttempts) {
-      await sleep(1500);
+      // ? 1.5s, 3s, 6s, 12s, 24s... capped at 30s
+      const delay = Math.min(1500 * Math.pow(2, i - 1), 30000);
+      await sleep(delay);
     }
   }
 
