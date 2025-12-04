@@ -11,7 +11,6 @@ vi.mock("../config", () => ({
   default: {
     requestAttempts: 3,
     requestTimeout: 2000,
-    requestRetryDelays: [2000, 5000, 7000, 15000, 30000],
   },
 }));
 
@@ -666,5 +665,4 @@ describe("apiRequest Helper Functions", () => {
       expect(isError).toBe(false); // Should be false due to additional property
     });
   });
-
 });
