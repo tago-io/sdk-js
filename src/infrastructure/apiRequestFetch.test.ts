@@ -1,6 +1,7 @@
 import { delay, HttpResponse, http } from "msw";
 import { setupServer } from "msw/node";
 import type { RequestConfig } from "../common/common.types.ts";
+import sleep from "../common/sleep.ts";
 import config from "../config.ts";
 import apiRequest from "./apiRequest.ts";
 
@@ -9,6 +10,7 @@ vi.mock("../config", () => ({
   default: {
     requestAttempts: 3,
     requestTimeout: 1000,
+    requestRetryDelays: [2000, 5000, 7000, 15000, 30000],
   },
 }));
 
@@ -54,6 +56,7 @@ describe("apiRequestFetch", () => {
     // Reset config for each test
     config.requestAttempts = 3;
     config.requestTimeout = 1000;
+    config.requestRetryDelays = [2000, 5000, 7000, 15000, 30000];
   });
 
   afterEach(() => {
@@ -833,6 +836,40 @@ describe("apiRequestFetch", () => {
       const result = await apiRequest(requestConfig);
       expect(result).toEqual({ success: "on-last-attempt" });
       expect(attemptCount).toBe(3);
+    });
+
+    it("should use exponential backoff delays reaching 7s on third retry", async () => {
+      config.requestAttempts = 5;
+      let attemptCount = 0;
+
+      server.use(
+        http.get(`${BASE_URL}/exponential-backoff`, () => {
+          attemptCount++;
+          if (attemptCount <= 3) {
+            return HttpResponse.error();
+          }
+          return HttpResponse.json({
+            status: true,
+            result: { data: "success" },
+          });
+        })
+      );
+
+      const requestConfig: RequestConfig = {
+        url: `${BASE_URL}/exponential-backoff`,
+        method: "GET",
+      };
+
+      const result = await apiRequest(requestConfig);
+
+      expect(result).toEqual({ data: "success" });
+
+      expect(attemptCount).toBe(4);
+
+      expect(sleep).toHaveBeenCalledTimes(3);
+      expect(sleep).toHaveBeenNthCalledWith(1, 2000); // 2s delay after 1st failure
+      expect(sleep).toHaveBeenNthCalledWith(2, 5000); // 5s delay after 2nd failure
+      expect(sleep).toHaveBeenNthCalledWith(3, 7000); // 7s delay after 3rd failure
     });
   });
 
