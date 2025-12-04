@@ -9,8 +9,9 @@ import { HttpError } from "./fetchUtils.ts";
 // Mock dependencies
 vi.mock("../config", () => ({
   default: {
-    requestAttempts: 3,
+    requestAttempts: 5,
     requestTimeout: 2000,
+    requestRetryDelays: [2000, 5000, 7000, 15000, 30000],
   },
 }));
 
@@ -663,6 +664,53 @@ describe("apiRequest Helper Functions", () => {
         Object.keys(errorResult).length === 1;
 
       expect(isError).toBe(false); // Should be false due to additional property
+    });
+  });
+
+  describe("Exponential backoff retry logic", () => {
+    it("should use exponential backoff reaching 7s delay on third retry", async () => {
+      const apiRequest = (await import("./apiRequest.ts")).default;
+      const sleep = (await import("../common/sleep.ts")).default;
+
+      vi.clearAllMocks();
+
+      let attemptCount = 0;
+      global.fetch = vi.fn(async () => {
+        attemptCount++;
+        if (attemptCount <= 3) {
+          throw new TypeError("Failed to fetch");
+        }
+        const mockResponse = {
+          ok: true,
+          status: 200,
+          statusText: "OK",
+          headers: {
+            get: (name: string) => (name === "content-type" ? "application/json" : null),
+          },
+          json: async () => ({ status: true, result: { data: "success" } }),
+          text: async () => JSON.stringify({ status: true, result: { data: "success" } }),
+          clone: function () {
+            return this;
+          },
+        } as unknown as Response;
+        return mockResponse;
+      });
+
+      const requestConfig = {
+        url: "https://mock-to-test.api.tago.io/test",
+        method: "GET" as const,
+      };
+
+      const result = await apiRequest(requestConfig);
+
+      expect(result).toEqual({ data: "success" });
+
+      expect(global.fetch).toHaveBeenCalledTimes(4);
+
+      expect(sleep).toHaveBeenCalledTimes(3);
+      expect(sleep).toHaveBeenNthCalledWith(1, 2000); // 2s delay after 1st failure
+      expect(sleep).toHaveBeenNthCalledWith(2, 5000); // 5s delay after 2nd failure
+      expect(sleep).toHaveBeenNthCalledWith(3, 7000); // 7s delay after 3rd failure
     });
   });
 });
