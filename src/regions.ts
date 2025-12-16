@@ -55,7 +55,7 @@ let runtimeRegion: RegionsObj | undefined;
 /**
  * Extracts TDeploy region configuration if present
  * @param region Region configuration
- * @returns RegionsObj with TDeploy endpoints or undefined
+ * @returns TDeploy id or undefined
  */
 function getTDeployRegion(region?: Regions | RegionsObj): string {
   if (region && typeof region === "object" && "tdeploy" in region && region.tdeploy) {
