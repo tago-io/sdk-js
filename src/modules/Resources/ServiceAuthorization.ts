@@ -1,7 +1,10 @@
 import type { ListTokenQuery, TokenData, TokenDataList } from "../../common/common.types.ts";
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import dateParser from "../Utils/dateParser.ts";
-import type { GenericToken, TokenCreateResponse } from "./ServiceAuthorization.types.ts";
+import type {
+  ServiceAuthorizationToken,
+  ServiceAuthorizationTokenCreateResponse,
+} from "./ServiceAuthorization.types.ts";
 
 class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   /**
@@ -53,8 +56,8 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    * console.log(result); // { token: 'token-xyz-123', name: 'Service Token', ... }
    * ```
    */
-  public async tokenCreate(tokenParams: TokenData): Promise<TokenCreateResponse> {
-    const result = await this.doRequest<TokenCreateResponse>({
+  public async tokenCreate(tokenParams: TokenData): Promise<ServiceAuthorizationTokenCreateResponse> {
+    const result = await this.doRequest<ServiceAuthorizationTokenCreateResponse>({
       path: "/serviceauth",
       method: "POST",
       body: tokenParams,
@@ -75,7 +78,7 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    * console.log(result); // Token Successfully Removed
    * ```
    */
-  public async tokenDelete(token: GenericToken): Promise<string> {
+  public async tokenDelete(token: ServiceAuthorizationToken): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/serviceauth/${token}`,
       method: "DELETE",
@@ -96,7 +99,7 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    * console.log(result); // Authorization Code Successfully Updated
    * ```
    */
-  public async tokenEdit(token: GenericToken, verificationCode?: string): Promise<string> {
+  public async tokenEdit(token: ServiceAuthorizationToken, verificationCode?: string): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/serviceauth/${token}`,
       method: "PUT",

@@ -1,6 +1,6 @@
 import type { GenericID, GenericToken, Query } from "../../common/common.types.ts";
 
-interface IDeviceParameters {
+interface NetworkDeviceParameters {
   name?: string;
   label?: string;
   type?: "text" | "dropdown" | "switch" | "number";
@@ -15,7 +15,7 @@ interface NetworkCreateInfo {
   logo_url?: string;
   icon_url?: string;
   banner_url?: string;
-  device_parameters?: IDeviceParameters[];
+  device_parameters?: NetworkDeviceParameters[];
   middleware_endpoint?: string;
   payload_encoder?: string;
   /** Base64 decoded string */
@@ -40,7 +40,7 @@ interface NetworkInfo extends NetworkCreateInfo {
   logo_url?: string;
   icon_url?: string;
   banner_url?: string;
-  device_parameters?: IDeviceParameters[];
+  device_parameters?: NetworkDeviceParameters[];
   middleware_endpoint?: string;
   payload_encoder?: string;
   /** Base64 decoded string */
@@ -86,4 +86,11 @@ type NetworkQuery = Query<
   | "updated_at"
 >;
 
-export type { NetworkInfo, NetworkCreateInfo, NetworkTokenInfo, NetworkQuery, NetworkTokenCreateResponse };
+export type {
+  NetworkDeviceParameters,
+  NetworkInfo,
+  NetworkCreateInfo,
+  NetworkTokenInfo,
+  NetworkQuery,
+  NetworkTokenCreateResponse,
+};

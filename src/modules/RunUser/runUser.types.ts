@@ -1,7 +1,7 @@
 import type { ExpireTimeOption, GenericID, GenericToken } from "../../common/common.types.ts";
 import type { OTPType } from "../Resources/account.types.ts";
 
-interface UserOptions {
+interface RunUserOptions {
   decimal_separator?: string;
   thousand_separator?: string;
   date_format?: string;
@@ -19,7 +19,7 @@ interface RunUserCreateInfo {
   language?: string;
   active: boolean;
   newsletter?: boolean;
-  options?: UserOptions;
+  options?: RunUserOptions;
 }
 
 interface RunUserCreate {
@@ -64,6 +64,7 @@ interface RunNotificationInfo {
 }
 
 export type {
+  RunUserOptions,
   RunUserInfo,
   RunUserCreateInfo,
   RunUserCreate,

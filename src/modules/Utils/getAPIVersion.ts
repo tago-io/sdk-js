@@ -1,31 +1,41 @@
-import TagoIOModule, { type doRequestParams, type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import TagoIOModule, { type doRequestParams } from "../../common/TagoIOModule.ts";
 import type { Regions, RegionsObj } from "../../regions.ts";
-
-/**
- * Utility class for retrieving TagoIO API version information
- */
-class GetAPIVersion extends TagoIOModule<GenericModuleParams> {
-  /**
-   * Gets the current TagoIO API version
-   * @param region Optional region to check version for
-   * @returns Promise resolving to version string
-   */
-  public static async getVersion(region?: Regions | RegionsObj): Promise<string> {
-    const params: doRequestParams = {
-      path: "/status",
-      method: "GET",
-    };
-
-    const result = await TagoIOModule.doRequestAnonymous<{ version: string }>(params, region);
-
-    return result.version;
-  }
-}
 
 /**
  * Gets the current TagoIO API version
  * @param region Optional region to check version for
  * @returns Promise resolving to version string
+ *
+ * @example
+ * ```typescript
+ * import { Utils } from "@tago-io/sdk";
+ *
+ * const version = await Utils.getAPIVersion();
+ * console.log(version); // "1.0.0"
+ * ```
  */
-const getVersion: typeof GetAPIVersion.getVersion = GetAPIVersion.getVersion;
-export default getVersion;
+async function getAPIVersion(region?: Regions | RegionsObj): Promise<string> {
+  const params: doRequestParams = {
+    path: "/status",
+    method: "GET",
+  };
+
+  const result = await GetAPIVersionInternal.doRequestAnonymous<{ version: string }>(params, region);
+
+  return result.version;
+}
+
+/**
+ * Internal class to access protected static method
+ * @internal
+ */
+class GetAPIVersionInternal extends TagoIOModule<{ token: string }> {
+  public static override async doRequestAnonymous<TR>(
+    requestObj: doRequestParams,
+    region?: Regions | RegionsObj
+  ): Promise<TR> {
+    return TagoIOModule.doRequestAnonymous<TR>(requestObj, region);
+  }
+}
+
+export default getAPIVersion;

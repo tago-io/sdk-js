@@ -20,7 +20,7 @@ describe("Parse LoRaWAN QR Code", () => {
       "LW:D0:1122334455667788:AABBCCDDEEFF0011:AABB1122:OAABBCCDDEEFF:SYYWWNNNNNN:PFOOBAR:CAF2C"
     );
 
-    // @ts-ignore
+    // @ts-expect-error
     expect(qr_code.join_eui).toBe("1122334455667788");
     expect(qr_code.dev_eui).toBe("AABBCCDDEEFF0011");
     expect(qr_code.profile_id).toBe("AABB1122");
@@ -43,7 +43,7 @@ describe("Parse LoRaWAN QR Code", () => {
     ];
     const qr_code = Utils.parseLorawanQRCode("LW:D0:1122334455667788:AABBCCDDEEFF0011");
 
-    // @ts-ignore
+    // @ts-expect-error
     expect(qr_code.join_eui).toBe("1122334455667788");
     expect(qr_code.dev_eui).toBe("AABBCCDDEEFF0011");
   });
@@ -67,7 +67,7 @@ describe("Parse LoRaWAN QR Code", () => {
       expect(e).toBe("Invalid QR Code");
     }
 
-    // @ts-ignore
+    // @ts-expect-error
     expect(qr_code).toBeUndefined();
   });
 });

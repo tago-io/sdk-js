@@ -1,10 +1,19 @@
-import path from "node:path";
-
 import Account from "../Resources/AccountDeprecated.ts";
 import Resources from "../Resources/Resources.ts";
 import type { UploadFileOptions } from "./utils.types.ts";
 
 type FileURL = string;
+
+/**
+ * Portable path.join implementation that works across all JS runtimes (Node.js, Deno, Bun, React Native/Expo).
+ * Joins path segments using forward slashes and normalizes the result.
+ */
+function joinPath(...segments: string[]): string {
+  return segments
+    .filter((segment) => segment !== "")
+    .join("/")
+    .replace(/\/+/g, "/");
+}
 
 /**
  * Upload a file and return it's URL.
@@ -27,7 +36,7 @@ async function uploadFile(resource: Account | Resources, options: UploadFileOpti
     }
   }
 
-  const fixed_path = path.join(options.path || "", options.filename);
+  const fixed_path = joinPath(options.path || "", options.filename);
 
   const body = { file: options.file_base64, filename: fixed_path };
   await resource.files.uploadBase64([{ ...body, public: options.public || true }]);

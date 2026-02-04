@@ -1,6 +1,6 @@
 import type { GenericID, Query } from "../../common/common.types.ts";
 
-interface IDeviceParameters {
+interface ConnectorDeviceParameters {
   name?: string;
   label?: string;
   type?: "text" | "dropdown" | "switch" | "number";
@@ -14,7 +14,7 @@ interface ConnectorCreateInfo {
   name?: string;
   description?: string;
   logo_url?: string;
-  device_parameters?: IDeviceParameters[];
+  device_parameters?: ConnectorDeviceParameters[];
   networks?: GenericID[];
   payload_encoder?: string;
   /** Base64 decoded string */
@@ -33,7 +33,7 @@ interface ConnectorInfo extends ConnectorCreateInfo {
   logo_url?: string;
   created_at: Date;
   updated_at: Date;
-  device_parameters?: IDeviceParameters[];
+  device_parameters?: ConnectorDeviceParameters[];
   networks?: GenericID[];
   /** Refers to the **description** in the Documentation settings */
   install_text?: string;
@@ -55,4 +55,4 @@ type ConnectorQuery = Query<
   | "networks"
 >;
 
-export type { ConnectorInfo, ConnectorCreateInfo, ConnectorQuery };
+export type { ConnectorDeviceParameters, ConnectorInfo, ConnectorCreateInfo, ConnectorQuery };

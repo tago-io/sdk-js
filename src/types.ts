@@ -26,8 +26,8 @@ export * from "./modules/Resources/plan.types.ts";
 export * from "./modules/Resources/profile.types.ts";
 export * from "./modules/Resources/run.types.ts";
 export type {
-  GenericToken as ServiceAuthGenericToken,
-  TokenCreateResponse as ServiceAuthTokenCreateResponse,
+  ServiceAuthorizationToken,
+  ServiceAuthorizationTokenCreateResponse,
 } from "./modules/Resources/ServiceAuthorization.types.ts";
 export * from "./modules/Resources/secrets.type.ts";
 export * from "./modules/Resources/tagocore.types.ts";

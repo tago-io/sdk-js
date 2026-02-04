@@ -1,7 +1,7 @@
 import type { Query } from "../../common/common.types.ts";
 import type { DeviceItem } from "../Device/device.types.ts";
 
-interface IDeviceParameters {
+interface NetworkModuleDeviceParameters {
   name?: string;
   label?: string;
   type?: "text" | "dropdown" | "switch" | "number";
@@ -17,7 +17,7 @@ interface INetworkInfo {
   logo_url?: string;
   icon_url?: string;
   banner_url?: string;
-  device_parameters?: IDeviceParameters[];
+  device_parameters?: NetworkModuleDeviceParameters[];
   middleware_endpoint?: string;
   payload_encoder?: string;
   payload_decoder?: string;
@@ -44,4 +44,4 @@ interface NetworkDeviceListQueryInfo extends DeviceItem {
   token: string;
 }
 
-export type { INetworkInfo, NetworkDeviceListQuery, NetworkDeviceListQueryInfo };
+export type { INetworkInfo, NetworkDeviceListQuery, NetworkDeviceListQueryInfo, NetworkModuleDeviceParameters };

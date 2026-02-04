@@ -1,6 +1,6 @@
 import type { GenericID, Query, TagsObj } from "../../common/common.types.ts";
 
-interface Permissions {
+interface AccessPermission {
   effect: "allow" | "deny";
   action: string[];
   resource: string[];
@@ -8,7 +8,7 @@ interface Permissions {
 
 interface AccessCreateInfo {
   name: string;
-  permissions: Permissions[];
+  permissions: AccessPermission[];
   // TODO: target type
   targets: [];
   profile?: GenericID;
@@ -24,4 +24,4 @@ interface AccessInfo extends AccessCreateInfo {
 
 type AccessQuery = Query<AccessInfo, "name" | "active" | "created_at" | "updated_at">;
 
-export type { AccessCreateInfo, AccessInfo, AccessQuery, Permissions };
+export type { AccessCreateInfo, AccessInfo, AccessQuery, AccessPermission };
