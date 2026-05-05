@@ -1,7 +1,9 @@
-import type { GenericID, Query } from "../../common/common.types.ts";
+import type { Data, GenericID, Query } from "../../common/common.types.ts";
+import type { DeviceListScope, UserListScope } from "../../types.ts";
 
 interface NotificationTriggerAnalysis {
   analysis_id: GenericID;
+  scope: Data[] | UserListScope[] | DeviceListScope[];
 }
 interface NotificationTriggerHTTP {
   url: string;
