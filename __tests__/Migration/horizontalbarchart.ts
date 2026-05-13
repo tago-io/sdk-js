@@ -37,7 +37,7 @@ describe("HorizontalBarChart widget - migration suite", () => {
     /**
      * Check if all the colors are different
      */
-    newStructure.display.variables.map((e: any) => {
+    newStructure.display.variables.forEach((e: any) => {
       expect(
         !displayVariables.find(
           (v: any) => v?.color === e?.color && (v?.variable !== e?.variable || v?.origin !== e?.origin)

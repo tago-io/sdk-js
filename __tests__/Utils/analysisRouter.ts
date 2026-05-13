@@ -53,7 +53,7 @@ describe("Analysis Router conditions", () => {
     router.register(func).whenDeviceListIdentifier("125");
     const execution = await router.exec();
 
-    // @ts-ignore
+    // @ts-expect-error
     expect(execution.status).toBeTruthy();
     expect(execution.services).toEqual(Array(14).fill("func", 0));
   });
@@ -91,7 +91,7 @@ describe("Analysis Router conditions", () => {
     router.register(func).whenDeviceListIdentifier("425");
     const execution = await router.exec();
 
-    // @ts-ignore
+    // @ts-expect-error
     expect(execution.status).toBeFalsy();
     expect(execution.services).toEqual([]);
   });

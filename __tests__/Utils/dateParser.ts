@@ -8,7 +8,7 @@ describe("Object parameter date parser", () => {
     };
 
     data = dateParser(data, ["a"]);
-    // @ts-ignore
+    // @ts-expect-error
     expect(data.a instanceof Date).toBeTruthy();
     expect(data.b).toEqual("test");
   });
@@ -20,7 +20,7 @@ describe("Object parameter date parser", () => {
     };
 
     data = dateParser(data, ["a", "b"]);
-    // @ts-ignore
+    // @ts-expect-error
     expect(data.a instanceof Date).toBeTruthy();
     expect(data.b).toEqual("never");
   });
@@ -32,7 +32,7 @@ describe("Object parameter date parser", () => {
     };
 
     data = dateParser(data, ["a"]);
-    // @ts-ignore
+    // @ts-expect-error
     expect(data.a instanceof Date).toBeFalsy();
     expect(data.b).toEqual("test");
   });
@@ -43,7 +43,7 @@ describe("Object parameter date parser", () => {
     };
 
     const dataResult = dateParser(dataInput, ["a"]);
-    // @ts-ignore
+    // @ts-expect-error
     expect(dataResult).not.toEqual(dataInput);
   });
 });

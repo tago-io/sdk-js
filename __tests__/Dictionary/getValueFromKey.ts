@@ -17,9 +17,9 @@ describe("getValueFromKey", () => {
   });
 
   it("does not get a value with one or more missing parameters", async () => {
-    expect(async () => await dictionary.getValueFromKey(undefined, "TEST", "TEST_KEY")).rejects.toThrow();
-    expect(async () => await dictionary.getValueFromKey("en-US", undefined, "TEST_KEY")).rejects.toThrow();
-    expect(async () => await dictionary.getValueFromKey("en-US", "TEST", undefined)).rejects.toThrow();
+    await expect(dictionary.getValueFromKey(undefined, "TEST", "TEST_KEY")).rejects.toThrow();
+    await expect(dictionary.getValueFromKey("en-US", undefined, "TEST_KEY")).rejects.toThrow();
+    await expect(dictionary.getValueFromKey("en-US", "TEST", undefined)).rejects.toThrow();
   });
 
   it("return the expression as is if the dictionary does not exist", async () => {

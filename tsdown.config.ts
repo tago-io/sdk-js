@@ -6,10 +6,7 @@ export default defineConfig({
   outDir: "./lib",
   clean: true,
   dts: true,
-  outExtension: ({ format }) => ({
-    js: format === "cjs" ? ".cjs" : ".js",
-    dts: ".d.ts",
-  }),
+  fixedExtension: false,
   splitting: false,
   sourcemap: true,
   target: "es2020",

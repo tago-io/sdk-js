@@ -64,11 +64,18 @@ function prepareHeaders(requestHeaders: Record<string, string> = {}): Record<str
       Pragma: "no-cache",
       "Cache-Control": "no-cache",
     };
-  } else if (typeof process !== "undefined") {
-    const banner =
-      process.env.T_ANALYSIS_CONTEXT === "tago-io"
-        ? "(Running at TagoIO)"
-        : `(External; Node.js/${process.version} ${process.platform}/${process.arch})`;
+  } else if (typeof process !== "undefined" && typeof process.env !== "undefined") {
+    // Node.js, Deno, or Bun environment
+    let banner = "(External)";
+    try {
+      if (process.env.T_ANALYSIS_CONTEXT === "tago-io") {
+        banner = "(Running at TagoIO)";
+      } else if (typeof process.version === "string" && typeof process.platform === "string") {
+        banner = `(External; Node.js/${process.version} ${process.platform}/${process.arch || "unknown"})`;
+      }
+    } catch {
+      // Ignore errors accessing process properties (can happen in some environments)
+    }
 
     headers = {
       ...headers,
@@ -354,7 +361,7 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
     // ? Wait before retry with exponential backoff
     if (i < config.requestAttempts) {
       // ? 1.5s, 3s, 6s, 12s, 24s... capped at 30s
-      const delay = Math.min(1500 * Math.pow(2, i - 1), 30000);
+      const delay = Math.min(1500 * 2 ** (i - 1), 30000);
       await sleep(delay);
     }
   }

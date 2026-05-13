@@ -91,7 +91,7 @@ function createMultipartEndHandler(options?: {
     }
 
     const clonedRequest = request.clone();
-    const body = await clonedRequest.json();
+    const body = (await clonedRequest.json()) as { upload_id: string; filename: string; parts: unknown[] };
 
     if (body.upload_id !== expectedUploadID) {
       return new HttpResponse(`Mismatched 'upload_id', expected '${expectedUploadID}'`, { status: 400 });

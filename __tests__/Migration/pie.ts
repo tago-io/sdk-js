@@ -39,7 +39,7 @@ describe("Pie widget - migration suite", () => {
      */
     // TODO(buildUpdate) Remove disabled rule and fix it
 
-    newStructure.display.variables.map((e: any) => {
+    newStructure.display.variables.forEach((e: any) => {
       expect(
         !displayVariables.find(
           (v: any) => v?.color === e?.color && (v?.variable !== e?.variable || v?.origin !== e?.origin)

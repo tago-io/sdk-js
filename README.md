@@ -75,4 +75,4 @@ async function getMyData() {
 
 ## License
 
-TagoIO SDK for JavaScript in the browser and Node.js is released under the [Apache-2.0 License](https://github.com/tago-io/tago-sdk-js/blob/master/LICENSE.md).
+TagoIO SDK for JavaScript in the browser and Node.js is released under the [Apache-2.0 License](https://github.com/tago-io/sdk-js/blob/master/LICENSE.md).

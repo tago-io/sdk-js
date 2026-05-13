@@ -1,16 +1,16 @@
 import type { GenericID } from "../../types.ts";
 
 /**
- * Token used on TagoIO, string with 34 characters
+ * Token used on TagoIO for Service Authorization, string with 34 characters
  */
-type GenericToken = string;
+type ServiceAuthorizationToken = string;
 
-type TokenCreateResponse = {
-  token: GenericToken;
+type ServiceAuthorizationTokenCreateResponse = {
+  token: ServiceAuthorizationToken;
   name: string;
   profile: GenericID;
   /** [Optional] Verification code to validate middleware requests. */
   additional_parameters?: string;
 };
 
-export type { GenericToken, TokenCreateResponse };
+export type { ServiceAuthorizationToken, ServiceAuthorizationTokenCreateResponse };

@@ -77,7 +77,7 @@ interface RunInfo {
   dictionary: GenericID;
 }
 
-interface UserOptions {
+interface RunUsersUserOptions {
   decimal_separator?: string;
   thousand_separator?: string;
   date_format?: string;
@@ -94,7 +94,7 @@ interface UserCreateInfo {
   language?: string;
   tags?: TagsObj[];
   active?: boolean;
-  options?: UserOptions;
+  options?: RunUsersUserOptions;
 }
 
 interface UserCreateResponse {
@@ -407,6 +407,7 @@ type UserListItem<
 
 export type {
   RunInfo,
+  RunUsersUserOptions,
   UserCreateInfo,
   UserCreateResponse,
   UserInfo,
