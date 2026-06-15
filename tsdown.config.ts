@@ -6,14 +6,12 @@ export default defineConfig({
   outDir: "./lib",
   clean: true,
   dts: true,
-  outExtensions: ({ format }) => ({
+  outExtension: ({ format }) => ({
     js: format === "cjs" ? ".cjs" : ".js",
     dts: ".d.ts",
   }),
   splitting: false,
   sourcemap: true,
   target: "es2020",
-  deps: {
-    neverBundle: ["papaparse", "qs", "eventsource"],
-  },
+  external: ["papaparse", "qs", "eventsource"],
 });
