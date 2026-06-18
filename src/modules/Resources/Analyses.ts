@@ -82,7 +82,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * ```typescript
    * const newAnalysis = await Resources.analysis.create({
    *   name: "My Analysis",
-   *   type: "node",
+   *   runtime: "node-rt2025",
    *   tags: [{ key: "type", value: "data-processing" }]
    * });
    * console.log(newAnalysis.id, newAnalysis.token); // analysis-id-123, analysis-token-123
@@ -228,7 +228,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * const result = await Resources.analysis.uploadScript("analysis-id-123", {
    *   name: "script.js",
    *   content: "base64-encoded-content",
-   *   language: "node"
+   *   language: "node-rt2025"
    * });
    * console.log(result);
    * ```
