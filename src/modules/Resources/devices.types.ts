@@ -69,12 +69,47 @@ interface DeviceCreateInfoImmutable extends Omit<DeviceCreateInfoBasic, "type"> 
   chunk_retention: number;
 }
 /**
+ * Hybrid devices combine immutable telemetry (time-partitioned, with retention via
+ * `chunk_period` + `chunk_retention`) and editable mutable variables (no retention) in
+ * a single device. At insert time each variable is routed to the mutable side when it
+ * matches `mutable_variable_regex`, otherwise it is stored as immutable telemetry.
+ */
+interface DeviceCreateInfoHybrid extends Omit<DeviceCreateInfoBasic, "type"> {
+  type: "hybrid";
+
+  /**
+   * Chunk division to retain data in the device.
+   *
+   * Required for Hybrid devices.
+   */
+  chunk_period: "day" | "week" | "month" | "quarter";
+
+  /**
+   * Amount of chunks to retain data according to the `chunk_period`.
+   * Integer between in the range of 0 to 36 (inclusive).
+   *
+   * Required for Hybrid devices.
+   */
+  chunk_retention: number;
+
+  /**
+   * Regex that routes each variable to the mutable side at insert time (unanchored
+   * substring match). Required for Hybrid devices. Can only be changed while the device
+   * is empty.
+   */
+  mutable_variable_regex: string;
+}
+/**
  * @deprecated
  */
 interface DeviceCreateInfoLegacy extends Omit<DeviceCreateInfoBasic, "type"> {
   type: "legacy";
 }
-type DeviceCreateInfo = DeviceCreateInfoLegacy | DeviceCreateInfoMutable | DeviceCreateInfoImmutable;
+type DeviceCreateInfo =
+  | DeviceCreateInfoLegacy
+  | DeviceCreateInfoMutable
+  | DeviceCreateInfoImmutable
+  | DeviceCreateInfoHybrid;
 type DeviceEditInfo = Partial<Omit<DeviceCreateInfo, "chunk_period" | "type"> & { chunk_retention: number }>;
 
 interface DeviceInfoBase {
@@ -124,7 +159,12 @@ type DeviceInfoMutable = Required<
     Omit<DeviceCreateInfoMutable, "configuration_params" | "serie_number" | "connector_parse" | "parse_function">
 >;
 
-type DeviceInfo = DeviceInfoImmutable | DeviceInfoMutable;
+type DeviceInfoHybrid = Required<
+  DeviceInfoBase &
+    Omit<DeviceCreateInfoHybrid, "configuration_params" | "serie_number" | "connector_parse" | "parse_function">
+>;
+
+type DeviceInfo = DeviceInfoImmutable | DeviceInfoMutable | DeviceInfoHybrid;
 
 interface ConfigurationParams {
   sent: boolean;
