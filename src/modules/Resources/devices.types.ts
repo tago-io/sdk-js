@@ -94,8 +94,9 @@ interface DeviceCreateInfoHybrid extends Omit<DeviceCreateInfoBasic, "type"> {
 
   /**
    * Regex that routes each variable to the mutable side at insert time (unanchored
-   * substring match). Required for Hybrid devices. Can only be changed while the device
-   * is empty.
+   * substring match). It must not match every variable or no variable; use a mutable or
+   * immutable device for those cases. Required for Hybrid devices. Can only be changed
+   * while the device is empty.
    */
   mutable_variable_regex: string;
 }

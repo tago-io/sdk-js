@@ -71,7 +71,8 @@ type BucketInfoHybrid = Omit<BucketInfoBasic, "data_retention" | "data_retention
   chunk_retention: number;
   /**
    * Regex that routes each variable to the mutable side at insert time (unanchored
-   * substring match).
+   * substring match). It must not match every variable or no variable; use a mutable or
+   * immutable device for those cases.
    *
    * Always returned for Hybrid devices.
    */
