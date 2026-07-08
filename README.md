@@ -1,35 +1,32 @@
 <br/>
 <p align="center">
-  <img src="https://assets.tago.io/tagoio/sdk.png" width="250px" alt="TagoIO"></img>
+  <img src="https://assets.tago.io/tagoio/sdk.png" width="200px" alt="TagoIO"></img>
 </p>
 
-# TagoIO - JavaScript SDK
-> TagoIO provides easy connection of electronic devices with external data to drive smarter decisions using contextual analysis. Supports Node.js, Browser, Deno, and Bun environments.
+# TagoIO JavaScript SDK
 
-## Help
+Official TagoIO SDK for JavaScript. Works with Node.js, browsers, Deno, and Bun.
 
-Official TagoIO SDK for JavaScript. Works across all major JavaScript runtimes and environments.
-
-| what                  | where                    |
-|-----------------------|--------------------------|
-| TagoIO website        | https://tago.io           |
-| SDK documentation     | https://js.sdk.tago.io    |
-| General documentation | https://docs.tago.io      |
+---
 
 ## Installation
 
-### Node.js & Bun
+### Node.js and Bun
+
 ```bash
 npm install @tago-io/sdk
 ```
 
 ### Deno
+
 ```bash
 deno add @tago-io/sdk
 ```
 
-## Quick Example
-#### Insert Device Data
+## Quick example
+
+Send and read device data:
+
 ```javascript
 // ESM (recommended)
 import { Device } from "@tago-io/sdk";
@@ -49,30 +46,45 @@ const myData = {
 
 async function sendMyData() {
   const result = await myDevice.sendData(myData);
-
   console.log(result);
   // 1 Data Added
 }
 
 async function getMyData() {
   const result = await myDevice.getData({ variables: ["temperature"], query: "last_item" });
-
   console.info("Current Temperature is:", result[0] ? result[0].value : "N/A");
   // Current Temperature is: 63
 }
-
-// -> See full documentation at: https://js.sdk.tago.io/
 ```
 
-## Runtime Compatibility
+## Documentation
+
+- [SDK documentation](https://js.sdk.tago.io)
+- [TagoIO docs](https://docs.tago.io)
+- [TagoIO website](https://tago.io)
+- [Releases](https://github.com/tago-io/sdk-js/releases)
+
+## Requirements
 
 | Runtime | ESM | CommonJS | Version |
 |---------|-----|----------|---------|
-| Node.js | ✓   | ✓        | 20+     |
-| Browser | ✓   | -        | Modern  |
-| Deno    | ✓   | -        | 2.0+    |
-| Bun     | ✓   | ✓        | 1.0+    |
+| Node.js | yes | yes | 20+ |
+| Browser | yes | no | Modern |
+| Deno | yes | no | 2.0+ |
+| Bun | yes | yes | 1.0+ |
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Report security issues through [GitHub Security Advisories](https://github.com/tago-io/sdk-js/security/advisories/new), not the public issue tracker.
 
 ## License
 
-TagoIO SDK for JavaScript in the browser and Node.js is released under the [Apache-2.0 License](https://github.com/tago-io/tago-sdk-js/blob/master/LICENSE.md).
+This repository is licensed under the [Apache License 2.0](LICENSE.md).
+
+### Copyright Notice
+
+TagoIO Inc. retains all rights to the TagoIO name, logo, and branding assets. These materials are not covered under the Apache License. See [LICENSE.md](LICENSE.md#copyright-notice).
+
+---
+
+Built by the TagoIO team. Software licensed under [Apache-2.0](LICENSE.md). TagoIO logos and branding are not covered by Apache-2.0; see [Copyright Notice](LICENSE.md#copyright-notice) in LICENSE.md.
