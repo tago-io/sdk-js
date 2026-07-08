@@ -12,11 +12,11 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       # Node 24 ships npm >= 11.5.1 (required for OIDC trusted publishing).
       # Do not run npm install -g npm@latest: it can break bundled deps (e.g. sigstore).
       # Do not set NODE_AUTH_TOKEN: OIDC must win over a placeholder token from setup-node.
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
@@ -31,7 +31,7 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: |
           npm ci
           npx jsr publish
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [publish-npm]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
