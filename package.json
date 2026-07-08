@@ -47,7 +47,6 @@
     }
   },
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "prepublishOnly": "pnpm run build",
     "build": "rm -rf ./lib; node updateEnv.cjs; tsdown",
     "publish:npm": "pnpm publish --access public",
