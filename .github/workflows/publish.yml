@@ -17,10 +17,10 @@ jobs:
         with:
           node-version: "22.x"
           registry-url: "https://registry.npmjs.org"
+      # Trusted publishing needs npm >= 11.5.1 (OIDC). Do not set NODE_AUTH_TOKEN on publish.
+      - run: npm install -g npm@latest
       - run: npm ci
-      - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm publish --access public
 
   publish-jsr:
     name: "Publish to JSR"
