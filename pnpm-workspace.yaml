@@ -1,0 +1,5 @@
+saveExact: true
+engineStrict: true
+
+overrides:
+  esbuild: "0.28.1"
