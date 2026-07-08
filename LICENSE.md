@@ -188,3 +188,15 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+
+## Copyright Notice
+
+TagoIO logos and branding assets at https://assets.tago.io/ are copyrighted by TagoIO Inc.
+and are not covered by the Apache License 2.0. They may be used only in this project's README
+and documentation for attribution, unmodified, via those URLs. Any other use, copy, or
+distribution requires explicit permission from TagoIO Inc.
+
+---
+
+*This software is provided by TagoIO Inc. under the Apache License 2.0. For questions or
+additional permissions, please contact us.*
