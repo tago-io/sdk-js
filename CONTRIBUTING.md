@@ -11,27 +11,27 @@ Thanks for helping improve the TagoIO JavaScript SDK.
 ## Development setup
 
 ```bash
-npm install
-npm run build
-npm test
-npm run check
+pnpm install
+pnpm run build
+pnpm test
+pnpm run check
 ```
 
-Requirements: Node.js 20+.
+Requirements: Node.js 22+, pnpm 11 (see `packageManager` in `package.json`; Corepack recommended).
 
 ## Pull requests
 
 1. Branch from `main` using `type/description` (for example `fix/device-token-refresh`).
 2. Keep the change focused. One concern per PR.
 3. Add or update tests when behavior changes.
-4. Run `npm run check` and `npm test` before opening the PR.
+4. Run `pnpm run check` and `pnpm test` before opening the PR.
 5. Fill the pull request template: `## Summary`, `## Test plan` (or a `Trivial:` marker in Summary), and `## Risk (CIA)`.
 
 ## Code style
 
 - TypeScript strict mode. Explicit types on public APIs (isolated declarations).
 - Prefer `async`/`await` over raw Promise chains.
-- Format and lint with Biome: `npm run check`.
+- Format and lint with Biome: `pnpm run check`.
 
 ## Docs
 

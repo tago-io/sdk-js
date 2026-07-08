@@ -15,6 +15,7 @@ Official TagoIO SDK for JavaScript. Works with Node.js, browsers, Deno, and Bun.
 
 ```bash
 npm install @tago-io/sdk
+# or: pnpm add @tago-io/sdk
 ```
 
 ### Deno
@@ -68,7 +69,7 @@ async function getMyData() {
 
 | Runtime | ESM | CommonJS | Version |
 |---------|-----|----------|---------|
-| Node.js | yes | yes | 20+ |
+| Node.js | yes | yes | 22+ |
 | Browser | yes | no | Modern |
 | Deno | yes | no | 2.0+ |
 | Bun | yes | yes | 1.0+ |
