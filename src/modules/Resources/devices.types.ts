@@ -111,7 +111,25 @@ type DeviceCreateInfo =
   | DeviceCreateInfoMutable
   | DeviceCreateInfoImmutable
   | DeviceCreateInfoHybrid;
-type DeviceEditInfo = Partial<Omit<DeviceCreateInfo, "chunk_period" | "type"> & { chunk_retention: number }>;
+type DeviceEditInfo = Partial<
+  Omit<DeviceCreateInfo, "chunk_period" | "type"> & {
+    chunk_retention: number;
+    /**
+     * Regex that routes each variable to the mutable side at insert time (Hybrid devices
+     * only). Can only be changed while the device is empty.
+     */
+    mutable_variable_regex: string;
+  }
+>;
+
+interface DeviceEmptyParams {
+  /**
+   * For Hybrid devices only: empty a single side of the device instead of everything.
+   * `"mutable"` truncates the editable variables; `"immutable"` drops the telemetry chunks.
+   * Omit to remove all data (every device type).
+   */
+  route?: "mutable" | "immutable";
+}
 
 interface DeviceInfoBase {
   /** Device ID. */
@@ -299,6 +317,7 @@ interface DeviceChunkCopyResponse {
 
 export type {
   DeviceQuery,
+  DeviceEmptyParams,
   DeviceCreateInfo,
   ConfigurationParams,
   DeviceInfo,
