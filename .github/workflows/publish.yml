@@ -16,13 +16,18 @@ jobs:
       # Node 24 ships npm >= 11.5.1 (required for OIDC trusted publishing).
       # Do not run npm install -g npm@latest: it can break bundled deps (e.g. sigstore).
       # Do not set NODE_AUTH_TOKEN: OIDC must win over a placeholder token from setup-node.
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
           package-manager-cache: false
-      - run: npm ci
-      - run: npm publish --access public
+          cache: pnpm
+      - run: pnpm install
+      - run: pnpm publish --access public --no-git-checks
 
   publish-jsr:
     name: "Publish to JSR"
@@ -32,9 +37,20 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v6
-      - run: |
-          npm ci
-          npx jsr publish
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - run: pnpm run publish:jsr
+
   docs:
     name: "Build Docs/Types and Deploy"
     runs-on: ubuntu-latest
@@ -46,13 +62,22 @@ jobs:
         with:
           persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
           fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: pnpm
       - name: Create local changes
         run: |
-          npm ci
-          npm run docs
-          npm run monacoTypes
+          pnpm install
+          pnpm run docs
+          pnpm run monacoTypes
           rm -rf __tests__ src .github *.js *.json *.md *.MD
           rm -rf .editorconfig .eslintignore .eslintrc.js .npmignore .npmrc .prettierrc
+          rm -rf pnpm-lock.yaml pnpm-workspace.yaml
           rm -rf assets
           mv docs/* .
           rm -rf docs/
