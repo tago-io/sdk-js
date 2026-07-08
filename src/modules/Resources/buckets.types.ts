@@ -25,7 +25,7 @@ interface BucketCreateInfo {
 /**
  * Type of data storage for a device (bucket).
  */
-type DataStorageType = "immutable" | "mutable" | "legacy";
+type DataStorageType = "immutable" | "mutable" | "legacy" | "hybrid";
 type ChunkPeriod = "day" | "week" | "month" | "quarter";
 interface BucketInfoBasic extends BucketCreateInfo {
   id: GenericID;
@@ -55,6 +55,29 @@ type BucketInfoImmutable = Omit<BucketInfoBasic, "data_retention" | "data_retent
    */
   chunk_retention: number;
 };
+type BucketInfoHybrid = Omit<BucketInfoBasic, "data_retention" | "data_retention_ignore"> & {
+  type: "hybrid";
+  /**
+   * Chunk division to retain data in the device.
+   *
+   * Always returned for Hybrid devices.
+   */
+  chunk_period: ChunkPeriod;
+  /**
+   * Amount of chunks to retain data according to the `chunk_period`.
+   *
+   * Always returned for Hybrid devices.
+   */
+  chunk_retention: number;
+  /**
+   * Regex that routes each variable to the mutable side at insert time (unanchored
+   * substring match). It must not match every variable or no variable; use a mutable or
+   * immutable device for those cases.
+   *
+   * Always returned for Hybrid devices.
+   */
+  mutable_variable_regex: string;
+};
 type BucketInfoMutable = Omit<
   BucketInfoBasic,
   "chunk_period" | "chunk_retention" | "data_retention" | "data_retention_ignore"
@@ -70,7 +93,7 @@ type BucketInfoLegacy = Omit<BucketInfoBasic, "chunk_period" | "chunk_retention"
   data_retention_ignore: [];
 };
 
-type BucketInfo = BucketInfoImmutable | BucketInfoMutable | BucketInfoLegacy;
+type BucketInfo = BucketInfoImmutable | BucketInfoMutable | BucketInfoLegacy | BucketInfoHybrid;
 
 interface BucketDeviceInfo {
   id: GenericID;
