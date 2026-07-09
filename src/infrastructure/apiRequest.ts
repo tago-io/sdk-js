@@ -276,14 +276,7 @@ async function performRequest(
       statusText: response.statusText,
     };
 
-    try {
-      return resultHandler(result);
-    } catch (handlerError) {
-      // If resultHandler throws, it's expected behavior (non-JSON, empty data, etc.)
-      // We should throw it directly, not wrap it as an error result
-      // biome-ignore lint/complexity/noUselessCatch: This is intentional to handle specific cases
-      throw handlerError;
-    }
+    return resultHandler(result);
   } catch (error: any) {
     // Only wrap actual network/fetch errors, not handler errors
     if (typeof error === "string") {

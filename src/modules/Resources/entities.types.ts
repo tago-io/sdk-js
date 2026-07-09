@@ -41,16 +41,17 @@ type EntityInfo = Required<EntityCreateInfo> & {
   updated_at: string;
 };
 
-interface EntityQuery
-  extends Query<EntityInfo, "name" | "visible" | "active" | "last_input" | "created_at" | "updated_at"> {
+interface EntityQuery extends Query<
+  EntityInfo,
+  "name" | "visible" | "active" | "last_input" | "created_at" | "updated_at"
+> {
   resolveBucketName?: boolean;
   resolveConnectorName?: boolean;
 }
 
 type EntityListItem<
-  T extends EntityQuery["fields"] extends readonly (keyof any)[]
-    ? EntityQuery["fields"][number]
-    : keyof EntityInfo = "id",
+  T extends EntityQuery["fields"] extends readonly (keyof any)[] ? EntityQuery["fields"][number] : keyof EntityInfo =
+    "id",
 > = Pick<EntityInfo, "id" | "name" | "tags" | T> & Partial<EntityInfo>;
 
 type EntityDataQuery = {

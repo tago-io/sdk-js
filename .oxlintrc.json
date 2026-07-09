@@ -1,0 +1,84 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "options": {
+    "typeAware": true
+  },
+  "plugins": ["typescript", "unicorn", "import", "oxc"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "env": {
+    "builtin": true,
+    "node": true,
+    "browser": true
+  },
+  "ignorePatterns": [
+    "lib/**",
+    "docs/**",
+    "coverage/**",
+    "node_modules/**",
+    "examples/**",
+    "build/**",
+    "out/**",
+    ".cache/**",
+    "**/*.tgz",
+    "**/*.local.*"
+  ],
+  "rules": {
+    "no-unused-vars": "error",
+    "typescript/no-unused-vars": "error",
+    "prefer-const": "error",
+    "typescript/no-explicit-any": "warn",
+    "import/extensions": ["error", "ignorePackages"],
+    "typescript/no-redundant-type-constituents": "off",
+    "typescript/restrict-template-expressions": "off",
+    "typescript/no-floating-promises": "off",
+    "typescript/no-base-to-string": "off",
+    "typescript/unbound-method": "off",
+    "typescript/no-unsafe-type-assertion": "off",
+    "typescript/no-unnecessary-type-assertion": "off",
+    "typescript/consistent-return": "off",
+    "typescript/no-unnecessary-type-conversion": "off",
+    "typescript/no-unnecessary-boolean-literal-compare": "off",
+    "typescript/no-unnecessary-template-expression": "off",
+    "eslint/no-underscore-dangle": "off",
+    "eslint/preserve-caught-error": "off",
+    "eslint/no-shadow": "off",
+    "unicorn/no-array-sort": "off",
+    "unicorn/no-useless-spread": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/__tests__/**/*.ts", "**/*.test.ts"],
+      "env": {
+        "vitest": true
+      },
+      "rules": {
+        "no-unused-vars": "off",
+        "typescript/no-unused-vars": "off",
+        "typescript/no-explicit-any": "off"
+      }
+    },
+    {
+      "files": [
+        "**/src/modules/Migration/**/*.ts",
+        "**/src/modules/Utils/router/**/*.ts",
+        "**/src/modules/Resources/**/*.types.ts",
+        "**/src/common/**/*.ts",
+        "**/src/infrastructure/**/*.ts",
+        "**/src/modules/Analysis/**/*.ts",
+        "**/src/modules/Utils/sendDownlink.ts",
+        "**/src/modules/Utils/updateMultipleDropdown.ts",
+        "**/src/modules/Dictionary/**/*.ts",
+        "**/src/modules/Network/**/*.ts",
+        "**/src/modules/Resources/**/*.ts",
+        "**/src/modules/Services/**/*.ts",
+        "**/src/modules/RunUser/**/*.ts"
+      ],
+      "rules": {
+        "typescript/no-explicit-any": "off"
+      }
+    }
+  ]
+}

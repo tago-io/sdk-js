@@ -1,0 +1,2 @@
+# Normalize text to LF so oxfmt --check (endOfLine: lf) is stable on Windows CI.
+* text=auto eol=lf
