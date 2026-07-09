@@ -14,11 +14,11 @@ build/
 out/
 /lib/
 .vscode
-yarn.lock
+/package-lock.json
+/yarn.lock
 .cache
 !.github/**
 *.local.*
 *.tgz
-examples/**/package-lock.json
 /docs/
 .claude

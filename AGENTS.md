@@ -8,30 +8,30 @@ Follow `tagoio:repo-standards` for README headers, section packs, LICENSE.md, CO
 
 ## Conventions
 
-- Package manager: npm (lockfile is `package-lock.json`). Do not migrate to pnpm/yarn.
-- Node: `>=20` (`package.json` `engines`). Do not lower the floor.
+- Package manager: pnpm 11 (lockfile is `pnpm-lock.yaml`). Do not reintroduce npm/yarn lockfiles or `npm install` for repo development.
+- Node: `>=22` (`package.json` `engines`). Do not lower the floor.
 - TypeScript: `isolatedDeclarations: true`, `moduleResolution: "bundler"`, target ES2020. Public APIs need explicit type annotations (class fields, getters, method return types, complex generics).
 - Prefer `type` over `interface` only when the surrounding file already does; match local style.
 - Linter/formatter: Biome (`biome.json`). Line width 120, 2 spaces.
 - Tests: Vitest. `TZ=UTC` when time matters. Specs live next to source as `*.test.ts` or under `__tests__/`.
 - Build entry: `src/modules.ts` → `lib/` (ESM `.js` + CJS `.cjs` + dual dts).
 - tsdown externals: `papaparse`, `qs`, `eventsource` only (see `tsdown.config.ts`). `eventsource` is optional at runtime.
-- JSR/Deno: `deno.json` (not `jsr.json`). Publish with `deno publish` / `npm run publish:jsr`.
+- JSR/Deno: `deno.json` (not `jsr.json`). Version lives only in `package.json`; `publish:jsr` injects it via `deno publish --set-version`.
 - Named exports from modules. Keep `export type` for type-only surfaces.
 
 ## Commands
 
 ```bash
-npm install
-npm run build          # clean lib/, stamp env, tsdown dual build
-npm test               # vitest
-npm run linter         # biome lint
-npm run format         # biome format --write
-npm run check          # biome check --write
-npm run docs           # typedoc
-npm run publish:npm    # npm publish (runs build via prepublishOnly)
-npm run publish:jsr    # deno publish
-npm run publish:all
+pnpm install
+pnpm run build          # clean lib/, stamp env, tsdown dual build
+pnpm test               # vitest
+pnpm run linter         # biome lint
+pnpm run format         # biome format --write
+pnpm run check          # biome check --write
+pnpm run docs           # typedoc
+pnpm run publish:npm    # pnpm publish (runs build via prepublishOnly)
+pnpm run publish:jsr    # deno publish --set-version from package.json
+pnpm run publish:all
 ```
 
 Smoke after build:
@@ -69,6 +69,6 @@ src/
 2. Async generators must declare the full `AsyncGenerator<...>` return type.
 3. Conditional-generic API methods need an explicit `Promise<...>` return type; do not rely on inference.
 4. Do not add new runtime dependencies without a clear need. Prefer existing packages (`nanoid`, `papaparse`, `qs`, optional `eventsource`).
-5. Do not hand-edit `lib/` or lock files. Regenerate with `npm run build` / `npm install`.
+5. Do not hand-edit `lib/` or lock files. Regenerate with `pnpm run build` / `pnpm install`.
 6. Do not put secrets, tokens, or personal emails in code, commits, or docs. Work email for this org: `felipefdl@tago.io` when needed.
 7. README logo is CDN-only: `https://assets.tago.io/tagoio/sdk.png`, width `200px`. No relative logo paths, no inline SVG in root README.

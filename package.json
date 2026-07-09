@@ -34,15 +34,24 @@
     "tagoio",
     "tago-io"
   ],
+  "packageManager": "pnpm@11.10.0+sha512.0b7f8b98060031904c017e3a41eb187a16d40eeb829b95c4f8cb03681761fc4ab53dd219115b9b447f4dce1a05a214764461e7d3703392a9f32f9511ce8c86c8",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.0.0",
+    "pnpm": ">=11.0.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": ">=11.0.0 <12.0.0",
+      "onFail": "download"
+    }
   },
   "scripts": {
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "pnpm run build",
     "build": "rm -rf ./lib; node updateEnv.cjs; tsdown",
-    "publish:npm": "npm publish",
-    "publish:jsr": "deno publish",
-    "publish:all": "npm run publish:npm && npm run publish:jsr",
+    "publish:npm": "pnpm publish --access public",
+    "publish:jsr": "deno publish --set-version $(node -p \"require('./package.json').version\")",
+    "publish:all": "pnpm run publish:npm && pnpm run publish:jsr",
     "linter": "biome lint .",
     "format": "biome format --write .",
     "check": "biome check --write .",
@@ -71,8 +80,5 @@
   },
   "optionalDependencies": {
     "eventsource": "4.0.0"
-  },
-  "overrides": {
-    "esbuild": "0.28.1"
   }
 }
