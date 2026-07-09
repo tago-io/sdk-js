@@ -50,7 +50,7 @@
     "prepublishOnly": "pnpm run build",
     "build": "rm -rf ./lib; node updateEnv.cjs; tsdown",
     "publish:npm": "pnpm publish --access public",
-    "publish:jsr": "deno publish",
+    "publish:jsr": "deno publish --set-version $(node -p \"require('./package.json').version\")",
     "publish:all": "pnpm run publish:npm && pnpm run publish:jsr",
     "linter": "biome lint .",
     "format": "biome format --write .",
