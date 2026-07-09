@@ -34,11 +34,10 @@ interface INetworkInfo {
   require_devices_access?: boolean;
 }
 
-interface NetworkDeviceListQuery
-  extends Omit<
-    Query<DeviceItem, "name" | "visible" | "last_input" | "last_output" | "created_at" | "updated_at">,
-    "fields"
-  > {}
+interface NetworkDeviceListQuery extends Omit<
+  Query<DeviceItem, "name" | "visible" | "last_input" | "last_output" | "created_at" | "updated_at">,
+  "fields"
+> {}
 
 interface NetworkDeviceListQueryInfo extends DeviceItem {
   token: string;

@@ -400,9 +400,8 @@ type ThemeOption =
 
 type UserQuery = Query<UserInfo, "name" | "active" | "last_login" | "created_at" | "updated_at">;
 type UserListItem<
-  T extends UserQuery["fields"] extends readonly (keyof any)[]
-    ? UserQuery["fields"][number]
-    : keyof UserInfo = keyof UserInfo,
+  T extends UserQuery["fields"] extends readonly (keyof any)[] ? UserQuery["fields"][number] : keyof UserInfo =
+    keyof UserInfo,
 > = Pick<UserInfo, T> & Partial<UserInfo>;
 
 export type {

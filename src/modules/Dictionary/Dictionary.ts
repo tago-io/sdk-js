@@ -98,7 +98,7 @@ class Dictionary extends TagoIOModule<IDictionaryModuleParams> {
       return this.runURL
         ? await TagoIOModule.doRequestAnonymous<LanguageData>(requestConfig, this.params.region)
         : await this.doRequest<LanguageData>(requestConfig);
-    } catch (_e) {
+    } catch {
       return null;
     }
   }

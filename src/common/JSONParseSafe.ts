@@ -11,7 +11,7 @@ function JSONParseSafe(jsonString: string, defaultValue: unknown = {}): unknown 
 
   try {
     return JSON.parse(jsonString);
-  } catch (_error) {
+  } catch {
     return defaultValue;
   }
 }

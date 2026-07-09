@@ -9,10 +9,10 @@ Follow `tagoio:repo-standards` for README headers, section packs, LICENSE.md, CO
 ## Conventions
 
 - Package manager: pnpm 11 (lockfile is `pnpm-lock.yaml`). Do not reintroduce npm/yarn lockfiles or `npm install` for repo development.
-- Node: `>=22` (`package.json` `engines`). Do not lower the floor.
+- Node: `>=22.12.0` (`package.json` `engines`). Do not lower the floor.
 - TypeScript: `isolatedDeclarations: true`, `moduleResolution: "bundler"`, target ES2020. Public APIs need explicit type annotations (class fields, getters, method return types, complex generics).
 - Prefer `type` over `interface` only when the surrounding file already does; match local style.
-- Linter/formatter: Biome (`biome.json`). Line width 120, 2 spaces.
+- Linter/formatter: OXC (`oxlint` type-aware, `oxfmt`). Line width 120, 2 spaces. Configs: `.oxlintrc.json`, `.oxfmtrc.json`.
 - Tests: Vitest. `TZ=UTC` when time matters. Specs live next to source as `*.test.ts` or under `__tests__/`.
 - Build entry: `src/modules.ts` → `lib/` (ESM `.js` + CJS `.cjs` + dual dts).
 - tsdown externals: `papaparse`, `qs`, `eventsource` only (see `tsdown.config.ts`). `eventsource` is optional at runtime.
@@ -25,9 +25,10 @@ Follow `tagoio:repo-standards` for README headers, section packs, LICENSE.md, CO
 pnpm install
 pnpm run build          # clean lib/, stamp env, tsdown dual build
 pnpm test               # vitest
-pnpm run linter         # biome lint
-pnpm run format         # biome format --write
-pnpm run check          # biome check --write
+pnpm run lint           # oxlint (type-aware via config)
+pnpm run fmt            # oxfmt write
+pnpm run fmt:check      # oxfmt --check
+pnpm run check          # oxlint --deny-warnings && oxfmt --check
 pnpm run docs           # typedoc
 pnpm run publish:npm    # pnpm publish (runs build via prepublishOnly)
 pnpm run publish:jsr    # deno publish --set-version from package.json

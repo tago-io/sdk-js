@@ -195,8 +195,10 @@ interface TokenData {
   middleware?: string;
 }
 
-interface ListTokenQuery
-  extends Query<TokenDataList, "name" | "permission" | "serie_number" | "verification_code" | "created_at"> {}
+interface ListTokenQuery extends Query<
+  TokenDataList,
+  "name" | "permission" | "serie_number" | "verification_code" | "created_at"
+> {}
 
 export type {
   Data,

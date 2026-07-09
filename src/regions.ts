@@ -91,7 +91,7 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
     return runtimeRegion;
   }
 
-  if (region !== undefined && !region !== null && region !== "env") {
+  if (region != null && region !== "env") {
     throw new ReferenceError(`> TagoIO-SDK: Invalid region ${region}.`);
   }
 
@@ -104,7 +104,7 @@ function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
     }
 
     return { api: api || "", sse: sse || "" };
-  } catch (_) {
+  } catch {
     // if (!noRegionWarning) {
     //   console.info("> TagoIO-SDK: No region or env defined, using fallback as usa-1.");
     //   noRegionWarning = true;

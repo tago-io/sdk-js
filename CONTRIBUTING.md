@@ -17,7 +17,7 @@ pnpm test
 pnpm run check
 ```
 
-Requirements: Node.js 22+, pnpm 11 (see `packageManager` in `package.json`; Corepack recommended).
+Requirements: Node.js 22.12+, pnpm 11 (see `packageManager` in `package.json`; Corepack recommended).
 
 ## Pull requests
 
@@ -31,7 +31,7 @@ Requirements: Node.js 22+, pnpm 11 (see `packageManager` in `package.json`; Core
 
 - TypeScript strict mode. Explicit types on public APIs (isolated declarations).
 - Prefer `async`/`await` over raw Promise chains.
-- Format and lint with Biome: `pnpm run check`.
+- Format and lint with OXC (oxlint + oxfmt): `pnpm run check`.
 
 ## Docs
 

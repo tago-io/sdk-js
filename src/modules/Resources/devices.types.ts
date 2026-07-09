@@ -8,8 +8,10 @@ import type {
 } from "../../common/common.types.ts";
 import type { DataStorageType } from "./buckets.types.ts";
 
-interface DeviceQuery
-  extends Query<DeviceInfo, "name" | "visible" | "active" | "last_input" | "created_at" | "updated_at"> {
+interface DeviceQuery extends Query<
+  DeviceInfo,
+  "name" | "visible" | "active" | "last_input" | "created_at" | "updated_at"
+> {
   resolveBucketName?: boolean;
   resolveConnectorName?: boolean;
   serial?: string;
@@ -195,9 +197,8 @@ interface ConfigurationParams {
 type DeviceCreateResponse = { device_id: GenericID; bucket_id: GenericID; token: GenericToken };
 
 type DeviceListItem<
-  T extends DeviceQuery["fields"] extends readonly (keyof any)[]
-    ? DeviceQuery["fields"][number]
-    : keyof DeviceInfo = keyof DeviceInfo,
+  T extends DeviceQuery["fields"] extends readonly (keyof any)[] ? DeviceQuery["fields"][number] : keyof DeviceInfo =
+    keyof DeviceInfo,
 > = Pick<Omit<DeviceInfo, "bucket"> & { bucket: GenericID }, "id" | "name" | "tags" | T> & Partial<DeviceInfo>;
 
 // "id" | "name" | "tags" |
@@ -212,8 +213,10 @@ interface DeviceTokenData {
   expire_time: ExpireTimeOption;
   created_at: string;
 }
-interface ListDeviceTokenQuery
-  extends Query<DeviceTokenDataList, "name" | "permission" | "serie_number" | "last_authorization" | "created_at"> {}
+interface ListDeviceTokenQuery extends Query<
+  DeviceTokenDataList,
+  "name" | "permission" | "serie_number" | "last_authorization" | "created_at"
+> {}
 
 type DeviceTokenDataList<
   T extends ListDeviceTokenQuery["fields"] extends readonly (keyof any)[]
