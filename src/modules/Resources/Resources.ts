@@ -18,6 +18,7 @@ import Plan from "./Plan.ts";
 import Profile from "./Profile.ts";
 import Run from "./Run.ts";
 import Secrets from "./Secrets.ts";
+import SQL from "./SQL.ts";
 import ServiceAuthorization from "./ServiceAuthorization.ts";
 import TagoCores from "./TagoCores.ts";
 import Tags from "./Tags.ts";
@@ -178,6 +179,11 @@ class Resources extends TagoIOModule<GenericModuleParams> {
   public secrets: Secrets = new Secrets(this.params);
   static get secrets(): Secrets {
     return new Resources().secrets;
+  }
+
+  public sql: SQL = new SQL(this.params);
+  static get sql(): SQL {
+    return new Resources().sql;
   }
 
   public entities: Entities = new Entities(this.params);
