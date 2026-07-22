@@ -35,7 +35,6 @@ const server = setupServer(
       },
     })
   ),
-  http.post("https://api.tago.io/sql/execute", () => HttpResponse.json({ status: true, result: EXECUTE_RESULT })),
   http.get("https://api.tago.io/sql/sql-id-123", () => HttpResponse.json({ status: true, result: QUERY_ROW })),
   http.put("https://api.tago.io/sql/sql-id-123", () => HttpResponse.json({ status: true, result: QUERY_ROW })),
   http.delete("https://api.tago.io/sql/sql-id-123", () =>
@@ -111,14 +110,6 @@ describe("SQL resource", () => {
 
     expect(result.row_count).toBe(1);
     expect(result.served_from_cache).toBe(false);
-  });
-
-  it("executes an ad-hoc query", async () => {
-    const result = await sql.executeAdhoc("SELECT variable, value FROM device($1) AS d LIMIT 10", [
-      { key: "$1", value: "my-device-id" },
-    ]);
-
-    expect(result.rows[0].variable).toBe("temperature");
   });
 
   it("fetches the tables catalog", async () => {

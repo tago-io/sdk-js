@@ -7,7 +7,6 @@ import type {
   SQLExecuteObj,
   SQLExecuteResult,
   SQLInfo,
-  SQLParam,
   SQLQuery,
   SQLTablesQuery,
   SQLTablesResult,
@@ -188,31 +187,6 @@ class SQL extends TagoIOModule<GenericModuleParams> {
       path: `/sql/${sqlID}/execute`,
       method: "POST",
       body: executeObj || {},
-    });
-
-    return result;
-  }
-
-  /**
-   * Runs a one-off TagoSQL query without storing it. Profile token only; results are
-   * never cached. Store queries you run regularly with `create`.
-   *
-   * @see {@link https://docs.tago.io/docs/tagoio/tagosql/executing-queries} Executing Queries
-   *
-   * @example
-   * ```typescript
-   * const result = await Resources.sql.executeAdhoc(
-   *   "SELECT variable, value FROM device($1) AS d WHERE value > $2 LIMIT 10",
-   *   [{ key: "$1", value: "my-device-id" }, { key: "$2", value: "25" }]
-   * );
-   * console.log(result); // { columns: [...], rows: [...], row_count: 3, ... }
-   * ```
-   */
-  public async executeAdhoc(query: string, params?: SQLParam[]): Promise<SQLExecuteResult> {
-    const result = await this.doRequest<SQLExecuteResult>({
-      path: "/sql/execute",
-      method: "POST",
-      body: { query, params: params || [] },
     });
 
     return result;
