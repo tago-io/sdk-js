@@ -517,7 +517,7 @@ class Files extends TagoIOModule<GenericModuleParams> {
     const uploadID = await this.createMultipartUpload(filename, options);
 
     const bytesPerChunk = options?.chunkSize || 7 * MB;
-    const fileBlob = file instanceof Blob ? file : new Blob([file]);
+    const fileBlob = file instanceof Blob ? file : new Blob([file as Uint8Array<ArrayBuffer>]);
     const chunkAmount = Math.floor(fileBlob.size / bytesPerChunk) + 1;
     const partsPerTime = 3;
 
