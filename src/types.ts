@@ -30,6 +30,7 @@ export type {
   TokenCreateResponse as ServiceAuthTokenCreateResponse,
 } from "./modules/Resources/ServiceAuthorization.types.ts";
 export * from "./modules/Resources/secrets.type.ts";
+export * from "./modules/Resources/sql.types.ts";
 export * from "./modules/Resources/tagocore.types.ts";
 export * from "./modules/Resources/template.types.ts";
 export * from "./modules/RunUser/runUser.types.ts";
