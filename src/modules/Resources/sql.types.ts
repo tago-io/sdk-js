@@ -31,6 +31,8 @@ interface SQLInfo extends SQLCreateInfo {
   version: number;
   created_at: Date;
   updated_at: Date;
+  /** Read-only, derived server-side: true when the query text uses session functions. Never accepted as input. */
+  session_context: boolean;
 }
 
 type SQLQuery = Query<SQLInfo, "name" | "active" | "created_at" | "updated_at">;
@@ -81,12 +83,23 @@ interface SQLResourceItem {
   name: string;
 }
 
+interface SQLFunctionInfo {
+  name: string;
+  kind: "aggregate" | "session";
+  args: string[];
+  description: string;
+  /** Present only on session functions; carries the COALESCE authoring idiom. */
+  example?: string;
+}
+
 interface SQLTablesResult {
   tables: SQLTableInfo[];
   resources: {
     devices: SQLResourceItem[];
     entities: SQLResourceItem[];
   };
+  /** Everything callable in a query, built from the allowlists. */
+  functions: SQLFunctionInfo[];
 }
 
 interface SQLTablesQuery {
@@ -105,6 +118,7 @@ export type {
   SQLCreateInfo,
   SQLExecuteObj,
   SQLExecuteResult,
+  SQLFunctionInfo,
   SQLInfo,
   SQLParam,
   SQLQuery,

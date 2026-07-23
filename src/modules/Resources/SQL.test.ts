@@ -8,6 +8,7 @@ const QUERY_ROW = {
   id: "sql-id-123",
   name: "Latest temperature",
   tags: [{ key: "audience", value: "dashboard" }],
+  session_context: true,
   created_at: "2026-07-01T12:00:00.000Z",
   updated_at: "2026-07-02T12:00:00.000Z",
 };
@@ -32,6 +33,16 @@ const server = setupServer(
       result: {
         tables: [{ function: "device", label: "Device Data", columns: [] }],
         resources: { devices: [], entities: [] },
+        functions: [
+          { name: "count", kind: "aggregate", args: ["column"], description: "Row count" },
+          {
+            name: "session_user_tag",
+            kind: "session",
+            args: ["key"],
+            description: "The executing user's value for a tag key, filled by the server",
+            example: "COALESCE(session_user_tag('key'), '...')",
+          },
+        ],
       },
     })
   ),
@@ -63,6 +74,7 @@ describe("SQL resource", () => {
 
     expect(result).toHaveLength(1);
     expect(result[0].id).toBe("sql-id-123");
+    expect(result[0].session_context).toBe(true);
     expect(result[0].created_at).toBeInstanceOf(Date);
   });
 
@@ -80,6 +92,7 @@ describe("SQL resource", () => {
     const result = await sql.info("sql-id-123");
 
     expect(result.name).toBe("Latest temperature");
+    expect(result.session_context).toBe(true);
     expect(result.updated_at).toBeInstanceOf(Date);
   });
 
@@ -116,5 +129,8 @@ describe("SQL resource", () => {
     const result = await sql.tables({ filter: "sensor" });
 
     expect(result.tables[0].function).toBe("device");
+    expect(result.functions[0].name).toBe("count");
+    expect(result.functions[1].kind).toBe("session");
+    expect(result.functions[1].example).toContain("COALESCE");
   });
 });
