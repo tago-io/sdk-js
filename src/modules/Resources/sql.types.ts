@@ -35,7 +35,11 @@ interface SQLInfo extends SQLCreateInfo {
   session_context: boolean;
 }
 
-type SQLQuery = Query<SQLInfo, "name" | "active" | "created_at" | "updated_at">;
+// ? List projection allowlist: other row fields come from info() only.
+type SQLListField = "id" | "name" | "tags" | "active" | "created_at" | "updated_at";
+type SQLQuery = Omit<Query<SQLInfo, "name" | "active" | "created_at" | "updated_at">, "fields"> & {
+  fields?: SQLListField[];
+};
 
 interface SQLExecuteObj {
   /** Values merged over the saved defaults per key. */
