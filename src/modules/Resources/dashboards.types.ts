@@ -64,9 +64,19 @@ interface WidgetData {
   origin: GenericID;
   qty?: number;
   timezone?: string;
-  variables?: string;
+  variables?: string[];
   bucket?: GenericID;
-  query?: "min" | "max" | "count" | "avg" | "sum";
+  query?:
+    | "min"
+    | "max"
+    | "count"
+    | "avg"
+    | "sum"
+    | "last_value"
+    | "last_item"
+    | "last_insert"
+    | "aggregate"
+    | "conditional";
   start_date?: Date | string;
   end_date?: Date | string;
   overwrite?: boolean;
