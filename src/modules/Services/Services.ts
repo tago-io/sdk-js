@@ -9,6 +9,7 @@ import PDFService from "./PDF.ts";
 import Sendgrid from "./Sendgrid.ts";
 import SMS from "./SMS.ts";
 import SMTP from "./SMTP.ts";
+import TagoTiP from "./TagoTiP.ts";
 import TwilioWhatsapp from "./Twilio-Whatsapp.ts";
 import Twilio from "./Twillio.ts";
 
@@ -99,6 +100,11 @@ class Services extends TagoIOModule<GenericModuleParams> {
   public twilio_whatsapp: TwilioWhatsapp = new TwilioWhatsapp(this.params);
   static get twilio_whatsapp(): TwilioWhatsapp {
     return new Services().twilio_whatsapp;
+  }
+
+  public tagotip: TagoTiP = new TagoTiP(this.params);
+  static get tagotip(): TagoTiP {
+    return new Services().tagotip;
   }
 
   /** @internal @deprecated renamed to .mqtt (lowercase) */
