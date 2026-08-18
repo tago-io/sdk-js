@@ -58,6 +58,7 @@ src/
 │   ├── Resources/    # account/profile/devices/dashboards/... API surface
 │   ├── RunUser/
 │   ├── Services/     # email, SMS, MQTT, PDF, etc.
+│   ├── TagoTiP/      # device command client (Service Authorization token)
 │   └── Utils/
 ├── modules.ts        # public entry
 ├── regions.ts

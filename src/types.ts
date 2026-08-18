@@ -36,6 +36,7 @@ export * from "./modules/Resources/template.types.ts";
 export * from "./modules/RunUser/runUser.types.ts";
 export * from "./modules/Services/Email.ts";
 export * from "./modules/Services/PDF.ts";
+export * from "./modules/TagoTiP/TagoTiP.ts";
 export * from "./modules/Utils/router/router.types.ts";
 export * from "./modules/Utils/utils.types.ts";
 export * from "./regions.ts";
