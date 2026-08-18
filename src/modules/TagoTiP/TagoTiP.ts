@@ -10,11 +10,26 @@ interface TagoTiPCommand {
 }
 
 /**
- * TagoTiP client for sending commands to devices.
+ * TagoTiP command client
  *
- * Requires a Service Authorization token.
+ * This class provides a convenient interface for sending commands to devices through
+ * TagoTiP. Unlike {@link Services}, which is configured with your analysis token, TagoTiP
+ * requires a Service Authorization token, so it is constructed with that token directly.
  *
- * @example
+ * @example Send a command
+ * ```ts
+ * import { TagoTiP } from "@tago-io/sdk";
+ *
+ * const tagoTiP = new TagoTiP({ token: "your-service-authorization-token" });
+ *
+ * await tagoTiP.cmd({
+ *   serial: "mqtt1",
+ *   protocol: "mqtt",
+ *   body: "reboot",
+ * });
+ * ```
+ *
+ * @example Inside an analysis, reading the token from the environment
  * ```ts
  * import { Analysis, TagoTiP } from "@tago-io/sdk";
  *
@@ -29,11 +44,10 @@ interface TagoTiPCommand {
  *
  *   const tagoTiP = new TagoTiP({ token: serviceAuthorizationToken });
  *
- *   await tagoTiP.cmd({
- *     serial: "mqtt1",
- *     protocol: "mqtt",
- *     body: "reboot",
- *   });
+ *   await tagoTiP
+ *     .cmd({ serial: "mqtt1", protocol: "mqtt", body: "reboot" })
+ *     .then(console.log)
+ *     .catch(console.log);
  * }
  *
  * Analysis.use(startAnalysis);
