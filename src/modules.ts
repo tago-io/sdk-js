@@ -58,6 +58,7 @@ export { default as Account } from "./modules/Resources/AccountDeprecated.ts";
 export { default as Resources } from "./modules/Resources/Resources.ts";
 export { default as RunUser } from "./modules/RunUser/RunUser.ts";
 export { default as Services } from "./modules/Services/Services.ts";
+export { default as TagoTiP } from "./modules/TagoTiP/TagoTiP.ts";
 export * as Utils from "./modules/Utils/Utils.ts";
 export type { Regions, RegionsObj } from "./regions.ts";
 export { regionsDefinition } from "./regions.ts";
