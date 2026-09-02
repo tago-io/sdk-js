@@ -10,7 +10,7 @@ interface AnalysisCreateInfo {
   name: string;
   description?: string | null;
   interval?: string;
-  run_on?: "tago" | "external";
+  run_on?: "tago" | "external" | "sandbox";
   file_name?: string;
   runtime?: RunTypeOptions;
   active?: true;
