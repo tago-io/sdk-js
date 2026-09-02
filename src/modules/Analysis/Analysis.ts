@@ -3,7 +3,7 @@ import TagoIOModule from "../../common/TagoIOModule.ts";
 import { openSSEListening } from "../../infrastructure/apiSSE.ts";
 import getRegionObj, { setRuntimeRegion } from "../../regions.ts";
 import ConsoleService from "../Services/Console.ts";
-import type { AnalysisConstructorParams, AnalysisEnvironment, analysisFunction } from "./analysis.types.ts";
+import type { AnalysisConstructorParams, AnalysisEnvironment, analysisFunction, AnalysisItem } from "./analysis.types.ts";
 
 /**
  * Analysis execution context for TagoIO
@@ -210,6 +210,15 @@ class Analysis extends TagoIOModule<AnalysisConstructorParams> {
     }
 
     return new Analysis(analysis, params);
+  }
+
+  public async info(): Promise<AnalysisItem>  {
+    const result = await this.doRequest<AnalysisItem>({
+      path: "/info",
+      method: "GET",
+    });
+
+    return result;
   }
 }
 
