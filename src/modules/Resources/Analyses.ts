@@ -1,5 +1,6 @@
 import type { GenericID, GenericToken } from "../../common/common.types.ts";
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import { SNIPPETS_BASE_URL } from "../../config.ts";
 import { withTimeout } from "../../infrastructure/fetchUtils.ts";
 import dateParser from "../Utils/dateParser.ts";
 import type {
@@ -11,11 +12,6 @@ import type {
   SnippetRuntime,
   SnippetsListResponse,
 } from "./analysis.types.ts";
-
-/**
- * Base URL for TagoIO analysis snippets repository
- */
-const SNIPPETS_BASE_URL = "https://snippets.tago.io";
 
 class Analyses extends TagoIOModule<GenericModuleParams> {
   /**
@@ -295,7 +291,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * ```
    */
   public async listSnippets(runtime: SnippetRuntime): Promise<SnippetsListResponse> {
-    const url = `${SNIPPETS_BASE_URL}/${runtime}.json`;
+    const url = `${SNIPPETS_BASE_URL}/analysis/${runtime}.json`;
     const enhancedFetch = withTimeout(fetch, 10000);
 
     const response = await enhancedFetch(url, {
@@ -333,7 +329,7 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    * ```
    */
   public async getSnippetFile(runtime: SnippetRuntime, filename: string): Promise<string> {
-    const url = `${SNIPPETS_BASE_URL}/${runtime}/${filename}`;
+    const url = `${SNIPPETS_BASE_URL}/analysis/${runtime}/${filename}`;
     const enhancedFetch = withTimeout(fetch, 10000);
 
     const response = await enhancedFetch(url, {

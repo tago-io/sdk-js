@@ -12,4 +12,9 @@ const config = {
   },
 };
 
+/**
+ * Base URL for TagoIO public snippets repository
+ */
+export const SNIPPETS_BASE_URL: string = "https://snippets.tago.io";
+
 export default config;
