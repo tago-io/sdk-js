@@ -147,7 +147,14 @@ type ExportOption = "csv" | "json" | "xml";
 
 type Conditionals = "<" | ">" | "=" | "!" | "><" | "*";
 
-type RunTypeOptions = "node-legacy" | "python-legacy" | "node-rt2025" | "python-rt2025" | "deno-rt2025" | "other";
+type RunTypeOptions =
+  | "node-legacy"
+  | "python-legacy"
+  | "node-rt2025"
+  | "python-rt2025"
+  | "deno-rt2025"
+  | "luau-rt2026"
+  | "other";
 
 type TokenCreateResponse = { token: GenericToken; expire_date: ExpireTimeOption; permission: PermissionOption };
 
