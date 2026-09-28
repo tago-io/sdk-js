@@ -127,6 +127,8 @@ interface UserInfo extends Omit<UserCreateInfo, "password" | "generate_password"
 }
 
 type UserEditInfo = Partial<UserInfo> & {
+  /** Sets a new password. Can be sent together with `force_password_change`. */
+  password?: string;
   /** Deletes the user's sessions. */
   logout_sessions?: boolean;
 };

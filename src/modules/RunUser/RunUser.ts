@@ -119,11 +119,25 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Login at TagoIO Run as user (Anonymous)
-   * A user flagged with `force_password_change` is rejected with code `force_password_change`
-   * and a 15-minute token that works with `passwordChange`.
+   *
+   * A user flagged with `force_password_change` is rejected (HTTP 400) with a JSON string
+   * `{ code: "force_password_change", message, token }`. Parse it and use the 15-minute `token`
+   * with `passwordChange`.
    * @param tagoIORunURL TagoIO Run url without http
    * @param credentialsObj Run user credentials
    * @param region TagoIO Region Server [default usa-1]
+   *
+   * @example
+   * ```ts
+   * try {
+   *   await RunUser.login("myapp.tago.run", { email: "user@example.com", password: "temporary" });
+   * } catch (error) {
+   *   const { code, token } = JSON.parse(error as string);
+   *   if (code === "force_password_change") {
+   *     await new RunUser({ token }).passwordChange("myapp.tago.run", "new-password");
+   *   }
+   * }
+   * ```
    */
   public static async login(
     tagoIORunURL: string,

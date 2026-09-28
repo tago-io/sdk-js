@@ -143,6 +143,8 @@ class Run extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Creates a new user in the Run environment.
+   * With `generate_password` or `send_email` and no `active`, the user is created active;
+   * `active: false` together with `send_email` is rejected.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
@@ -171,6 +173,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Updates information for an existing Run user.
+   * Sending `password` sets a new password for the user.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
@@ -194,7 +197,7 @@ class Run extends TagoIOModule<GenericModuleParams> {
   /**
    * Resends the set-password invite link to a Run user.
    * Allowed only while the invite is pending (the user never signed in and `force_password_change` is true),
-   * at most once per hour per user.
+   * at most once per hour per user. Resending to an inactive user is rejected.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
