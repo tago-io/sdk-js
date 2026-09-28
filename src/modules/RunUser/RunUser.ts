@@ -119,6 +119,8 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Login at TagoIO Run as user (Anonymous)
+   * A user flagged with `force_password_change` is rejected with code `force_password_change`
+   * and a 15-minute token that works with `passwordChange`.
    * @param tagoIORunURL TagoIO Run url without http
    * @param credentialsObj Run user credentials
    * @param region TagoIO Region Server [default usa-1]
@@ -185,6 +187,7 @@ class RunUser extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Change password using token of the password recover.
+   * Also accepts the 15-minute token from a `force_password_change` login rejection.
    * @param tagoIORunURL TagoIO Run url without http
    * @param password New password
    */
