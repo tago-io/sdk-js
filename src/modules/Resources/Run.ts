@@ -13,6 +13,7 @@ import type {
   RunSAMLInfo,
   UserCreateInfo,
   UserCreateResponse,
+  UserEditInfo,
   UserInfo,
   UserListItem,
   UserQuery,
@@ -142,6 +143,8 @@ class Run extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Creates a new user in the Run environment.
+   * With `generate_password` or `send_email` and no `active`, the user is created active;
+   * `active: false` together with `send_email` is rejected.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
@@ -151,8 +154,9 @@ class Run extends TagoIOModule<GenericModuleParams> {
    * const result = await Resources.run.userCreate({
    *   name: "John Doe",
    *   email: "john@example.com",
-   *   password: "secure123",
    *   timezone: "America/New_York",
+   *   generate_password: true,
+   *   send_email: true,
    * });
    * console.log(result); // { user: 'user-id-123' }
    * ```
@@ -169,22 +173,46 @@ class Run extends TagoIOModule<GenericModuleParams> {
 
   /**
    * Updates information for an existing Run user.
+   * Sending `password` sets a new password for the user.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
    *
    * @example
    * If receive an error "Authorization Denied", check policy **Run User** / **Edit** in Access Management.
    * ```typescript
-   * const userData = ;
-   * const result = await Resources.run.userEdit("user-id-123", { name: "Updated Name" });
+   * const result = await Resources.run.userEdit("user-id-123", { name: "Updated Name", logout_sessions: true });
    * console.log(result); // TagoIO Run User Successfully Updated
    * ```
    */
-  public async userEdit(userID: GenericID, data: Partial<UserInfo>): Promise<string> {
+  public async userEdit(userID: GenericID, data: UserEditInfo): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/run/users/${userID}`,
       method: "PUT",
       body: data,
+    });
+
+    return result;
+  }
+
+  /**
+   * Resends the set-password invite link to a Run user.
+   * Allowed only while the invite is pending (the user never signed in and `force_password_change` is true),
+   * at most once per hour per user. Resending to an inactive user is rejected.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/191-tagorun} TagoRun
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Run User** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.run.userResendInvite("user-id-123", { invite_template: "invite" });
+   * console.log(result); // Invite sent
+   * ```
+   */
+  public async userResendInvite(userID: GenericID, data?: { invite_template?: string }): Promise<string> {
+    const result = await this.doRequest<string>({
+      path: `/run/users/${userID}/invite`,
+      method: "POST",
+      body: data ?? {},
     });
 
     return result;
