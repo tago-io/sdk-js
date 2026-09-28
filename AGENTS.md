@@ -16,7 +16,7 @@ Follow `tagoio:repo-standards` for README headers, section packs, LICENSE.md, CO
 - Tests: Vitest. `TZ=UTC` when time matters. Specs live next to source as `*.test.ts` or under `__tests__/`.
 - Build entry: `src/modules.ts` → `lib/` (ESM `.js` + CJS `.cjs` + dual dts).
 - tsdown externals: `papaparse`, `qs`, `eventsource` only (see `tsdown.config.ts`). `eventsource` is optional at runtime.
-- JSR/Deno: `deno.json` (not `jsr.json`). Version lives only in `package.json`; `publish:jsr` injects it via `deno publish --set-version`.
+- JSR/Deno: `deno.json` (not `jsr.json`). The version lives in both `package.json` and `deno.json`; bump them together. `publish:jsr` passes the `package.json` version to `deno publish --set-version`, which fails when `deno.json` differs.
 - Named exports from modules. Keep `export type` for type-only surfaces.
 
 ## Commands
