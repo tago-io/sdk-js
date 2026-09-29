@@ -87,7 +87,8 @@ interface UserOptions {
 interface UserCreateInfo {
   name: string;
   email: string;
-  password: string;
+  /** Omit when `generate_password` is true. */
+  password?: string;
   timezone: string;
   company?: string;
   phone?: string;
@@ -95,13 +96,23 @@ interface UserCreateInfo {
   tags?: TagsObj[];
   active?: boolean;
   options?: UserOptions;
+  /**
+   * The server generates the password and turns on `force_password_change`.
+   * Omit `password` when true; sending both is rejected.
+   */
+  generate_password?: boolean;
+  /**
+   * Sends a welcome email. `true` uses the Run's `welcome` template; a string names an `email_templates` key.
+   * Unknown keys fall back to `welcome`, then to a built-in default.
+   */
+  send_email?: boolean | string;
 }
 
 interface UserCreateResponse {
   user: GenericID;
 }
 
-interface UserInfo extends Omit<UserCreateInfo, "password"> {
+interface UserInfo extends Omit<UserCreateInfo, "password" | "generate_password" | "send_email"> {
   id: GenericID;
   profile: GenericID;
   active: boolean;
@@ -111,7 +122,16 @@ interface UserInfo extends Omit<UserCreateInfo, "password"> {
   updated_at: Date;
   options: object;
   tags: TagsObj[];
+  /** The user must set a new password on the next sign-in. */
+  force_password_change: boolean;
 }
+
+type UserEditInfo = Partial<UserInfo> & {
+  /** Sets a new password. Can be sent together with `force_password_change`. */
+  password?: string;
+  /** Deletes the user's sessions. */
+  logout_sessions?: boolean;
+};
 
 interface LoginResponseRun {
   token: GenericToken;
@@ -409,6 +429,7 @@ export type {
   UserCreateInfo,
   UserCreateResponse,
   UserInfo,
+  UserEditInfo,
   LoginResponseRun,
   UserQuery,
   UserListItem,
