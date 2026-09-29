@@ -125,11 +125,16 @@ class Device extends TagoIOModule<DeviceConstructorParams> {
       queryParams.query = undefined;
     }
 
-    let result = await this.doRequest<Data[] | number>({
+    let result = await this.doRequest<Data[] | number | null>({
       path: "/data",
       method: "GET",
       params: queryParams,
     });
+
+    // ? Scalar queries (avg, sum, ...) return null when there is no data in range.
+    if (result === null) {
+      return [];
+    }
 
     if (typeof result === "number") {
       result = [
