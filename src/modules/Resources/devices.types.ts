@@ -237,6 +237,40 @@ interface DeviceDataRestore {
   notification?: boolean;
 }
 
+interface DeviceStatisticsQuery {
+  /**
+   * Interval between items. Also sets the default range and the longest range allowed:
+   * 1 month for `hour`, 3 months for `day`, and 12 months for `month`.
+   *
+   * @default "hour"
+   */
+  periodicity?: "hour" | "day" | "month";
+  /**
+   * Start of the range. Send it together with `end_date`. If either one is missing, the default range
+   * for `periodicity` is used: the last 24 hours for `hour`, the last 3 months for `day`,
+   * and the last 12 months for `month`.
+   */
+  start_date?: string | Date;
+  /** End of the range. Must not be before `start_date`. */
+  end_date?: string | Date;
+  /**
+   * IANA timezone used to read `start_date` and `end_date` as local times.
+   * Send the dates as strings without a UTC offset when you set it.
+   *
+   * @default "UTC"
+   */
+  timezone?: string;
+}
+
+interface DeviceStatistic {
+  /** When the counters were recorded. */
+  time: Date;
+  /** Data records added to the device since the start of the month. Missing when there was no input this month. */
+  device_input?: number;
+  /** Data records returned by the device since the start of the month. Missing when there was no output this month. */
+  device_output?: number;
+}
+
 interface DeviceDataBackup {
   deviceID: GenericID;
   /**
@@ -336,4 +370,6 @@ export type {
   DeviceDataBackup,
   DeviceDataRestore,
   DeviceDataBackupResponse,
+  DeviceStatisticsQuery,
+  DeviceStatistic,
 };

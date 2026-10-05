@@ -26,6 +26,8 @@ import type {
   DeviceInfo,
   DeviceListItem,
   DeviceQuery,
+  DeviceStatistic,
+  DeviceStatisticsQuery,
   DeviceTokenDataList,
   ListDeviceTokenQuery,
 } from "./devices.types.ts";
@@ -431,6 +433,36 @@ class Devices extends TagoIOModule<GenericModuleParams> {
     });
 
     return result;
+  }
+
+  /**
+   * Retrieves the data input and output counters of a device over time.
+   *
+   * Requires the Control Tower add-on. Counters are month-to-date totals that reset at the start of each
+   * calendar month (UTC). When the range includes the current time, the first item holds the live counters.
+   *
+   * @see {@link https://docs.tago.io/docs/api/device-statistics} Device Statistics
+   * @see {@link https://docs.tago.io/docs/tagoio/addons/control-tower} Control Tower
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Device** / **Access** in Access Management.
+   * ```typescript
+   * const statistics = await Resources.devices.statistics("device-id-123", {
+   *   periodicity: "day",
+   *   start_date: "2026-09-01",
+   *   end_date: "2026-09-30",
+   * });
+   * console.log(statistics); // [ { time: 2026-09-01T00:00:00.000Z, device_input: 1250, device_output: 8730 }, ... ]
+   * ```
+   */
+  public async statistics(deviceID: GenericID, queryParams?: DeviceStatisticsQuery): Promise<DeviceStatistic[]> {
+    const result = await this.doRequest<DeviceStatistic[]>({
+      path: `/device/${deviceID}/statistics`,
+      method: "GET",
+      params: queryParams,
+    });
+
+    return result.map((item) => dateParser(item, ["time"]));
   }
 
   /**
