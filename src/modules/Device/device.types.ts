@@ -35,6 +35,26 @@ interface DeviceConstructorParams {
   // options?: any;
 }
 
+// Payload Parser Snippets types
+type PayloadParserRuntime = "javascript";
+
+interface PayloadParserSnippetItem {
+  id: string;
+  title: string;
+  description: string;
+  language: string;
+  tags: string[];
+  filename: string;
+  file_path: string;
+}
+
+interface PayloadParserSnippetsListResponse {
+  runtime: PayloadParserRuntime;
+  schema_version: number;
+  generated_at: string;
+  snippets: PayloadParserSnippetItem[];
+}
+
 type DataToSend = DataCreate;
 type DataToEdit = DataEdit;
 
@@ -190,4 +210,7 @@ export type {
   OptionsStreaming,
   ListResponse,
   valuesTypes,
+  PayloadParserRuntime,
+  PayloadParserSnippetItem,
+  PayloadParserSnippetsListResponse,
 };
