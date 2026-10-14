@@ -76,7 +76,7 @@ type AnalysisListItem<
 interface AnalysisEndpointListItem {
   id: GenericID;
   name: string;
-  /** Endpoint root, `{API_URL}/endpoint/{id}/`. */
+  /** Endpoint root without a trailing slash, `{API_URL}/endpoint/{id}`; request paths start with `/`. */
   url: string;
 }
 

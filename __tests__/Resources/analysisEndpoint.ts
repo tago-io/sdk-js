@@ -18,7 +18,7 @@ const handlers = [
     lastCall = { url: new URL(request.url), method: request.method, headers: request.headers, body: "" };
     return HttpResponse.json({
       status: true,
-      result: [{ id: ANALYSIS_ID, name: "My Page", url: `https://api.tago.io/endpoint/${ANALYSIS_ID}/` }],
+      result: [{ id: ANALYSIS_ID, name: "My Page", url: `https://api.tago.io/endpoint/${ANALYSIS_ID}` }],
     });
   }),
   http.put(`https://api.tago.io/analysis/${ANALYSIS_ID}`, async ({ request }) => {
@@ -80,7 +80,7 @@ describe("Resources analysis endpoint", () => {
       const result = await resources.analysis.listEndpoints();
 
       expect(result).toEqual([
-        { id: ANALYSIS_ID, name: "My Page", url: `https://api.tago.io/endpoint/${ANALYSIS_ID}/` },
+        { id: ANALYSIS_ID, name: "My Page", url: `https://api.tago.io/endpoint/${ANALYSIS_ID}` },
       ]);
       expect(lastCall?.headers.get("token")).toBe("test-token");
     });
