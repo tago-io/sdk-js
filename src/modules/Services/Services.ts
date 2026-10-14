@@ -103,7 +103,9 @@ class Services extends TagoIOModule<GenericModuleParams> {
 
   /** @internal @deprecated renamed to .mqtt (lowercase) */
   public MQTT: MQTT = new MQTT(this.params);
+  /** @deprecated Migrate to TagoTIP: https://docs.tago.io/docs/tagotip/transports/mqtt */
   public mqtt: MQTT = new MQTT(this.params);
+  /** @deprecated Migrate to TagoTIP: https://docs.tago.io/docs/tagotip/transports/mqtt */
   static get mqtt(): MQTT {
     return new Services().mqtt;
   }

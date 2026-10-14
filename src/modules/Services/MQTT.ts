@@ -26,9 +26,14 @@ interface MQTTDataDeprecated extends Omit<MQTTData, "device"> {
 class MQTT extends TagoIOModule<GenericModuleParams> {
   /**
    * Publish MQTT
+   * @deprecated Migrate to TagoTIP: https://docs.tago.io/docs/tagotip/transports/mqtt
    * @param mqtt MQTT Object
    */
   public async publish(mqtt: MQTTData | MQTTDataDeprecated): Promise<string> {
+    console.warn(
+      "[TagoIO SDK] services.mqtt.publish() is deprecated. Migrate to TagoTIP: https://docs.tago.io/docs/tagotip/transports/mqtt"
+    );
+
     let device: GenericID;
     if ("device" in mqtt) {
       device = mqtt.device;
