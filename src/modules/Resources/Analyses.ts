@@ -1,9 +1,16 @@
+import qs from "qs";
 import type { GenericID, GenericToken } from "../../common/common.types.ts";
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import config from "../../config.ts";
 import { withTimeout } from "../../infrastructure/fetchUtils.ts";
+import regions from "../../regions.ts";
 import dateParser from "../Utils/dateParser.ts";
 import type {
   AnalysisCreateInfo,
+  AnalysisEditInfo,
+  AnalysisEndpointCallOptions,
+  AnalysisEndpointListItem,
+  AnalysisEndpointResponse,
   AnalysisInfo,
   AnalysisListItem,
   AnalysisQuery,
@@ -16,6 +23,19 @@ import type {
  * Base URL for TagoIO analysis snippets repository
  */
 const SNIPPETS_BASE_URL = "https://snippets.tago.io";
+
+/**
+ * Builds the path of an Endpoint call: `/endpoint/{id}/{path}`, relative to the Endpoint root.
+ * Segments are URL-encoded and `.`/`..` are refused, since they would leave the Endpoint root.
+ */
+function endpointPath(analysisID: GenericID, path = "/"): string {
+  const segments = path.replace(/^\/+/, "").split("/");
+  if (segments.some((segment) => segment === "." || segment === "..")) {
+    throw new Error('Invalid Endpoint path: "." and ".." segments are not allowed');
+  }
+
+  return `/endpoint/${encodeURIComponent(analysisID)}/${segments.map(encodeURIComponent).join("/")}`;
+}
 
 class Analyses extends TagoIOModule<GenericModuleParams> {
   /**
@@ -113,9 +133,12 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *   active: false
    * });
    * console.log(result); // Successfully Updated
+   *
+   * // Turn on the HTTP Endpoint of a Luau analysis (a partial `endpoint` is merged into the stored one)
+   * await Resources.analysis.edit("analysis-id-123", { endpoint: { active: true, access: "public" } });
    * ```
    */
-  public async edit(analysisID: GenericID, analysisObj: Partial<AnalysisInfo>): Promise<string> {
+  public async edit(analysisID: GenericID, analysisObj: AnalysisEditInfo): Promise<string> {
     const result = await this.doRequest<string>({
       path: `/analysis/${analysisID}`,
       method: "PUT",
@@ -125,6 +148,105 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
     });
 
     return result;
+  }
+
+  /**
+   * Lists the analyses with an active Endpoint that the token may call: all of them for a profile token, and the
+   * ones granted by Access Management (`call_endpoint`) for a Run user or analysis token.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
+   *
+   * @example
+   * If receive an error "Authorization Denied", the token is missing or invalid.
+   * ```typescript
+   * const endpoints = await Resources.analysis.listEndpoints();
+   * console.log(endpoints); // [ { id: 'analysis-id-123', name: 'My Page', url: 'https://api.tago.io/endpoint/analysis-id-123/' } ]
+   * ```
+   */
+  public async listEndpoints(): Promise<AnalysisEndpointListItem[]> {
+    const result = await this.doRequest<AnalysisEndpointListItem[]>({
+      path: "/endpoint",
+      method: "GET",
+    });
+
+    return result;
+  }
+
+  /**
+   * Calls the Endpoint of a Luau analysis (`{API_URL}/endpoint/{id}/{path}`) with the module token.
+   * Unlike the other methods, a non-2xx answer is returned, not thrown: the Endpoint's code decides its status.
+   * The request is sent once (no retries) and redirects are never followed: the 3xx answer is returned as is
+   * (browsers hide it behind `status: 0`). The body is parsed when the response is JSON, otherwise it is text.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
+   *
+   * @example
+   * A Run user or analysis token needs **Analysis** / **Call Endpoint** in Access Management.
+   * ```typescript
+   * const response = await Resources.analysis.callEndpoint("analysis-id-123", {
+   *   method: "POST",
+   *   path: "/orders",
+   *   query: { dry_run: true },
+   *   body: { item: "sensor" },
+   * });
+   * console.log(response.status, response.body); // 200 { ok: true }
+   * ```
+   */
+  public async callEndpoint<T = any>(
+    analysisID: GenericID,
+    options?: AnalysisEndpointCallOptions
+  ): Promise<AnalysisEndpointResponse<T>> {
+    const apiURI = regions(this.params.region)?.api;
+    if (!apiURI) {
+      throw new Error("Invalid region");
+    }
+    if (!this.params.token) {
+      throw new Error("Token is required but not provided");
+    }
+    if (!analysisID) {
+      throw new Error("Invalid analysis ID");
+    }
+
+    const method = options?.method || "GET";
+    const headers: Record<string, string> = { ...options?.headers };
+    const init: RequestInit = { method, redirect: "manual" };
+
+    if (options?.body !== undefined) {
+      if (method === "GET" || method === "HEAD") {
+        throw new Error(`An Endpoint call with ${method} cannot have a body`);
+      }
+      if (typeof options.body === "string") {
+        init.body = options.body;
+      } else {
+        init.body = JSON.stringify(options.body);
+        if (!Object.keys(headers).some((key) => key.toLowerCase() === "content-type")) {
+          headers["Content-Type"] = "application/json";
+        }
+      }
+    }
+
+    const query = qs.stringify(options?.query || {}, { arrayFormat: "repeat" });
+    const url = `${apiURI}${endpointPath(analysisID, options?.path)}${query ? `?${query}` : ""}`;
+
+    const enhancedFetch = withTimeout(fetch, config.requestTimeout);
+    const response = await enhancedFetch(url, { ...init, headers: { token: this.params.token, ...headers } });
+
+    const responseHeaders: Record<string, string> = {};
+    response.headers.forEach((value, key) => {
+      responseHeaders[key] = value;
+    });
+
+    const text = await response.text();
+    let body: any = text;
+    if (text && /\bjson\b/i.test(responseHeaders["content-type"] || "")) {
+      try {
+        body = JSON.parse(text);
+      } catch {
+        body = text;
+      }
+    }
+
+    return { status: response.status, headers: responseHeaders, body };
   }
 
   /**

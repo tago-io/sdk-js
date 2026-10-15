@@ -6,6 +6,20 @@ interface ScriptFile {
   language: RunTypeOptions;
 }
 
+/**
+ * HTTP Endpoint of a saved Luau Analysis, answered at `{API_URL}/endpoint/{id}/{path}`.
+ * Off by default; `active: true` is accepted only on a Luau (Sandbox) runtime.
+ */
+interface AnalysisEndpoint {
+  /** Whether the Analysis answers HTTP requests at its Endpoint address. */
+  active: boolean;
+  /**
+   * Who may call: `"token"` (default) needs a TagoIO token of the profile, `"public"` also accepts requests with no token.
+   * Run user and analysis tokens always need the Access Management action `call_endpoint` on the analysis.
+   */
+  access: "public" | "token";
+}
+
 interface AnalysisCreateInfo {
   name: string;
   description?: string | null;
@@ -21,7 +35,12 @@ interface AnalysisCreateInfo {
     value: string | number | boolean;
   };
   tags?: TagsObj[];
+  /** Endpoint settings. Omitted fields keep their default (`active: false`, `access: "token"`). */
+  endpoint?: Partial<AnalysisEndpoint>;
 }
+
+/** Fields accepted when editing an analysis. `endpoint` is a partial update merged into the stored one. */
+type AnalysisEditInfo = Partial<Omit<AnalysisInfo, "endpoint">> & { endpoint?: Partial<AnalysisEndpoint> };
 
 interface VersionsAnalysis {
   [version_number_key: string]: {
@@ -35,6 +54,7 @@ interface VersionsAnalysis {
 interface AnalysisInfo extends AnalysisCreateInfo {
   id: GenericID;
   token: string;
+  endpoint: AnalysisEndpoint;
   last_run: ExpireTimeOption;
   created_at: Date;
   updated_at: Date;
@@ -51,6 +71,40 @@ type AnalysisListItem<
     ? AnalysisQuery["fields"][number]
     : keyof AnalysisInfo = keyof AnalysisInfo,
 > = Pick<AnalysisInfo, T> & Partial<AnalysisInfo>;
+
+/** An analysis with an active Endpoint that the caller may call. */
+interface AnalysisEndpointListItem {
+  id: GenericID;
+  name: string;
+  /** Endpoint root without a trailing slash, `{API_URL}/endpoint/{id}`; request paths start with `/`. */
+  url: string;
+}
+
+/** Methods an Endpoint call may use. */
+type AnalysisEndpointMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS";
+
+type AnalysisEndpointQueryValue = string | number | boolean;
+
+interface AnalysisEndpointCallOptions {
+  /** @default "GET" */
+  method?: AnalysisEndpointMethod;
+  /** Path relative to the Endpoint root, e.g. `"/hello"`. Segments are URL-encoded; `.` and `..` are refused. @default "/" */
+  path?: string;
+  /** Query string values; an array repeats the key. */
+  query?: Record<string, AnalysisEndpointQueryValue | AnalysisEndpointQueryValue[]>;
+  /** Extra request headers. */
+  headers?: Record<string, string>;
+  /** A string is sent as is; any other value is sent as JSON. Not allowed with `GET` and `HEAD`. */
+  body?: unknown;
+}
+
+interface AnalysisEndpointResponse<T = any> {
+  status: number;
+  /** Response headers with lowercased names. */
+  headers: Record<string, string>;
+  /** Parsed when the response is JSON, otherwise the response text. */
+  body: T;
+}
 
 /**
  * Available runtime environments for snippets
@@ -94,6 +148,13 @@ interface SnippetsListResponse {
 export type {
   AnalysisInfo,
   AnalysisCreateInfo,
+  AnalysisEditInfo,
+  AnalysisEndpoint,
+  AnalysisEndpointListItem,
+  AnalysisEndpointMethod,
+  AnalysisEndpointQueryValue,
+  AnalysisEndpointCallOptions,
+  AnalysisEndpointResponse,
   ScriptFile,
   AnalysisQuery,
   AnalysisListItem,

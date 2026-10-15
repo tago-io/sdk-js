@@ -2,6 +2,10 @@ import type { GenericID, Query, TagsObj } from "../../common/common.types.ts";
 
 interface Permissions {
   effect: "allow" | "deny";
+  /**
+   * Access Management actions, e.g. `"access"`, `"run_analysis"`, `"execute"` (on `sql`), or `"call_endpoint"` (on `analysis`:
+   * lets Run users or analyses call the analysis's Endpoint).
+   */
   action: string[];
   resource: string[];
 }
