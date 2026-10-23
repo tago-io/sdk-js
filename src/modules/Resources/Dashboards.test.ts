@@ -76,6 +76,19 @@ describe("Dashboards AI resource", () => {
     expect(Object.fromEntries(requests[0].url.searchParams)).toEqual({ search: "ana", page: "2", amount: "50" });
   });
 
+  it("does not retry generate after a 5xx", async () => {
+    let hits = 0;
+    server.use(
+      http.post("https://api.tago.io/dashboard/dash-id-123/generate", () => {
+        hits += 1;
+        return HttpResponse.json({ status: false, message: "Sorry, Internal Error" }, { status: 500 });
+      })
+    );
+
+    await expect(dashboards.generate("dash-id-123", { prompt: "Show temperature" })).rejects.toBeDefined();
+    expect(hits).toBe(1);
+  });
+
   it("passes per_user and ai_instructions through edit", async () => {
     await dashboards.edit("dash-id-123", { per_user: true, ai_instructions: "Use metric units" });
 

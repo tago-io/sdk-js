@@ -275,6 +275,9 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
    * A generation takes 15 to 60 seconds, so this call waits up to 180 seconds. The server answers 429 when
    * the profile already runs 3 generations or the dashboard is already generating.
    *
+   * Each generation is billed and saves a new dashboard version, so the SDK makes a single attempt and never
+   * retries it, even after a timeout or a 5xx. Callers decide whether to call again.
+   *
    * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
    *
    * @example
@@ -296,7 +299,7 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
       path: `/dashboard/${dashboardID}/generate`,
       method: "POST",
       body: params,
-      overwriteRequestConfig: { timeout: GENERATE_TIMEOUT_MS },
+      overwriteRequestConfig: { timeout: GENERATE_TIMEOUT_MS, attempts: 1 },
     });
 
     return result;
