@@ -5,11 +5,16 @@ import Widgets from "./Dashboard.Widgets.ts";
 import type {
   AnalysisRelated,
   DashboardCreateInfo,
+  DashboardGenerateParams,
   DashboardInfo,
   DashboardQuery,
+  DashboardRunUser,
+  DashboardRunUsersQuery,
   DevicesRelated,
   PublicKeyResponse,
 } from "./dashboards.types.ts";
+
+const GENERATE_TIMEOUT_MS = 180_000;
 
 class Dashboards extends TagoIOModule<GenericModuleParams> {
   /**
@@ -258,6 +263,62 @@ class Dashboards extends TagoIOModule<GenericModuleParams> {
       body: {
         scope,
       },
+    });
+
+    return result;
+  }
+
+  /**
+   * Builds or edits an AI dashboard from a prompt. Without `run_user`, it changes the dashboard's own setup.
+   * With `run_user`, it changes that run user's individual dashboard, which requires `per_user` on the dashboard.
+   *
+   * A generation takes 15 to 60 seconds, so this call waits up to 180 seconds. The server answers 429 when
+   * the profile already runs 3 generations or the dashboard is already generating.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dashboard** / **Edit** in Access Management.
+   * ```typescript
+   * const result = await Resources.dashboards.generate("dashboard-id-123", {
+   *   prompt: "Show temperature and humidity for the last 24 hours",
+   *   history: [
+   *     { role: "user", content: "Add a map of all sensors" },
+   *     { role: "assistant", content: "Added a map widget with every sensor." },
+   *   ],
+   *   run_user: "run-user-id-123",
+   * });
+   * console.log(result); // { id: 'dashboard-id-123' }
+   * ```
+   */
+  public async generate(dashboardID: GenericID, params: DashboardGenerateParams): Promise<{ id: GenericID }> {
+    const result = await this.doRequest<{ id: GenericID }>({
+      path: `/dashboard/${dashboardID}/generate`,
+      method: "POST",
+      body: params,
+      overwriteRequestConfig: { timeout: GENERATE_TIMEOUT_MS },
+    });
+
+    return result;
+  }
+
+  /**
+   * Lists the run users who can open a per-user AI dashboard, with pagination support.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/articles/15-dashboard-overview} Dashboard Overview
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Dashboard** / **Access** in Access Management.
+   * ```typescript
+   * const users = await Resources.dashboards.listRunUsers("dashboard-id-123", { search: "ana", page: 1, amount: 50 });
+   * console.log(users); // [ { id: 'run-user-id-123', name: 'Ana', email: 'ana@example.com', has_dashboard: true }, ... ]
+   * ```
+   */
+  public async listRunUsers(dashboardID: GenericID, queryObj?: DashboardRunUsersQuery): Promise<DashboardRunUser[]> {
+    const result = await this.doRequest<DashboardRunUser[]>({
+      path: `/dashboard/${dashboardID}/run-users`,
+      method: "GET",
+      params: queryObj,
     });
 
     return result;

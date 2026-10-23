@@ -10,11 +10,18 @@ interface Arrangement {
   tab?: string | null;
 }
 
+type DashboardType = "dashboard" | "blueprint" | "custom" | "ai";
+
 interface DashboardCreateInfo {
   label: string;
   arrangement?: Arrangement[];
   tags?: TagsObj[];
   visible?: boolean;
+  type?: DashboardType;
+  /** Each run user gets an individual generated dashboard. Only valid on `type: "ai"`. */
+  per_user?: boolean;
+  /** Rules for the AI generator, up to 10,000 characters. */
+  ai_instructions?: string | null;
 }
 
 interface DashboardInfo extends DashboardCreateInfo {
@@ -29,7 +36,7 @@ interface DashboardInfo extends DashboardCreateInfo {
     color?: string;
   };
   background: any;
-  type: string;
+  type: DashboardType;
   blueprint_device_behavior: "more_than_one" | "always";
   blueprint_selector_behavior: undefined | "open" | "closed" | "always_open" | "always_closed";
   blueprint_devices: [
@@ -164,6 +171,37 @@ type EditDataModel = PostDataModel & { id: GenericID };
 
 type DashboardQuery = Query<DashboardInfo, "name" | "label" | "active" | "created_at" | "updated_at">;
 
+interface DashboardGenerateHistoryEntry {
+  role: "user" | "assistant";
+  content: string;
+}
+
+interface DashboardGenerateParams {
+  /** What to build or change. */
+  prompt: string;
+  /** Earlier turns of the conversation, oldest first. */
+  history?: DashboardGenerateHistoryEntry[];
+  /** Run user whose individual dashboard to build or edit. Requires `per_user` on the dashboard. */
+  run_user?: GenericID;
+}
+
+interface DashboardRunUsersQuery {
+  /** Matches name or email. */
+  search?: string;
+  /** Starts at 1. */
+  page?: number;
+  /** Starts at 1. Default and max 1000. */
+  amount?: number;
+}
+
+interface DashboardRunUser {
+  id: GenericID;
+  name: string | null;
+  email: string | null;
+  /** True once the run user has a generated dashboard. */
+  has_dashboard: boolean;
+}
+
 type PublicKeyResponse = { token: GenericToken; expire_time: ExpireTimeOption };
 
 type widgetOverwriteOptions = "start_date" | "end_date" | "timezone";
@@ -173,6 +211,11 @@ type widgetOverwrite = {
 };
 
 export type {
+  DashboardType,
+  DashboardGenerateHistoryEntry,
+  DashboardGenerateParams,
+  DashboardRunUsersQuery,
+  DashboardRunUser,
   DashboardQuery,
   PublicKeyResponse,
   DevicesRelated,
