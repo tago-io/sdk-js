@@ -10,6 +10,7 @@ export * from "./modules/Network/network.types.ts";
 export * from "./modules/Resources/access.types.ts";
 export * from "./modules/Resources/account.types.ts";
 export * from "./modules/Resources/actions.types.ts";
+export * from "./modules/Resources/ai.types.ts";
 export * from "./modules/Resources/analysis.types.ts";
 export * from "./modules/Resources/billing.types.ts";
 export * from "./modules/Resources/buckets.types.ts";
