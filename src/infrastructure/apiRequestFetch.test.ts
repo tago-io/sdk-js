@@ -911,4 +911,25 @@ describe("apiRequestFetch", () => {
       await expect(apiRequest(requestConfig)).rejects.toBe("OK");
     });
   });
+  describe("Per-request attempts", () => {
+    it.each([
+      [1, 1],
+      [0, 1],
+      [Number.NaN, 1],
+      [2, 2],
+    ])("with attempts %s, sends %s request(s) on a 5xx", async (attempts, expected) => {
+      let calls = 0;
+      server.use(
+        http.get(`${BASE_URL}/attempts`, () => {
+          calls += 1;
+          return new HttpResponse(null, { status: 500 });
+        })
+      );
+
+      await expect(apiRequest({ url: `${BASE_URL}/attempts`, method: "GET", attempts })).rejects.toMatchObject({
+        status: 500,
+      });
+      expect(calls).toBe(expected);
+    });
+  });
 });

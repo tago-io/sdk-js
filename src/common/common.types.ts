@@ -10,6 +10,8 @@ export interface RequestConfig {
   data?: any;
   params?: Record<string, any>;
   timeout?: number;
+  /** Attempts for this request, including the first. Defaults to the SDK-wide setting. */
+  attempts?: number;
 }
 
 /**
