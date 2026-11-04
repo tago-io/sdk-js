@@ -39,6 +39,7 @@ export { default as envToJson } from "./envToJson.ts";
 export { default as getAPIVersion } from "./getAPIVersion.ts";
 export { default as getDevice } from "./getDevice.ts";
 export { default as getTokenByName } from "./getTokenByName.ts";
+export { default as parseAIGeneration } from "./parseAIGeneration.ts";
 export { default as parseLorawanQRCode } from "./parseLorawanQRCode.ts";
 export { default as AnalysisRouter } from "./router/router.ts";
 export { default as sendDownlink } from "./sendDownlink.ts";

@@ -2,6 +2,7 @@ import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModul
 import Access from "./Access.ts";
 import Account from "./Account.ts";
 import Actions from "./Actions.ts";
+import AI from "./AI.ts";
 import Analyses from "./Analyses.ts";
 import Billing from "./Billing.ts";
 import Buckets from "./Buckets.ts";
@@ -78,6 +79,11 @@ class Resources extends TagoIOModule<GenericModuleParams> {
   public actions: Actions = new Actions(this.params);
   static get actions(): Actions {
     return new Resources().actions;
+  }
+
+  public ai: AI = new AI(this.params);
+  static get ai(): AI {
+    return new Resources().ai;
   }
 
   public analysis: Analyses = new Analyses(this.params);

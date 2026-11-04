@@ -334,7 +334,9 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
   let resulterror: any;
 
   // Retry loop
-  for (let i = 1; i <= config.requestAttempts; i += 1) {
+  // ? At least one attempt: a 0, negative or NaN override would otherwise resolve without sending.
+  const attempts = Math.max(Math.trunc(requestConfig.attempts ?? config.requestAttempts) || 1, 1);
+  for (let i = 1; i <= attempts; i += 1) {
     const requestResult = await performRequest(url, requestConfig, headers);
 
     if (isErrorResult(requestResult)) {
@@ -352,7 +354,7 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
     }
 
     // ? Wait before retry with exponential backoff
-    if (i < config.requestAttempts) {
+    if (i < attempts) {
       // ? 1.5s, 3s, 6s, 12s, 24s... capped at 30s
       const delay = Math.min(1500 * Math.pow(2, i - 1), 30000);
       await sleep(delay);
@@ -374,4 +376,19 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
   return result;
 }
 
+/**
+ * Whether an apiRequest rejection is a transport failure (timeout, network
+ * error, or 5xx) rather than an API answer. A 4xx rejects with the API's
+ * message instead.
+ * @internal
+ */
+function isTransportError(error: unknown): boolean {
+  if (typeof error !== "object" || error === null || !("from" in error) || !("status" in error)) {
+    return false;
+  }
+  const { status } = error as ErrorResult;
+  return status < 0 || status >= 500;
+}
+
 export default apiRequest;
+export { isTransportError };
