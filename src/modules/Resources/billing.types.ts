@@ -1,6 +1,10 @@
 import type { GenericID } from "../../common/common.types.ts";
 
-type BillingPlan = "free" | "starter" | "scale";
+/**
+ * Account plan. `starter` and `scale` are the former ids of `pro` and `max`: the API still accepts them,
+ * and TagoDeploy instances may still return them.
+ */
+type BillingPlan = "free" | "pro" | "max" | "starter" | "scale";
 
 type BillingService =
   | "input"
