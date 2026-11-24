@@ -41,7 +41,7 @@ class Plan extends TagoIOModule<GenericModuleParams> {
    * ```typescript
    * const resources = new Resources({ token: "YOUR-PROFILE-TOKEN" });
    * const result = await resources.plan.getActivePlan();
-   * console.log(result); // { plan: 'scale' }
+   * console.log(result); // { plan: 'max' }
    * ```
    */
   public async getActivePlan(): Promise<Pick<PlanInfo, "plan">> {
