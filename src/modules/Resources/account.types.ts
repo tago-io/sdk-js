@@ -40,7 +40,7 @@ interface AccountInfo extends Omit<AccountCreateInfo, "password" | "cpassword" |
   stripe_id: string | null;
   /** Type of the account e.g "user" */
   type: string;
-  /** Plan of the account e.g  "free" | "starter" | "scale" */
+  /** Plan of the account e.g "free" | "lite" | "pro" | "max" */
   plan: string;
   created_at: Date;
   updated_at: Date;
