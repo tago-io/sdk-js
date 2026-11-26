@@ -53,20 +53,30 @@ const regionsDefinition: Record<string, RegionsObjApi | undefined> = {
 let runtimeRegion: RegionsObj | undefined;
 
 /**
+ * Extracts TDeploy region configuration if present
+ * @param region Region configuration
+ * @returns TDeploy id or undefined
+ */
+function getTDeployRegion(region?: Regions | RegionsObj): string {
+  if (region && typeof region === "object" && "tdeploy" in region && region.tdeploy) {
+    return region.tdeploy.trim();
+  }
+  return undefined;
+}
+
+/**
  * Get connection URI for Realtime and API
  * @internal
  * @param region Region
  */
 function getConnectionURI(region?: Regions | RegionsObj): RegionsObj {
   // Handle tdeploy in RegionsObj - takes precedence
-  if (region && typeof region === "object" && "tdeploy" in region && region.tdeploy) {
-    const tdeploy = region.tdeploy.trim();
-    if (tdeploy) {
-      return {
+  const tdeploy = getTDeployRegion(region);
+  if (tdeploy) {
+    return {
         api: `https://api.${tdeploy}.tagoio.net`,
         sse: `https://sse.${tdeploy}.tagoio.net/events`,
       };
-    }
   }
 
   let normalizedRegion = region;
@@ -138,4 +148,4 @@ function setRuntimeRegion(region: RegionsObj): void {
 
 export default getConnectionURI;
 export type { Regions, RegionsObj };
-export { regionsDefinition, setRuntimeRegion };
+export { regionsDefinition, setRuntimeRegion, getTDeployRegion };

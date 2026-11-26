@@ -1,4 +1,5 @@
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
+import { getTDeployRegion } from "../../regions.ts";
 
 interface PDFResult {
   status: boolean;
@@ -92,7 +93,9 @@ class PDFService extends TagoIOModule<GenericModuleParams> {
    */
   public async generate(params: PDFParams): Promise<PDFResult> {
     try {
-      const response = await fetch("https://pdf.middleware.tago.io", {
+      const tdeploy = getTDeployRegion(this.params.region);
+      const pdfUri = tdeploy ? `https://pdf.${tdeploy}.tagoio.net` : "https://pdf.middleware.tago.io";
+      const response = await fetch(pdfUri, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

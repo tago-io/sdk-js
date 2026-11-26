@@ -1,4 +1,5 @@
 import type { Regions, RegionsObj } from "../../regions.ts";
+import type { GenericID } from "../../common/common.types.ts";
 
 type analysisFunction = (context: any, data: any) => any;
 
@@ -24,6 +25,13 @@ interface AnalysisConstructorParams {
   loadEnvOnProcess?: boolean;
 }
 
+interface AnalysisItem {
+  id: GenericID;
+  name: string;
+  run_on: "tago" | "external";
+  active: boolean;
+}
+
 interface AnalysisEnvironment {
   [key: string]: string;
 }
@@ -40,4 +48,4 @@ interface TagoContext {
   log: (...args: any[]) => void;
 }
 
-export type { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment, TagoContext };
+export type { AnalysisConstructorParams, analysisFunction, AnalysisEnvironment, TagoContext, AnalysisItem };
