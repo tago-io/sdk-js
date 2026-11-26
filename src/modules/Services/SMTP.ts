@@ -46,6 +46,17 @@ class SMTP extends TagoIOModule<GenericModuleParams> {
    * });
    *
    * @example
+   * // With CC and BCC recipients
+   * const result = await emailService.send({
+   *   to: "client@company.com",
+   *   cc: ["manager@company.com"],
+   *   bcc: "audit@company.com",
+   *   subject: "Reports",
+   *   message: "Hello client, it's your report",
+   *   smtp_secret: environment.SMTP_TAGOIO_SECRET
+   * });
+   *
+   * @example
    * // Sending HTML content
    * const result = await emailService.send({
    *   to: "client@company.com",
@@ -82,6 +93,14 @@ class SMTP extends TagoIOModule<GenericModuleParams> {
 
     if (Array.isArray(email.to)) {
       email.to = email.to.join(",");
+    }
+
+    if (Array.isArray(email.cc)) {
+      email.cc = email.cc.join(",");
+    }
+
+    if (Array.isArray(email.bcc)) {
+      email.bcc = email.bcc.join(",");
     }
 
     const result = await this.doRequest<string>({

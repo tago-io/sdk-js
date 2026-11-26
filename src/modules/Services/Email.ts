@@ -40,6 +40,22 @@ interface EmailBase {
    */
   to: string | string[];
   /**
+   * Carbon copy recipient email address(es) (optional)
+   * Not available on the default TagoIO email service; use a custom email service
+   * @example
+   * "manager@example.com"
+   * ["manager1@example.com", "manager2@example.com"]
+   */
+  cc?: string | string[];
+  /**
+   * Blind carbon copy recipient email address(es) (optional)
+   * Not available on the default TagoIO email service; use a custom email service
+   * @example
+   * "audit@example.com"
+   * ["audit1@example.com", "audit2@example.com"]
+   */
+  bcc?: string | string[];
+  /**
    * Sender name (optional)
    * If not provided, the default sender name configured in TagoRUN will be used
    * @example "My Application"
