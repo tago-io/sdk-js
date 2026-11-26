@@ -1,3 +1,4 @@
+import qs from "qs";
 import type { GenericID } from "../../common/common.types.ts";
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import { Cache } from "../../modules.ts";
@@ -31,12 +32,16 @@ class SQL extends TagoIOModule<GenericModuleParams> {
    * ```
    */
   public async list(queryObj?: SQLQuery): Promise<SQLInfo[]> {
+    // ? /sql only parses the `fields[]=x` array form; the default `fields[0]=x` is ignored and the
+    // ? endpoint falls back to id/name/tags. Encoded on the path so other modules keep their format.
+    const fields = queryObj?.fields || ["id", "name", "tags"];
+    const fieldsQuery = qs.stringify({ fields }, { arrayFormat: "brackets" });
+
     let result = await this.doRequest<SQLInfo[]>({
-      path: "/sql",
+      path: `/sql?${fieldsQuery}`,
       method: "GET",
       params: {
         page: queryObj?.page || 1,
-        fields: queryObj?.fields || ["id", "name", "tags"],
         filter: queryObj?.filter || {},
         amount: queryObj?.amount || 20,
         orderBy: queryObj?.orderBy ? `${queryObj.orderBy[0]},${queryObj.orderBy[1]}` : "created_at,desc",

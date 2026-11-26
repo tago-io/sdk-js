@@ -78,6 +78,24 @@ describe("SQL resource", () => {
     expect(result[0].created_at).toBeInstanceOf(Date);
   });
 
+  it("sends fields as the repeated `fields[]` form the endpoint requires", async () => {
+    let requestUrl = "";
+    server.use(
+      http.get("https://api.tago.io/sql", ({ request }) => {
+        requestUrl = request.url;
+        return HttpResponse.json({ status: true, result: [QUERY_ROW] });
+      })
+    );
+
+    await sql.list({ fields: ["id", "name", "tags", "active", "created_at", "updated_at"], amount: 10 });
+
+    // ? The indexed form (`fields[0]=id`) is silently ignored by /sql, which then returns only id/name/tags.
+    const params = new URL(requestUrl).searchParams;
+    expect(params.getAll("fields[]")).toEqual(["id", "name", "tags", "active", "created_at", "updated_at"]);
+    expect(params.get("fields[0]")).toBeNull();
+    expect(params.get("amount")).toBe("10");
+  });
+
   it("creates a query", async () => {
     const result = await sql.create({
       name: "Latest temperature",
