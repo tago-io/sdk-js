@@ -326,8 +326,10 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
   let result: any;
   let resulterror: any;
 
+  const attempts = requestConfig.attempts ?? config.requestAttempts;
+
   // Retry loop
-  for (let i = 1; i <= config.requestAttempts; i += 1) {
+  for (let i = 1; i <= attempts; i += 1) {
     const requestResult = await performRequest(url, requestConfig, headers);
 
     if (isErrorResult(requestResult)) {
@@ -345,7 +347,7 @@ async function apiRequest(requestConfig: RequestConfig, cacheTTL?: number): Prom
     }
 
     // ? Wait before retry with exponential backoff
-    if (i < config.requestAttempts) {
+    if (i < attempts) {
       // ? 1.5s, 3s, 6s, 12s, 24s... capped at 30s
       const delay = Math.min(1500 * Math.pow(2, i - 1), 30000);
       await sleep(delay);

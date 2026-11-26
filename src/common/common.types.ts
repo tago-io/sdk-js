@@ -10,6 +10,8 @@ export interface RequestConfig {
   data?: any;
   params?: Record<string, any>;
   timeout?: number;
+  /** Overrides `config.requestAttempts` for this request. */
+  attempts?: number;
 }
 
 /**
