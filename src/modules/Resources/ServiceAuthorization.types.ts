@@ -17,7 +17,9 @@ type TokenCreateResponse = {
 type TokenCreateInfo = TokenData & {
   /**
    * [Optional] ID of a Luau Analysis of the profile with the MQTT Endpoint: devices connecting with this
-   * authorization run its code. Set at creation only; it cannot change later. Available on paid plans.
+   * authorization run its code. Set at creation only; it cannot change later. For paid plans (Lite, Pro, and Max;
+   * TagoDeploy instances always have it): on a Free account it is refused with
+   * `"The MQTT Endpoint needs a paid plan. Upgrade to use it."`.
    */
   analysis?: GenericID;
 };

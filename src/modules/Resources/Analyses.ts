@@ -325,7 +325,9 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
   /**
    * Runs a Luau analysis with its MQTT Endpoint on for one test message, as if a device had published it, and
    * answers how the run ended. The run is real: it counts against the profile's MQTT Endpoint runs per minute, and
-   * messages the code publishes reach connected devices. The MQTT Endpoint is available on paid plans.
+   * messages the code publishes reach connected devices. The MQTT Endpoint is for paid plans (Lite, Pro, and Max;
+   * TagoDeploy instances always have it): on a Free account the call is refused with
+   * `"The MQTT Endpoint needs a paid plan. Upgrade to use it."`.
    *
    * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
    *

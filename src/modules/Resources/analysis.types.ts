@@ -22,7 +22,7 @@ interface AnalysisEndpoint {
 
 /**
  * Session events that also run the code of an Analysis with the MQTT Endpoint on. A PUBLISH always runs it;
- * CONNECT, SUBSCRIBE, and UNSUBSCRIBE run it only when turned on here. All off by default.
+ * CONNECT, SUBSCRIBE, and UNSUBSCRIBE are opt-in: each runs it only when turned on here. All off by default.
  */
 interface AnalysisMqttEvents {
   connect: boolean;
@@ -41,7 +41,11 @@ interface AnalysisMqttPorts {
 /**
  * MQTT Endpoint of a saved Luau Analysis: devices connect with a Service Authorization bound to the Analysis
  * (`analysis` on `serviceAuthorization.tokenCreate`), and each message they publish runs its code.
- * Off by default; turning it on is accepted only on a Luau (Sandbox) runtime, on a paid plan.
+ * Off by default; turning it or an event on is accepted only on a Luau (Sandbox) runtime.
+ *
+ * The MQTT Endpoint is for paid plans (Lite, Pro, and Max; TagoDeploy instances always have it). On a Free account,
+ * turning it or an event on, creating a bound authorization, and Try it are refused with
+ * `"The MQTT Endpoint needs a paid plan. Upgrade to use it."`. Turning things off is always allowed.
  */
 interface AnalysisMqtt {
   /** Whether published messages run the Analysis. */
@@ -103,8 +107,11 @@ interface AnalysisInfo extends AnalysisCreateInfo {
   id: GenericID;
   token: string;
   endpoint: AnalysisEndpoint;
-  /** MQTT Endpoint state. Returned by `info`, not by `list`. */
-  mqtt: AnalysisMqtt;
+  /**
+   * MQTT Endpoint state. Returned by `info`, not by `list`, and missing on servers without the MQTT Endpoint
+   * (such as older TagoDeploy instances).
+   */
+  mqtt?: AnalysisMqtt;
   last_run: ExpireTimeOption;
   created_at: Date;
   updated_at: Date;
@@ -168,9 +175,9 @@ interface AnalysisMqttTry {
 
 /**
  * How a test message ended: `"ran"` (the code ran to its end), `"failed"` (the code raised, hit a limit or the deadline,
- * or could not start), `"refused"` (the Analysis is deactivated, not Luau, or has the MQTT Endpoint off),
- * `"rate_limited"` (the profile's MQTT Endpoint runs per minute are spent), or `"too_large"` (the payload is over
- * 256 KiB). Details go to the Analysis console.
+ * or could not start), `"refused"` (the Analysis is deactivated, not Luau, or has the MQTT Endpoint off, or the account
+ * is on the Free plan), `"rate_limited"` (the profile's MQTT Endpoint runs per minute are spent), or `"too_large"` (the
+ * payload is over 256 KiB). Details go to the Analysis console.
  */
 type AnalysisMqttOutcome = "ran" | "failed" | "refused" | "rate_limited" | "too_large";
 

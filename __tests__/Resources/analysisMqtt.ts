@@ -10,6 +10,7 @@ import {
 } from "../../src/modules.ts";
 
 const ANALYSIS_ID = "6125a6a1d4c8a300120a1234";
+const OLD_SERVER_ANALYSIS_ID = "6125a6a1d4c8a300120a9999";
 const TOKEN = "at0123456789abcdef0123456789abcdef";
 
 let lastBody: unknown = null;
@@ -39,6 +40,9 @@ const handlers = [
         },
       },
     })
+  ),
+  http.get(`https://api.tago.io/analysis/${OLD_SERVER_ANALYSIS_ID}`, () =>
+    HttpResponse.json({ status: true, result: { id: OLD_SERVER_ANALYSIS_ID, name: "Legacy" } })
   ),
   http.post(`https://api.tago.io/analysis/${ANALYSIS_ID}/mqtt/try`, async ({ request }) => {
     lastBody = await request.json();
@@ -104,6 +108,12 @@ describe("Resources analysis MQTT Endpoint", () => {
         host: "mqtt.endpoint.example.com",
         ports: { plain: 1883, secure: 8883 },
       });
+    });
+
+    test("info has no mqtt on a server without the MQTT Endpoint", async () => {
+      const info: AnalysisInfo = await resources.analysis.info(OLD_SERVER_ANALYSIS_ID);
+
+      expect(info.mqtt).toBeUndefined();
     });
   });
 
