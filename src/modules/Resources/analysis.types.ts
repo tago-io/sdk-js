@@ -20,6 +20,46 @@ interface AnalysisEndpoint {
   access: "public" | "token";
 }
 
+/**
+ * Session events that also run the code of an Analysis with the MQTT Endpoint on. A PUBLISH always runs it;
+ * CONNECT, SUBSCRIBE, and UNSUBSCRIBE run it only when turned on here. All off by default.
+ */
+interface AnalysisMqttEvents {
+  connect: boolean;
+  subscribe: boolean;
+  unsubscribe: boolean;
+}
+
+/** Broker ports of the MQTT Endpoint. */
+interface AnalysisMqttPorts {
+  /** MQTT over TCP, e.g. `1883`. */
+  plain: number;
+  /** MQTT over TLS, e.g. `8883`. */
+  secure: number;
+}
+
+/**
+ * MQTT Endpoint of a saved Luau Analysis: devices connect with a Service Authorization bound to the Analysis
+ * (`analysis` on `serviceAuthorization.tokenCreate`), and each message they publish runs its code.
+ * Off by default; turning it on is accepted only on a Luau (Sandbox) runtime, on a paid plan.
+ */
+interface AnalysisMqtt {
+  /** Whether published messages run the Analysis. */
+  active: boolean;
+  /** Session events that also run the code. */
+  events: AnalysisMqttEvents;
+  /** Broker host devices connect to. Read-only; present only when the TagoIO instance sets one. */
+  host?: string;
+  /** Broker ports. Read-only; present with `host`. */
+  ports?: AnalysisMqttPorts;
+}
+
+/** MQTT Endpoint settings sent on create or edit. Omitted fields keep their stored value (on create, off). */
+interface AnalysisMqttChanges {
+  active?: boolean;
+  events?: Partial<AnalysisMqttEvents>;
+}
+
 interface AnalysisCreateInfo {
   name: string;
   description?: string | null;
@@ -37,10 +77,18 @@ interface AnalysisCreateInfo {
   tags?: TagsObj[];
   /** Endpoint settings. Omitted fields keep their default (`active: false`, `access: "token"`). */
   endpoint?: Partial<AnalysisEndpoint>;
+  /** MQTT Endpoint settings. Omitted fields keep their default (off). */
+  mqtt?: AnalysisMqttChanges;
 }
 
-/** Fields accepted when editing an analysis. `endpoint` is a partial update merged into the stored one. */
-type AnalysisEditInfo = Partial<Omit<AnalysisInfo, "endpoint">> & { endpoint?: Partial<AnalysisEndpoint> };
+/**
+ * Fields accepted when editing an analysis. `endpoint` and `mqtt` are partial updates merged into the stored ones;
+ * `mqtt.host` and `mqtt.ports` are read-only.
+ */
+type AnalysisEditInfo = Partial<Omit<AnalysisInfo, "endpoint" | "mqtt">> & {
+  endpoint?: Partial<AnalysisEndpoint>;
+  mqtt?: AnalysisMqttChanges;
+};
 
 interface VersionsAnalysis {
   [version_number_key: string]: {
@@ -55,6 +103,8 @@ interface AnalysisInfo extends AnalysisCreateInfo {
   id: GenericID;
   token: string;
   endpoint: AnalysisEndpoint;
+  /** MQTT Endpoint state. Returned by `info`, not by `list`. */
+  mqtt: AnalysisMqtt;
   last_run: ExpireTimeOption;
   created_at: Date;
   updated_at: Date;
@@ -106,6 +156,30 @@ interface AnalysisEndpointResponse<T = any> {
   body: T;
 }
 
+/** A test message for the MQTT Endpoint of an Analysis. */
+interface AnalysisMqttTry {
+  /** Topic name as a device would publish it, without `+`, `#`, or NUL. */
+  topic: string;
+  /** Payload, given to the code as UTF-8 bytes. */
+  payload: string;
+  /** @default 1 */
+  qos?: 0 | 1 | 2;
+}
+
+/**
+ * How a test message ended: `"ran"` (the code ran to its end), `"failed"` (the code raised, hit a limit or the deadline,
+ * or could not start), `"refused"` (the Analysis is deactivated, not Luau, or has the MQTT Endpoint off),
+ * `"rate_limited"` (the profile's MQTT Endpoint runs per minute are spent), or `"too_large"` (the payload is over
+ * 256 KiB). Details go to the Analysis console.
+ */
+type AnalysisMqttOutcome = "ran" | "failed" | "refused" | "rate_limited" | "too_large";
+
+interface AnalysisMqttTryResult {
+  outcome: AnalysisMqttOutcome;
+  /** Time the run took, including the wait for it to start, in milliseconds. */
+  duration_ms: number;
+}
+
 /**
  * Available runtime environments for snippets
  */
@@ -155,6 +229,13 @@ export type {
   AnalysisEndpointQueryValue,
   AnalysisEndpointCallOptions,
   AnalysisEndpointResponse,
+  AnalysisMqtt,
+  AnalysisMqttChanges,
+  AnalysisMqttEvents,
+  AnalysisMqttOutcome,
+  AnalysisMqttPorts,
+  AnalysisMqttTry,
+  AnalysisMqttTryResult,
   ScriptFile,
   AnalysisQuery,
   AnalysisListItem,
