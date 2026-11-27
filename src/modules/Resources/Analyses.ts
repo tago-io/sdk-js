@@ -13,6 +13,8 @@ import type {
   AnalysisEndpointResponse,
   AnalysisInfo,
   AnalysisListItem,
+  AnalysisMqttTry,
+  AnalysisMqttTryResult,
   AnalysisQuery,
   ScriptFile,
   SnippetRuntime,
@@ -136,6 +138,9 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
    *
    * // Turn on the HTTP Endpoint of a Luau analysis (a partial `endpoint` is merged into the stored one)
    * await Resources.analysis.edit("analysis-id-123", { endpoint: { active: true, access: "public" } });
+   *
+   * // Turn on the MQTT Endpoint of a Luau analysis, with CONNECT events (a partial `mqtt` is merged into the stored one)
+   * await Resources.analysis.edit("analysis-id-123", { mqtt: { active: true, events: { connect: true } } });
    * ```
    */
   public async edit(analysisID: GenericID, analysisObj: AnalysisEditInfo): Promise<string> {
@@ -312,6 +317,35 @@ class Analyses extends TagoIOModule<GenericModuleParams> {
       body: {
         scope: scopeObj,
       },
+    });
+
+    return result;
+  }
+
+  /**
+   * Runs a Luau analysis with its MQTT Endpoint on for one test message, as if a device had published it, and
+   * answers how the run ended. The run is real: it counts against the profile's MQTT Endpoint runs per minute, and
+   * messages the code publishes reach connected devices. The MQTT Endpoint is for paid plans (Lite, Pro, and Max;
+   * TagoDeploy instances always have it): on a Free account the call is refused with
+   * `"The MQTT Endpoint needs a paid plan. Upgrade to use it."`.
+   *
+   * @see {@link https://help.tago.io/portal/en/kb/tagoio/analysis} Analysis
+   *
+   * @example
+   * If receive an error "Authorization Denied", check policy **Analysis** / **Run Analysis** in Access Management.
+   * ```typescript
+   * const result = await Resources.analysis.tryMqtt("analysis-id-123", {
+   *   topic: "sensors/room-1",
+   *   payload: JSON.stringify({ temperature: 21.5 }),
+   * });
+   * console.log(result); // { outcome: 'ran', duration_ms: 42 }
+   * ```
+   */
+  public async tryMqtt(analysisID: GenericID, message: AnalysisMqttTry): Promise<AnalysisMqttTryResult> {
+    const result = await this.doRequest<AnalysisMqttTryResult>({
+      path: `/analysis/${analysisID}/mqtt/try`,
+      method: "POST",
+      body: message,
     });
 
     return result;

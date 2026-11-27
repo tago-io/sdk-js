@@ -27,7 +27,10 @@ export * from "./modules/Resources/profile.types.ts";
 export * from "./modules/Resources/run.types.ts";
 export type {
   GenericToken as ServiceAuthGenericToken,
+  TokenCreateInfo as ServiceAuthTokenCreateInfo,
   TokenCreateResponse as ServiceAuthTokenCreateResponse,
+  TokenListItem as ServiceAuthTokenListItem,
+  TokenListQuery as ServiceAuthTokenListQuery,
 } from "./modules/Resources/ServiceAuthorization.types.ts";
 export * from "./modules/Resources/secrets.type.ts";
 export * from "./modules/Resources/sql.types.ts";

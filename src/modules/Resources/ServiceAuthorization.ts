@@ -1,7 +1,12 @@
-import type { ListTokenQuery, TokenData, TokenDataList } from "../../common/common.types.ts";
 import TagoIOModule, { type GenericModuleParams } from "../../common/TagoIOModule.ts";
 import dateParser from "../Utils/dateParser.ts";
-import type { GenericToken, TokenCreateResponse } from "./ServiceAuthorization.types.ts";
+import type {
+  GenericToken,
+  TokenCreateInfo,
+  TokenCreateResponse,
+  TokenListItem,
+  TokenListQuery,
+} from "./ServiceAuthorization.types.ts";
 
 class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   /**
@@ -18,10 +23,16 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    *   amount: 20
    * });
    * console.log(result); // [ { name: 'API Service Token', token: 'token-xyz-123' } ]
+   *
+   * // Authorizations bound to the MQTT Endpoint of an analysis
+   * const bound = await Resources.serviceAuthorization.tokenList({
+   *   fields: ["name", "token", "analysis"],
+   *   filter: { analysis: "analysis-id-123" },
+   * });
    * ```
    */
-  public async tokenList(query?: ListTokenQuery): Promise<Partial<TokenDataList>[]> {
-    let result = await this.doRequest<Partial<TokenDataList>[]>({
+  public async tokenList(query?: TokenListQuery): Promise<Partial<TokenListItem>[]> {
+    let result = await this.doRequest<Partial<TokenListItem>[]>({
       path: "/serviceauth",
       method: "GET",
       params: {
@@ -51,9 +62,16 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
    *   verification_code: "additional parameter"
    * });
    * console.log(result); // { token: 'token-xyz-123', name: 'Service Token', ... }
+   *
+   * // An authorization for devices connecting to the MQTT Endpoint of a Luau analysis
+   * const credential = await Resources.serviceAuthorization.tokenCreate({
+   *   name: "Room sensors",
+   *   permission: "full",
+   *   analysis: "analysis-id-123",
+   * });
    * ```
    */
-  public async tokenCreate(tokenParams: TokenData): Promise<TokenCreateResponse> {
+  public async tokenCreate(tokenParams: TokenCreateInfo): Promise<TokenCreateResponse> {
     const result = await this.doRequest<TokenCreateResponse>({
       path: "/serviceauth",
       method: "POST",
@@ -85,7 +103,8 @@ class ServiceAuthorization extends TagoIOModule<GenericModuleParams> {
   }
 
   /**
-   * Updates a service authorization token with an optional verification code.
+   * Updates a service authorization token with an optional verification code. The analysis an authorization is
+   * bound to cannot change.
    *
    * @see {@link https://help.tago.io/portal/en/kb/articles/218-authorization} Authorization
    *
